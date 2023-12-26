@@ -1,0 +1,95 @@
+C:\z\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.deps.json
+C:\z\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.dll
+C:\z\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.pdb
+C:\z\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.GeneratedMSBuildEditorConfig.editorconfig
+C:\z\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.AssemblyInfoInputs.cache
+C:\z\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.AssemblyInfo.cs
+C:\z\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.csproj.CoreCompileInputs.cache
+C:\z\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.dll
+C:\z\Aliados\Aliados\Entity\obj\Debug\net6.0\refint\Entity.dll
+C:\z\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.pdb
+C:\z\Aliados\Aliados\Entity\obj\Debug\net6.0\ref\Entity.dll
+C:\Users\mauro_j2pjkpe\Downloads\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.deps.json
+C:\Users\mauro_j2pjkpe\Downloads\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.runtimeconfig.json
+C:\Users\mauro_j2pjkpe\Downloads\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.dll
+C:\Users\mauro_j2pjkpe\Downloads\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.pdb
+C:\Users\mauro_j2pjkpe\Downloads\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.csproj.AssemblyReference.cache
+C:\Users\mauro_j2pjkpe\Downloads\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mauro_j2pjkpe\Downloads\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.AssemblyInfoInputs.cache
+C:\Users\mauro_j2pjkpe\Downloads\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.AssemblyInfo.cs
+C:\Users\mauro_j2pjkpe\Downloads\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.csproj.CoreCompileInputs.cache
+C:\Users\mauro_j2pjkpe\Downloads\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.dll
+C:\Users\mauro_j2pjkpe\Downloads\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\refint\Entity.dll
+C:\Users\mauro_j2pjkpe\Downloads\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.pdb
+C:\Users\mauro_j2pjkpe\Downloads\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.genruntimeconfig.cache
+C:\Users\mauro_j2pjkpe\Downloads\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\ref\Entity.dll
+E:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.deps.json
+E:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.runtimeconfig.json
+E:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.dll
+E:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.pdb
+E:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.csproj.AssemblyReference.cache
+E:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.GeneratedMSBuildEditorConfig.editorconfig
+E:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.AssemblyInfoInputs.cache
+E:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.AssemblyInfo.cs
+E:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.csproj.CoreCompileInputs.cache
+E:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.dll
+E:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\refint\Entity.dll
+E:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.pdb
+E:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.genruntimeconfig.cache
+E:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\ref\Entity.dll
+F:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.deps.json
+F:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.runtimeconfig.json
+F:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.dll
+F:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.pdb
+F:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.csproj.AssemblyReference.cache
+F:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.GeneratedMSBuildEditorConfig.editorconfig
+F:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.AssemblyInfoInputs.cache
+F:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.AssemblyInfo.cs
+F:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.csproj.CoreCompileInputs.cache
+F:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.dll
+F:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\refint\Entity.dll
+F:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.pdb
+F:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.genruntimeconfig.cache
+F:\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\ref\Entity.dll
+C:\Users\JOSEC\Desktop\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.deps.json
+C:\Users\JOSEC\Desktop\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.runtimeconfig.json
+C:\Users\JOSEC\Desktop\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.dll
+C:\Users\JOSEC\Desktop\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.pdb
+C:\Users\JOSEC\Desktop\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.csproj.AssemblyReference.cache
+C:\Users\JOSEC\Desktop\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\JOSEC\Desktop\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.AssemblyInfoInputs.cache
+C:\Users\JOSEC\Desktop\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.AssemblyInfo.cs
+C:\Users\JOSEC\Desktop\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.csproj.CoreCompileInputs.cache
+C:\Users\JOSEC\Desktop\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.dll
+C:\Users\JOSEC\Desktop\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\refint\Entity.dll
+C:\Users\JOSEC\Desktop\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.pdb
+C:\Users\JOSEC\Desktop\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.genruntimeconfig.cache
+C:\Users\JOSEC\Desktop\Aliados_2 (2)\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\ref\Entity.dll
+C:\Users\JOSEC\Desktop\Aliados Zoco\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.deps.json
+C:\Users\JOSEC\Desktop\Aliados Zoco\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.runtimeconfig.json
+C:\Users\JOSEC\Desktop\Aliados Zoco\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.dll
+C:\Users\JOSEC\Desktop\Aliados Zoco\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.pdb
+C:\Users\JOSEC\Desktop\Aliados Zoco\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.csproj.AssemblyReference.cache
+C:\Users\JOSEC\Desktop\Aliados Zoco\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\JOSEC\Desktop\Aliados Zoco\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.AssemblyInfoInputs.cache
+C:\Users\JOSEC\Desktop\Aliados Zoco\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.AssemblyInfo.cs
+C:\Users\JOSEC\Desktop\Aliados Zoco\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.csproj.CoreCompileInputs.cache
+C:\Users\JOSEC\Desktop\Aliados Zoco\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.dll
+C:\Users\JOSEC\Desktop\Aliados Zoco\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\refint\Entity.dll
+C:\Users\JOSEC\Desktop\Aliados Zoco\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.pdb
+C:\Users\JOSEC\Desktop\Aliados Zoco\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.genruntimeconfig.cache
+C:\Users\JOSEC\Desktop\Aliados Zoco\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\ref\Entity.dll
+C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.deps.json
+C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.runtimeconfig.json
+C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.dll
+C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\Entity\bin\Debug\net6.0\Entity.pdb
+C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.csproj.AssemblyReference.cache
+C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.AssemblyInfoInputs.cache
+C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.AssemblyInfo.cs
+C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.csproj.CoreCompileInputs.cache
+C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.dll
+C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\refint\Entity.dll
+C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.pdb
+C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.genruntimeconfig.cache
+C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\ref\Entity.dll

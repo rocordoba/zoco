@@ -1,0 +1,66 @@
+.iconos-modales {
+  width: 29px;
+  height: 33px;
+}
+
+.modalShadow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 2rem 3rem;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 0px 0px 25px #222;
+  backdrop-filter: blur(10px);
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.centrado {
+  display: grid;
+  place-items: center;
+}
+
+.caja-popup {
+  width: 100% !important;
+  height: 585px;
+  background: transparent linear-gradient(129deg, #ffffff 0%, #e5e8ee 100%) 0%
+    0% no-repeat padding-box;
+  box-shadow: 5px 4px 16px #00000047;
+  border-radius: 50px;
+  opacity: 1;
+}
+
+@media only screen and (max-width: 320px) {
+  .caja-popup {
+    width: 100% !important;
+    height: 585px;
+    background: transparent linear-gradient(129deg, #ffffff 0%, #e5e8ee 100%) 0%
+      0% no-repeat padding-box;
+    box-shadow: 5px 4px 16px #00000047;
+    border-radius: 50px;
+    opacity: 1;
+  }
+}
+
+/* .form-metrica {
+  width: 1% !important;
+  margin-left: 14rem;
+} */
+
+.ocultar-texto-div {
+    visibility: hidden !important;
+  }
+
+  .width-personalizado-form-popup{
+    width: 85%;
+  }
+
+  @media only screen and (max-width: 900px) {
+    .width-personalizado-form-popup{
+      width: 100%;
+    }
+  }

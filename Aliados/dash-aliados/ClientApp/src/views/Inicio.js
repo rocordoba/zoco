@@ -91,7 +91,6 @@ const Inicio = ({ califico, setCalifico }) => {
           <PopUpCalificar califico={califico} setCalifico={setCalifico} />
         </>
       )}
-
       <div className="pb-4">
         <ComportamientoGrafica datos={datosBack} />
       </div>

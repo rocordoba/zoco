@@ -131,3 +131,4 @@ C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Al
 C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\IOC\obj\Debug\net6.0\refint\IOC.dll
 C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\IOC\obj\Debug\net6.0\IOC.pdb
 C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\IOC\obj\Debug\net6.0\ref\IOC.dll
+C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\IOC\obj\Debug\net6.0\IOC.sourcelink.json

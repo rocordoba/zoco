@@ -93,3 +93,4 @@ C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Al
 C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.pdb
 C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.genruntimeconfig.cache
 C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\ref\Entity.dll
+C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.sourcelink.json

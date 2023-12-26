@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DarkModeContext } from "../context/DarkModeContext";
 import "./ComportamientoGrafica.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -31,57 +31,65 @@ const ComportamientoGrafica = ({datos}) => {
   const { darkMode } = useContext(DarkModeContext);
   const tickColor = darkMode ? "#fff" : "#292B2F";
 
-  const {comparativahoy, comparativaHoymesanterior} = datos
-
+  const {comparativahoy, comparativaHoymesanterior, totalesPorDiaTarjeta} = datos;
+  const totales = totalesPorDiaTarjeta;
+  console.log("🚀 ~ file: ComportamientoGrafica.js:36 ~ ComportamientoGrafica ~ totales:", totales)
  
   // grafica en comportamiento
   const data = {
     labels: [
+      // diaSemana,
+      // diaSemana,
+      // diaSemana,
+      // diaSemana,
+      // diaSemana,
+      // diaSemana,
+      // diaSemana,
       "Lunes",
       "Martes",
-      "Miércoles",
+      "Miercoles",
       "Jueves",
       "Viernes",
-      "Sábado",
-      "Domingo",
+      "Sabado",
+      "Domingo"
     ],
     datasets: [
       {
-        label: "Delv1",
+        label: "Comercio1",
         borderColor: "rgba(255, 99, 132, 1)",
         backgroundColor: "rgba(255, 99, 132, 0)",
-        data: [12, 19, 33, 45, 72, 93, 100],
+        data: [1, 19, 33, 45, 72, 93, 100],
       },
-      {
-        label: "Delv2",
-        borderColor: "rgba(54, 162, 235, 1)",
-        backgroundColor: "rgba(54, 162, 235, 0)", 
-        data: [5, 8, 33, 47, 69, 72, 86],
-      },
-      {
-        label: "Suc1",
-        borderColor: "#b4c400",
-        backgroundColor: "rgba(180, 196, 0, 0)", 
-        data: [6, 37, 42, 48, 54, 73, 77],
-      },
-      {
-        label: "Suc2",
-        borderColor: "#31008B",
-        backgroundColor: "rgba(49, 0, 139, 0)", 
-        data: [1, 17, 29, 42, 76, 86, 96],
-      },
-      {
-        label: "Suc3",
-        borderColor: "#08B",
-        backgroundColor: "rgba(49, 0, 139, 0)", 
-        data: [7, 12, 22, 32, 56, 76, 100],
-      },
-      {
-        label: "Suc4",
-        borderColor: "#080B",
-        backgroundColor: "rgba(49, 0, 139, 0)", 
-        data: [2, 18, 28, 38, 66, 86, 90],
-      },
+      // {
+      //   label: "Delv2",
+      //   borderColor: "rgba(54, 162, 235, 1)",
+      //   backgroundColor: "rgba(54, 162, 235, 0)", 
+      //   data: [5, 8, 33, 47, 69, 72, 86],
+      // },
+      // {
+      //   label: "Suc1",
+      //   borderColor: "#b4c400",
+      //   backgroundColor: "rgba(180, 196, 0, 0)", 
+      //   data: [6, 37, 42, 48, 54, 73, 77],
+      // },
+      // {
+      //   label: "Suc2",
+      //   borderColor: "#31008B",
+      //   backgroundColor: "rgba(49, 0, 139, 0)", 
+      //   data: [1, 17, 29, 42, 76, 86, 96],
+      // },
+      // {
+      //   label: "Suc3",
+      //   borderColor: "#08B",
+      //   backgroundColor: "rgba(49, 0, 139, 0)", 
+      //   data: [7, 12, 22, 32, 56, 76, 100],
+      // },
+      // {
+      //   label: "Suc4",
+      //   borderColor: "#080B",
+      //   backgroundColor: "rgba(49, 0, 139, 0)", 
+      //   data: [2, 18, 28, 38, 66, 86, 90],
+      // },
     ],
   };
 
@@ -99,7 +107,7 @@ const ComportamientoGrafica = ({datos}) => {
     responsive: true,
     scales: {
       y: {
-        display: true, 
+        display: false, 
         grid: {
           display: false, 
         },

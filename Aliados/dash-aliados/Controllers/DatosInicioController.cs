@@ -359,6 +359,7 @@ namespace dash_aliados.Controllers
                         .GroupBy(s => s.DiaSemana)
                         .Select(group => new
                         {
+                            NombreComercio = grupoTarjeta.Key, // Agregar el nombre del comercio al objeto
                             DiaSemana = group.Key,
                             TotalConDescuentoPorDia = group.Sum(item => item.TotalConDescuentos)
                         })

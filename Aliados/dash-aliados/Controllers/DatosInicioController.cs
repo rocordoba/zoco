@@ -420,7 +420,7 @@ namespace dash_aliados.Controllers
 
         private double ObtenerPorcentaje(double comparativaHoy, double comparativaDiaAnterior)
         {
-            comparativaDiaAnterior = 25000;
+           
             return comparativaHoy / (comparativaDiaAnterior != 0 ? comparativaDiaAnterior : 1);
         }
 

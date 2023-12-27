@@ -13,7 +13,11 @@ import {
   Legend,
   Filler,
 } from "chart.js";
-import { faCircleUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleUp,
+  faCircleArrowDown,
+  faCirclePause,
+} from "@fortawesome/free-solid-svg-icons";
 import { Bar, Line } from "react-chartjs-2";
 
 ChartJS.register(
@@ -27,14 +31,22 @@ ChartJS.register(
   Filler
 );
 
-const ComportamientoGrafica = ({datos}) => {
+const ComportamientoGrafica = ({ datos }) => {
   const { darkMode } = useContext(DarkModeContext);
   const tickColor = darkMode ? "#fff" : "#292B2F";
 
-  const {comparativahoy, comparativaHoymesanterior, totalesPorDiaTarjeta, porcentaje} = datos;
+  const {
+    comparativahoy,
+    comparativaHoymesanterior,
+    totalesPorDiaTarjeta,
+    porcentaje,
+  } = datos;
   const totales = totalesPorDiaTarjeta;
-  console.log("🚀 ~ file: ComportamientoGrafica.js:36 ~ ComportamientoGrafica ~ totales:", totales)
- 
+  console.log(
+    "🚀 ~ file: ComportamientoGrafica.js:36 ~ ComportamientoGrafica ~ totales:",
+    totales
+  );
+
   // grafica en comportamiento
   const data = {
     labels: [
@@ -51,7 +63,7 @@ const ComportamientoGrafica = ({datos}) => {
       "Jueves",
       "Viernes",
       "Sabado",
-      "Domingo"
+      "Domingo",
     ],
     datasets: [
       {
@@ -63,31 +75,31 @@ const ComportamientoGrafica = ({datos}) => {
       // {
       //   label: "Delv2",
       //   borderColor: "rgba(54, 162, 235, 1)",
-      //   backgroundColor: "rgba(54, 162, 235, 0)", 
+      //   backgroundColor: "rgba(54, 162, 235, 0)",
       //   data: [5, 8, 33, 47, 69, 72, 86],
       // },
       // {
       //   label: "Suc1",
       //   borderColor: "#b4c400",
-      //   backgroundColor: "rgba(180, 196, 0, 0)", 
+      //   backgroundColor: "rgba(180, 196, 0, 0)",
       //   data: [6, 37, 42, 48, 54, 73, 77],
       // },
       // {
       //   label: "Suc2",
       //   borderColor: "#31008B",
-      //   backgroundColor: "rgba(49, 0, 139, 0)", 
+      //   backgroundColor: "rgba(49, 0, 139, 0)",
       //   data: [1, 17, 29, 42, 76, 86, 96],
       // },
       // {
       //   label: "Suc3",
       //   borderColor: "#08B",
-      //   backgroundColor: "rgba(49, 0, 139, 0)", 
+      //   backgroundColor: "rgba(49, 0, 139, 0)",
       //   data: [7, 12, 22, 32, 56, 76, 100],
       // },
       // {
       //   label: "Suc4",
       //   borderColor: "#080B",
-      //   backgroundColor: "rgba(49, 0, 139, 0)", 
+      //   backgroundColor: "rgba(49, 0, 139, 0)",
       //   data: [2, 18, 28, 38, 66, 86, 90],
       // },
     ],
@@ -97,7 +109,7 @@ const ComportamientoGrafica = ({datos}) => {
     plugins: {
       legend: {
         labels: {
-          boxWidth: 8, 
+          boxWidth: 8,
           boxHeight: 8,
         },
         display: true,
@@ -107,9 +119,9 @@ const ComportamientoGrafica = ({datos}) => {
     responsive: true,
     scales: {
       y: {
-        display: false, 
+        display: false,
         grid: {
-          display: false, 
+          display: false,
         },
         ticks: {
           color: tickColor,
@@ -117,12 +129,11 @@ const ComportamientoGrafica = ({datos}) => {
       },
       x: {
         grid: {
-          display: false, 
+          display: false,
         },
-        
+
         ticks: {
           color: tickColor,
-          
         },
       },
     },
@@ -173,14 +184,52 @@ const ComportamientoGrafica = ({datos}) => {
 
   midata.datasets.forEach(function (dataset) {
     dataset.barPercentage = 0.4;
-    dataset.barThickness = 20; 
+    dataset.barThickness = 20;
   });
 
   let numeroPorcentual = porcentaje || 0;
-  console.log("🚀 ~ file: ComportamientoGrafica.js:180 ~ ComportamientoGrafica ~ numeroPorcentual:", numeroPorcentual)
-  let porcentajeFinal = numeroPorcentual.toFixed(2); 
-  console.log("🚀 ~ file: ComportamientoGrafica.js:181 ~ ComportamientoGrafica ~ porcentajeFinal:", porcentajeFinal)
+  console.log(
+    "🚀 ~ file: ComportamientoGrafica.js:180 ~ ComportamientoGrafica ~ numeroPorcentual:",
+    numeroPorcentual
+  );
+  let porcentajeFinal = numeroPorcentual.toFixed(2);
+  console.log(
+    "🚀 ~ file: ComportamientoGrafica.js:181 ~ ComportamientoGrafica ~ porcentajeFinal:",
+    porcentajeFinal
+  );
 
+  let porcentajeEjemplo = -10;
+
+  const mostrarIcono = () => {
+    if (porcentajeEjemplo > 0) {
+      return (
+        <div>
+          <FontAwesomeIcon
+            className="color-verde me-2 fs-25"
+            icon={faCircleUp}
+          />
+        </div>
+      );
+    } else if (porcentajeEjemplo === 0) {
+      return (
+        <div>
+        <FontAwesomeIcon
+          className="color-verde me-2 fs-25"
+          icon={faCirclePause}
+        />
+      </div>
+      );
+    } else {                   
+      return (
+        <div>
+          <FontAwesomeIcon
+            className="color-rojo me-2 fs-25"
+            icon={faCircleArrowDown}
+          />
+        </div>
+      );
+    }
+  };
 
   return (
     <section>
@@ -199,11 +248,7 @@ const ComportamientoGrafica = ({datos}) => {
                 Facturación por rubro
               </h2>
               <div className="d-flex justify-content-center">
-                <Line
-                  className="px-3"
-                  data={data}
-                  options={options}
-                />
+                <Line className="px-3" data={data} options={options} />
               </div>
             </div>
           </div>
@@ -236,8 +281,12 @@ const ComportamientoGrafica = ({datos}) => {
                         className="color-verde me-2 fs-25"
                         icon={faCircleUp}
                       /> */}
-                      <span className="lato-bold fs-18"> {porcentajeFinal} %</span>
+                      <span className="lato-bold fs-18">
+                        {" "}
+                        {porcentajeFinal} %
+                      </span>
                     </div>
+                    <div>porcentaje {mostrarIcono()}</div>
                   </div>
                 </div>
               </div>
@@ -259,18 +308,18 @@ const ComportamientoGrafica = ({datos}) => {
                   Comportamiento de ventas
                 </h5>
                 <div className="d-flex justify-content-center">
-                  <Line style={{ width: "100%" }} data={data} options={options} />
+                  <Line
+                    style={{ width: "100%" }}
+                    data={data}
+                    options={options}
+                  />
                 </div>
               </div>
             </div>
           </div>
           <div className="my-2 ">
             <div className="d-flex justify-content-center ">
-              <div
-                className={
-                  darkMode ? " bg-grafica-dark" : "bg-grafica"
-                }
-              >
+              <div className={darkMode ? " bg-grafica-dark" : "bg-grafica"}>
                 <h5 className="text-center py-4 lato-bold fs-16">
                   {" "}
                   Comparativa (igual día mes anterior)
@@ -292,7 +341,10 @@ const ComportamientoGrafica = ({datos}) => {
                           className="color-rojo me-2 fs-25"
                           icon={faCircleUp}
                         /> */}
-                        <span className="lato-bold fs-18"> {porcentajeFinal}%</span>
+                        <span className="lato-bold fs-18">
+                          {" "}
+                          {porcentajeFinal}%
+                        </span>
                       </div>
                     </div>
                   </div>

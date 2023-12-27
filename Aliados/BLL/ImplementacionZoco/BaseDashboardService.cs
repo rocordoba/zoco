@@ -22,26 +22,27 @@ namespace BLL.ImplementacionZoco
             _repoUsuario = repoUsuarios;
        
         }
-        public async Task<List<BaseDashboard>> DatosInicioAliados(string CuitAliado /*, int year, int month, int week, string comercio*/)
+        public async Task<List<BaseDashboard>> DatosInicioAliados(string CuitAliado/*, int year, int month, int week, string comercio*/)
         {
-            IQueryable<BaseDashboard> tbUsuario = await _repoBaseDashBoard.Consultar(u => u.Cuit == Convert.ToDouble(CuitAliado));/*
-            if (comercio != "Todos")
-            {
-                tbUsuario = tbUsuario.Where(u =>
-                    u.NombreComercio == comercio &&
-                    u.AñoPago == year &&
-                    u.MesPago == month &&
-                    u.SemanaMesPago == week
-                );
-            }
-            else
-            {
-                tbUsuario = tbUsuario.Where(u =>
-                    u.AñoPago == year &&
-                    u.MesPago == month &&
-                    u.SemanaMesPago == week
-                );
-            }*/
+            IQueryable<BaseDashboard> tbUsuario = await _repoBaseDashBoard.Consultar(u => u.Cuit == Convert.ToDouble(CuitAliado));
+
+            //if (comercio != "Todos")
+            //{
+            //    tbUsuario = tbUsuario.Where(u =>
+            //        u.NombreComercio == comercio &&
+            //        u.AñoPago == year &&
+            //        u.MesPago == month &&
+            //        u.SemanaMesPago == week
+            //    );
+            //}
+            //else
+            //{
+            //    tbUsuario = tbUsuario.Where(u =>
+            //        u.AñoPago == year &&
+            //        u.MesPago == month &&
+            //        u.SemanaMesPago == week
+            //    );
+            //}
             return tbUsuario.ToList();
         }
 

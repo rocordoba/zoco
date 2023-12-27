@@ -11,7 +11,7 @@ namespace BLL.InterfacesZoco
     public interface IBaseDashboardService
     {
       
-        Task<List<BaseDashboard>> DatosInicioAliados(string CuitAliado/*,int year,int month,int week,string comercio*/);
+        Task<List<BaseDashboard>> DatosInicioAliados(string CuitAliado);
 
        
         Task<List<BaseDashboard>> Lista();

@@ -94,3 +94,17 @@ C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Al
 C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.genruntimeconfig.cache
 C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\ref\Entity.dll
 C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\Entity\obj\Debug\net6.0\Entity.sourcelink.json
+C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\Entity\bin\Debug\net6.0\Entity.deps.json
+C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\Entity\bin\Debug\net6.0\Entity.runtimeconfig.json
+C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\Entity\bin\Debug\net6.0\Entity.dll
+C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\Entity\bin\Debug\net6.0\Entity.pdb
+C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\Entity\obj\Debug\net6.0\Entity.csproj.AssemblyReference.cache
+C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\Entity\obj\Debug\net6.0\Entity.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\Entity\obj\Debug\net6.0\Entity.AssemblyInfoInputs.cache
+C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\Entity\obj\Debug\net6.0\Entity.AssemblyInfo.cs
+C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\Entity\obj\Debug\net6.0\Entity.csproj.CoreCompileInputs.cache
+C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\Entity\obj\Debug\net6.0\Entity.dll
+C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\Entity\obj\Debug\net6.0\refint\Entity.dll
+C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\Entity\obj\Debug\net6.0\Entity.pdb
+C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\Entity\obj\Debug\net6.0\Entity.genruntimeconfig.cache
+C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\Entity\obj\Debug\net6.0\ref\Entity.dll

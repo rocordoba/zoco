@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Spinner } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 
 import "./ContenidoLogin.css";
@@ -17,90 +17,87 @@ import { useNavigate } from "react-router-dom";
 const usuarioData = {
   usuario: "33333333333",
   password: "gha8arm",
-  califico:""
-
+  califico: "",
 };
 
 const ContenidoLogin = ({ onSubmit, datosMandados, setDatosMandados }) => {
-    const [recuperar, setRecuperar] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
-    const [usuario, setUsuario] = useState("");
-    const [password, setPassword] = useState("");
-    const [isActive, setIsActive] = useState(0);
-    console.log(
-        "🚀 ~ file: ContenidoLogin.js:28 ~ ContenidoLogin ~ isActive:",
-        isActive
-    );
+  const [recuperar, setRecuperar] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [usuario, setUsuario] = useState("");
+  const [password, setPassword] = useState("");
+  const [isActive, setIsActive] = useState(0);
+  console.log(
+    "🚀 ~ file: ContenidoLogin.js:28 ~ ContenidoLogin ~ isActive:",
+    isActive
+  );
+  const [isLoading, setIsLoading] = useState(false);
+  const [buttonText, setButtonText] = useState("Conectar");
 
-    const navigate = useNavigate();
-    const [contador, setContador] = useState(0);
-    console.log(
-        "🚀 ~ file: ContenidoLogin.js:31 ~ ContenidoLogin ~ contador:",
-        contador
-    );
+  const navigate = useNavigate();
+  const [contador, setContador] = useState(0);
+  console.log(
+    "🚀 ~ file: ContenidoLogin.js:31 ~ ContenidoLogin ~ contador:",
+    contador
+  );
 
-    const {
-        reset,
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm();
+  const {
+    reset,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-    const handleMouseDown = (event) => {
-        event.preventDefault();
-        setShowPassword(!showPassword);
-    };
+  const handleMouseDown = (event) => {
+    event.preventDefault();
+    setShowPassword(!showPassword);
+  };
 
-    const handleLimpiarFormulario = () => {
-        reset();
-    };
+  const handleLimpiarFormulario = () => {
+    reset();
+  };
 
-    
+  const onSubmit2 = () => {
+    console.log("Usuario:", usuario);
+    console.log("Contraseña:", password);
 
-    const onSubmit2 = () => {
-        console.log("Usuario:", usuario);
-        console.log("Contraseña:", password);
+    fetch("/api/acceso/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        UsuarioCuit: usuario,
+        Clave: password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setDatosMandados(data);
+        console.log(data);
+        if (data.token) {
+          alert("Inicio de sesión exitoso");
+          setIsActive(1);
+          navigate("/aliados/inicio");
+          window.location.reload();
 
-        fetch("/api/acceso/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                UsuarioCuit: usuario,
-                Clave: password
-            })
-        })
-            .then(response => response.json())
-            .then(data => {
-                setDatosMandados(data);
-                console.log(data);
-                if (data.token) {
-                    alert("Inicio de sesión exitoso");
-                    setIsActive(1);
-                    navigate("/aliados/inicio");
-                    window.location.reload();
-                    
-                    // Almacenar el token y el ID del usuario en localStorage
-                    localStorage.setItem("token", data.token);
-                    localStorage.setItem("userId", data.userId);
+          // Almacenar el token y el ID del usuario en localStorage
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("userId", data.userId);
 
-                    // Almacenar el token y el ID del usuario en sessionStorage
-                    sessionStorage.setItem("token", data.token);
-                    sessionStorage.setItem("userId", data.userId);
-
-                   
-                } else {
-                    alert("Revisar usuario/contraseña");
-                    setContador(contador + 1);
-                }
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    };
-
-
+          // Almacenar el token y el ID del usuario en sessionStorage
+          sessionStorage.setItem("token", data.token);
+          sessionStorage.setItem("userId", data.userId);
+        } else {
+          alert("Revisar usuario/contraseña");
+          setButtonText("Conectar"); // Restablecer el texto del botón
+          setIsLoading(false); // Det
+          setContador(contador + 1);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <div>
@@ -329,15 +326,38 @@ const ContenidoLogin = ({ onSubmit, datosMandados, setDatosMandados }) => {
                 </Form.Text>
                 <div className="d-flex justify-content-center">
                   <Button
-                    disabled={contador === 4 && true}
+                    disabled={contador === 4} // Deshabilitar si contador es 4
+                    onClick={() => {
+                      if (usuario && password) {
+                        setIsLoading(true); // Cambiar al estado de carga si los campos no están vacíos
+                        setButtonText("Conectar"); // Restablecer el texto del botón
+                        onSubmit2(); // Realizar la acción de inicio de sesión
+                      } else {
+                        // Realizar acciones si los campos están vacíos
+                        // alert("Por favor, ingresa usuario y contraseña");
+                      }
+                    }}
                     className={
                       contador === 4
-                        ? "my-4 btn-login-disabled lato-bold border-0 "
+                        ? "my-4 btn-login-disabled lato-bold border-0"
                         : "my-4 btn-login lato-bold border-0"
                     }
                     type="submit"
                   >
-                    Conectar
+                    {isLoading ? ( // Mostrar "Loading..." si isLoading es true, de lo contrario, el estado del botón
+                      <>
+                        Loading...
+                        <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                        />
+                      </>
+                    ) : (
+                      buttonText // Mostrar el texto del botón dinámicamente
+                    )}
                   </Button>
                 </div>
                 {contador === 1 && (
@@ -366,11 +386,13 @@ const ContenidoLogin = ({ onSubmit, datosMandados, setDatosMandados }) => {
                     </h6>
                   </div>
                 )}
-                 {contador === 4 && (
+                {contador === 4 && (
                   <div className="d-flex justify-content-center text-center">
                     <h6 className="text-danger  fs-16-a-14 mx-5">
-                      LLegaste al límite de intentos posible. Te hemos restringido el acceso por
-                      motivos de seguridad. Por favor comunicate con el departamento de Liquidaciones para resolver el problema. 
+                      LLegaste al límite de intentos posible. Te hemos
+                      restringido el acceso por motivos de seguridad. Por favor
+                      comunicate con el departamento de Liquidaciones para
+                      resolver el problema.
                     </h6>
                   </div>
                 )}

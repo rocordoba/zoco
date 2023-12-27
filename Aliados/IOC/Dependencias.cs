@@ -34,8 +34,10 @@ namespace IOC
 
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
-            services.AddScoped<IUsuarioZocoService,UsuarioZocoService>();
+            services.AddScoped<IUsuarioZocoService, UsuarioZocoService>();
             services.AddScoped<IBaseDashboardService, BaseDashboardService>();
+            services.AddScoped<IInflacionService, InflacionService>();
+
 
 
 

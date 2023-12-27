@@ -238,7 +238,7 @@ namespace dash_aliados.Controllers
                     TotalNetoMes = totalNetoMes,
                     TotalBrutoMes = totalBrutoMes,
                     Comparativahoy = comparativahot,
-                    ComparativaHoymesanterior = 25000,
+                    ComparativaHoymesanterior = comparativaHotmesanterior,
                     Porcentaje = porcentaje,
                     DescuentosPorTarjeta = descuentosPorTarjeta,
                     TotalesPorDiaTarjeta = totalesPorDiaPorTarjeta,
@@ -344,9 +344,9 @@ namespace dash_aliados.Controllers
                 int semanaActual = ObtenerSemanaDelMesActual();
 
                 var totalesPorTarjetaEnFecha = sas
-                    .Where(s => s.SemanaMesOp == semanaActual && s.FechaDePago == fecha.Date)
-                    .GroupBy(s => s.NombreComercio)
-                    .ToList();
+                  .Where(s => s.SemanaMesOp == semanaActual && s.FechaDePago == fecha.Date)
+                  .GroupBy(s => s.NombreComercio.Replace(" ", "")) // Eliminar espacios en NombreComercio
+                  .ToList();
 
                 foreach (var grupoTarjeta in totalesPorTarjetaEnFecha)
                 {

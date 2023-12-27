@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using Entity.Zoco;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -19,7 +20,10 @@ namespace DAL.DBContext
 
         public virtual DbSet<BaseCuota> BaseCuotas { get; set; } = null!;
         public virtual DbSet<BaseDashboard> BaseDashboards { get; set; } = null!;
+        public virtual DbSet<Califico> Calificos { get; set; } = null!;
+        public virtual DbSet<CalificoCom> CalificoComs { get; set; } = null!;
         public virtual DbSet<CompMensual> CompMensuals { get; set; } = null!;
+        public virtual DbSet<Inflacion> Inflacions { get; set; } = null!;
         public virtual DbSet<Menu> Menus { get; set; } = null!;
         public virtual DbSet<Noticia> Noticias { get; set; } = null!;
         public virtual DbSet<Rol> Rols { get; set; } = null!;
@@ -27,10 +31,12 @@ namespace DAL.DBContext
         public virtual DbSet<Usuarios> Usuarios { get; set; } = null!;
         public virtual DbSet<UsuarioNo> UsuarioNos { get; set; } = null!;
 
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-          
+
         }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -285,6 +291,44 @@ namespace DAL.DBContext
                     .HasColumnName("Total Neto");
             });
 
+            modelBuilder.Entity<Califico>(entity =>
+            {
+                entity.ToTable("Califico");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Califico1).HasColumnName("Califico");
+
+                entity.Property(e => e.Fecha).HasColumnType("date");
+
+                entity.Property(e => e.UsuarioId).HasColumnName("UsuarioID");
+
+                entity.HasOne(d => d.Usuario)
+                    .WithMany(p => p.Calificos)
+                    .HasForeignKey(d => d.UsuarioId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Califico__Usuari__71D1E811");
+            });
+
+            modelBuilder.Entity<CalificoCom>(entity =>
+            {
+                entity.ToTable("CalificoCom");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Descripcion).HasMaxLength(500);
+
+                entity.Property(e => e.Fecha).HasColumnType("date");
+
+                entity.Property(e => e.UsuarioId).HasColumnName("UsuarioID");
+
+                entity.HasOne(d => d.Usuario)
+                    .WithMany(p => p.CalificoComs)
+                    .HasForeignKey(d => d.UsuarioId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__CalificoC__Usuar__74AE54BC");
+            });
+
             modelBuilder.Entity<CompMensual>(entity =>
             {
                 entity.HasNoKey();
@@ -311,6 +355,19 @@ namespace DAL.DBContext
                 entity.Property(e => e.TotalBruto)
                     .HasColumnType("money")
                     .HasColumnName("Total Bruto");
+            });
+
+            modelBuilder.Entity<Inflacion>(entity =>
+            {
+                entity.ToTable("Inflacion");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Fecha).HasColumnType("date");
+
+                entity.Property(e => e.Inflacion1).HasColumnName("Inflacion");
+
+                entity.Property(e => e.Rubro).HasMaxLength(255);
             });
 
             modelBuilder.Entity<Menu>(entity =>
@@ -485,7 +542,6 @@ namespace DAL.DBContext
 
             OnModelCreatingPartial(modelBuilder);
         }
-
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

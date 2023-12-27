@@ -36,6 +36,7 @@ namespace BLL.ImplementacionZoco
              return inflacions.ToList();
          }*/
 
+        //   public async Task<List<Inflacion>> ObtenerPorRubro(string CuitAliado)
         public async Task<List<Inflacion>> ObtenerPorRubro(string CuitAliado)
         {
             IQueryable<BaseDashboard> tbrubro = await _repoBaseDashBoard.Consultar(u => u.Cuit == Convert.ToDouble(CuitAliado));
@@ -44,23 +45,24 @@ namespace BLL.ImplementacionZoco
 
             var inflacionesCoincidentes = await _repoInflacion.Consultar(i => rubrosUnicos.Contains(i.Rubro) || i.Rubro == "Total");
 
+            var ultimos7Meses = DateTime.Today.AddMonths(-7); // Obtener la fecha hace 7 meses desde hoy
+
             var inflacionesFiltradas = inflacionesCoincidentes
-                .Where(i => i.Fecha <= DateTime.Today)
-                .OrderByDescending(i => i.Fecha)
-                .ToList();
+     .Where(i => i.Fecha >= ultimos7Meses && i.Fecha <= DateTime.Today)
+     .OrderByDescending(i => i.Fecha)
+     .Select(i => new Inflacion
+     {
+         Rubro = i.Rubro,
+         Fecha = i.Fecha,
+         Inflacion1 = i.Inflacion1,
+         // Otras propiedades que tenga el modelo Inflacion, excluyendo el campo "id"
+     })
+     .ToList();
 
-            var inflacionTotal = inflacionesFiltradas.FirstOrDefault(i => i.Rubro == "Total");
+            return inflacionesFiltradas;
 
-            var resultado = new List<Inflacion>();
-            resultado.AddRange(inflacionesFiltradas.Where(i => i.Rubro != "Total"));
-
-            if (inflacionTotal != null)
-            {
-                resultado.Add(inflacionTotal);
-            }
-
-            return resultado;
         }
+
 
 
 

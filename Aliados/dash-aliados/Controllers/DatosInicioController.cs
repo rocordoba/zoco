@@ -344,9 +344,9 @@ namespace dash_aliados.Controllers
                 int semanaActual = ObtenerSemanaDelMesActual();
 
                 var totalesPorTarjetaEnFecha = sas
-                  .Where(s => s.SemanaMesOp == semanaActual && s.FechaDePago == fecha.Date)
-                  .GroupBy(s => s.NombreComercio.Replace(" ", "")) // Eliminar espacios en NombreComercio
-                  .ToList();
+                    .Where(s => s.SemanaMesOp == semanaActual && s.FechaDePago == fecha.Date)
+                    .GroupBy(s => s.NombreComercio.Replace(" ", ""))
+                    .ToList();
 
                 foreach (var grupoTarjeta in totalesPorTarjetaEnFecha)
                 {
@@ -359,10 +359,23 @@ namespace dash_aliados.Controllers
                         .GroupBy(s => s.DiaSemana)
                         .Select(group => new
                         {
-                            NombreComercio = grupoTarjeta.Key, // Agregar el nombre del comercio al objeto
+                            NombreComercio = grupoTarjeta.Key,
                             DiaSemana = group.Key,
+                            // Assignando un valor numérico a los días de la semana
+                            DiaNumero = group.Key switch
+                            {
+                                "Lunes" => 0,
+                                "Martes" => 1,
+                                "Miércoles" => 2,
+                                "Jueves" => 3,
+                                "Viernes" => 4,
+                                "Sábado" => 5,
+                                "Domingo" => 6,
+                                _ => -1 // Manejar valores no reconocidos
+                            },
                             TotalConDescuentoPorDia = group.Sum(item => item.TotalConDescuentos)
                         })
+                        .OrderBy(day => day.DiaNumero) // Ordenar por el número asignado al día
                         .ToList();
 
                     totalesPorDiaPorTarjeta[grupoTarjeta.Key].AddRange(totalesPorDia);
@@ -371,6 +384,7 @@ namespace dash_aliados.Controllers
 
             return totalesPorDiaPorTarjeta;
         }
+
 
 
 
@@ -420,8 +434,14 @@ namespace dash_aliados.Controllers
 
         private double ObtenerPorcentaje(double comparativaHoy, double comparativaDiaAnterior)
         {
+<<<<<<< HEAD
            
             return comparativaHoy / (comparativaDiaAnterior != 0 ? comparativaDiaAnterior : 1);
+=======
+            var resultadoResta = comparativaHoy - comparativaDiaAnterior;
+            var resultado = resultadoResta / comparativaHoy;
+            return resultado;
+>>>>>>> 70f5b58e060841fcc760a68ae0c052f792ef1e62
         }
 
 

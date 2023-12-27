@@ -220,8 +220,7 @@ namespace dash_aliados.Controllers
                 var totalBrutoMañana = ObtenerTotalBruto(listaMañana);
                 var totalNetoMes = ObtenerTotalNeto(listaMes);
                 var totalBrutoMes = ObtenerTotalBruto(listaMes);
-                var totalRetencionesMes = ObtenerTotalRetenciones(listaMes);
-                var totalIvaMes = ObtenerTotalIva(listaMes);
+               
                 var comparativahot = ObtenerComparativa(sas, listaHoy);
                 var comparativaHotmesanterior = ObtenerComparativa(sas, listaMismoDiaMesAnterior);
                 var porcentaje = ObtenerPorcentaje(comparativahot, comparativaHotmesanterior);
@@ -243,8 +242,7 @@ namespace dash_aliados.Controllers
                     DescuentosPorTarjeta = descuentosPorTarjeta,
                     TotalesPorDiaTarjeta = totalesPorDiaPorTarjeta,
                     Fantasiasnombre = fantasiasnombre,
-                    TotalRetencionesMes = totalRetencionesMes,
-                    TotalIvaMes = totalIvaMes,
+                   
                     TotalOperaciones = totalOperaciones,
                     TotalConDescuentoCuotas1 = totalConDescuentoCuotas1,
                     TotalConDescuentoCuotas2 = totalConDescuentoCuotas2,
@@ -431,14 +429,7 @@ namespace dash_aliados.Controllers
             return (double)lista.Sum(s => s.TotalBruto);
         }
 
-        private double ObtenerTotalRetenciones(List<BaseDashboard> lista)
-        {
-            return (double)lista.Sum(s => s.RetencionImpositiva);
-        }
-        private double ObtenerTotalIva(List<BaseDashboard> lista)
-        {
-            return (double)lista.Sum(s => s.Arancel + s.Iva21);
-        }
+     
 
         private double ObtenerComparativa(List<BaseDashboard> sas, List<BaseDashboard> lista)
         {

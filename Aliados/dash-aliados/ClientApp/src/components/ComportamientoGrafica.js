@@ -31,7 +31,7 @@ const ComportamientoGrafica = ({datos}) => {
   const { darkMode } = useContext(DarkModeContext);
   const tickColor = darkMode ? "#fff" : "#292B2F";
 
-  const {comparativahoy, comparativaHoymesanterior, totalesPorDiaTarjeta} = datos;
+  const {comparativahoy, comparativaHoymesanterior, totalesPorDiaTarjeta, porcentaje} = datos;
   const totales = totalesPorDiaTarjeta;
   console.log("🚀 ~ file: ComportamientoGrafica.js:36 ~ ComportamientoGrafica ~ totales:", totales)
  
@@ -176,6 +176,12 @@ const ComportamientoGrafica = ({datos}) => {
     dataset.barThickness = 20; 
   });
 
+  let numeroPorcentual = porcentaje || 0;
+  console.log("🚀 ~ file: ComportamientoGrafica.js:180 ~ ComportamientoGrafica ~ numeroPorcentual:", numeroPorcentual)
+  let porcentajeFinal = numeroPorcentual.toFixed(2); 
+  console.log("🚀 ~ file: ComportamientoGrafica.js:181 ~ ComportamientoGrafica ~ porcentajeFinal:", porcentajeFinal)
+
+
   return (
     <section>
       <article className="container d-none d-md-block">
@@ -226,11 +232,11 @@ const ComportamientoGrafica = ({datos}) => {
                     }
                   >
                     <div>
-                      <FontAwesomeIcon
+                      {/* <FontAwesomeIcon
                         className="color-verde me-2 fs-25"
                         icon={faCircleUp}
-                      />
-                      <span className="lato-bold fs-18"> 1%</span>
+                      /> */}
+                      <span className="lato-bold fs-18"> {porcentajeFinal} %</span>
                     </div>
                   </div>
                 </div>
@@ -282,11 +288,11 @@ const ComportamientoGrafica = ({datos}) => {
                   >
                     <div>
                       <div>
-                        <FontAwesomeIcon
+                        {/* <FontAwesomeIcon
                           className="color-rojo me-2 fs-25"
                           icon={faCircleUp}
-                        />
-                        <span className="lato-bold fs-18"> 1%</span>
+                        /> */}
+                        <span className="lato-bold fs-18"> {porcentajeFinal}%</span>
                       </div>
                     </div>
                   </div>

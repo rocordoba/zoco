@@ -79,7 +79,7 @@ const Inicio = ({ califico, setCalifico }) => {
       </div>
       <ScrollToTopButton />
       <div className="pt-2">
-        <TituloPagina title="Inicio" />
+        <TituloPagina title="Inicios" />
       </div>
 
       <div className="my-3">

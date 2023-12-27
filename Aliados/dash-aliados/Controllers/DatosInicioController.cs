@@ -361,29 +361,42 @@ namespace dash_aliados.Controllers
                         {
                             NombreComercio = grupoTarjeta.Key,
                             DiaSemana = group.Key,
-                            // Assignando un valor numérico a los días de la semana
-                            DiaNumero = group.Key switch
-                            {
-                                "Lunes" => 0,
-                                "Martes" => 1,
-                                "Miércoles" => 2,
-                                "Jueves" => 3,
-                                "Viernes" => 4,
-                                "Sábado" => 5,
-                                "Domingo" => 6,
-                                _ => -1 // Manejar valores no reconocidos
-                            },
                             TotalConDescuentoPorDia = group.Sum(item => item.TotalConDescuentos)
                         })
-                        .OrderBy(day => day.DiaNumero) // Ordenar por el número asignado al día
+                        .OrderBy(d => GetDayOfWeekNumber(d.DiaSemana)) // Ordenar por día de la semana
                         .ToList();
 
                     totalesPorDiaPorTarjeta[grupoTarjeta.Key].AddRange(totalesPorDia);
                 }
             }
 
+            // Ordenar por días de la semana al finalizar todos los cálculos
+            foreach (var key in totalesPorDiaPorTarjeta.Keys.ToList())
+            {
+                totalesPorDiaPorTarjeta[key] = totalesPorDiaPorTarjeta[key]
+                    .OrderBy(obj => GetDayOfWeekNumber(obj.GetType().GetProperty("DiaSemana").GetValue(obj).ToString()))
+                    .ToList();
+            }
+
             return totalesPorDiaPorTarjeta;
         }
+
+        // Función para obtener el número del día de la semana
+        private int GetDayOfWeekNumber(string dayOfWeek)
+        {
+            switch (dayOfWeek)
+            {
+                case "Lunes": return 0;
+                case "Martes": return 1;
+                case "Miércoles": return 2;
+                case "Jueves": return 3;
+                case "Viernes": return 4;
+                case "Sábado": return 5;
+                case "Domingo": return 6;
+                default: return -1; // Valor predeterminado en caso de error
+            }
+        }
+
 
 
 

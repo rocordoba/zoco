@@ -434,14 +434,11 @@ namespace dash_aliados.Controllers
 
         private double ObtenerPorcentaje(double comparativaHoy, double comparativaDiaAnterior)
         {
-<<<<<<< HEAD
-           
-            return comparativaHoy / (comparativaDiaAnterior != 0 ? comparativaDiaAnterior : 1);
-=======
+
             var resultadoResta = comparativaHoy - comparativaDiaAnterior;
             var resultado = resultadoResta / comparativaHoy;
             return resultado;
->>>>>>> 70f5b58e060841fcc760a68ae0c052f792ef1e62
+
         }
 
 

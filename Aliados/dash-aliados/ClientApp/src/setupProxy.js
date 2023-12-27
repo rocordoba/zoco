@@ -12,7 +12,8 @@ const context = [
     "/api/datosinicio/lista",//sasfiltro
     "/api/datosinicio/base",
     "/api/datosinicio/sasfiltro",
-     "/api/analisis/analisis"
+    "/api/analisis/analisis",
+    "/api/contablidad/contabilidad"
 ];
 
 module.exports = function (app) {

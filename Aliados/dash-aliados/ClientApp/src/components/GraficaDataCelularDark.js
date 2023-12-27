@@ -1,57 +1,50 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import Chart from "chart.js/auto";
 import amexPNG from "../assets/img/amex-blanco.png";
-
 import argencardPNG from "../assets/img/argencard-blanco.png";
-
 import cabalPNG from "../assets/img/cabal-blanco.png";
-
 import dinersPNG from "../assets/img/diners-blanco.png";
-
-import masterPNG from "../assets/img/mastercard-blanco.png";
-
+import masterPNG from "../assets/img/mastercard-blanco.png"
 import naranjaxPNG from "../assets/img/naranjax-blanco.png";
-
 import visaPNG from "../assets/img/visa-blanco.png";
+import { DarkModeContext } from "../context/DarkModeContext";
 
-import { DarkModeContext } from "../context/DarkModeContext";;
-
-const GraficaDataCelularDark = ({datos}) => {
+const GraficaDataCelularDark = ({ datos }) => {
   const { darkMode } = useContext(DarkModeContext);
-
   const descuentosPorTarjeta = datos.descuentosPorTarjeta || [];
 
-   // Crear un objeto para mapear los datos dinámicos
-  const dataTarjeta = descuentosPorTarjeta.map(item => ({
-    totalConDescuento: item.totalConDescuento
+  // Crear un objeto para mapear los datos dinámicos
+  const dataTarjeta = descuentosPorTarjeta.map((item) => ({
+    totalConDescuento: item.totalConDescuento,
   }));
 
-  const numerosTarjeta = dataTarjeta.map(item => item.totalConDescuento)
+  const numerosTarjeta = dataTarjeta.map((item) => item.totalConDescuento);
+
+  // Ordenar beneficios de mayor a menor
+  numerosTarjeta.sort((a, b) => b - a);
+
+  // Crear un array con los nombres de las tarjetas ordenados según los beneficios
+  const tarjetasOrdenadas = [
+    "Visa",
+    "MasterCard",
+    "Argencard",
+    "Amex",
+    "Diners",
+    "Cabal",
+    "Naranjax",
+  ];
+
+  const imagenes = {
+    Visa: visaPNG,
+    MasterCard: masterPNG,
+    Argencard: argencardPNG,
+    Amex: amexPNG,
+    Diners: dinersPNG,
+    Cabal: cabalPNG,
+    Naranjax: naranjaxPNG,
+  };
 
   useEffect(() => {
-    // setup
-    const data = {
-      labels: ["", "", "", "", "", "", ""],
-      datasets: [
-        {
-          label: "",
-          data: numerosTarjeta ,
-          backgroundColor: ["#b4c400 "],
-          borderColor: ["#b4c400 "],
-          borderWidth: 1,
-          image: [
-            `${visaPNG}`,
-            `${masterPNG}`,
-            `${argencardPNG}`,
-            `${amexPNG}`,
-            `${dinersPNG}`,
-            `${cabalPNG}`,
-            `${naranjaxPNG}`,
-          ],
-        },
-      ],
-    };
-    // configuracion de las imagenes de las tarjetas
     const imageItems = {
       id: "imageItems",
       beforeDatasetsDraw(chart, args, pluginOptions) {
@@ -65,9 +58,10 @@ const GraficaDataCelularDark = ({datos}) => {
         ctx.save();
         const imageSize = options.layout.padding.left;
 
-        data.datasets[0].image.forEach((imageLink, index) => {
+        data.datasets[0].image.forEach((_, index) => {
           const logo = new Image();
-          logo.src = imageLink;
+          const tarjeta = tarjetasOrdenadas[index];
+          logo.src = imagenes[tarjeta];
           ctx.drawImage(
             logo,
             0,
@@ -81,7 +75,27 @@ const GraficaDataCelularDark = ({datos}) => {
 
     const config = {
       type: "bar",
-      data,
+      data: {
+        labels: tarjetasOrdenadas,
+        datasets: [
+          {
+            label: "",
+            data: numerosTarjeta,
+            backgroundColor: ["#b4c400"],
+            borderColor: ["#b4c400"],
+            borderWidth: 1,
+            image: [
+              visaPNG,
+              masterPNG,
+              argencardPNG,
+              amexPNG,
+              dinersPNG,
+              cabalPNG,
+              naranjaxPNG,
+            ],
+          },
+        ],
+      },
       options: {
         layout: {
           padding: {
@@ -104,7 +118,7 @@ const GraficaDataCelularDark = ({datos}) => {
           },
           y: {
             beginAtZero: true,
-            display: true,
+            display: false,
             grid: {
               display: false,
             },
@@ -117,24 +131,23 @@ const GraficaDataCelularDark = ({datos}) => {
         },
         plugins: {
           legend: {
-            display: false, // para mostrar la leyenda
+            display: false,
           },
         },
       },
-
       plugins: [imageItems],
     };
 
     const ctx = document.getElementById("myChart");
-    const existingChart = Chart.getChart(ctx); // Obtener el gráfico existente en el lienzo
-  
-    // Si ya hay un gráfico en el lienzo, destrúyelo antes de crear uno nuevo
+    const existingChart = Chart.getChart(ctx);
+
     if (existingChart) {
       existingChart.destroy();
     }
-  
-    new Chart(ctx, config); // Crear un nuevo gráfico
-  }, [descuentosPorTarjeta]);
+
+    new Chart(ctx, config);
+  }, [descuentosPorTarjeta, imagenes, numerosTarjeta, tarjetasOrdenadas]);
+
   return (
     <div className="container">
       <div

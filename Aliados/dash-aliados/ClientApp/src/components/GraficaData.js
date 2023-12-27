@@ -6,13 +6,13 @@ import {
   LinearScale,
   PointElement,
   BarElement,
-  Title, 
+  Title,
   Tooltip,
   Legend,
   Filler,
 } from "chart.js";
 import TarjetasLogo from "./TarjetasLogo";
-import { useContext} from "react";
+import { useContext } from "react";
 import { DarkModeContext } from "../context/DarkModeContext";
 import TarjetasLogoBlanco from "./TarjetasLogoBlanco";
 
@@ -21,7 +21,7 @@ ChartJS.register(
   LinearScale,
   PointElement,
   BarElement,
-  Title, 
+  Title,
   Tooltip,
   Legend,
   Filler
@@ -56,8 +56,16 @@ const GraficaData = ({ datos }) => {
     dinersTotalDescuento,
     naranjaxTotalDescuento,
   ];
+  // Ordenar beneficios de mayor a menor
+  beneficios.sort((a, b) => b - a);
+
   // var beneficios = [1, 2, 3, 4, 5, 6, 7]
-  var tarjetas = ["", "", "", "", "", "", ""];
+  var tarjetas = ["Visa", "MasterCard", "Cabal", "Argencard", "Amex", "Diners", "Naranjax"];
+
+  // Obtener el índice original de la tarjeta después de ordenar los beneficios
+  var tarjetasOrdenadas = tarjetas.slice().sort(function (a, b) {
+    return beneficios[tarjetas.indexOf(b)] - beneficios[tarjetas.indexOf(a)];
+  });
 
   const { darkMode } = useContext(DarkModeContext);
   const tickColor = darkMode ? "#fff" : "#292B2F";
@@ -77,6 +85,7 @@ const GraficaData = ({ datos }) => {
         },
       },
       x: {
+        display: false,
         grid: {
           display: false,
         },
@@ -126,11 +135,11 @@ const GraficaData = ({ datos }) => {
         />
         {darkMode ? (
           <>
-            <TarjetasLogoBlanco />
+            <TarjetasLogoBlanco  tarjetasOrdenadas={tarjetasOrdenadas}/>
           </>
         ) : (
           <>
-            <TarjetasLogo />
+            <TarjetasLogo  tarjetasOrdenadas={tarjetasOrdenadas}/>
           </>
         )}
       </article>

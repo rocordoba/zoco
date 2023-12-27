@@ -41,69 +41,123 @@ const ComportamientoGrafica = ({ datos }) => {
     totalesPorDiaTarjeta,
     porcentaje,
   } = datos;
-  const totales = totalesPorDiaTarjeta;
-  console.log(
-    "🚀 ~ file: ComportamientoGrafica.js:36 ~ ComportamientoGrafica ~ totales:",
-    totales
-  );
+  const totales = totalesPorDiaTarjeta || [];
+
+  // const valoresTiendaABC = totales["TiendaABC"];
+  // const dias = valoresTiendaABC.map((valor) => valor.diaSemana);
+  // const totalConDescuentoPorDia = valoresTiendaABC.map(
+  //   (valor) => valor.totalConDescuentoPorDia
+  // );
+
+  // const valoresTienditaABC = totales["TienditaABC"];
+  // const diasTienda2 = valoresTienditaABC.map((valor) => valor.diaSemana);
+  // const totalConDescuentoPorDiaTienda2 = valoresTienditaABC.map(
+  //   (valor) => valor.totalConDescuentoPorDia
+  // );
 
   // grafica en comportamiento
-  const data = {
-    labels: [
-      // diaSemana,
-      // diaSemana,
-      // diaSemana,
-      // diaSemana,
-      // diaSemana,
-      // diaSemana,
-      // diaSemana,
-      "Lunes",
-      "Martes",
-      "Miercoles",
-      "Jueves",
-      "Viernes",
-      "Sabado",
-      "Domingo",
-    ],
-    datasets: [
-      {
-        label: "Comercio1",
-        borderColor: "rgba(255, 99, 132, 1)",
-        backgroundColor: "rgba(255, 99, 132, 0)",
-        data: [1, 19, 33, 45, 72, 93, 100],
-      },
-      // {
-      //   label: "Delv2",
-      //   borderColor: "rgba(54, 162, 235, 1)",
-      //   backgroundColor: "rgba(54, 162, 235, 0)",
-      //   data: [5, 8, 33, 47, 69, 72, 86],
-      // },
-      // {
-      //   label: "Suc1",
-      //   borderColor: "#b4c400",
-      //   backgroundColor: "rgba(180, 196, 0, 0)",
-      //   data: [6, 37, 42, 48, 54, 73, 77],
-      // },
-      // {
-      //   label: "Suc2",
-      //   borderColor: "#31008B",
-      //   backgroundColor: "rgba(49, 0, 139, 0)",
-      //   data: [1, 17, 29, 42, 76, 86, 96],
-      // },
-      // {
-      //   label: "Suc3",
-      //   borderColor: "#08B",
-      //   backgroundColor: "rgba(49, 0, 139, 0)",
-      //   data: [7, 12, 22, 32, 56, 76, 100],
-      // },
-      // {
-      //   label: "Suc4",
-      //   borderColor: "#080B",
-      //   backgroundColor: "rgba(49, 0, 139, 0)",
-      //   data: [2, 18, 28, 38, 66, 86, 90],
-      // },
-    ],
-  };
+  // const data = {
+  //   labels: dias,
+  //   datasets: [
+  //     {
+  //       label: "Comercio1",
+  //       borderColor: "rgba(255, 99, 132, 1)",
+  //       backgroundColor: "rgba(255, 99, 132, 0)",
+  //       data: totalConDescuentoPorDia,
+  //     },
+  //      {
+  //       label: "Delv2",
+  //       borderColor: "rgba(54, 162, 235, 1)",
+  //       backgroundColor: "rgba(54, 162, 235, 0)",
+  //       data: totalConDescuentoPorDiaTienda2,
+  //     },
+  //     // {
+  //     //   label: "Suc1",
+  //     //   borderColor: "#b4c400",
+  //     //   backgroundColor: "rgba(180, 196, 0, 0)",
+  //     //   data: [6, 37, 42, 48, 54, 73, 77],
+  //     // },
+  //     // {
+  //     //   label: "Suc2",
+  //     //   borderColor: "#31008B",
+  //     //   backgroundColor: "rgba(49, 0, 139, 0)",
+  //     //   data: [1, 17, 29, 42, 76, 86, 96],
+  //     // },
+  //     // {
+  //     //   label: "Suc3",
+  //     //   borderColor: "#08B",
+  //     //   backgroundColor: "rgba(49, 0, 139, 0)",
+  //     //   data: [7, 12, 22, 32, 56, 76, 100],
+  //     // },
+  //     // {
+  //     //   label: "Suc4",
+  //     //   borderColor: "#080B",
+  //     //   backgroundColor: "rgba(49, 0, 139, 0)",
+  //     //   data: [2, 18, 28, 38, 66, 86, 90],
+  //     // },
+  //   ],
+  // };
+
+  // const options = {
+  //   plugins: {
+  //     legend: {
+  //       labels: {
+  //         boxWidth: 8,
+  //         boxHeight: 8,
+  //       },
+  //       display: true,
+  //       position: "bottom",
+  //     },
+  //   },
+  //   responsive: true,
+  //   scales: {
+  //     y: {
+  //       display: false,
+  //       grid: {
+  //         display: false,
+  //       },
+  //       ticks: {
+  //         color: tickColor,
+  //       },
+  //     },
+  //     x: {
+  //       grid: {
+  //         display: false,
+  //       },
+
+  //       ticks: {
+  //         color: tickColor,
+  //       },
+  //     },
+  //   },
+  // };
+
+  const tiendas = Object.keys(totales);
+  // Obtener los días únicos de todas las tiendas
+  const diasUnicos = tiendas.reduce((dias, tienda) => {
+    const valoresTienda = totales[tienda];
+    const diasTienda = valoresTienda.map((valor) => valor.diaSemana);
+    return [...new Set([...dias, ...diasTienda])]; // Unir y obtener días únicos
+  }, []);
+
+  const datasets = tiendas.map((tienda) => {
+    const valoresTienda = totales[tienda];
+    const dias = valoresTienda.map((valor) => valor.diaSemana);
+    const totalConDescuentoPorDia = valoresTienda.map(
+      (valor) => valor.totalConDescuentoPorDia
+    );
+
+    return {
+      label: tienda,
+      borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
+        Math.random() * 256
+      )}, ${Math.floor(Math.random() * 256)}, 1)`,
+      backgroundColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
+        Math.random() * 256
+      )}, ${Math.floor(Math.random() * 256)}, 0)`,
+      data: totalConDescuentoPorDia,
+    };
+  });
 
   const options = {
     plugins: {
@@ -131,12 +185,16 @@ const ComportamientoGrafica = ({ datos }) => {
         grid: {
           display: false,
         },
-
         ticks: {
           color: tickColor,
         },
       },
     },
+  };
+
+  const data = {
+    labels: diasUnicos ,
+    datasets: datasets,
   };
 
   // grafica en Comparativa
@@ -188,20 +246,11 @@ const ComportamientoGrafica = ({ datos }) => {
   });
 
   let numeroPorcentual = porcentaje || 0;
-  console.log(
-    "🚀 ~ file: ComportamientoGrafica.js:180 ~ ComportamientoGrafica ~ numeroPorcentual:",
-    numeroPorcentual
-  );
   let porcentajeFinal = numeroPorcentual.toFixed(2);
-  console.log(
-    "🚀 ~ file: ComportamientoGrafica.js:181 ~ ComportamientoGrafica ~ porcentajeFinal:",
-    porcentajeFinal
-  );
-
-  let porcentajeEjemplo = -10;
+  let porcentajeNumero = porcentajeFinal;
 
   const mostrarIcono = () => {
-    if (porcentajeEjemplo > 0) {
+    if (porcentajeNumero > 0) {
       return (
         <div>
           <FontAwesomeIcon
@@ -210,16 +259,16 @@ const ComportamientoGrafica = ({ datos }) => {
           />
         </div>
       );
-    } else if (porcentajeEjemplo === 0) {
+    } else if (porcentajeNumero === 0) {
       return (
         <div>
-        <FontAwesomeIcon
-          className="color-verde me-2 fs-25"
-          icon={faCirclePause}
-        />
-      </div>
+          <FontAwesomeIcon
+            className="color-negro me-2 fs-25 fa-rotate-90"
+            icon={faCirclePause}
+          />
+        </div>
       );
-    } else {                   
+    } else {
       return (
         <div>
           <FontAwesomeIcon
@@ -276,17 +325,12 @@ const ComportamientoGrafica = ({ datos }) => {
                         : "btn-comparativa centrado"
                     }
                   >
-                    <div>
-                      {/* <FontAwesomeIcon
-                        className="color-verde me-2 fs-25"
-                        icon={faCircleUp}
-                      /> */}
+                    <div className="d-flex">
+                      <div>{mostrarIcono()}</div>
                       <span className="lato-bold fs-18">
-                        {" "}
                         {porcentajeFinal} %
                       </span>
                     </div>
-                    <div>porcentaje {mostrarIcono()}</div>
                   </div>
                 </div>
               </div>
@@ -336,14 +380,10 @@ const ComportamientoGrafica = ({ datos }) => {
                     }
                   >
                     <div>
-                      <div>
-                        {/* <FontAwesomeIcon
-                          className="color-rojo me-2 fs-25"
-                          icon={faCircleUp}
-                        /> */}
+                      <div className="d-flex">
+                        <div>{mostrarIcono()}</div>
                         <span className="lato-bold fs-18">
-                          {" "}
-                          {porcentajeFinal}%
+                          {porcentajeFinal} %
                         </span>
                       </div>
                     </div>

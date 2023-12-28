@@ -81,12 +81,12 @@ namespace dash_aliados.Controllers
             if (cuotas == 2)
             {
                 return (double)sas.Where(s => s.Cuotas >= cuotas)
-                                  .Sum(s => s.TotalNeto ?? 0);
+                                  .Sum(s => s.TotalConDescuentos ?? 0);
             }
             else
             {
                 return (double)sas.Where(s => s.Cuotas == cuotas)
-                                  .Sum(s => s.TotalNeto ?? 0);
+                                  .Sum(s => s.TotalConDescuentos ?? 0);
             }
         }
         public async Task<List<object>> ObtenerResumenUltimos7Meses(List<BaseDashboard> sas)

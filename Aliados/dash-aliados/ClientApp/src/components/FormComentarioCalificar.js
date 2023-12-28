@@ -9,11 +9,44 @@ const FormComentarioCalificar = () => {
   const [rating, setRating] = useState(0);
   const { register, handleSubmit, reset } = useForm();
 
-  const onSubmit = (datos) => {
-    const datosConRating = { ...datos, rating };
-    console.log("Datos a enviar:", datosConRating);
-    reset();
-  };
+    const onSubmit = async (datos) => {
+        const token = localStorage.getItem("token");
+        const userId = parseInt(localStorage.getItem("userId")); // Asegúrate de que userId sea un entero
+        const fechaActual = new Date().toISOString();
+
+        const datosConRating = {
+            Token: token,
+            Id: userId,
+            NumCalifico: rating, 
+            Descripcion: datos.descripcion, 
+            Fecha: fechaActual
+        };
+
+        console.log("Datos a enviar:", datosConRating);
+
+        try {
+            const response = await fetch('/api/califico/califico', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(datosConRating),
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al enviar los datos');
+            }
+
+            const data = await response.json();
+            // Hacer algo con la respuesta de la API si es necesario
+
+            reset(); // Reiniciar el formulario
+        } catch (error) {
+            console.error('Hubo un error:', error);
+            // Manejar el error adecuadamente
+        }
+    };
+
 
   const handleStarClick = (star) => {
     setRating(star);

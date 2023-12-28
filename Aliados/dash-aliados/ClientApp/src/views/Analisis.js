@@ -68,7 +68,7 @@ const Analisis = () => {
         <DatosAnalisis datosBack={datosBack} />
       </div>
       <EvolucionMensual3Barras datosBack={datosBack} />
-      <TripleGraficoAnalisis />
+      <TripleGraficoAnalisis datosBack={datosBack} />
       <div className="py-4">
         <Footer />
       </div>

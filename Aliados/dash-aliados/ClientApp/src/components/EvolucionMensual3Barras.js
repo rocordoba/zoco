@@ -92,21 +92,21 @@ const EvolucionMensual3Barras = ({ datosBack }) => {
     labels: meses,
     datasets: [
       {
-        label: "Por monto",
-        data: barraActiva ? [80, 60, 40, 90, 80, 70, 70, 80, 90] : [],
-        // data: barraActiva ? totalBruto : [],
+        label: "Por monto $",
+        // data: barraActiva ? [180, 60, 40, 90, 80, 70, 70, 80, 90] : [],
+        data: barraActiva ? totalBruto : [],
         backgroundColor: "#B4C400",
       },
       {
-        label: "Ajuste por inflación",
-        // data: barraActivaInflacion ? [80, 60, 40, 90, 80, 70, 70, 80, 90] : [],
+        label: "Ajuste por inflación $",
         data: barraActivaInflacion ? totalBrutoInflacion : [],
+        // data: barraActivaInflacion ? totalBrutoInflacion : [],
         backgroundColor: backgroundColor,
       },
       {
-        label: "Por cantidad de operaciones",
+        label: "Por cantidad de operaciones $",
+        // data: barraActivaOperaciones ? operaciones : [],
         data: barraActivaOperaciones ? operaciones : [],
-
         backgroundColor: "#B3B5BF",
       },
     ],
@@ -207,7 +207,7 @@ const EvolucionMensual3Barras = ({ datosBack }) => {
         </article>
       </section>
       <section className="container my-4 d-block d-lg-none">
-        <EvolucionMensualCelular resumenUltimos7Meses={resumenUltimos7Meses} />
+        <EvolucionMensualCelular datosBack={datosBack} />
       </section>
     </div>
   );

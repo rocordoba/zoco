@@ -2,10 +2,11 @@ import React, { useContext, useEffect, useState, useRef } from "react";
 import Chart from "chart.js/auto";
 import { DarkModeContext } from "../context/DarkModeContext";
 
-const EvolucionMensualCelular = ({ resumenUltimos7Meses }) => {
+const EvolucionMensualCelular = ({ datosBack}) => {
   const { darkMode } = useContext(DarkModeContext);
   const color = darkMode ? "#fff" : "dark";
   const backgroundColor = darkMode ? "#fff" : "#292B2F";
+  const { resumenUltimos7Meses } = datosBack;
   const datosResumenUltimosMeses = resumenUltimos7Meses || [];
   const totalBruto7Meses = datosResumenUltimosMeses.map(
     (dato) => dato.totalBruto
@@ -42,24 +43,24 @@ const EvolucionMensualCelular = ({ resumenUltimos7Meses }) => {
       labels: meses,
       datasets: [
         {
-          label: "Por monto",
-          data: [1, 2, 3, 4, 5, 6, 7],
-          // data: totalBruto,
+          label: "Por monto $",
+          // data: [1, 2, 3, 4, 5, 6, 7],
+          data: totalBruto || [],
           backgroundColor: ["#b4c400"],
           borderWidth: 1,
           hidden: !showPorMonto, // Oculta si showPorMonto es falso
         },
         {
-          label: "Por inflacion",
-          data: totalBrutoInflacion,
+          label: "Por inflacion $",
+          data: totalBrutoInflacion || [],
           backgroundColor: [backgroundColor],
           borderWidth: 1,
           hidden: !showAjusteInflacion,
           // Oculta si showAjusteInflacion es falso
         },
         {
-          label: " Por cantidad de operaciones",
-          data: operaciones,
+          label: " Por cantidad de operaciones $",
+          data: operaciones || [],
           backgroundColor: ["#B3B5BF"],
 
           borderWidth: 1,
@@ -121,7 +122,7 @@ const EvolucionMensualCelular = ({ resumenUltimos7Meses }) => {
 
     const ctx = chartRef.current;
     chartInstance.current = new Chart(ctx, config);
-  }, [showPorMonto, showPorCantidad, showAjusteInflacion]);
+  }, [showPorMonto, showPorCantidad, showAjusteInflacion,datosResumenUltimosMeses]);
 
   const togglePorMonto = () => {
     setShowPorMonto(!showPorMonto);

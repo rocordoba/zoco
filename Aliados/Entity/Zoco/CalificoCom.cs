@@ -11,6 +11,6 @@ namespace Entity.Zoco
         public string? Descripcion { get; set; }
         public DateTime? Fecha { get; set; }
 
-        public virtual Usuarios Usuario { get; set; } = null!;
+        public virtual Usuarios? Usuario { get; set; } = null!;
     }
 }

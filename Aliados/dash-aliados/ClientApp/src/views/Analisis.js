@@ -10,6 +10,7 @@ import TituloPagina from "../components/TituloPagina";
 
 const Analisis = () => {
     const [datosBack, setDatosBack] = useState({});
+    console.log("🚀 ~ file: Analisis.js:13 ~ Analisis ~ datosBack:", datosBack)
     useEffect(() => {
         const token = localStorage.getItem("token");
         const userId = localStorage.getItem("userId");
@@ -64,9 +65,9 @@ const Analisis = () => {
         <TituloPagina title="Análisis" />
       </div>
       <div className="my-3">
-        <DatosAnalisis />
+        <DatosAnalisis datosBack={datosBack} />
       </div>
-      <EvolucionMensual3Barras />
+      <EvolucionMensual3Barras datosBack={datosBack} />
       <TripleGraficoAnalisis />
       <div className="py-4">
         <Footer />

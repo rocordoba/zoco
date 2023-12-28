@@ -113,15 +113,7 @@ const NuevoNavReact = ({ name, ...props }) => {
 
   // states y config de los botones
   const [datoCapturados, setDatoCapturados] = useState({});
-  console.log(
-    "🚀 ~ file: NuevoNavReact.js:117 ~ NuevoNavReact ~ datoCapturados:",
-    datoCapturados
-  );
   const [isSearchable, setIsSearchable] = useState(true);
-  console.log(
-    "🚀 ~ file: NuevoNavReact.js:118 ~ NuevoNavReact ~ setIsSearchable:",
-    setIsSearchable
-  );
   const [selectedAnio, setSelectedAnio] = useState(null);
   const [selectedMes, setSelectedMes] = useState(null);
   const [selectedComercio, setSelectedComercio] = useState(null);
@@ -784,7 +776,7 @@ const NuevoNavReact = ({ name, ...props }) => {
                 </div>
               </NavLink>
             </div>
-            <div className="centrado my-2">
+            {/* <div className="centrado my-2">
               <NavLink
                 end
                 to="/aliados/calculadora"
@@ -802,7 +794,7 @@ const NuevoNavReact = ({ name, ...props }) => {
                   </div>
                 </div>
               </NavLink>
-            </div>
+            </div> */}
             <div className="centrado my-2">
               <NavLink
                 end

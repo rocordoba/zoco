@@ -41,9 +41,7 @@ const optionsSemanas = [
 const BienvenidoPanel = ({datos }) => {
   const { darkMode } = useContext(DarkModeContext);
   const [datoCapturados, setDatoCapturados] = useState({})
-  console.log("🚀 ~ file: BienvenidoPanel.js:43 ~ BienvenidoPanel ~ datoCapturados:", datoCapturados)
   const [isSearchable, setIsSearchable] = useState(true);
-  console.log("🚀 ~ file: BienvenidoPanel.js:46 ~ BienvenidoPanel ~ setIsSearchable:", setIsSearchable)
   const [selectedAnio, setSelectedAnio] = useState(null);
   const [selectedMes, setSelectedMes] = useState(null);
   const [selectedComercio, setSelectedComercio] = useState(null);

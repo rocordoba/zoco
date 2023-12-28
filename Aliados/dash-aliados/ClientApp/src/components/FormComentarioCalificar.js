@@ -12,17 +12,10 @@ const FormComentarioCalificar = () => {
     comentario: "",
   });
 
-  const handleInputChange = (event) => {
-    event.preventDefault();
-    const { name, value } = event.target;
-    setFormComentarioData({ ...formComentarioData, [name]: value });
-  };
-
-  const onSubmit = (event) => {
-    event.preventDefault();
-    const datosConRating = { ...formComentarioData, rating };
-    setRating(0);
-    setFormComentarioData({ comentario: "" });
+  const onSubmit = (datos) => {
+    const datosConRating = { ...datos, rating };
+    console.log("Datos a enviar:", datosConRating);
+    reset();
   };
 
   const handleStarClick = (star) => {

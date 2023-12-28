@@ -24,17 +24,19 @@ namespace dash_aliados.Controllers
             _usuarioZocoService = usuarioZoco;
         }
         [HttpPost("califico")]
-        public async Task<ActionResult> Inicio([FromBody] VMDatosInicio request)
+        public async Task<ActionResult> Inicio([FromBody] VMCalificoCom request)
         {
             if (!string.IsNullOrEmpty(request.Token))
             {
-                var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
-                var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario /*, request.Year, request.Month, request.Week, request.comercio*/);
-
+              
              
                 var resultado = new
                 {
-                    AñoActual = request.Year,
+                   ID=request.Id,
+                   token=request.Token,
+                   califico=request.NumCalifico,
+                   calificoreques=request.Descripcion,
+                   fecha=request.Fecha,
 
                  
                 };

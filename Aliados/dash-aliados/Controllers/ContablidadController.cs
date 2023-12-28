@@ -68,7 +68,7 @@ namespace dash_aliados.Controllers
         }
         private double ObtenerTotalNeto(List<BaseDashboard> lista)
         {
-            return (double)lista.Sum(s => s.TotalNeto);
+            return (double)lista.Sum(s => s.TotalConDescuentos);
         }
         private double ObtenerTotalBruto(List<BaseDashboard> lista)
         {

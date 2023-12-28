@@ -245,8 +245,7 @@ const SidebarReact = () => {
     confirmar: "",
     nueva: "",
   });
-  console.log("🚀 ~ file: SidebarReact.js:248 ~ SidebarReact ~ formData:", formData)
-
+ 
   //Modal configuraciones
   function ModalConfiguraciones(props) {
     const { show, onHide } = props;
@@ -725,7 +724,7 @@ const SidebarReact = () => {
             </div>
           </NavLink>
         </div>
-        <div className="centrado my-2">
+        {/* <div className="centrado my-2">
           <NavLink
             end
             to="/aliados/calculadora"
@@ -743,7 +742,7 @@ const SidebarReact = () => {
               </div>
             </div>
           </NavLink>
-        </div>
+        </div> */}
         <div className="centrado my-2">
           <NavLink
             end
@@ -766,7 +765,7 @@ const SidebarReact = () => {
         <div className="centrado my-2">
           <NavLink
             end
-            to="/aliados/tickets"
+            to="/aliados/cupones"
             className=" border-0"
             onClick={ocultarModalesTickets}
           >

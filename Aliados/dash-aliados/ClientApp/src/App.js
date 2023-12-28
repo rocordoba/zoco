@@ -17,28 +17,15 @@ function App() {
   const { darkMode } = useContext(DarkModeContext);
   const [navVisible, showNavbar] = useState(false);
   const [califico, setCalifico] = useState(0);
-  console.log("🚀 ~ file: App.js:21 ~ App ~ califico:", califico);
   // const [datosBack, setDatosBack] = useState({});
-
   // const [recuperar, setRecuperar] = useState(false);
   // const [showPassword, setShowPassword] = useState(false);
   const [usuario, setUsuario] = useState("");
-  console.log("🚀 ~ file: App.js:27 ~ App ~ setUsuario:", setUsuario);
   const [password, setPassword] = useState("");
-  console.log("🚀 ~ file: App.js:29 ~ App ~ setPassword:", setPassword);
   const [isActive, setIsActive] = useState(0);
-  console.log(
-    "🚀 ~ file: ContenidoLogin.js:28 ~ ContenidoLogin ~ isActive:",
-    isActive
-  );
 
   const [contador, setContador] = useState(0);
-  console.log(
-    "🚀 ~ file: ContenidoLogin.js:31 ~ ContenidoLogin ~ contador:",
-    contador
-  );
   const [datosMandados, setDatosMandados] = useState();
-  console.log(datosMandados);
 
   const onSubmit = () => {
     console.log("Usuario:", usuario);
@@ -161,7 +148,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/aliados/tickets"
+                  path="/aliados/cupones"
                   element={
                     <section
                       className={!navVisible ? "page-with-navbar " : "page  "}

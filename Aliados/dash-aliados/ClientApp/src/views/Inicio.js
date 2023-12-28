@@ -16,25 +16,17 @@ import PopUpCalificar from "../components/PopUpCalificar";
 const Inicio = ({ califico, setCalifico }) => {
   const { darkMode } = useContext(DarkModeContext);
   const [datosBack, setDatosBack] = useState({});
-  console.log("🚀 ~ file: Inicio.js:19 ~ Inicio ~ datosBack:", datosBack);
-
   const [contador, setContador] = useState(0);
-  console.log(
-    "🚀 ~ file: ContenidoLogin.js:31 ~ ContenidoLogin ~ contador:",
-    contador,
-    setContador
-  );
   const [datosMandados, setDatosMandados] = useState();
-  console.log(datosMandados, setDatosMandados);
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
-
     const currentDate = new Date();
     const year = currentDate.getFullYear();
-    const month = currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
-    const week = Math.ceil(currentDate.getDate() / 7); // Obtener la semana actual
+    const month = currentDate.getMonth() + 1; 
+    const week = Math.ceil(currentDate.getDate() / 7); 
     const comercio = "Todos";
     const day = currentDate.getDay();
     const requestData = {
@@ -62,7 +54,6 @@ const Inicio = ({ califico, setCalifico }) => {
           return response.json();
         })
         .then((data) => {
-          console.log("Datos recuperados:", data);
           setDatosBack(data);
         })
         .catch((error) => {

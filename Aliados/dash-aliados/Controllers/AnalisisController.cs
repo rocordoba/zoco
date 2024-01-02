@@ -43,8 +43,8 @@ namespace dash_aliados.Controllers
                 var totalConDescuentoCuotas1 = ObtenerTotalConDescuentoCuotas(sas, 1);
                 var totalConDescuentoCuotas2 = ObtenerTotalConDescuentoCuotas(sas, 2);
                 var totalCuotas = totalConDescuentoCuotas1 + totalConDescuentoCuotas2;
-                var tarea = ObtenerResumenUltimos7Meses(sas);
-                var resumenUltimos7Meses = tarea.Result;
+                // var tarea = ObtenerResumenUltimos7Meses(sas);
+                // var resumenUltimos7Meses = tarea.Result;
                
                 var debito = ObtenerTicketPromedio(sas, 0);
                 var credito = ObtenerTicketPromedio(sas, 1);
@@ -59,7 +59,7 @@ namespace dash_aliados.Controllers
                     TotalConDescuentoCuotas1 = totalConDescuentoCuotas1,
                     TotalConDescuentoCuotas2 = totalConDescuentoCuotas2,
                     TotalCuotas= totalCuotas,
-                    ResumenUltimos7Meses = resumenUltimos7Meses,
+                  //  ResumenUltimos7Meses = resumenUltimos7Meses,
                     Porcentajeporcuotas = porcentajeporcuotas,
                     Porcentajeticket = porcentajeticket,
                     Porcentajetipopago = porcentajetipopago,

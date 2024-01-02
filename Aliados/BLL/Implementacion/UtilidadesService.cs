@@ -17,7 +17,7 @@ namespace BLL.Implementacion
             string clave = Guid.NewGuid().ToString("N").Substring(0,6);
             return clave;
         }
-        public string ConvertirSha256(string texto)
+        public string GenerateHash256(string texto)
         {
          
             StringBuilder sb = new StringBuilder();
@@ -37,6 +37,11 @@ namespace BLL.Implementacion
 
         }
 
-      
+        public string GenerateHash(string password)
+        {
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password, BCrypt.Net.BCrypt.GenerateSalt(12));
+            return hashedPassword;
+        }
+
     }
 }

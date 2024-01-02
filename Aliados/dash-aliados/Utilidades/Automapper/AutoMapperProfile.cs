@@ -12,6 +12,7 @@ namespace dash_aliados.Utilidades.Automapper
     {
         public AutoMapperProfile()
         {
+
             #region Usuarios zoco
             CreateMap<Usuarios, VMUsuariosZoco>()
              .ForMember(destino =>
@@ -53,6 +54,20 @@ namespace dash_aliados.Utilidades.Automapper
                     destino.Correo,
                     opt => opt.MapFrom(origen => origen.Correo));
             #endregion
+            #region comentariocom
+            CreateMap<VMCalificoCom, CalificoCom>()
+          
+            .ForMember(dest => dest.NumCalifico, opt => opt.MapFrom(src => src.NumCalifico))
+            .ForMember(dest => dest.Descripcion, opt => opt.MapFrom(src => src.Descripcion))
+            .ForMember(dest => dest.Fecha, opt => opt.MapFrom(src => DateTime.Parse(src.Fecha ?? string.Empty)));
+
+            CreateMap<CalificoCom, VMCalificoCom>()
+          
+                .ForMember(dest => dest.NumCalifico, opt => opt.MapFrom(src => src.NumCalifico))
+                .ForMember(dest => dest.Descripcion, opt => opt.MapFrom(src => src.Descripcion))
+                .ForMember(dest => dest.Fecha, opt => opt.MapFrom(src => src.Fecha.HasValue ? src.Fecha.Value.ToString() : null));
+            #endregion
+
             #region BaseDashboard
             CreateMap<BaseDashboard, VMBaseDashboard>()
         .ForMember(dest => dest.NroDeComercio, opt => opt.MapFrom(src => src.NroDeComercio.ToString()))

@@ -9,6 +9,7 @@ const context = [
     "/api/acceso/login", 
     "/api/datosinicio/base",
     "/api/analisis/analisis",
+    "/api/califico/calificocom",
     "/api/califico/califico",
     "/api/contablidad/contabilidad",
     "/api/cupones/cupones",

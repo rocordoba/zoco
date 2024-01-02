@@ -39,7 +39,7 @@ const FormComentarioCalificar = () => {
         console.log("Datos a enviar:", datosConRating);
 
         try {
-            const response = await fetch('/api/califico/califico', {
+            await fetch('/api/califico/califico', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -47,13 +47,7 @@ const FormComentarioCalificar = () => {
                 body: JSON.stringify(datosConRating),
             });
 
-            if (!response.ok) {
-                throw new Error('Error al enviar los datos');
-            }
-
-            const data = await response.json();
-            // Hacer algo con la respuesta de la API si es necesario
-
+            // No hay lógica adicional después de la solicitud, por lo que no se espera respuesta
             setRating(0);
             setFormComentarioData({ comentario: "" });
         } catch (error) {
@@ -61,6 +55,7 @@ const FormComentarioCalificar = () => {
             // Manejar el error adecuadamente
         }
     };
+
   const { darkMode } = useContext(DarkModeContext);
   return (
     <section className="container">

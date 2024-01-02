@@ -26,8 +26,8 @@ namespace dash_aliados.Controllers
             _usuarioZocoService = usuarioZoco;
             _ComentarioService = calificocomentario;
         }
-        [HttpPost("califico")]
-        public async Task<ActionResult> Inicio([FromBody] VMCalificoCom request)
+        [HttpPost("calificocom")]
+        public async Task<ActionResult> calificocom([FromBody] VMCalificoCom request)
         {
             if (!string.IsNullOrEmpty(request.Token))
             {
@@ -42,6 +42,23 @@ namespace dash_aliados.Controllers
 
             return Unauthorized("El token o el ID de la sesión no son válidos");
         }
+        [HttpPost("califico")]
+        public async Task<ActionResult> califico([FromBody] VMCalificoCom request)
+        {
+            if (!string.IsNullOrEmpty(request.Token))
+            {
+                var entidad = _mapper.Map<CalificoCom>(request);
+
+                var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
+                var califico = await _ComentarioService.Crear(entidad);
+                return StatusCode(StatusCodes.Status200OK);
+                // Aquí puedes realizar cualquier lógica adicional antes de guardar en la base de datos
+
+            }
+
+            return Unauthorized("El token o el ID de la sesión no son válidos");
+        }
+
 
     }
 }

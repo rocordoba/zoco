@@ -233,7 +233,7 @@ const ComportamientoGrafica = ({ datos }) => {
     labels: meses,
     datasets: [
       {
-        label: "Beneficios",
+        label: "Monto$",
         data: beneficios,
         backgroundColor: "#B4C400",
       },

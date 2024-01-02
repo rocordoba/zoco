@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\IOC\\IOC.csproj": {}
+    "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\IOC\\IOC.csproj": {}
   },
   "projects": {
-    "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\BLL\\BLL.csproj": {
+    "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\BLL\\BLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\BLL\\BLL.csproj",
+        "projectUniqueName": "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\BLL\\BLL.csproj",
         "projectName": "BLL",
-        "projectPath": "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\BLL\\BLL.csproj",
-        "packagesPath": "C:\\Users\\JOSEC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\BLL\\obj\\",
+        "projectPath": "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\BLL\\BLL.csproj",
+        "packagesPath": "C:\\Users\\54381\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\BLL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\JOSEC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\54381\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,11 +28,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\DAL\\DAL.csproj": {
-                "projectPath": "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\DAL\\DAL.csproj"
+              "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\DAL\\DAL.csproj"
               },
-              "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\Entity\\Entity.csproj": {
-                "projectPath": "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\Entity\\Entity.csproj"
+              "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\Entity\\Entity.csproj": {
+                "projectPath": "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\Entity\\Entity.csproj"
               }
             }
           }
@@ -68,21 +68,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\DAL\\DAL.csproj": {
+    "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\DAL\\DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\DAL\\DAL.csproj",
+        "projectUniqueName": "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\DAL\\DAL.csproj",
         "projectName": "DAL",
-        "projectPath": "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\DAL\\DAL.csproj",
-        "packagesPath": "C:\\Users\\JOSEC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\DAL\\obj\\",
+        "projectPath": "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\DAL\\DAL.csproj",
+        "packagesPath": "C:\\Users\\54381\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\DAL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\JOSEC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\54381\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -96,8 +96,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\Entity\\Entity.csproj": {
-                "projectPath": "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\Entity\\Entity.csproj"
+              "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\Entity\\Entity.csproj": {
+                "projectPath": "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\Entity\\Entity.csproj"
               }
             }
           }
@@ -127,21 +127,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\Entity\\Entity.csproj": {
+    "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\Entity\\Entity.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\Entity\\Entity.csproj",
+        "projectUniqueName": "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\Entity\\Entity.csproj",
         "projectName": "Entity",
-        "projectPath": "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\Entity\\Entity.csproj",
-        "packagesPath": "C:\\Users\\JOSEC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\Entity\\obj\\",
+        "projectPath": "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\Entity\\Entity.csproj",
+        "packagesPath": "C:\\Users\\54381\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\Entity\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\JOSEC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\54381\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -200,21 +200,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\IOC\\IOC.csproj": {
+    "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\IOC\\IOC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\IOC\\IOC.csproj",
+        "projectUniqueName": "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\IOC\\IOC.csproj",
         "projectName": "IOC",
-        "projectPath": "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\IOC\\IOC.csproj",
-        "packagesPath": "C:\\Users\\JOSEC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\IOC\\obj\\",
+        "projectPath": "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\IOC\\IOC.csproj",
+        "packagesPath": "C:\\Users\\54381\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\IOC\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\JOSEC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\54381\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -228,11 +228,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\BLL\\BLL.csproj": {
-                "projectPath": "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\BLL\\BLL.csproj"
+              "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\BLL\\BLL.csproj": {
+                "projectPath": "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\BLL\\BLL.csproj"
               },
-              "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\DAL\\DAL.csproj": {
-                "projectPath": "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\DAL\\DAL.csproj"
+              "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\Users\\54381\\Desktop\\proyecto para conectar\\Aliados Zoco-conectar\\Aliados_2\\Aliados\\Aliados\\DAL\\DAL.csproj"
               }
             }
           }
@@ -262,7 +262,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

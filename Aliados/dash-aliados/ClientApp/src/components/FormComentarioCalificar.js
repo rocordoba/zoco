@@ -1,7 +1,6 @@
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useState } from "react";
-import { useForm } from "react-hook-form";
 import { DarkModeContext } from "../context/DarkModeContext";
 import "./FormComentarioCalificar.css";
 import { Col, Form } from "react-bootstrap";
@@ -11,15 +10,6 @@ const FormComentarioCalificar = () => {
   const [formComentarioData, setFormComentarioData] = useState({
     comentario: "",
   });
-
-
-    
-
-  const handleInputChange = (event) => {
-    event.preventDefault();
-    const { name, value } = event.target;
-    setFormComentarioData({ ...formComentarioData, [name]: value });
-  };
 
   //const onSubmit = (event) => {
   //  event.preventDefault();
@@ -196,7 +186,12 @@ const FormComentarioCalificar = () => {
               required
               type="text"
               name="comentario"
-              onChange={handleInputChange}
+              onChange={(e) =>
+                setFormComentarioData({
+                  ...formComentarioData,
+                  comentario: e.target.value,
+                })
+              }
             />
           </Form.Group>
         </div>

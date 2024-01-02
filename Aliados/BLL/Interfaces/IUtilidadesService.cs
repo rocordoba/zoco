@@ -13,6 +13,7 @@ namespace BLL.Interfaces
 
         string GenerarClave();
 
-        string ConvertirSha256(string texto);
+        string GenerateHash256(string texto);
+        string GenerateHash(string texto);
     }
 }

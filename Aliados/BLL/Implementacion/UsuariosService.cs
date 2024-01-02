@@ -41,7 +41,7 @@ namespace BLL.Implementacion
             {
 
                 string clave_generada = _utilidadesService.GenerarClave();
-                entidad.Clave = _utilidadesService.ConvertirSha256(clave_generada);
+                entidad.Clave = _utilidadesService.GenerateHash256(clave_generada);
 
                 if (usuario_creado.IdUsuario == 0)
                     throw new TaskCanceledException("No se pudo crear el usuario");
@@ -174,7 +174,7 @@ namespace BLL.Implementacion
 
         public async Task<Usuarios> ObtenerPorCredenciales(string correo, string clave)
         {
-            string clave_encriptada = _utilidadesService.ConvertirSha256(clave);
+            string clave_encriptada = _utilidadesService.GenerateHash256(clave);
 
             var usuariocuit = Convert.ToDouble(correo);
 
@@ -214,7 +214,7 @@ namespace BLL.Implementacion
 
 
                 string clave_generada = _utilidadesService.GenerarClave();
-                usuario_encontrado.Clave = _utilidadesService.ConvertirSha256(clave_generada);
+                usuario_encontrado.Clave = _utilidadesService.GenerateHash256(clave_generada);
 
 
                 UrlPlantillaCorreo = UrlPlantillaCorreo.Replace("[clave]", clave_generada);

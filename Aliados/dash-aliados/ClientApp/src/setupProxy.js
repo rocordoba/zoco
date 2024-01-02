@@ -9,9 +9,10 @@ const context = [
     "/api/acceso/login", 
     "/api/datosinicio/base",
     "/api/analisis/analisis",
+    "/api/califico/califico",
     "/api/contablidad/contabilidad",
     "/api/cupones/cupones",
-    "/api/califico/califico"
+   
 ];
 
 module.exports = function (app) {

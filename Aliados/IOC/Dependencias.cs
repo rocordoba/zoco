@@ -18,6 +18,7 @@ using Entity.Entity;
 using DAL.DBContext;
 using BLL.ImplemtacionZoco;
 using BLL.ImplementacionZoco;
+using Entity.Zoco;
 
 namespace IOC
 {
@@ -37,6 +38,7 @@ namespace IOC
             services.AddScoped<IUsuarioZocoService, UsuarioZocoService>();
             services.AddScoped<IBaseDashboardService, BaseDashboardService>();
             services.AddScoped<IInflacionService, InflacionService>();
+            services.AddScoped<ICalificoComentarioService, CalificoService>();
 
 
 

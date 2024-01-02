@@ -42,7 +42,7 @@ namespace BLL.ImplemtacionZoco
             {
 
                 string clave_generada = _utilidadesService.GenerarClave();
-                entidad.Password = _utilidadesService.ConvertirSha256(clave_generada);
+                entidad.Password = _utilidadesService.GenerateHash256(clave_generada);
 
                 if (usuario_creado.Id == 0)
                     throw new TaskCanceledException("No se pudo crear el usuario");
@@ -87,8 +87,8 @@ namespace BLL.ImplemtacionZoco
 
         public async Task<Usuarios> ObtenerPorCredenciales(string correo, string clave)
         {
-            string clave_encriptada = _utilidadesService.ConvertirSha256(clave);
-
+         //   string clave_encriptada = _utilidadesService.ConvertirSha256(clave);
+            string clave_encriptada = _utilidadesService.GenerateHash256(clave);
             var usuariocuit = Convert.ToDouble(correo);
 
             Usuarios usuario_encontrado = await _repositorioUser.Obtener(u=>u.Usuario==correo && u.Password==clave_encriptada);

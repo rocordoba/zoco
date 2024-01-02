@@ -12,16 +12,65 @@ const FormComentarioCalificar = () => {
     comentario: "",
   });
 
-  const onSubmit = (datos) => {
-    const datosConRating = { ...datos, rating };
-    console.log("Datos a enviar:", datosConRating);
-    reset();
+
+    
+
+  const handleInputChange = (event) => {
+    event.preventDefault();
+    const { name, value } = event.target;
+    setFormComentarioData({ ...formComentarioData, [name]: value });
   };
+
+  //const onSubmit = (event) => {
+  //  event.preventDefault();
+  //  const datosConRating = { ...formComentarioData, rating };
+  //  setRating(0);
+  //  setFormComentarioData({ comentario: "" });
+  //};
+
 
   const handleStarClick = (star) => {
     setRating(star);
   };
+    const onSubmit = async (event) => {
+        event.preventDefault();
+        const token = localStorage.getItem("token");
+        const userId = parseInt(localStorage.getItem("userId")); // Asegúrate de que userId sea un entero
+        const fechaActual = new Date().toISOString();
 
+        const datosConRating = {
+            Token: token,
+            UsuarioId: userId,
+            NumCalifico: rating,
+            Descripcion: formComentarioData.comentario,
+            Fecha: fechaActual
+        };
+
+        console.log("Datos a enviar:", datosConRating);
+
+        try {
+            const response = await fetch('/api/califico/califico', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(datosConRating),
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al enviar los datos');
+            }
+
+            const data = await response.json();
+            // Hacer algo con la respuesta de la API si es necesario
+
+            setRating(0);
+            setFormComentarioData({ comentario: "" });
+        } catch (error) {
+            console.error('Hubo un error:', error);
+            // Manejar el error adecuadamente
+        }
+    };
   const { darkMode } = useContext(DarkModeContext);
   return (
     <section className="container">

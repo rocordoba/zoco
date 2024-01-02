@@ -12,13 +12,33 @@ const PopUpCalificar = ({ califico, setCalifico }) => {
   console.log("🚀 ~ file: PopUpCalificar.js:12 ~ PopUpCalificar ~ datosCapturadosMetrica:", datosCapturadosMetrica)
   const { register, handleSubmit, reset } = useForm();
 
-  const onSubmit = (datos) => {
-    setDatosCapturadosMetrica(datos);
-    setCalifico(1);
+    const onSubmit = async (datos) => {
+        setDatosCapturadosMetrica(datos);
+        setCalifico(1);
+        reset();
+        verModalNotificacion();
 
-    reset();
-    verModalNotificacion();
-  };
+        try {
+            const response = await fetch('/api/califico/califico', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(datos),
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al enviar los datos');
+            }
+
+            
+
+        } catch (error) {
+            console.error('Hubo un error:', error);
+           
+        }
+    };
+
 
   const [isActive, setIsActive] = useState(false)
 

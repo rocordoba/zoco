@@ -43,14 +43,11 @@ namespace dash_aliados.Controllers
             return Unauthorized("El token o el ID de la sesión no son válidos");
         }
         [HttpPost("califico")]
-        public async Task<ActionResult> califico([FromBody] VMCalificoCom request)
+        public async Task<ActionResult> califico([FromBody] VMCalifico request)
         {
             if (!string.IsNullOrEmpty(request.Token))
             {
-                var entidad = _mapper.Map<CalificoCom>(request);
-
-                var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
-                var califico = await _ComentarioService.Crear(entidad);
+                
                 return StatusCode(StatusCodes.Status200OK);
                 // Aquí puedes realizar cualquier lógica adicional antes de guardar en la base de datos
 

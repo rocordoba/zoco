@@ -11,21 +11,6 @@ const FormComentarioCalificar = () => {
     comentario: "",
   });
 
-<<<<<<< HEAD
-  const onSubmit = (datos) => {
-    const datosConRating = { ...datos, rating };
-    console.log("Datos a enviar:", datosConRating);
-=======
-
-    
-
-  const handleInputChange = (event) => {
-    event.preventDefault();
-    const { name, value } = event.target;
-    setFormComentarioData({ ...formComentarioData, [name]: value });
->>>>>>> c191a637a05ea5fd6f3ea77b1daf2d436cfb58a1
-  };
-
   //const onSubmit = (event) => {
   //  event.preventDefault();
   //  const datosConRating = { ...formComentarioData, rating };
@@ -201,6 +186,12 @@ const FormComentarioCalificar = () => {
               required
               type="text"
               name="comentario"
+              onChange={(e) =>
+                setFormComentarioData({
+                  ...formComentarioData,
+                  comentario: e.target.value,
+                })
+              }
             />
           </Form.Group>
         </div>

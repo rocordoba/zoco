@@ -1,7 +1,6 @@
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useState } from "react";
-import { useForm } from "react-hook-form";
 import { DarkModeContext } from "../context/DarkModeContext";
 import "./FormComentarioCalificar.css";
 import { Col, Form } from "react-bootstrap";
@@ -15,7 +14,6 @@ const FormComentarioCalificar = () => {
   const onSubmit = (datos) => {
     const datosConRating = { ...datos, rating };
     console.log("Datos a enviar:", datosConRating);
-    reset();
   };
 
   const handleStarClick = (star) => {
@@ -147,7 +145,6 @@ const FormComentarioCalificar = () => {
               required
               type="text"
               name="comentario"
-              onChange={handleInputChange}
             />
           </Form.Group>
         </div>

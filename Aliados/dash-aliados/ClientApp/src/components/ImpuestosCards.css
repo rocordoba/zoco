@@ -16,8 +16,10 @@
   opacity: 1 !important;
 }
 
+
 .bg-card-costo {
   width: 100% !important;
+  
   background: transparent linear-gradient(120deg, #ffffff 0%, #e5e8ee 100%) 0%
     0% no-repeat padding-box !important;
   box-shadow: 5px 4px 16px #d0d7e2 !important;
@@ -38,7 +40,7 @@
 
 .bg-card-costo-dark {
   width: 100% !important;
-  height: 222px !important;
+ 
   background: transparent linear-gradient(97deg, #292b2f 0%, #16181a 100%) 0% 0%
     no-repeat padding-box;
   box-shadow: 5px 4px 16px #0c0c0c !important;

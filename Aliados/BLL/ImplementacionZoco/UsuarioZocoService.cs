@@ -85,30 +85,36 @@ namespace BLL.ImplemtacionZoco
             throw new NotImplementedException();
         }
 
-        public async Task<Usuarios> ObtenerPorCredenciales(string correo, string clave)
+        public string GenerateBCryptHash(string password)
         {
-         //   string clave_encriptada = _utilidadesService.ConvertirSha256(clave);
-            string clave_encriptada = _utilidadesService.GenerateHash256(clave);
-            var usuariocuit = Convert.ToDouble(correo);
-
-            Usuarios usuario_encontrado = await _repositorioUser.Obtener(u=>u.Usuario==correo && u.Password==clave_encriptada);
-                // await _repositorioUser.Obtener(u => u.Usuario == correo && u.Clave == clave_encriptada);
-
-
-            // si usuario es diferente de null
-            //creo un numero aleatorio, le mando , lo guardo, UPDATE!!
-            //lo puedo mandar x CORREO o por whatsapp!
-
-            //le pido que lo ingrese en un modal, 
-            //si es el mismo, lo dejo ingresar!
-            //y le retorno el usuario, sino lo trunco, 
-
-            //contabilizar si es la segunda vez q ingresa mal el codigo
-
-            return usuario_encontrado;
+            return BCrypt.Net.BCrypt.HashPassword(password, BCrypt.Net.BCrypt.GenerateSalt());
         }
+     
+public async Task<Usuarios> ObtenerPorCredenciales(string correo, string clave)
+    {
+        var usuariocuit = Convert.ToDouble(correo);
 
-        public async Task<Usuarios> ObtenerPorId(int IdUsuario)
+        // Busca el usuario por el correo
+        Usuarios usuario_encontrado = await _repositorioUser.Obtener(u => u.Usuario == correo);
+
+        // Verifica la clave usando EnhancedVerify, que soporta el prefijo $2y$ de PHP
+        bool verified = BCrypt.Net.BCrypt.EnhancedVerify(clave, usuario_encontrado.Password);
+
+        // si usuario es diferente de null
+        //creo un numero aleatorio, le mando , lo guardo, UPDATE!!
+        //lo puedo mandar x CORREO o por whatsapp!
+
+        //le pido que lo ingrese en un modal, 
+        //si es el mismo, lo dejo ingresar!
+        //y le retorno el usuario, sino lo trunco, 
+
+        //contabilizar si es la segunda vez q ingresa mal el codigo
+
+        return usuario_encontrado;
+    }
+
+
+    public async Task<Usuarios> ObtenerPorId(int IdUsuario)
         {
             IQueryable<Usuarios> query = await _repositorioUser.Consultar(u => u.Id == IdUsuario);
 

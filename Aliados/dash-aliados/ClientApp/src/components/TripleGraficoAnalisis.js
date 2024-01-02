@@ -1,5 +1,5 @@
 import { Bar } from "react-chartjs-2";
-import "./TripleGraficoAnalisis.css"
+import "./TripleGraficoAnalisis.css";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -27,11 +27,11 @@ ChartJS.register(
   Filler
 );
 
-const TripleGraficoAnalisis = () => {
+const TripleGraficoAnalisis = ({ datosBack }) => {
   const { darkMode } = useContext(DarkModeContext);
   const tickColor = darkMode ? "#fff" : "#292B2F";
 
-  // grafica en Facturacion por cuota
+  // FACTURACION POR CUOTA
   var beneficios = [52, 96];
   var labels = ["Débito", "Crédito"];
 
@@ -64,7 +64,7 @@ const TripleGraficoAnalisis = () => {
   };
 
   var midataFacturacion = {
-    labels:labels,
+    labels: labels,
     datasets: [
       {
         label: "Valores",
@@ -79,9 +79,8 @@ const TripleGraficoAnalisis = () => {
     dataset.barThickness = 30;
   });
 
-  // grafica Ticket promedio
+  // TICKET PROMEDIO 
   var ticketValues = [52, 96];
-
 
   var midataTickets = {
     labels: labels,
@@ -99,9 +98,8 @@ const TripleGraficoAnalisis = () => {
     dataset.barThickness = 30;
   });
 
-  // grafica ventas por tipo de pago
+  // VENTAS POR TIPO DE PAGO
   var ventasValues = [52, 96];
-
 
   var midataVentas = {
     labels: labels,

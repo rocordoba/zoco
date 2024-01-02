@@ -1,8 +1,9 @@
 import { useContext } from "react";
 import { DarkModeContext } from "../context/DarkModeContext";
 
-const DatosAnalisis = () => {
+const DatosAnalisis = ({datosBack}) => {
   const { darkMode } = useContext(DarkModeContext);
+  const {totalOperaciones,totalCuotas, totalConDescuentoCuotas0, totalConDescuentoCuotas1} = datosBack;
 
   return (
     <section className="container">
@@ -20,7 +21,7 @@ const DatosAnalisis = () => {
             }
           >
             <div className=" d-flex justify-content-center border-0 lato-bold fs-24">
-              3927
+              {totalOperaciones}
             </div>
           </button>
         </article>
@@ -34,12 +35,12 @@ const DatosAnalisis = () => {
             }
           >
             <div className=" d-flex justify-content-center border-0 lato-bold fs-24">
-              $ 11.542.670,46
+              $ {totalConDescuentoCuotas0}
             </div>
           </button>
         </article>
         <article className="col-12 col-md-6 col-lg-3  py-2 d-lg-none d-block">
-          <h6 className="text-center lato-bold fs-17"> Total Neto </h6>
+          <h6 className="text-center lato-bold fs-17"> Debito </h6>
           <button
             className={
               darkMode
@@ -48,7 +49,7 @@ const DatosAnalisis = () => {
             }
           >
             <div className=" d-flex justify-content-center border-0 lato-bold fs-24">
-              $ 11.542.670,46
+              ${totalConDescuentoCuotas0}
             </div>
           </button>
         </article>
@@ -63,7 +64,7 @@ const DatosAnalisis = () => {
             }
           >
             <div className=" d-flex justify-content-center border-0 lato-bold fs-24">
-              $ 6.306.580,71
+              $ {totalConDescuentoCuotas1}
             </div>
           </button>
         </article>
@@ -77,7 +78,7 @@ const DatosAnalisis = () => {
             }
           >
             <div className=" d-flex justify-content-center border-0 lato-bold fs-24">
-              $ 0,00
+              $ {totalCuotas}
             </div>
           </button>
         </div>

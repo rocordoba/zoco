@@ -2,10 +2,33 @@ import React, { useContext, useEffect, useState, useRef } from "react";
 import Chart from "chart.js/auto";
 import { DarkModeContext } from "../context/DarkModeContext";
 
-const EvolucionMensualCelular = () => {
+const EvolucionMensualCelular = ({ datosBack}) => {
   const { darkMode } = useContext(DarkModeContext);
   const color = darkMode ? "#fff" : "dark";
   const backgroundColor = darkMode ? "#fff" : "#292B2F";
+  const { resumenUltimos7Meses } = datosBack;
+  const datosResumenUltimosMeses = resumenUltimos7Meses || [];
+  const totalBruto7Meses = datosResumenUltimosMeses.map(
+    (dato) => dato.totalBruto
+  );
+  console.log(
+    "🚀 ~ file: EvolucionMensual3Barras.js:43 ~ EvolucionMensual3Barras ~ totalBruto7Meses:",
+    totalBruto7Meses
+  );
+
+  const totalOperaciones = datosResumenUltimosMeses.map(
+    (dato) => dato.cantidadDatos
+  );
+  const ultimos7Meses = datosResumenUltimosMeses.map((dato) => dato.mes);
+  const totalBrutoMenosInflacion = datosResumenUltimosMeses.map(
+    (dato) => dato.totalBrutoMenosInflacion
+  );
+
+  let totalBruto = totalBruto7Meses;
+  let totalBrutoInflacion = totalBrutoMenosInflacion;
+  let operaciones = totalOperaciones;
+
+  let meses = ultimos7Meses;
 
   const chartRef = useRef(null); // Referencia al canvas de la gráfica
   const chartInstance = useRef(null); // Referencia a la instancia de Chart.js
@@ -17,41 +40,33 @@ const EvolucionMensualCelular = () => {
 
   useEffect(() => {
     const data = {
-      labels: [
-        "Abril",
-        "Mayo",
-        "Junio",
-        "Julio",
-        "Agosto",
-        "Septiembre",
-        "Octubre",
-      ],
+      labels: meses,
       datasets: [
         {
-          label: "Por monto",
-          data: [1, 2, 3, 4, 5, 6, 7],
+          label: "Por monto $",
+          // data: [1, 2, 3, 4, 5, 6, 7],
+          data: totalBruto || [],
           backgroundColor: ["#b4c400"],
           borderWidth: 1,
           hidden: !showPorMonto, // Oculta si showPorMonto es falso
         },
         {
-          label: "Por inflacion",
-          data: [8, 6, 4, 9, 8, 7, 7, 8, 9],
+          label: "Por inflacion $",
+          data: totalBrutoInflacion || [],
           backgroundColor: [backgroundColor],
           borderWidth: 1,
           hidden: !showAjusteInflacion,
           // Oculta si showAjusteInflacion es falso
         },
         {
-          label: " Por cantidad de operaciones",
-          data: [7, 6, 5, 4, 3, 2, 1],
+          label: " Por cantidad de operaciones $",
+          data: operaciones || [],
           backgroundColor: ["#B3B5BF"],
-         
+
           borderWidth: 1,
           hidden: !showPorCantidad,
           // Oculta si showPorCantidad es falso
         },
- 
       ],
     };
 
@@ -107,12 +122,12 @@ const EvolucionMensualCelular = () => {
 
     const ctx = chartRef.current;
     chartInstance.current = new Chart(ctx, config);
-  }, [showPorMonto, showPorCantidad, showAjusteInflacion]);
+  }, [showPorMonto, showPorCantidad, showAjusteInflacion,datosResumenUltimosMeses]);
 
   const togglePorMonto = () => {
     setShowPorMonto(!showPorMonto);
   };
-  
+
   const toggleAjusteInflacion = () => {
     setShowAjusteInflacion(!showAjusteInflacion);
   };
@@ -120,7 +135,6 @@ const EvolucionMensualCelular = () => {
   const togglePorCantidad = () => {
     setShowPorCantidad(!showPorCantidad);
   };
-
 
   const activadoMonto = () => {
     if (darkMode && showPorMonto) {
@@ -167,8 +181,7 @@ const EvolucionMensualCelular = () => {
           <h6 className="lato-bold fs-16">Evolución mensual</h6>
           <div className="d-flex justify-content-center flex-wrap my-2">
             <span className="fs-14">
-              <button onClick={togglePorMonto} 
-              className={activadoMonto()}>
+              <button onClick={togglePorMonto} className={activadoMonto()}>
                 Por monto
               </button>
             </span>
@@ -177,7 +190,7 @@ const EvolucionMensualCelular = () => {
           <div className="d-flex justify-content-center flex-wrap my-2">
             <span className="fs-14">
               <button
-                onClick={toggleAjusteInflacion }
+                onClick={toggleAjusteInflacion}
                 className={activadoInflacion()}
               >
                 Por inflación
@@ -187,8 +200,8 @@ const EvolucionMensualCelular = () => {
           <div className="d-flex justify-content-center flex-wrap my-2">
             <span className="fs-14">
               <button
-                onClick={togglePorCantidad }
-               className={activadoOperacion()}
+                onClick={togglePorCantidad}
+                className={activadoOperacion()}
               >
                 Por operaciones
               </button>

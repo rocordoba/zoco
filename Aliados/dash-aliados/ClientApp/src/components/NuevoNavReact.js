@@ -439,14 +439,10 @@ const NuevoNavReact = ({ name, ...props }) => {
   const [mostrarOffcanvas, setMostrarOffcanvas] = useState(false);
 
   const cerrarOffcanvas = () => {
-    // Lógica adicional antes de cerrar el Offcanvas si es necesario
-    console.log('Cerrando Offcanvas');
     setMostrarOffcanvas(false);
   };
 
   const otroEvento = () => {
-    // Agrega aquí tu lógica para el otro evento que deseas manejar
-    console.log('Otro evento');
     setVisible1(false)
     setVisible2(false)
   };

@@ -9,6 +9,8 @@ import TituloPagina from "../components/TituloPagina";
 
 const Tickets = () => {
     const [datosBack, setDatosBack] = useState({});
+    const {listaMes} = datosBack;
+
     useEffect(() => {
         const token = localStorage.getItem("token");
         const userId = localStorage.getItem("userId");
@@ -64,7 +66,7 @@ const Tickets = () => {
       <div className="my-3">
         <DatosTickets />
       </div>
-      <TablaTickets />
+      <TablaTickets listaMes={listaMes} />
       <div className="py-4">
         <Footer />
       </div>

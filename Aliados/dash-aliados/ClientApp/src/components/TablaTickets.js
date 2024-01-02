@@ -133,8 +133,11 @@ const datos = [
   },
 ];
 
-const TablaTickets = () => {
+const TablaTickets = ({listaMes}) => {
   const { darkMode } = useContext(DarkModeContext);
+  const listaDelMes = listaMes || [];
+  console.log("🚀 ~ file: TablaTickets.js:139 ~ TablaTickets ~ listaDelMes:", listaDelMes)
+
   return (
     <section>
       <Buscador />
@@ -233,7 +236,7 @@ const TablaTickets = () => {
             </tr>
           </thead>
           <tbody className="text-center">
-            {datos.map((dato, id) => (
+            {listaDelMes.map((dato, id) => (
               <ItemsTablaTicket {...dato} key={id}></ItemsTablaTicket>
             ))}
           </tbody>

@@ -36,20 +36,32 @@ namespace dash_aliados.Controllers
                 var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), DateTime.Today);
                 var totalNetoHoy = ObtenerTotalNeto(listaHoy);
                 var totalBrutoHoy = ObtenerTotalBruto(listaHoy);
-              
+
+                var totalOperaciones = ObtenerTotalOperaciones(listaMes);
                 var totalRetencionesMes = ObtenerTotalRetenciones(listaMes);
                 var totalIvaMes = ObtenerTotalIva(listaMes);
-              
+                var totalIva21Mes = ObtenerTotalIva21(listaMes);
+                var totalbrutomes=ObtenerTotalBruto(listaMes);
+                var totalcredito = totalbrutomes*21;
+                var arancel = obtenerarancelmes(listaMes);
+                var ingresobruto = obteneringresobruto(listaMes);
+                var retencionganancia = obtenerretencionganancia(listaMes);
                 var resultado = new
                 {
                     AñoActual = request.Year,
                   
                     TotalNetoHoy = totalNetoHoy,
                     TotalBrutoHoy = totalBrutoHoy,
-                 
+                    TotalOperaciones=totalOperaciones,
                     TotalRetencionesMes = totalRetencionesMes,
-                    TotalIvaMes = totalIvaMes
-               
+                    TotalIvaMes = totalIvaMes,
+                    TotalIva21Mes=totalIva21Mes,
+                    Totalcredito=totalcredito,
+                    Arancel=arancel,
+                    TotalBrutoMes = totalbrutomes,
+                    Ingresobruto=ingresobruto,
+                    Retencionganancia=retencionganancia,
+
                 };
 
                 return StatusCode(StatusCodes.Status200OK, resultado);
@@ -57,6 +69,31 @@ namespace dash_aliados.Controllers
 
             return Unauthorized("El token o el ID de la sesión no son válidos");
         }
+
+        private object obtenerretencionganancia(List<BaseDashboard> listaMes)
+        {
+            return (double)listaMes.Sum(s => s.RetencionGanacia);
+        }
+
+        private object obteneringresobruto(List<BaseDashboard> listaMes)
+        {
+            return (double)listaMes.Sum(s => s.RetencionProvincial);
+        }
+
+        private object obtenerarancelmes(List<BaseDashboard> listaMes)
+        {
+            return (double)listaMes.Sum(s => s.Arancel);
+        }
+
+        private double ObtenerTotalOperaciones(List<BaseDashboard> sas)
+        {
+            return (double)sas.Count();
+        }
+        private double ObtenerTotalIva21(List<BaseDashboard> listaMes)
+        {
+            return (double)listaMes.Sum(s => s.Iva21);
+        }
+
 
         private List<BaseDashboard> ObtenerListaPorFecha(List<BaseDashboard> sas, DateTime fecha)
         {

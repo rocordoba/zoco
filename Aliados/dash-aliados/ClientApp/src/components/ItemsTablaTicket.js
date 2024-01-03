@@ -12,7 +12,9 @@ const ItemsTablaTicket = ({
   impuestoDebitoCredito,
   retencionProvincial,
   retencionGanacia,
+  totalConDescuentos
 }) => {
+  console.log("🚀 ~ file: ItemsTablaTicket.js:17 ~ totalConDescuentos:", totalConDescuentos)
   const formatearFecha = (fecha) => {
     const fechaObj = new Date(fecha);
     const año = fechaObj.getFullYear();
@@ -28,8 +30,6 @@ const ItemsTablaTicket = ({
       style: "currency",
       currency: "ARS",
     }).format(valor);
-
-    // Agregar comas como separadores de miles
     const partes = valorFormateado.split(",");
     partes[0] = partes[0]
       .replace(/\D/g, "")
@@ -46,7 +46,7 @@ const ItemsTablaTicket = ({
   }
   
 
-  const valoresFormateados = formatearValores(totalBruto, costoFinancieroEn,arancel)
+  const valoresFormateados = formatearValores(totalBruto, costoFinancieroEn,arancel,iva21, impuestoDebitoCredito,iva21,impuestoDebitoCredito,retencionProvincial,retencionGanacia,retencionIva,totalConDescuentos)
   
 
   const fechaFormateada = formatearFecha(fecha);
@@ -60,17 +60,16 @@ const ItemsTablaTicket = ({
           : "tabla-borde-bottom  text-dark"
       }
     >
-      <td className="fs-13 lato-regular py-3 "> {fechaFormateada}</td>
-      <td className="fs-13 lato-regular py-3 ">$ {valoresFormateados[0]}</td>
-      <td className="fs-13 lato-regular py-3 ">$ {valoresFormateados[1]} </td>
-      <td className="fs-13 lato-regular py-3 ">$ {valoresFormateados[2]}</td>
-      <td className="fs-13 lato-regular py-3 ">$ {iva21}</td>
-      <td className="fs-13 lato-regular py-3 ">$ {impuestoDebitoCredito} </td>
-      <td className="fs-13 lato-regular py-3 ">$ {retencionProvincial} </td>
-      <td className="fs-13 lato-regular py-3 ">$ {retencionGanacia}</td>
-      <td className="fs-13 lato-regular py-3 ">$ {retencionIva}</td>
-      <td className="fs-13 lato-regular py-3 ">$ </td>
-      <td className="fs-13 lato-regular py-3 ">$ </td>
+      <td className="fs-12-a-10 lato-regular py-3 "> {fechaFormateada}</td>
+      <td className="fs-12-a-10 lato-regular py-3 ">$ {valoresFormateados[0]}</td>
+      <td className="fs-12-a-10 lato-regular py-3 ">$ {valoresFormateados[1]} </td>
+      <td className="fs-12-a-10 lato-regular py-3 ">$ {valoresFormateados[2]}</td>
+      <td className="fs-12-a-10 lato-regular py-3 ">$ {valoresFormateados[3]}</td>
+      <td className="fs-12-a-10 lato-regular py-3 ">$ {valoresFormateados[4]} </td>
+      <td className="fs-12-a-10 lato-regular py-3 ">$ {valoresFormateados[5]} </td>
+      <td className="fs-12-a-10 lato-regular py-3 ">$ {valoresFormateados[6]}</td>
+      <td className="fs-12-a-10 lato-regular py-3 ">$ {valoresFormateados[7]}</td>
+      <td className="fs-12-a-10 lato-regular py-3 ">${valoresFormateados[10]} </td>
     </tr>
   );
 };

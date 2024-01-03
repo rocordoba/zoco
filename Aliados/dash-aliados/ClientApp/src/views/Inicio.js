@@ -83,7 +83,7 @@ const Inicio = ({ califico, setCalifico }) => {
         <DatosInicio datos={datosBackContext} />
       </div>
       {/* <ModalEditable /> */}
-      {califico === 1 && (
+      {califico === 0 && (
         <>
           <PopUpCalificar califico={califico} setCalifico={setCalifico} />
         </>

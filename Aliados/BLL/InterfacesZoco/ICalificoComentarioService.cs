@@ -8,5 +8,6 @@ namespace BLL.InterfacesZoco
     public interface ICalificoComentarioService
     {
         Task<CalificoCom> Crear(CalificoCom entidad);
+        Task<Califico> CrearComentario(Califico entidad);
     }
 }

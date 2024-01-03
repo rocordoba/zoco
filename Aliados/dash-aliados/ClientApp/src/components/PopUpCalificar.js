@@ -13,6 +13,17 @@ const PopUpCalificar = ({ califico, setCalifico }) => {
   const { register, handleSubmit, reset } = useForm();
 
     const onSubmit = async (datos) => {
+     /*   const token = localStorage.getItem("token");*/
+        /*const userId = localStorage.getItem("userId");*/
+        const token = localStorage.getItem('token');
+        const usuarioId = localStorage.getItem('userId');
+        const datosEnviar = {
+            NumCalifico: datos.radio,
+            UsuarioId: usuarioId,
+            Token: token,
+            Fecha: new Date().toISOString(),
+        };
+
         setDatosCapturadosMetrica(datos);
         setCalifico(1);
         reset();
@@ -24,21 +35,16 @@ const PopUpCalificar = ({ califico, setCalifico }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(datos),
+                body: JSON.stringify(datosEnviar),
             });
 
             if (!response.ok) {
                 throw new Error('Error al enviar los datos');
             }
-
-            
-
         } catch (error) {
             console.error('Hubo un error:', error);
-           
         }
     };
-
 
   const [isActive, setIsActive] = useState(false)
 

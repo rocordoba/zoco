@@ -26,7 +26,7 @@ namespace dash_aliados.Controllers
         }
 
         [HttpPost("cupones")]
-        public async Task<ActionResult> Analisis([FromBody] VMDatosInicio request)
+        public async Task<ActionResult> Cupones([FromBody] VMDatosInicio request)
         {
             if (!string.IsNullOrEmpty(request.Token))
             {
@@ -63,6 +63,7 @@ namespace dash_aliados.Controllers
         {
             return sas.Where(s => s.FechaDePago >= fechaInicio.Date && s.FechaDePago <= fechaFin.Date).ToList();
         }
+       
 
         public List<object> ObtenerSumaPorDia(List<BaseDashboard> lista)
         {

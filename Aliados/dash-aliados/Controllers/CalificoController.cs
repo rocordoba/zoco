@@ -47,7 +47,8 @@ namespace dash_aliados.Controllers
         {
             if (!string.IsNullOrEmpty(request.Token))
             {
-                
+                var entidad = _mapper.Map<Califico>(request);
+                var califico = await _ComentarioService.CrearComentario(entidad);
                 return StatusCode(StatusCodes.Status200OK);
                 // Aquí puedes realizar cualquier lógica adicional antes de guardar en la base de datos
 

@@ -67,7 +67,23 @@ namespace dash_aliados.Utilidades.Automapper
                 .ForMember(dest => dest.Descripcion, opt => opt.MapFrom(src => src.Descripcion))
                 .ForMember(dest => dest.Fecha, opt => opt.MapFrom(src => src.Fecha.HasValue ? src.Fecha.Value.ToString() : null));
             #endregion
+            #region Comentarios
+            CreateMap<VMCalifico, Califico>()
+    .ForMember(dest => dest.UsuarioId, opt => opt.MapFrom(src => int.Parse(src.UsuarioId)))
+    .ForMember(dest => dest.NumCalifico, opt => opt.MapFrom(src => (int?)int.Parse(src.NumCalifico)))
+    .ForMember(dest => dest.Fecha, opt => opt.MapFrom(src => (DateTime?)DateTime.Parse(src.Fecha)))
+    // Ignora el mapeo del campo 'Califico1' y 'Id' ya que no están en VMCalifico
+    .ForMember(dest => dest.Califico1, opt => opt.Ignore())
+    .ForMember(dest => dest.Id, opt => opt.Ignore());
+            CreateMap<Califico, VMCalifico>()
+                .ForMember(dest => dest.UsuarioId, opt => opt.MapFrom(src => src.UsuarioId.ToString()))
+                .ForMember(dest => dest.NumCalifico, opt => opt.MapFrom(src => src.NumCalifico.HasValue ? src.NumCalifico.Value.ToString() : null))
+                .ForMember(dest => dest.Fecha, opt => opt.MapFrom(src => src.Fecha.HasValue ? src.Fecha.Value.ToString("o") : null));
+            // 'o' para el formato de fecha es ISO 8601
 
+
+
+            #endregion
             #region BaseDashboard
             CreateMap<BaseDashboard, VMBaseDashboard>()
         .ForMember(dest => dest.NroDeComercio, opt => opt.MapFrom(src => src.NroDeComercio.ToString()))

@@ -6,6 +6,7 @@ import EvolucionMensual3Barras from "../components/EvolucionMensual3Barras";
 import TripleGraficoAnalisis from "../components/TripleGraficoAnalisis";
 import ScrollToTopButton from "../components/ScrollToTopButton";
 import TituloPagina from "../components/TituloPagina";
+import { DarkModeContext } from "../context/DarkModeContext";
 
 
 const Analisis = () => {

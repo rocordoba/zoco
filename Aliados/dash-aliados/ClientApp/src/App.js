@@ -68,7 +68,7 @@ function App() {
   };
 
   return (
-    <div className={darkMode ? " container-dark" : "container-light bg-gris"}>
+    <div className={darkMode ? "container-dark" : "container-light bg-gris"}>
       <BrowserRouter>
         <div className="App">
           {window.location.pathname === "/" ? (

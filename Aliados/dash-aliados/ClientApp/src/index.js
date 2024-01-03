@@ -4,10 +4,14 @@ import App from "./App";
 import { DarkModeProvider } from "./context/DarkModeContext";
 import "bootstrap/dist/js/bootstrap.bundle.min.js"; 
 import "bootstrap/dist/css/bootstrap.min.css";
+import { DatosInicioProvider } from "./context/DatosInicioContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <DarkModeProvider>
+    <DatosInicioProvider>
     <App />
+    </DatosInicioProvider>
+   
   </DarkModeProvider>
 );

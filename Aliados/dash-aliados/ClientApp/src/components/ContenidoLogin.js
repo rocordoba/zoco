@@ -26,19 +26,11 @@ const ContenidoLogin = ({ onSubmit, datosMandados, setDatosMandados }) => {
   const [usuario, setUsuario] = useState("");
   const [password, setPassword] = useState("");
   const [isActive, setIsActive] = useState(0);
-  console.log(
-    "🚀 ~ file: ContenidoLogin.js:28 ~ ContenidoLogin ~ isActive:",
-    isActive
-  );
   const [isLoading, setIsLoading] = useState(false);
   const [buttonText, setButtonText] = useState("Conectar");
-
   const navigate = useNavigate();
   const [contador, setContador] = useState(0);
-  console.log(
-    "🚀 ~ file: ContenidoLogin.js:31 ~ ContenidoLogin ~ contador:",
-    contador
-  );
+
 
   const {
     reset,
@@ -75,11 +67,8 @@ const ContenidoLogin = ({ onSubmit, datosMandados, setDatosMandados }) => {
         setDatosMandados(data);
         console.log(data);
         if (data.token) {
-          alert("Inicio de sesión exitoso");
           setIsActive(1);
           navigate("/aliados/inicio");
-          window.location.reload();
-
           // Almacenar el token y el ID del usuario en localStorage
           localStorage.setItem("token", data.token);
           localStorage.setItem("userId", data.userId);

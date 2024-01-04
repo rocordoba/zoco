@@ -4,5 +4,5 @@ export default function formatearFecha(fecha) {
   const mes = String(fechaObj.getMonth() + 1).padStart(2, "0");
   const dia = String(fechaObj.getDate()).padStart(2, "0");
 
-  return `${año}-${mes}-${dia}`;
+  return `${dia}-${mes}-${año}`;
 }

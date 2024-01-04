@@ -48,8 +48,8 @@ namespace dash_aliados.Controllers
                     TotalOperaciones = totalOperaciones,
                     listaMes = sumasPorDia,
                     TotalBrutoHoy = totalBrutoHoy,
-                    contracargo = 0,
-                    retenciones= 0,
+                    contracargo = "0,00",
+                    retenciones= "0,00",
 
                 };
 

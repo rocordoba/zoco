@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ItemsTablaTicket from "./ItemsTablaTicket";
 import { DarkModeContext } from "../context/DarkModeContext";
 import "./TablaTickets.css";
@@ -13,19 +13,28 @@ const TablaTickets = ({ listaMes }) => {
   const { darkMode } = useContext(DarkModeContext);
   const listaDelMes = listaMes || [];
 
-  const [datosBuscador, setDatosBuscador] = useState({});
-  const { register, handleSubmit, reset } = useForm();
-  const onSubmit = (datos) => {
-    setDatosBuscador(datos);
-    reset();
+  // Estados para el término de búsqueda y los resultados filtrados
+  const [busqueda, setBusqueda] = useState("");
+  const [resultadosFiltrados, setResultadosFiltrados] = useState([]);
+
+  // Manejar el cambio en el campo de búsqueda
+  const handleSearchChange = (e) => {
+    setBusqueda(e.target.value);
   };
 
-   // Filtrar la lista basada en los datos del buscador
-   const listaFiltrada = listaDelMes.filter(dato => {
-    // Aquí asumimos que quieres filtrar por una propiedad, ajusta según tus necesidades
-    return dato.fecha.includes(datosBuscador.datosBuscados);
-  });
+  // Función para realizar la búsqueda
+  const buscarFecha = () => {
+    const busquedaLower = busqueda.toLowerCase();
+    const resultados = listaDelMes.filter((item) =>
+      item.fecha.toLowerCase().includes(busquedaLower)
+    );
+    setResultadosFiltrados(resultados);
+  };
 
+  // Efecto para actualizar los resultados cuando cambia el término de búsqueda
+  useEffect(() => {
+    buscarFecha();
+  }, [busqueda]);
 
   return (
     <section>
@@ -33,25 +42,20 @@ const TablaTickets = ({ listaMes }) => {
         <div className="d-flex flex-wrap justify-content-between ">
           <div className="margin-centrado-responsive">
             <div className="my-3">
-              <form className="d-flex" onSubmit={handleSubmit(onSubmit)}>
-                <h6 className="my-3 me-2 lato-regular fs-18">Buscar:</h6>
+
+              <div className="campo-busqueda">
                 <input
+                  type="number"
+                  value={busqueda}
+                  onChange={handleSearchChange}
                   className={
                     darkMode
                       ? " form-control text-white label-buscador-dark lato-regular fs-18 border-0"
                       : "form-control label-buscador lato-regular fs-18 border-0"
                   }
-                  type="search"
-                  aria-label="Search"
-                  {...register("datosBuscados")}
+                  placeholder="Buscar por fecha..."
                 />
-                <button className="btn  btn-search ms-2" type="submit">
-                  <FontAwesomeIcon
-                    className="text-white"
-                    icon={faMagnifyingGlass}
-                  />
-                </button>
-              </form>
+              </div>
             </div>
           </div>
           <div className="d-flex centrado-responsive">
@@ -221,9 +225,17 @@ const TablaTickets = ({ listaMes }) => {
             </tr>
           </thead>
           <tbody className="text-center">
-            {listaFiltrada.map((dato, id) => (
-              <ItemsTablaTicket {...dato} key={id}></ItemsTablaTicket>
-            ))}
+            {resultadosFiltrados.length > 0 ? (
+              resultadosFiltrados.map((dato, id) => (
+                <ItemsTablaTicket {...dato} key={id} />
+              ))
+            ) : (
+              <div className="text-center">
+                <p className="lato-bold fs-12-a-10">
+                  No se encontraron resultados para esta fecha.
+                </p>
+              </div>
+            )}
           </tbody>
         </table>
       </div>

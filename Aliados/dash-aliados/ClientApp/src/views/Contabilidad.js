@@ -7,6 +7,8 @@ import ScrollToTopButton from "../components/ScrollToTopButton";
 import TituloPagina from "../components/TituloPagina";
 
 const Contabilidad = () => {
+
+  
   const [datosBack, setDatosBack] = useState({});
   console.log("🚀 ~ file: Contabilidad.js:11 ~ Contabilidad ~ datosBack:", datosBack)
   useEffect(() => {

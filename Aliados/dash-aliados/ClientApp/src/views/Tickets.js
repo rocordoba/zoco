@@ -14,7 +14,6 @@ const Tickets = () => {
     useEffect(() => {
         const token = localStorage.getItem("token");
         const userId = localStorage.getItem("userId");
-
         const currentDate = new Date();
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
@@ -54,6 +53,7 @@ const Tickets = () => {
                 });
         }
     }, []);
+    
   return (
     <div>
       <div className="d-xl-block d-none mt-4 pt-4 ">

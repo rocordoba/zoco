@@ -41,96 +41,11 @@ const ComportamientoGrafica = ({ datos }) => {
     totalesPorDiaTarjeta,
     porcentaje,
   } = datos;
+  console.log(
+    "🚀 ~ file: ComportamientoGrafica.js:44 ~ ComportamientoGrafica ~ datos:",
+    datos
+  );
   const totales = totalesPorDiaTarjeta || [];
-
-  // const valoresTiendaABC = totales["TiendaABC"];
-  // const dias = valoresTiendaABC.map((valor) => valor.diaSemana);
-  // const totalConDescuentoPorDia = valoresTiendaABC.map(
-  //   (valor) => valor.totalConDescuentoPorDia
-  // );
-
-  // const valoresTienditaABC = totales["TienditaABC"];
-  // const diasTienda2 = valoresTienditaABC.map((valor) => valor.diaSemana);
-  // const totalConDescuentoPorDiaTienda2 = valoresTienditaABC.map(
-  //   (valor) => valor.totalConDescuentoPorDia
-  // );
-
-  // grafica en comportamiento
-  // const data = {
-  //   labels: dias,
-  //   datasets: [
-  //     {
-  //       label: "Comercio1",
-  //       borderColor: "rgba(255, 99, 132, 1)",
-  //       backgroundColor: "rgba(255, 99, 132, 0)",
-  //       data: totalConDescuentoPorDia,
-  //     },
-  //      {
-  //       label: "Delv2",
-  //       borderColor: "rgba(54, 162, 235, 1)",
-  //       backgroundColor: "rgba(54, 162, 235, 0)",
-  //       data: totalConDescuentoPorDiaTienda2,
-  //     },
-  //     // {
-  //     //   label: "Suc1",
-  //     //   borderColor: "#b4c400",
-  //     //   backgroundColor: "rgba(180, 196, 0, 0)",
-  //     //   data: [6, 37, 42, 48, 54, 73, 77],
-  //     // },
-  //     // {
-  //     //   label: "Suc2",
-  //     //   borderColor: "#31008B",
-  //     //   backgroundColor: "rgba(49, 0, 139, 0)",
-  //     //   data: [1, 17, 29, 42, 76, 86, 96],
-  //     // },
-  //     // {
-  //     //   label: "Suc3",
-  //     //   borderColor: "#08B",
-  //     //   backgroundColor: "rgba(49, 0, 139, 0)",
-  //     //   data: [7, 12, 22, 32, 56, 76, 100],
-  //     // },
-  //     // {
-  //     //   label: "Suc4",
-  //     //   borderColor: "#080B",
-  //     //   backgroundColor: "rgba(49, 0, 139, 0)",
-  //     //   data: [2, 18, 28, 38, 66, 86, 90],
-  //     // },
-  //   ],
-  // };
-
-  // const options = {
-  //   plugins: {
-  //     legend: {
-  //       labels: {
-  //         boxWidth: 8,
-  //         boxHeight: 8,
-  //       },
-  //       display: true,
-  //       position: "bottom",
-  //     },
-  //   },
-  //   responsive: true,
-  //   scales: {
-  //     y: {
-  //       display: false,
-  //       grid: {
-  //         display: false,
-  //       },
-  //       ticks: {
-  //         color: tickColor,
-  //       },
-  //     },
-  //     x: {
-  //       grid: {
-  //         display: false,
-  //       },
-
-  //       ticks: {
-  //         color: tickColor,
-  //       },
-  //     },
-  //   },
-  // };
 
   const tiendas = Object.keys(totales);
   // Obtener los días únicos de todas las tiendas
@@ -193,13 +108,13 @@ const ComportamientoGrafica = ({ datos }) => {
   };
 
   const data = {
-    labels: diasUnicos ,
+    labels: diasUnicos,
     datasets: datasets,
   };
 
   // grafica en Comparativa
   var beneficios = [comparativaHoymesanterior, comparativahoy];
-  var meses = ["Noviembre", "Diciembre"];
+  var meses = ["Diciembre", "Enero"];
 
   var misoptions = {
     responsive: true,

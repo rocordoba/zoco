@@ -55,7 +55,7 @@ namespace dash_aliados.Controllers
                         var totalIvaMes = ObtenerTotalIva(listaMes);
                         var totalIva21Mes = ObtenerTotalIva21(listaMes);
                         var totalbrutomes = ObtenerTotalBruto(listaMes);
-                        var totalcredito = totalbrutomes * 21;
+                        var totaldebito = totalbrutomes * 21;
                         var arancel = obtenerarancelmes(listaMes);
                         var ingresobruto = obteneringresobruto(listaMes);
                         var retencionganancia = obtenerretencionganancia(listaMes);
@@ -69,7 +69,7 @@ namespace dash_aliados.Controllers
                             TotalRetencionesMes = totalRetencionesMes,
                             TotalIvaMes = totalIvaMes,
                             TotalIva21Mes = totalIva21Mes,
-                            Totalcredito = totalcredito,
+                            Totaldebito = totaldebito,
                             Arancel = arancel,
                             TotalBrutoMes = totalbrutomes,
                             Ingresobruto = ingresobruto,
@@ -93,7 +93,7 @@ namespace dash_aliados.Controllers
                         var totalIvaMes = ObtenerTotalIva(listaMes);
                         var totalIva21Mes = ObtenerTotalIva21(listaMes);
                         var totalbrutomes = ObtenerTotalBruto(listaMes);
-                        var totalcredito = totalbrutomes * 21;
+                        var totaldebito = totalbrutomes * 21;
                         var arancel = obtenerarancelmes(listaMes);
                         var ingresobruto = obteneringresobruto(listaMes);
                         var retencionganancia = obtenerretencionganancia(listaMes);
@@ -107,7 +107,7 @@ namespace dash_aliados.Controllers
                             TotalRetencionesMes = totalRetencionesMes,
                             TotalIvaMes = totalIvaMes,
                             TotalIva21Mes = totalIva21Mes,
-                            Totalcredito = totalcredito,
+                            Totaldebito = totaldebito,
                             Arancel = arancel,
                             TotalBrutoMes = totalbrutomes,
                             Ingresobruto = ingresobruto,
@@ -147,7 +147,7 @@ namespace dash_aliados.Controllers
                         var totalIvaMes = ObtenerTotalIva(listaMes);
                         var totalIva21Mes = ObtenerTotalIva21(listaMes);
                         var totalbrutomes = ObtenerTotalBruto(listaMes);
-                        var totalcredito = totalbrutomes * 21;
+                        var totaldebito = totalbrutomes * 21;
                         var arancel = obtenerarancelmes(listaMes);
                         var ingresobruto = obteneringresobruto(listaMes);
                         var retencionganancia = obtenerretencionganancia(listaMes);
@@ -161,7 +161,7 @@ namespace dash_aliados.Controllers
                             TotalRetencionesMes = totalRetencionesMes,
                             TotalIvaMes = totalIvaMes,
                             TotalIva21Mes = totalIva21Mes,
-                            Totalcredito = totalcredito,
+                            Totaldebito = totaldebito,
                             Arancel = arancel,
                             TotalBrutoMes = totalbrutomes,
                             Ingresobruto = ingresobruto,
@@ -192,7 +192,7 @@ namespace dash_aliados.Controllers
                         var totalIvaMes = ObtenerTotalIva(listaMes);
                         var totalIva21Mes = ObtenerTotalIva21(listaMes);
                         var totalbrutomes = ObtenerTotalBruto(listaMes);
-                        var totalcredito = totalbrutomes * 21;
+                        var totaldebito = totalbrutomes * 21;
                         var arancel = obtenerarancelmes(listaMes);
                         var ingresobruto = obteneringresobruto(listaMes);
                         var retencionganancia = obtenerretencionganancia(listaMes);
@@ -206,7 +206,7 @@ namespace dash_aliados.Controllers
                             TotalRetencionesMes = totalRetencionesMes,
                             TotalIvaMes = totalIvaMes,
                             TotalIva21Mes = totalIva21Mes,
-                            Totalcredito = totalcredito,
+                            Totaldebito = totaldebito,
                             Arancel = arancel,
                             TotalBrutoMes = totalbrutomes,
                             Ingresobruto = ingresobruto,

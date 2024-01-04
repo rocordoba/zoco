@@ -41,19 +41,15 @@ const ComportamientoGrafica = ({ datos }) => {
     totalesPorDiaTarjeta,
     porcentaje,
   } = datos;
-  console.log(
-    "🚀 ~ file: ComportamientoGrafica.js:44 ~ ComportamientoGrafica ~ datos:",
-    datos
-  );
   const totales = totalesPorDiaTarjeta || [];
 
   const tiendas = Object.keys(totales);
   // Obtener los días únicos de todas las tiendas
-  const diasUnicos = tiendas.reduce((dias, tienda) => {
-    const valoresTienda = totales[tienda];
-    const diasTienda = valoresTienda.map((valor) => valor.diaSemana);
-    return [...new Set([...dias, ...diasTienda])]; // Unir y obtener días únicos
-  }, []);
+  // const diasUnicos = tiendas.reduce((dias, tienda) => {
+  //   const valoresTienda = totales[tienda];
+  //   const diasTienda = valoresTienda.map((valor) => valor.diaSemana);
+  //   return [...new Set([...dias, ...diasTienda])]; 
+  // }, []);
 
   const datasets = tiendas.map((tienda) => {
     const valoresTienda = totales[tienda];
@@ -108,7 +104,7 @@ const ComportamientoGrafica = ({ datos }) => {
   };
 
   const data = {
-    labels: diasUnicos,
+    labels: ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"],
     datasets: datasets,
   };
 

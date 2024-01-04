@@ -350,7 +350,9 @@ namespace dash_aliados.Controllers
         {
             var totalesPorDiaPorTarjeta = new Dictionary<string, List<object>>();
 
-            foreach (var fecha in fechasUnicas)
+            var fechasHastaHoy = fechasUnicas.Where(fecha => fecha.Date <= DateTime.Today).ToList();
+
+            foreach (var fecha in fechasHastaHoy)
             {
                 int semanaActual = ObtenerSemanaDelMesActual();
 
@@ -367,14 +369,13 @@ namespace dash_aliados.Controllers
                     }
 
                     var totalesPorDia = grupoTarjeta
-                        .GroupBy(s => s.DiaSemana)
+                        .GroupBy(s => s.FechaDePago)
                         .Select(group => new
                         {
                             NombreComercio = grupoTarjeta.Key,
-                            DiaSemana = group.Key,
+                            DiaSemana = group.Key.Value.ToString("dddd"),
                             TotalConDescuentoPorDia = group.Sum(item => item.TotalConDescuentos)
                         })
-                        .OrderBy(d => GetDayOfWeekNumber(d.DiaSemana))
                         .ToList();
 
                     totalesPorDiaPorTarjeta[grupoTarjeta.Key].AddRange(totalesPorDia);
@@ -385,26 +386,33 @@ namespace dash_aliados.Controllers
             foreach (var key in totalesPorDiaPorTarjeta.Keys.ToList())
             {
                 totalesPorDiaPorTarjeta[key] = totalesPorDiaPorTarjeta[key]
-                    .OrderBy(obj => GetDayOfWeekNumber(obj.GetType().GetProperty("DiaSemana").GetValue(obj).ToString()))
+                    .OrderBy(obj =>
+                    {
+                        dynamic d = obj;
+                        return GetDayOfWeekNumber(d.DiaSemana);
+                    })
                     .ToList();
             }
+
 
             return totalesPorDiaPorTarjeta;
         }
 
+       
+
         private int GetDayOfWeekNumber(string dayOfWeek)
         {
-            switch (dayOfWeek)
+            return dayOfWeek switch
             {
-                case "Lunes": return 1;
-                case "Martes": return 2;
-                case "Miércoles": return 3;
-                case "Jueves": return 4;
-                case "Viernes": return 5;
-                case "Sábado": return 6;
-                case "Domingo": return 7;
-                default: return 0; // en caso de un valor no reconocido
-            }
+                "lunes" => 0,
+                "martes" => 1,
+                "miércoles" => 2,
+                "jueves" => 3,
+                "viernes" => 4,
+                "sábado" => 5,
+                "domingo" => 6,
+                _ => 7 // Por si acaso hay algún valor inesperado
+            };
         }
 
 

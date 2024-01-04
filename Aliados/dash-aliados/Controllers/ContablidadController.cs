@@ -32,15 +32,15 @@ namespace dash_aliados.Controllers
             {
                 var currentDate = DateTime.Today;
                 var currentWeek = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(currentDate, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
-
+                var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
+                var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario);
                 // Verificar si el año, mes y semana son actuales
                 if (request.Year == currentDate.Year && request.Month == currentDate.Month && request.Week == currentWeek)
                 {
-                    var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
-                    var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario);
+                   
 
                     // Verificar si el comercio es "Todos"
-                    if (request.comercio.ToLower() == "todos")
+                    if (request.comercio.ToLower() == "Todos")
                     {
                         //var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
                         //var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario /*, request.Year, request.Month, request.Week, request.comercio*/);
@@ -55,7 +55,7 @@ namespace dash_aliados.Controllers
                         var totalIvaMes = ObtenerTotalIva(listaMes);
                         var totalIva21Mes = ObtenerTotalIva21(listaMes);
                         var totalbrutomes = ObtenerTotalBruto(listaMes);
-                        var totalcredito = totalbrutomes * 21;
+                        var totaldebito = totalbrutomes * 21;
                         var arancel = obtenerarancelmes(listaMes);
                         var ingresobruto = obteneringresobruto(listaMes);
                         var retencionganancia = obtenerretencionganancia(listaMes);
@@ -69,7 +69,7 @@ namespace dash_aliados.Controllers
                             TotalRetencionesMes = totalRetencionesMes,
                             TotalIvaMes = totalIvaMes,
                             TotalIva21Mes = totalIva21Mes,
-                            Totalcredito = totalcredito,
+                            Totaldebito = totaldebito,
                             Arancel = arancel,
                             TotalBrutoMes = totalbrutomes,
                             Ingresobruto = ingresobruto,
@@ -93,7 +93,7 @@ namespace dash_aliados.Controllers
                         var totalIvaMes = ObtenerTotalIva(listaMes);
                         var totalIva21Mes = ObtenerTotalIva21(listaMes);
                         var totalbrutomes = ObtenerTotalBruto(listaMes);
-                        var totalcredito = totalbrutomes * 21;
+                        var totaldebito = totalbrutomes * 21;
                         var arancel = obtenerarancelmes(listaMes);
                         var ingresobruto = obteneringresobruto(listaMes);
                         var retencionganancia = obtenerretencionganancia(listaMes);
@@ -107,7 +107,7 @@ namespace dash_aliados.Controllers
                             TotalRetencionesMes = totalRetencionesMes,
                             TotalIvaMes = totalIvaMes,
                             TotalIva21Mes = totalIva21Mes,
-                            Totalcredito = totalcredito,
+                            Totaldebito = totaldebito,
                             Arancel = arancel,
                             TotalBrutoMes = totalbrutomes,
                             Ingresobruto = ingresobruto,
@@ -120,11 +120,11 @@ namespace dash_aliados.Controllers
                 }
                 else 
                 {
-                    var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
-                    var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario);
+                    //var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
+                    //var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario);
 
                     // Verificar si el comercio es "Todos"
-                    if (request.comercio.ToLower() == "todos")
+                    if (request.comercio.ToLower() == "Todos")
                     {
                         //var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
                         //var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario /*, request.Year, request.Month, request.Week, request.comercio*/);
@@ -133,11 +133,10 @@ namespace dash_aliados.Controllers
                         DateTime fechaFinalDeLaSemana = GetLastDayOfWeek(fechaInicial);
 
                         var listaFiltrada = sas.Where(s =>
-                            s.FechaDePago.HasValue &&
-                            s.FechaDePago.Value.Year == request.Year &&
-                            s.FechaDePago.Value.Month == request.Month &&
-                            GetWeekOfYear(s.FechaDePago.Value) == request.Week)
-                        .ToList();
+                         s.FechaDePago.HasValue &&
+                             s.FechaDePago.Value.Date >= fechaInicial.Date &&
+                             s.FechaDePago.Value.Date <= fechaFinalDeLaSemana.Date)
+                              .ToList();
 
                         var listaHoy = ObtenerListaPorFecha(listaFiltrada, fechaFinalDeLaSemana);
                         var listaMes = ObtenerListaPorRangoFecha(listaFiltrada, fechaInicial, fechaFinalDeLaSemana);
@@ -147,7 +146,7 @@ namespace dash_aliados.Controllers
                         var totalIvaMes = ObtenerTotalIva(listaMes);
                         var totalIva21Mes = ObtenerTotalIva21(listaMes);
                         var totalbrutomes = ObtenerTotalBruto(listaMes);
-                        var totalcredito = totalbrutomes * 21;
+                        var totaldebito = totalbrutomes * 21;
                         var arancel = obtenerarancelmes(listaMes);
                         var ingresobruto = obteneringresobruto(listaMes);
                         var retencionganancia = obtenerretencionganancia(listaMes);
@@ -161,7 +160,7 @@ namespace dash_aliados.Controllers
                             TotalRetencionesMes = totalRetencionesMes,
                             TotalIvaMes = totalIvaMes,
                             TotalIva21Mes = totalIva21Mes,
-                            Totalcredito = totalcredito,
+                            Totaldebito = totaldebito,
                             Arancel = arancel,
                             TotalBrutoMes = totalbrutomes,
                             Ingresobruto = ingresobruto,
@@ -179,11 +178,10 @@ namespace dash_aliados.Controllers
                         DateTime fechaFinalDeLaSemana = GetLastDayOfWeek(fechaInicial);
 
                         var listaFiltrada = sas.Where(s =>
-                            s.FechaDePago.HasValue &&
-                            s.FechaDePago.Value.Year == request.Year &&
-                            s.FechaDePago.Value.Month == request.Month &&
-                            GetWeekOfYear(s.FechaDePago.Value) == request.Week)
-                        .ToList();
+                          s.FechaDePago.HasValue &&
+                              s.FechaDePago.Value.Date >= fechaInicial.Date &&
+                              s.FechaDePago.Value.Date <= fechaFinalDeLaSemana.Date)
+                               .ToList();
                         var listaHoy = ObtenerListaPorFecha(listaFiltrada, fechaFinalDeLaSemana);
                         var listaMes = ObtenerListaPorRangoFecha(listaFiltrada, fechaInicial, fechaFinalDeLaSemana);
 
@@ -192,7 +190,7 @@ namespace dash_aliados.Controllers
                         var totalIvaMes = ObtenerTotalIva(listaMes);
                         var totalIva21Mes = ObtenerTotalIva21(listaMes);
                         var totalbrutomes = ObtenerTotalBruto(listaMes);
-                        var totalcredito = totalbrutomes * 21;
+                        var totaldebito = totalbrutomes * 21;
                         var arancel = obtenerarancelmes(listaMes);
                         var ingresobruto = obteneringresobruto(listaMes);
                         var retencionganancia = obtenerretencionganancia(listaMes);
@@ -206,7 +204,7 @@ namespace dash_aliados.Controllers
                             TotalRetencionesMes = totalRetencionesMes,
                             TotalIvaMes = totalIvaMes,
                             TotalIva21Mes = totalIva21Mes,
-                            Totalcredito = totalcredito,
+                            Totaldebito = totaldebito,
                             Arancel = arancel,
                             TotalBrutoMes = totalbrutomes,
                             Ingresobruto = ingresobruto,

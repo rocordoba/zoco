@@ -328,10 +328,23 @@ namespace dash_aliados.Controllers
         // Este método recibe una lista de movimientos y devuelve una lista de fechas únicas ordenadas de forma descendente
         public List<DateTime> ObtenerFechasUnicas(List<BaseDashboard> movimientosUltimos7Dias)
         {
-            // Usamos el operador ?? para asignar un valor por defecto en caso de que la fecha sea nula
-            var fechasUnicas = movimientosUltimos7Dias.Select(s => s.FechaDePago ?? DateTime.MinValue).Distinct().OrderByDescending(d => d).ToList();
+            // Encuentra el lunes más reciente
+            DateTime lunesDeEstaSemana = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Monday);
+
+            // Usa DateTime.Today como el límite superior en lugar del domingo
+            DateTime fechaHastaHoy = DateTime.Today;
+
+            var fechasUnicas = movimientosUltimos7Dias
+                .Select(s => s.FechaDePago ?? DateTime.MinValue)
+                .Distinct()
+                .Where(d => d >= lunesDeEstaSemana && d <= fechaHastaHoy)
+                .OrderByDescending(d => d)
+                .ToList();
+
             return fechasUnicas;
         }
+
+
 
         private Dictionary<string, List<object>> ObtenerTotalesPorDiaPorTarjeta(List<BaseDashboard> sas, List<DateTime> fechasUnicas)
         {
@@ -361,7 +374,7 @@ namespace dash_aliados.Controllers
                             DiaSemana = group.Key,
                             TotalConDescuentoPorDia = group.Sum(item => item.TotalConDescuentos)
                         })
-                        .OrderBy(d => GetDayOfWeekNumber(d.DiaSemana)) // Ordenar por día de la semana
+                        .OrderBy(d => GetDayOfWeekNumber(d.DiaSemana))
                         .ToList();
 
                     totalesPorDiaPorTarjeta[grupoTarjeta.Key].AddRange(totalesPorDia);
@@ -379,22 +392,20 @@ namespace dash_aliados.Controllers
             return totalesPorDiaPorTarjeta;
         }
 
-        // Función para obtener el número del día de la semana
         private int GetDayOfWeekNumber(string dayOfWeek)
         {
             switch (dayOfWeek)
             {
-                case "Lunes": return 0;
-                case "Martes": return 1;
-                case "Miércoles": return 2;
-                case "Jueves": return 3;
-                case "Viernes": return 4;
-                case "Sábado": return 5;
-                case "Domingo": return 6;
-                default: return -1; // Valor predeterminado en caso de error
+                case "Lunes": return 1;
+                case "Martes": return 2;
+                case "Miércoles": return 3;
+                case "Jueves": return 4;
+                case "Viernes": return 5;
+                case "Sábado": return 6;
+                case "Domingo": return 7;
+                default: return 0; // en caso de un valor no reconocido
             }
         }
-
 
 
 

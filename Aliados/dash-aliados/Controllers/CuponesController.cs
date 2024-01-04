@@ -34,7 +34,8 @@ namespace dash_aliados.Controllers
 
                 var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario);
                 //   var inflacion = await _inflacionService.ObtenerPorRubro(usuarioEncontrado.Usuario);
-
+                var listaHoy = ObtenerListaPorFecha(sas, DateTime.Today);
+                var totalBrutoHoy = ObtenerTotalBruto(listaHoy);
                 var totalOperaciones = ObtenerTotalOperaciones(sas);
                 var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), DateTime.Today);
 
@@ -45,7 +46,11 @@ namespace dash_aliados.Controllers
                 {
                     AñoActual = request.Year,
                     TotalOperaciones = totalOperaciones,
-                    listaMes = sumasPorDia // Aquí usamos las sumas por día en lugar de la lista original
+                    listaMes = sumasPorDia,
+                    TotalBrutoHoy = totalBrutoHoy,
+                    contracargo = 0,
+                    retenciones= 0,
+
                 };
 
                 return StatusCode(StatusCodes.Status200OK, resultado);
@@ -53,8 +58,14 @@ namespace dash_aliados.Controllers
 
             return Unauthorized("El token o el ID de la sesión no son válidos");
         }
-
-
+        private List<BaseDashboard> ObtenerListaPorFecha(List<BaseDashboard> sas, DateTime fecha)
+        {
+            return sas.Where(s => s.FechaDePago == fecha.Date).ToList();
+        }
+        private double ObtenerTotalBruto(List<BaseDashboard> lista)
+        {
+            return (double)lista.Sum(s => s.TotalBruto);
+        }
         private double ObtenerTotalOperaciones(List<BaseDashboard> sas)
         {
             return (double)sas.Count();

@@ -14,9 +14,9 @@ const Contabilidad = () => {
 
     const currentDate = new Date();
     const year = 2023;
-    const month = currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
+    const month = 6; // Sumar 1 porque los meses van de 0 a 11
     const week = 5; // Obtener la semana actual
-      const comercio = "BRILLA ARTICULOS DE LIMPIEZA";
+      const comercio = "Suc3";
     const day = currentDate.getDay();
     const requestData = {
       token: token,

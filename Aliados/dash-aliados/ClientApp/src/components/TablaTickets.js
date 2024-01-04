@@ -2,11 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import ItemsTablaTicket from "./ItemsTablaTicket";
 import { DarkModeContext } from "../context/DarkModeContext";
 import "./TablaTickets.css";
-import { useForm } from "react-hook-form";
 import pdf from "../assets/img/pdf.png";
 import xls from "../assets/img/xls.png";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import pdfPrueba from "../doc/prueba.pdf";
 
 const TablaTickets = ({ listaMes }) => {
@@ -42,7 +39,6 @@ const TablaTickets = ({ listaMes }) => {
         <div className="d-flex flex-wrap justify-content-between ">
           <div className="margin-centrado-responsive">
             <div className="my-3">
-
               <div className="campo-busqueda">
                 <input
                   type="number"
@@ -53,7 +49,7 @@ const TablaTickets = ({ listaMes }) => {
                       ? " form-control text-white label-buscador-dark lato-regular fs-18 border-0"
                       : "form-control label-buscador lato-regular fs-18 border-0"
                   }
-                  placeholder="Buscar por fecha..."
+                  placeholder="01-01-2024"
                 />
               </div>
             </div>
@@ -230,11 +226,11 @@ const TablaTickets = ({ listaMes }) => {
                 <ItemsTablaTicket {...dato} key={id} />
               ))
             ) : (
-              <div className="text-center">
-                <p className="lato-bold fs-12-a-10">
+              <tr>
+                <td className="lato-bold fs-12-a-10">
                   No se encontraron resultados para esta fecha.
-                </p>
-              </div>
+                </td>
+              </tr>
             )}
           </tbody>
         </table>

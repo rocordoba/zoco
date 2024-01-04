@@ -17,7 +17,6 @@ import { DatosInicioContext  } from "../context/DatosInicioContext";
 const Inicio = ({ califico, setCalifico }) => {
   const { darkMode } = useContext(DarkModeContext);
   const {datosBackContext} = useContext(DatosInicioContext)
-  console.log("🚀 ~ file: Inicio.js:20 ~ Inicio ~ datosBackContext:", datosBackContext)
   const [contador, setContador] = useState(0);
   const [datosMandados, setDatosMandados] = useState();
 

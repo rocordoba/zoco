@@ -49,9 +49,6 @@ const ContenidoLogin = ({ onSubmit, datosMandados, setDatosMandados }) => {
   };
 
   const onSubmit2 = () => {
-    console.log("Usuario:", usuario);
-    console.log("Contraseña:", password);
-
     fetch("/api/acceso/login", {
       method: "POST",
       headers: {

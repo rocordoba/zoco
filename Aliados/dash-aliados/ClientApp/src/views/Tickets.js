@@ -9,6 +9,7 @@ import { DatosInicioContext } from "../context/DatosInicioContext";
 
 const Tickets = () => {
   const { datosCuponesContext } = useContext(DatosInicioContext);
+  console.log("🚀 ~ file: Tickets.js:12 ~ Tickets ~ datosCuponesContext:", datosCuponesContext)
   const { listaMes } = datosCuponesContext;
   return (
     <div>

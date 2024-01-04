@@ -47,6 +47,9 @@ export const DatosInicioProvider = ({ children }) => {
     }
   }, []);
 
+
+  const [datosCuponesContext, setDatosCuponesContext]= useState({})
+
    useEffect(() => {
         const token = localStorage.getItem("token");
         const userId = localStorage.getItem("userId");
@@ -82,7 +85,7 @@ export const DatosInicioProvider = ({ children }) => {
                 })
                 .then((data) => {
                     console.log("Datos recuperados:", data);
-                    setDatosBack(data);
+                    setDatosCuponesContext(data);
                 })
                 .catch((error) => {
                     console.error("Error en la solicitud:", error);
@@ -92,7 +95,12 @@ export const DatosInicioProvider = ({ children }) => {
     
 
   return (
-    <DatosInicioContext.Provider value={{ datosBackContext, setDatosBackContext }}>
+    <DatosInicioContext.Provider 
+    value={{ 
+      datosBackContext, 
+      setDatosBackContext,
+      datosCuponesContext
+      }}>
       {children}
     </DatosInicioContext.Provider>
   );

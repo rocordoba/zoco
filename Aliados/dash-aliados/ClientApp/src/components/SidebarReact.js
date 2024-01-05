@@ -17,7 +17,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useState } from "react";
-import { NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import qr from "../assets/img/qr.png";
 import qrClaro from "../assets/img/qr-blanco.png";
 import logo from "../assets/img/logo.png";
@@ -245,7 +245,7 @@ const SidebarReact = () => {
     confirmar: "",
     nueva: "",
   });
- 
+
   //Modal configuraciones
   function ModalConfiguraciones(props) {
     const { show, onHide } = props;
@@ -273,20 +273,18 @@ const SidebarReact = () => {
               : "modal-content text-black "
           }
         >
-          <section>
-            <div className="d-flex justify-content-end">
-              <FontAwesomeIcon
-                onClick={onHide}
-                className="fs-18 me-2"
-                icon={faXmark}
-              />
+          <section className="d-flex justify-content-between my-4">
+            <div className="ocultar-div"></div>
+            <div className="d-flex justify-content-center">
+              <h6 className="fs-18 lato-bold">Cambiar contraseña</h6>
+            </div>
+            <div>
+              <button className="border-0 btn-filtro-cruz" onClick={onHide}>
+                <FontAwesomeIcon className="fs-18 " icon={faXmark} />
+              </button>
             </div>
           </section>
-          <section>
-            <div className="d-flex justify-content-center ">
-              <h6 className="fs-20 lato-bold  ">Cambiar contraseña</h6>
-            </div>
-          </section>
+         
           <div className="d-flex justify-content-center">
             <form className="py-5 " onSubmit={handleSubmit(onSubmit)}>
               <article>
@@ -400,28 +398,6 @@ const SidebarReact = () => {
   }
 
   //click fuera del modal
-  const modalCampanaRef = useRef(null);
-  const modalCerrarSesionRef = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        (modalCampanaRef.current &&
-          !modalCampanaRef.current.contains(event.target)) ||
-        (modalCerrarSesionRef.current &&
-          !modalCerrarSesionRef.current.contains(event.target))
-      ) {
-        setVisible1(false);
-        setVisible2(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [modalCampanaRef, modalCerrarSesionRef]);
 
   return (
     <>
@@ -443,23 +419,31 @@ const SidebarReact = () => {
               />
             </div>
 
-            <div className="zoom" onClick={() => {verModalNotificacion(); setVisible2(false);}}>
+            <div
+              className="zoom"
+              onClick={() => {
+                verModalNotificacion();
+                setVisible2(false);
+              }}
+            >
               <FontAwesomeIcon
                 className={activadoIconoCampana()}
-                
                 icon={faBell}
               />
             </div>
-            <div className="zoom" onClick={() => {verModalCerrarSesion(); setVisible1(false);}}>
-              <FontAwesomeIcon
-                className={activadoIconoUser()}
-                icon={faUser}
-                />
+            <div
+              className="zoom"
+              onClick={() => {
+                verModalCerrarSesion();
+                setVisible1(false);
+              }}
+            >
+              <FontAwesomeIcon className={activadoIconoUser()} icon={faUser} />
             </div>
           </div>
           {/* caja campana  */}
           {visible1 && (
-            <div className="" ref={modalCampanaRef}>
+            <div className="">
               <div className="d-flex justify-content-center">
                 {darkMode ? (
                   <div>
@@ -590,7 +574,7 @@ const SidebarReact = () => {
           )}
           {/* caja cerrar sesion  */}
           {visible2 && (
-            <div className=" container" ref={modalCerrarSesionRef}>
+            <div className=" container">
               <div className="d-flex justify-content-center">
                 <div className="mx-3"></div>
                 <div className="mx-5"></div>
@@ -781,7 +765,7 @@ const SidebarReact = () => {
             </div>
           </NavLink>
         </div>
-        
+
         <div className="centrado my-2">
           <NavLink
             end

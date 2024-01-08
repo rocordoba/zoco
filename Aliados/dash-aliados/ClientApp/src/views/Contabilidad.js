@@ -11,7 +11,8 @@ import Impuesto2CardsBn from "../components/Impuesto2CardsBn";
 
 const Contabilidad = () => {
   const { datosContabilidadContext } = useContext(DatosInicioContext);
-
+  console.log("🚀 ~ file: Contabilidad.js:14 ~ Contabilidad ~ datosContabilidadContext:", datosContabilidadContext)
+ 
   return (
     <div>
       <div className="d-xl-block d-none mt-4 pt-4 ">

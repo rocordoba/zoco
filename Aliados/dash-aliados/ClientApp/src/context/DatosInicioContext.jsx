@@ -17,11 +17,11 @@ export const DatosInicioProvider = ({ children }) => {
     const requestData = {
       token: token,
       id: userId,
-      year: 2024,
-      month: 1,
-      week: 1,
+      year: year,
+      month: month,
+      week: week,
       comercio: comercio,
-      day: 4,
+      day: day,
     };
 
     if (token && userId) {

@@ -41,7 +41,7 @@ const TablaTickets = ({ listaMes }) => {
             <div className="my-3">
               <div className="campo-busqueda">
                 <input
-                  type="number"
+                  type="text"
                   value={busqueda}
                   onChange={handleSearchChange}
                   className={

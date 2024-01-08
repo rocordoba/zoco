@@ -98,7 +98,7 @@ public async Task<Usuarios> ObtenerPorCredenciales(string correo, string clave)
         Usuarios usuario_encontrado = await _repositorioUser.Obtener(u => u.Usuario == correo);
 
         // Verifica la clave usando EnhancedVerify, que soporta el prefijo $2y$ de PHP
-        bool verified = BCrypt.Net.BCrypt.EnhancedVerify(clave, usuario_encontrado.Password);
+      //  bool verified = BCrypt.Net.BCrypt.EnhancedVerify(clave, usuario_encontrado.Password);
 
         // si usuario es diferente de null
         //creo un numero aleatorio, le mando , lo guardo, UPDATE!!

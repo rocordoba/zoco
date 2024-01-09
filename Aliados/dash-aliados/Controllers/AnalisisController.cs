@@ -49,7 +49,7 @@ namespace dash_aliados.Controllers
                         var totalConDescuentoCuotas1 = ObtenerTotalConDescuentoCuotas(listaMes, 1);
                         var totalConDescuentoCuotas2 = ObtenerTotalConDescuentoCuotas(listaMes, 2);
                         var totalCuotas = totalConDescuentoCuotas1 + totalConDescuentoCuotas2;
-                        var tarea = ObtenerResumenUltimos7Meses(listaMes);
+                        var tarea = ObtenerResumenUltimos7Meses(sas);
                         var resumenUltimos7Meses = tarea.Result;
 
                         var debito = ObtenerTicketPromedio(listaMes, 0);
@@ -78,16 +78,17 @@ namespace dash_aliados.Controllers
                     else
                     {
                         sas = sas.Where(s => s.NombreComercio != null && s.NombreComercio.ToLower() == request.comercio.ToLower()).ToList();
-                        var totalOperaciones = ObtenerTotalOperaciones(sas);
-                        var totalConDescuentoCuotas0 = ObtenerTotalConDescuentoCuotas(sas, 0);
-                        var totalConDescuentoCuotas1 = ObtenerTotalConDescuentoCuotas(sas, 1);
-                        var totalConDescuentoCuotas2 = ObtenerTotalConDescuentoCuotas(sas, 2);
+                        var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), DateTime.Today);
+                        var totalOperaciones = ObtenerTotalOperaciones(listaMes);
+                        var totalConDescuentoCuotas0 = ObtenerTotalConDescuentoCuotas(listaMes, 0);
+                        var totalConDescuentoCuotas1 = ObtenerTotalConDescuentoCuotas(listaMes, 1);
+                        var totalConDescuentoCuotas2 = ObtenerTotalConDescuentoCuotas(listaMes, 2);
                         var totalCuotas = totalConDescuentoCuotas1 + totalConDescuentoCuotas2;
                         var tarea = ObtenerResumenUltimos7Meses(sas);
                         var resumenUltimos7Meses = tarea.Result;
 
-                        var debito = ObtenerTicketPromedio(sas, 0);
-                        var credito = ObtenerTicketPromedio(sas, 1);
+                        var debito = ObtenerTicketPromedio(listaMes, 0);
+                        var credito = ObtenerTicketPromedio(listaMes, 1);
                         var porcentajeporcuotas = ObtenerPorcentaje(totalConDescuentoCuotas0, totalCuotas);
                         var porcentajeticket = ObtenerPorcentaje(debito, credito);
                         var porcentajetipopago = ObtenerPorcentaje(totalConDescuentoCuotas0, totalConDescuentoCuotas1);

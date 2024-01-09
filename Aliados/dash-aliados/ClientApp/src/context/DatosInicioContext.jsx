@@ -84,7 +84,7 @@ export const DatosInicioProvider = ({ children }) => {
                     return response.json();
                 })
                 .then((data) => {
-                    console.log("Datos recuperados:", data);
+      
                     setDatosCuponesContext(data);
                 })
                 .catch((error) => {
@@ -94,12 +94,7 @@ export const DatosInicioProvider = ({ children }) => {
     }, []);
     
 
-    const [califico, setCalifico] = useState(0);
-    const [isActive, setIsActive] = useState(0);
-    const [usuario, setUsuario] = useState("");
-    const [password, setPassword] = useState("");
-  
-    const [contador, setContador] = useState(0);
+
     const [datosMandados, setDatosMandados] = useState();
   
     const [datosContabilidadContext, setDatosContabilidadContext] = useState({});
@@ -146,6 +141,52 @@ export const DatosInicioProvider = ({ children }) => {
       }
     }, []);
 
+
+    const [datosAnalisisContext, setDatosAnalisisContext] = useState({});
+    useEffect(() => {
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
+  
+      const currentDate = new Date();
+      const year = 2023;
+      const month = 6; // Sumar 1 porque los meses van de 0 a 11
+      const week = 5; // Obtener la semana actual
+      const comercio = "Suc3";
+      const day = currentDate.getDay();
+      const requestData = {
+        token: token,
+        id: userId,
+        year: year,
+        month: month,
+        week: week,
+        comercio: comercio,
+        day: day,
+      };
+  
+      if (token && userId) {
+        fetch(`/api/analisis/analisis`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestData),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            setDatosAnalisisContext(data);
+          })
+          .catch((error) => {
+            console.error("Error en la solicitud:", error);
+          });
+      }
+    }, []);
+  
+
   return (
     <DatosInicioContext.Provider 
     value={{ 
@@ -155,7 +196,9 @@ export const DatosInicioProvider = ({ children }) => {
       datosMandados,
       setDatosMandados,
       datosContabilidadContext, 
-      setDatosContabilidadContext
+      setDatosContabilidadContext,
+      datosAnalisisContext, 
+      setDatosAnalisisContext
       }}>
       {children}
     </DatosInicioContext.Provider>

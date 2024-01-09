@@ -144,6 +144,7 @@ export const DatosInicioProvider = ({ children }) => {
 
     const [datosAnalisisContext, setDatosAnalisisContext] = useState({});
     useEffect(() => {
+<<<<<<< HEAD
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("userId");
   
@@ -168,6 +169,25 @@ export const DatosInicioProvider = ({ children }) => {
         day: day,
       };
   
+=======
+        const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("userId");
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
+        const week = Math.ceil(currentDate.getDate() / 7); // Obtener la semana actual
+        const comercio = "Todos";
+        const day = currentDate.getDay();
+        const requestData = {
+            token: token,
+            id: userId,
+            year: year,
+            month: month,
+            week: week,
+            comercio: comercio,
+            day: day,
+        };
+>>>>>>> bef9c543236f4efa8d5222d34283770d4a207710
       if (token && userId) {
         fetch(`/api/analisis/analisis`, {
           method: "POST",

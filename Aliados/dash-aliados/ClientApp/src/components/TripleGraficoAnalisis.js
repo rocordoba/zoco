@@ -34,7 +34,9 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
 
   const {
     debito,
-    credito
+    credito,
+    totalConDescuentoCuotas0,
+    totalConDescuentoCuotas1,
   } = datosBack;
 
 
@@ -107,7 +109,7 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
   });
 
   // VENTAS POR TIPO DE PAGO
-  var ventasValues = [52, 96];
+  var ventasValues = [totalConDescuentoCuotas0, totalConDescuentoCuotas1];
 
   var midataVentas = {
     labels: labels,

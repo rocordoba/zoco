@@ -40,7 +40,7 @@ namespace dash_aliados.Controllers
                 var ultimoDiaMes = primerDiaMes.AddMonths(1).AddDays(-1);
 
                 // Filtrar datos basados en el rango de fechas
-                var datosFiltrados = sas.Where(dato => dato.FechaOperacion?.Date >= primerDiaMes && dato.FechaOperacion?.Date <= ultimoDiaMes).ToList();
+                var datosFiltrados = sas.Where(dato => dato.FechaDePago?.Date >= primerDiaMes && dato.FechaDePago?.Date <= ultimoDiaMes).ToList();
 
 
                 using (var workbook = new XLWorkbook())
@@ -117,7 +117,7 @@ namespace dash_aliados.Controllers
                 var ultimoDiaMes = primerDiaMes.AddMonths(1).AddDays(-1);
 
                 // Filtrar datos basados en el rango de fechas
-                var datosFiltrados = sas.Where(dato => dato.FechaOperacion?.Date >= primerDiaMes && dato.FechaOperacion?.Date <= ultimoDiaMes).ToList();
+                var datosFiltrados = sas.Where(dato => dato.FechaDePago?.Date >= primerDiaMes && dato.FechaDePago?.Date <= ultimoDiaMes).ToList();
 
 
                 using (var workbook = new XLWorkbook())

@@ -1,4 +1,4 @@
-import React, { useContext} from "react";
+import React, { useContext } from "react";
 import BienvenidoPanel from "../components/BienvenidoPanel";
 import Footer from "../components/Footer";
 import DatosTickets from "../components/DatosTickets";
@@ -9,8 +9,9 @@ import { DatosInicioContext } from "../context/DatosInicioContext";
 
 const Tickets = () => {
   const { datosCuponesContext } = useContext(DatosInicioContext);
-  console.log("🚀 ~ file: Tickets.js:12 ~ Tickets ~ datosCuponesContext:", datosCuponesContext)
   const { listaMes } = datosCuponesContext;
+  
+  
   return (
     <div>
       <div className="d-xl-block d-none mt-4 pt-4 ">
@@ -21,7 +22,7 @@ const Tickets = () => {
         <TituloPagina title="Cupones" />
       </div>
       <div className="my-3">
-        <DatosTickets />
+        <DatosTickets  datosCuponesContext={datosCuponesContext}/>
       </div>
       <TablaTickets listaMes={listaMes} />
       <div className="py-4">

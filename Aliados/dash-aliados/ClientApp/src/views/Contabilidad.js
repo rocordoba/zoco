@@ -5,51 +5,14 @@ import DatosContabilidad from "../components/DatosContabilidad";
 import ImpuestosCards from "../components/ImpuestosCards";
 import ScrollToTopButton from "../components/ScrollToTopButton";
 import TituloPagina from "../components/TituloPagina";
+import { DatosInicioContext } from "../context/DatosInicioContext";
+import Impuesto2Cards from "../components/Impuesto2Cards";
+import Impuesto2CardsBn from "../components/Impuesto2CardsBn";
 
 const Contabilidad = () => {
-  const [datosBack, setDatosBack] = useState({});
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
-
-    const currentDate = new Date();
-    const year = 2023;
-    const month = 6; // Sumar 1 porque los meses van de 0 a 11
-    const week = 5; // Obtener la semana actual
-      const comercio = "Suc3";
-    const day = currentDate.getDay();
-    const requestData = {
-      token: token,
-      id: userId,
-      year: year,
-      month: month,
-      week: week,
-      comercio: comercio,
-      day: day,
-    };
-
-    if (token && userId) {
-      fetch(`/api/contablidad/contabilidad`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestData),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setDatosBack(data);
-        })
-        .catch((error) => {
-          console.error("Error en la solicitud:", error);
-        });
-    }
-  }, []);
+  const { datosContabilidadContext } = useContext(DatosInicioContext);
+  console.log("🚀 ~ file: Contabilidad.js:14 ~ Contabilidad ~ datosContabilidadContext:", datosContabilidadContext)
+ 
   return (
     <div>
       <div className="d-xl-block d-none mt-4 pt-4 ">
@@ -60,9 +23,22 @@ const Contabilidad = () => {
         <TituloPagina title="Contabilidad" />
       </div>
       <div className="my-3">
-        <DatosContabilidad datosBack={datosBack} />
+        <DatosContabilidad datosBack={datosContabilidadContext} />
       </div>
-      <ImpuestosCards />
+      {/* <ImpuestosCards datosBack={datosContabilidadContext} /> */}
+      <section className="d-lg-block d-none">
+        <div className="py-5">
+          <Impuesto2Cards />
+        </div>
+        <div className="py-2">
+          <Impuesto2CardsBn />
+        </div>
+      </section>
+      <section className="d-block d-lg-none">
+        <div className="py-5">
+        <ImpuestosCards datosBack={datosContabilidadContext} /> 
+        </div>
+      </section>
       <div className="py-4">
         <Footer />
       </div>

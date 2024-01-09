@@ -9,11 +9,6 @@ import { DarkModeContext } from "../context/DarkModeContext";
 
 const Buscador = () => {
   const [datosBuscador, setDatosBuscador] = useState({});
-  console.log(
-    "🚀 ~ file: Buscador.js:8 ~ Buscador ~ datosBuscado:",
-    datosBuscador
-  );
-
   const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = (datos) => {

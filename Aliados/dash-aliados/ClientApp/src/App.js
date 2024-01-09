@@ -12,61 +12,13 @@ import Login from "./views/Login";
 import SidebarReact from "./components/SidebarReact";
 import ScrollToTop from "./components/ScrollToTop";
 import NuevoNavReact from "./components/NuevoNavReact";
+import { DatosInicioContext } from "./context/DatosInicioContext";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
   const [navVisible, showNavbar] = useState(false);
-  const [califico, setCalifico] = useState(0);
-  // const [datosBack, setDatosBack] = useState({});
-  // const [recuperar, setRecuperar] = useState(false);
-  // const [showPassword, setShowPassword] = useState(false);
-  const [usuario, setUsuario] = useState("");
-  const [password, setPassword] = useState("");
-  const [isActive, setIsActive] = useState(0);
-
-  const [contador, setContador] = useState(0);
-  const [datosMandados, setDatosMandados] = useState();
-
-  const onSubmit = () => {
-    console.log("Usuario:", usuario);
-    console.log("Contraseña:", password);
-
-    fetch("/api/acceso/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        UsuarioCuit: usuario,
-        Clave: password,
-      }),
-    })
-      // Procesar la respuesta de la API
-      .then((response) => response.json())
-
-      .then((data) => {
-        // Verificar si el inicio de sesión fue exitoso o no
-        setDatosMandados(data);
-        console.log(data);
-        if (data.IdUsuario !== 0) {
-          alert("Inicio de sesión exitoso");
-          setIsActive(1);
-
-          window.location.reload();
-
-          if (data.califico === 0 || data.califico === null) {
-            console.log("aqui va el popup");
-          }
-        } else {
-          alert("Revisar usuario/contraseña");
-          setContador(contador + 1);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-
+  const { califico, setCalifico } =
+    useContext(DatosInicioContext);
   return (
     <div className={darkMode ? "container-dark" : "container-light bg-gris"}>
       <BrowserRouter>
@@ -78,9 +30,6 @@ function App() {
               }
             >
               <Login
-                onSubmit={onSubmit}
-                datosMandados={datosMandados}
-                setDatosMandados={setDatosMandados}
               />
             </div>
           ) : (

@@ -1,8 +1,12 @@
 import { useContext } from "react";
 import { DarkModeContext } from "../context/DarkModeContext";
+import { formatearAPeso } from "../helpers/formatearAPeso";
 
-const DatosTickets = () => {
+const DatosTickets = ({ datosCuponesContext}) => {
   const { darkMode } = useContext(DarkModeContext)
+  const {totalOperaciones,totalBrutoHoy, contracargo, retenciones } = datosCuponesContext;
+
+  const totalBrutoHoyFormateado = formatearAPeso(totalBrutoHoy);
     return (
       <section className="container">
         <div className="row">
@@ -13,7 +17,7 @@ const DatosTickets = () => {
             </h6>
             <button className={darkMode ? ' bg-data-dark border-0 quitar-cursor-pointer' : 'container-light bg-data  border-0 quitar-cursor-pointer'}>
               <div className=" d-flex justify-content-center border-0 lato-bold fs-24">
-                3927
+                {totalOperaciones}
               </div>
             </button>
           </article>
@@ -25,7 +29,7 @@ const DatosTickets = () => {
             </h6>
             <button className={darkMode ? ' bg-data-dark border-0 quitar-cursor-pointer' : 'container-light bg-data  border-0 quitar-cursor-pointer'}>
               <div className=" d-flex justify-content-center border-0 lato-bold fs-24">
-                $ 11.542.670,46
+                $ {totalBrutoHoyFormateado}
               </div>
             </button>
           </article>
@@ -37,7 +41,7 @@ const DatosTickets = () => {
             </h6>
             <button className={darkMode ? ' bg-data-dark border-0 quitar-cursor-pointer' : 'container-light bg-data  border-0 quitar-cursor-pointer'}>
               <div className=" d-flex justify-content-center border-0 lato-bold fs-24">
-                $ 306.580,71
+                $ {contracargo}
               </div>
             </button>
           </article>
@@ -48,7 +52,7 @@ const DatosTickets = () => {
             </h6>
             <button className={darkMode ? ' bg-data-dark border-0 quitar-cursor-pointer' : 'container-light bg-data  border-0 quitar-cursor-pointer'}>
               <div className=" d-flex justify-content-center border-0 lato-bold fs-24">
-                $ 0,00
+                $ {retenciones}
               </div>
             </button>
           </article>

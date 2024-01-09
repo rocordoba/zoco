@@ -41,19 +41,40 @@ const ComportamientoGrafica = ({ datos }) => {
     totalesPorDiaTarjeta,
     porcentaje,
   } = datos;
-  console.log(
-    "🚀 ~ file: ComportamientoGrafica.js:44 ~ ComportamientoGrafica ~ datos:",
-    datos
-  );
   const totales = totalesPorDiaTarjeta || [];
 
+
   const tiendas = Object.keys(totales);
-  // Obtener los días únicos de todas las tiendas
-  const diasUnicos = tiendas.reduce((dias, tienda) => {
-    const valoresTienda = totales[tienda];
-    const diasTienda = valoresTienda.map((valor) => valor.diaSemana);
-    return [...new Set([...dias, ...diasTienda])]; // Unir y obtener días únicos
-  }, []);
+
+  // Crear un array para almacenar los días
+  let diasArray = [];
+  // Iterar sobre cada tienda
+  for (let tienda in totales) {
+    if (totales.hasOwnProperty(tienda)) {
+      // Obtener los días de esa tienda y añadirlos al array
+      diasArray = diasArray.concat(totales[tienda].map(valor => valor.diaSemana));
+    }
+    
+  }
+  // Si quieres eliminar duplicados, convierte el array en un Set y luego de nuevo en un array
+  diasArray = [...new Set(diasArray)];
+
+  function ordenarDias(dia) {
+    const orden = {
+      lunes: 1,
+      martes: 2,
+      miércoles: 3,
+      jueves: 4,
+      viernes: 5,
+      sábado: 6,
+      domingo: 7
+    };
+    return orden[dia] || 8;
+  }
+  
+  diasArray.sort((a, b) => ordenarDias(a) - ordenarDias(b));
+
+
 
   const datasets = tiendas.map((tienda) => {
     const valoresTienda = totales[tienda];
@@ -108,7 +129,7 @@ const ComportamientoGrafica = ({ datos }) => {
   };
 
   const data = {
-    labels: diasUnicos,
+    labels: diasArray,
     datasets: datasets,
   };
 

@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import { DarkModeContext } from "../context/DarkModeContext";
 import "./FormComentarioCalificar.css";
 import { Col, Form } from "react-bootstrap";
+import Swal from "sweetalert2";
 
 const FormComentarioCalificar = () => {
   const [rating, setRating] = useState(0);
@@ -18,43 +19,57 @@ const FormComentarioCalificar = () => {
   //  setFormComentarioData({ comentario: "" });
   //};
 
+  const isButtonDisabled = rating === 0;
 
   const handleStarClick = (star) => {
     setRating(star);
   };
-    const onSubmit = async (event) => {
-        event.preventDefault();
-        const token = localStorage.getItem("token");
-        const userId = parseInt(localStorage.getItem("userId")); // Asegúrate de que userId sea un entero
-        const fechaActual = new Date().toISOString();
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    const token = localStorage.getItem("token");
+    const userId = parseInt(localStorage.getItem("userId")); // Asegúrate de que userId sea un entero
+    const fechaActual = new Date().toISOString();
 
-        const datosConRating = {
-            Token: token,
-            UsuarioId: userId,
-            NumCalifico: rating,
-            Descripcion: formComentarioData.comentario,
-            Fecha: fechaActual
-        };
-
-        console.log("Datos a enviar:", datosConRating);
-
-        try {
-            await fetch('/api/califico/califico', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(datosConRating),
-            });
-
-            // No hay lógica adicional después de la solicitud, por lo que no se espera respuesta
-            setRating(0);
-            setFormComentarioData({ comentario: "" });
-        } catch (error) {
-            console.error('Hubo un error:', error);
-            // Manejar el error adecuadamente
-        }
+    const datosConRating = {
+      Token: token,
+      UsuarioId: userId,
+      NumCalifico: rating,
+      Descripcion: formComentarioData.comentario,
+      Fecha: fechaActual,
     };
+
+    console.log("Datos a enviar:", datosConRating);
+
+    try {
+      await fetch("/api/califico/califico", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(datosConRating),
+      });
+
+      // No hay lógica adicional después de la solicitud, por lo que no se espera respuesta
+      setRating(0);
+      setFormComentarioData({ comentario: "" });
+
+      // Mostrar SweetAlert2 aquí
+      Swal.fire({
+        title: "¡Enviado!",
+        text: "Tu comentario ha sido enviado con éxito.",
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
+    } catch (error) {
+      console.error("Hubo un error:", error);
+      Swal.fire({
+        title: "Error",
+        text: "Hubo un problema al enviar tu comentario.",
+        icon: "error",
+        confirmButtonText: "Cerrar",
+      });
+    }
+  };
 
   const { darkMode } = useContext(DarkModeContext);
   return (
@@ -181,6 +196,7 @@ const FormComentarioCalificar = () => {
               required
               type="text"
               name="comentario"
+              value={formComentarioData.comentario}
               onChange={(e) =>
                 setFormComentarioData({
                   ...formComentarioData,
@@ -191,7 +207,15 @@ const FormComentarioCalificar = () => {
           </Form.Group>
         </div>
         <div className="my-4 d-flex justify-content-center">
-          <button className="btn-enviar-comentario" type="submit">
+          <button
+            disabled={isButtonDisabled}
+            className={
+              isButtonDisabled
+                ? "btn-enviar-comentario-disabled"
+                : "btn-enviar-comentario"
+            }
+            type="submit"
+          >
             <span className="lato-bold fs-18 text-white ">Enviar</span>
           </button>
         </div>

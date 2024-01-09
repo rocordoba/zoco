@@ -1,7 +1,18 @@
+import { useContext } from "react";
 import ContenidoLogin from "../components/ContenidoLogin";
 import FooterLogin from "../components/FooterLogin";
+import { DatosInicioContext } from "../context/DatosInicioContext";
 
-const Login = ({ onSubmit, datosMandados, setDatosMandados }) => {
+const Login = () => {
+  const {
+    onSubmit,
+    datosMandados,
+    setDatosMandados,
+    setIsLoading,
+    setButtonText,
+    isLoading,
+    buttonTex,
+  } = useContext(DatosInicioContext);
   return (
     <section className="bg-view-login ">
       <article className="">
@@ -17,6 +28,10 @@ const Login = ({ onSubmit, datosMandados, setDatosMandados }) => {
             onSubmit={onSubmit}
             datosMandados={datosMandados}
             setDatosMandados={setDatosMandados}
+            setIsLoading={setIsLoading}
+            setButtonText={setButtonText}
+            isLoading={isLoading}
+            buttonTex={buttonTex}
           />
         </div>
       </article>

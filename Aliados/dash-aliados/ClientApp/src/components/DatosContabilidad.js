@@ -3,12 +3,12 @@ import { DarkModeContext } from "../context/DarkModeContext";
 import formatearValores from "../helpers/formatearAPeso";
 
 const DatosContabilidad = ({ datosBack }) => {
-  const { totalBrutoMes, totalIvaMes, totalNetoHoy, totalRetencionesMes } =
+  const { totalBrutoMes, totalIvaMes, totalNetoMes, totalRetencionesMes } =
     datosBack;
 
   const valoresFormateados = formatearValores(
     totalBrutoMes,
-    totalNetoHoy,
+    totalNetoMes,
     totalRetencionesMes,
     totalIvaMes
   );

@@ -11,7 +11,7 @@ import Impuesto2CardsBn from "../components/Impuesto2CardsBn";
 
 const Contabilidad = () => {
   const { datosContabilidadContext } = useContext(DatosInicioContext);
-  console.log("🚀 ~ file: Contabilidad.js:14 ~ Contabilidad ~ datosContabilidadContext:", datosContabilidadContext)
+ 
  
   return (
     <div>
@@ -28,7 +28,7 @@ const Contabilidad = () => {
       {/* <ImpuestosCards datosBack={datosContabilidadContext} /> */}
       <section className="d-lg-block d-none">
         <div className="py-5">
-          <Impuesto2Cards />
+          <Impuesto2Cards datosBack={datosContabilidadContext} />
         </div>
         <div className="py-2">
           <Impuesto2CardsBn />

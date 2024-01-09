@@ -7,72 +7,75 @@ import xls from "../assets/img/xls.png";
 import pdfPrueba from "../doc/prueba.pdf";
 
 const TablaTickets = ({ listaMes }) => {
-    const { darkMode } = useContext(DarkModeContext);
-    const listaDelMes = listaMes || [];
+  const [descargando, setDescargando] = useState(false);
+  const { darkMode } = useContext(DarkModeContext);
+  const listaDelMes = listaMes || [];
 
-    const [busqueda, setBusqueda] = useState("");
-    const [resultadosFiltrados, setResultadosFiltrados] = useState([]);
+  const [busqueda, setBusqueda] = useState("");
+  const [resultadosFiltrados, setResultadosFiltrados] = useState([]);
 
-    const handleSearchChange = (e) => {
-        setBusqueda(e.target.value);
-    };
+  const handleSearchChange = (e) => {
+    setBusqueda(e.target.value);
+  };
 
-    const buscarFecha = () => {
-        const busquedaLower = busqueda.toLowerCase();
-        const resultados = listaDelMes.filter((item) =>
-            item.fecha.toLowerCase().includes(busquedaLower)
-        );
-        setResultadosFiltrados(resultados);
-    };
+  const buscarFecha = () => {
+    const busquedaLower = busqueda.toLowerCase();
+    const resultados = listaDelMes.filter((item) =>
+      item.fecha.toLowerCase().includes(busquedaLower)
+    );
+    setResultadosFiltrados(resultados);
+  };
 
-    // Función para manejar la descarga de Excel
-    const manejarClicDescarga = async () => {
-        const token = localStorage.getItem("token");
-        const userId = localStorage.getItem("userId");
-        const fechaActual = new Date();
-        const año = fechaActual.getFullYear();
-        const mes = fechaActual.getMonth() + 1;
+  // Función para manejar la descarga de Excel
+  const manejarClicDescarga = async () => {
+     // Desactivar el botón al iniciar la descarga
+  setDescargando(true);
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+    const fechaActual = new Date();
+    const año = fechaActual.getFullYear();
+    const mes = fechaActual.getMonth() + 1;
 
-        try {
-            const respuesta = await fetch('/api/excel/excel', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                   
-                },
-                body: JSON.stringify({
-                    Id: userId,
-                    token:token,
-                    Year: año,
-                    Month: mes,
-                    comercio: 'todos'
-                })
-            });
+    try {
+      const respuesta = await fetch("/api/excel/excel", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Id: userId,
+          token: token,
+          Year: año,
+          Month: mes,
+          comercio: "todos",
+        }),
+      });
 
-            if (!respuesta.ok) {
-                throw new Error('La respuesta de la red no fue correcta');
-            }
+      if (!respuesta.ok) {
+        throw new Error("La respuesta de la red no fue correcta");
+      }
 
-            const blob = await respuesta.blob();
-            const urlDescarga = window.URL.createObjectURL(blob);
-            const fechaActual = new Date();
-            const fechaFormateada = fechaActual.toISOString().split('T')[0]; // Formato: 'YYYY-MM-DD'
+      const blob = await respuesta.blob();
+      const urlDescarga = window.URL.createObjectURL(blob);
+      const fechaActual = new Date();
+      const fechaFormateada = fechaActual.toISOString().split("T")[0]; // Formato: 'YYYY-MM-DD'
 
-            // Crear el enlace con el nombre de archivo deseado
-            const enlace = document.createElement('a');
-            enlace.href = urlDescarga;
-            enlace.setAttribute('download', `zoco_${fechaFormateada}.xlsx`); // Formato: 'zoco_YYYY-MM-DD.xlsx'
-            document.body.appendChild(enlace);
-            enlace.click();
-            enlace.parentNode.removeChild(enlace);
-        } catch (error) {
-            console.error('Hubo un error:', error);
-        }
-    };
+      // Crear el enlace con el nombre de archivo deseado
+      const enlace = document.createElement("a");
+      enlace.href = urlDescarga;
+      enlace.setAttribute("download", `zoco_${fechaFormateada}.xlsx`); // Formato: 'zoco_YYYY-MM-DD.xlsx'
+      document.body.appendChild(enlace);
+      enlace.click();
+      enlace.parentNode.removeChild(enlace);
+    } catch (error) {
+      console.error("Hubo un error:", error);
+      setDescargando(false);
+    }
+  };
 
-    useEffect(() => {
-        buscarFecha();
-    }, [busqueda]);
+  useEffect(() => {
+    buscarFecha();
+  }, [busqueda]);
 
   return (
     <section>
@@ -120,21 +123,28 @@ const TablaTickets = ({ listaMes }) => {
                 </div>
               </a>
             </div>
-                      <div className="btn-pdf-descargar centrado border-0 mx-2">
-                          <button
-                              className="text-decoration-none centrado-flex"
-                              onClick={manejarClicDescarga}
-                          >
-                              <div className="my-3">
-                                  <div className="text-center">
-                                      <img className="img-fluid icono-pdf-xls mb-1" src={xls} alt="Excel" />
-                                  </div>
-                                  <div className="d-flex justify-content-center align-items-center">
-                                      <h6 className="text-white lato-bold fs-16">Descargar Excel</h6>
-                                  </div>
-                              </div>
-                          </button>
-                      </div>
+            <div className="">
+              <button
+                className={descargando ? "btn-pdf-descargar-disabled" : "btn-pdf-descargar centrado border-0 mx-2"}
+                disabled={descargando}
+                onClick={manejarClicDescarga}
+              >
+                <div className="my-3">
+                  <div className="text-center">
+                    <img
+                      className="img-fluid icono-pdf-xls mb-1"
+                      src={xls}
+                      alt="Excel"
+                    />
+                  </div>
+                  <div className="d-flex justify-content-center align-items-center">
+                    <h6 className="text-white lato-bold fs-16">
+                      Descargar 
+                    </h6>
+                  </div>
+                </div>
+              </button>
+            </div>
           </div>
         </div>
       </section>

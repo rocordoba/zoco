@@ -9,10 +9,7 @@ import TituloPagina from "../components/TituloPagina";
 import { DatosInicioContext } from "../context/DatosInicioContext";
 
 const Analisis = () => {
-
-  const {datosAnalisisContext} = useContext(DatosInicioContext)
-
- 
+  const { datosAnalisisContext } = useContext(DatosInicioContext);
 
   return (
     <div>

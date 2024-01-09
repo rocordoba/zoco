@@ -1,4 +1,5 @@
 import { Bar } from "react-chartjs-2";
+import formatearValores from "../helpers/formatearAPeso";
 import "./TripleGraficoAnalisis.css";
 import {
   Chart as ChartJS,
@@ -31,8 +32,15 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
   const { darkMode } = useContext(DarkModeContext);
   const tickColor = darkMode ? "#fff" : "#292B2F";
 
+  const {
+    debito,
+    credito
+  } = datosBack;
+
+
+
   // FACTURACION POR CUOTA
-  var beneficios = [52, 96];
+  var beneficios = [debito, credito];
   var labels = ["Débito", "Crédito"];
 
   var misoptions = {

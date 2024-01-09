@@ -38,7 +38,7 @@ namespace dash_aliados.Controllers
                 if (request.Year == currentDate.Year && request.Month == currentDate.Month && request.Week == currentWeek)
                 {
                    
-
+                   
                     // Verificar si el comercio es "Todos"
                     if (request.comercio.ToLower() == "todos")
                     {

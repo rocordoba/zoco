@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import Select from "react-select";
-import './BienvenidoPanel.css';
+import "./BienvenidoPanel.css";
 import { DarkModeContext } from "../context/DarkModeContext";
 const optionsAnios = [
   { value: "2023", label: "2023" },
@@ -38,9 +38,9 @@ const optionsSemanas = [
   { value: "semana 28-31", label: "28-31" },
 ];
 
-const BienvenidoPanel = ({datos }) => {
+const BienvenidoPanel = ({ datos }) => {
   const { darkMode } = useContext(DarkModeContext);
-  const [datoCapturados, setDatoCapturados] = useState({})
+  const [datoCapturados, setDatoCapturados] = useState({});
   const [isSearchable, setIsSearchable] = useState(true);
   const [selectedAnio, setSelectedAnio] = useState(null);
   const [selectedMes, setSelectedMes] = useState(null);
@@ -50,18 +50,17 @@ const BienvenidoPanel = ({datos }) => {
   const handleEnviarDatos = () => {
     // Aquí puedes preparar los datos para enviar al backend
     //  AñoActual = añoActual,
-      //    MesesHastaHoy = mesesHastaHoy,
-        //  SemanasPorMes = semanasPorMes,
-        //Fantasiasnombre = fantasiasnombre
+    //    MesesHastaHoy = mesesHastaHoy,
+    //  SemanasPorMes = semanasPorMes,
+    //Fantasiasnombre = fantasiasnombre
     const data = {
       anio: selectedAnio?.value,
       mes: selectedMes?.value,
       comercio: selectedComercio?.value,
       semana: selectedSemana?.value,
     };
-    setDatoCapturados(data)
+    setDatoCapturados(data);
   };
-
 
   return (
     <section
@@ -149,7 +148,7 @@ const BienvenidoPanel = ({datos }) => {
                   </label>
                   <Select
                     value={selectedComercio}
-                    defaultInputValue={ "Todos"}
+                    defaultInputValue={"Todos"}
                     className="select__control_custom lato-bold"
                     classNamePrefix="select"
                     isSearchable={isSearchable}

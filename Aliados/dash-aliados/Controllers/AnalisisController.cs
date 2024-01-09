@@ -41,7 +41,7 @@ namespace dash_aliados.Controllers
                 if (request.Year == currentDate.Year && request.Month == currentDate.Month && request.Week == currentWeek)
                 {
                     //   var inflacion = await _inflacionService.ObtenerPorRubro(usuarioEncontrado.Usuario);
-                    if (request.comercio.ToLower() == "Todos")
+                    if (request.comercio.ToLower() == "todos")
                     {
                         var totalOperaciones = ObtenerTotalOperaciones(sas);
                         var totalConDescuentoCuotas0 = ObtenerTotalConDescuentoCuotas(sas, 0);
@@ -112,7 +112,7 @@ namespace dash_aliados.Controllers
                 }
                 else
                 {
-                    if (request.comercio.ToLower() == "Todos")
+                    if (request.comercio.ToLower() == "todos")
                     {
                         DateTime fechaInicial = GetFirstDayOfWeekInMonth(request.Year, request.Month, request.Week);
                         DateTime fechaFinalDeLaSemana = GetLastDayOfWeek(fechaInicial);

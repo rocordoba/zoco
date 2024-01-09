@@ -40,7 +40,7 @@ namespace dash_aliados.Controllers
                    
 
                     // Verificar si el comercio es "Todos"
-                    if (request.comercio.ToLower() == "Todos")
+                    if (request.comercio.ToLower() == "todos")
                     {
                         //var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
                         //var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario /*, request.Year, request.Month, request.Week, request.comercio*/);
@@ -120,15 +120,11 @@ namespace dash_aliados.Controllers
                 }
                 else 
                 {
-                    //var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
-                    //var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario);
-
+                  
                     // Verificar si el comercio es "Todos"
-                    if (request.comercio.ToLower() == "Todos")
+                    if (request.comercio.ToLower() == "todos")
                     {
-                        //var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
-                        //var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario /*, request.Year, request.Month, request.Week, request.comercio*/);
-
+                        
                         DateTime fechaInicial = GetFirstDayOfWeekInMonth(request.Year, request.Month, request.Week);
                         DateTime fechaFinalDeLaSemana = GetLastDayOfWeek(fechaInicial);
 

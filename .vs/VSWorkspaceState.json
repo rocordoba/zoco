@@ -4,8 +4,9 @@
     "\\Aliados",
     "\\Aliados\\BLL",
     "\\Aliados\\BLL\\Implementacion",
-    "\\Aliados\\dash-aliados"
+    "\\Aliados\\dash-aliados",
+    "\\Aliados\\dash-aliados\\Controllers"
   ],
-  "SelectedNode": "\\Aliados\\dash-aliados\\dash-aliados.sln",
+  "SelectedNode": "\\Aliados\\dash-aliados\\Controllers\\DatosInicioController.cs",
   "PreviewInSolutionExplorer": false
 }

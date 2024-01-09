@@ -13,6 +13,7 @@ const context = [
     "/api/califico/califico",
     "/api/contablidad/contabilidad",
     "/api/cupones/cupones",
+    "/api/excel/excel",
    
 ];
 

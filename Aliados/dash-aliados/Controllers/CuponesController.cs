@@ -48,8 +48,9 @@ namespace dash_aliados.Controllers
 
                         var listaHoy = ObtenerListaPorFecha(sas, DateTime.Today);
                        
-                        var totalOperaciones = ObtenerTotalOperaciones(sas);
+                        
                         var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), DateTime.Today);
+                        var totalOperaciones = ObtenerTotalOperaciones(listaMes);
                         var totalBrutoHoy = ObtenerTotalBruto(listaMes);
                         // Llamada al método para obtener las sumas por día
                         var sumasPorDia = ObtenerSumaPorDia(listaMes);
@@ -73,12 +74,12 @@ namespace dash_aliados.Controllers
 
                         var listaHoy = ObtenerListaPorFecha(sas, DateTime.Today);
                      
-                        var totalOperaciones = ObtenerTotalOperaciones(sas);
+                      //  var totalOperaciones = ObtenerTotalOperaciones(sas);
                         var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), DateTime.Today);
                         var totalBrutoHoy = ObtenerTotalBruto(listaMes);
                         // Llamada al método para obtener las sumas por día
                         var sumasPorDia = ObtenerSumaPorDia(listaMes);
-
+                        var totalOperaciones = ObtenerTotalOperaciones(listaMes);
                         var resultado = new
                         {
                             AñoActual = request.Year,

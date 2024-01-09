@@ -14,7 +14,57 @@ const Buscador = () => {
   const onSubmit = (datos) => {
     setDatosBuscador(datos);
     reset();
-  };
+    };
+    const BotonDescargarExcel = () => {
+        const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("userId");
+        const fechaActual = new Date();
+        const año = fechaActual.getFullYear();
+        const mes = fechaActual.getMonth() + 1; 
+
+        const manejarClicDescarga = async () => {
+            try {
+                const respuesta = await fetch('/api/excel/excel', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        Id: userId,
+                        Year: año,
+                        Month: mes,
+                        comercio: 'todos'
+                    })
+                });
+
+                if (!respuesta.ok) {
+                    throw new Error('La respuesta de la red no fue correcta');
+                }
+
+              
+                const blob = await respuesta.blob();
+                const urlDescarga = window.URL.createObjectURL(blob);
+                const enlace = document.createElement('a');
+                enlace.href = urlDescarga;
+                enlace.setAttribute('download', 'datos.xlsx');
+                document.body.appendChild(enlace);
+                enlace.click();
+                enlace.parentNode.removeChild(enlace);
+            } catch (error) {
+                console.error('Hubo un error:', error);
+            }
+        };
+
+        return (
+            <button onClick={manejarClicDescarga}>
+                Descargar Excel
+            </button>
+        );
+    };
+
+    export default BotonDescargarExcel;
+
   const { darkMode } = useContext(DarkModeContext);
   return (
     <section className="container mt-3 mb-3 ">
@@ -67,30 +117,30 @@ const Buscador = () => {
               </div>
             </a>
           </div>
-          <div className="btn-pdf-descargar centrado border-0 mx-2">
-            <a
-              className="text-decoration-none centrado-flex"
-              href={pdfPrueba}
-              download="Reporte Pdf Prueba"
-            >
-              <div className="my-3">
-                <div>
-                  <div className="text-center">
-                    <img
-                      className="img-fluid icono-pdf-xls mb-1"
-                      src={xls}
-                      alt="pdf"
-                    />
+                  <div className="btn-pdf-descargar centrado border-0 mx-2">
+                      <button
+                          className="text-decoration-none centrado-flex"
+                          onClick={handleDownloadExcel} 
+                      >
+                          <div className="my-3">
+                              <div>
+                                  <div className="text-center">
+                                      <img
+                                          className="img-fluid icono-pdf-xls mb-1"
+                                          src={xls}
+                                          alt="Excel"
+                                      />
+                                  </div>
+                              </div>
+                              <div>
+                                  <div className="d-flex justify-content-center align-items-center">
+                                      <h6 className="text-white lato-bold fs-16">Descargar Excel</h6>
+                                  </div>
+                              </div>
+                          </div>
+                      </button>
                   </div>
-                </div>
-                <div>
-                  <div className="d-flex justify-content-center align-items-center">
-                    <h6 className="text-white lato-bold fs-16">Descargar</h6>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
+
         </div>
       </div>
     </section>

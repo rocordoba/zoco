@@ -9,6 +9,7 @@ using BLL.InterfacesZoco;
 using dash_aliados.Models.ViewModelsZoco;
 using System;
 using Entity.Zoco;
+using System.Diagnostics.Eventing.Reader;
 
 namespace dash_aliados.Controllers
 {
@@ -48,210 +49,407 @@ namespace dash_aliados.Controllers
         }
 
 
-        //[HttpPost("base")]
-        //public async Task<ActionResult> Inicio([FromBody] VMDatosInicio request)
-        //{
-        //    if (!string.IsNullOrEmpty(request.Token))
-        //    {
-        //        var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
-
-
-
-        //        var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario, request.Year, request.Month, request.Week, request.comercio);
-
-        //        HashSet<string> fantasiasnombre = new HashSet<string>();
-        //        int index = 0;
-
-        //        while (index < sas.Count)
-        //        {
-        //            if (!fantasiasnombre.Contains(sas[index].NombreComercio))
-        //            {
-        //                fantasiasnombre.Add(sas[index].NombreComercio);
-        //            }
-        //            index++;
-        //        }
-        //        int numeroDia = request.Day;
-        //        DateTime hoy = new DateTime(request.Year, request.Month, numeroDia);
-
-        //        int añoActual = request.Year;
-
-
-        //        List<string> mesesHastaHoy = new List<string>();
-        //        for (DateTime date = new DateTime(añoActual, 1, 1); date <= hoy; date = date.AddMonths(1))
-        //        {
-        //            mesesHastaHoy.Add(date.ToString("MMMM"));
-        //        }
-        //        Dictionary<string, List<int>> semanasPorMes = new Dictionary<string, List<int>>();
-        //        foreach (var mes in mesesHastaHoy)
-        //        {
-        //            DateTime primerDiaDelMes = new DateTime(añoActual, DateTime.ParseExact(mes, "MMMM", CultureInfo.CurrentCulture).Month, 1);
-        //            DateTime ultimoDiaDelMes = primerDiaDelMes.AddMonths(1).AddDays(-1);
-        //            int numeroSemanas = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(ultimoDiaDelMes, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
-
-
-        //            List<int> semanasDelMes = Enumerable.Range(1, numeroSemanas)
-        //                                                 .Where(week => primerDiaDelMes.AddDays((week - 1) * 7).Month == primerDiaDelMes.Month)
-        //                                                 .ToList();
-        //            semanasPorMes.Add(mes, semanasDelMes);
-        //        }
-        //        foreach (var mes in semanasPorMes.Keys.ToList())
-        //        {
-        //            int numeroSemanasEnMes = semanasPorMes[mes].Count;
-        //            semanasPorMes[mes] = Enumerable.Range(1, numeroSemanasEnMes).ToList();
-        //        }
-
-        //        DateTime mañana = hoy.AddDays(1);
-        //        DateTime primero = new DateTime(hoy.Year, hoy.Month, 1);
-        //        DateTime ultimoMesMismoDia = hoy.AddMonths(-1);
-        //        DateTime mismoDiaMesAnterior = new DateTime(ultimoMesMismoDia.Year, ultimoMesMismoDia.Month, hoy.Day);
-        //        DateTime haceUnaSemana = DateTime.Today.AddDays(-7);
-
-        //        var listaMismoDiaMesAnterior = sas.Where(s => s.FechaDePago == mismoDiaMesAnterior).ToList();
-        //        var listaHoy = sas.Where(s => s.FechaDePago == hoy).ToList();
-        //        var listaMañana = sas.Where(s => s.FechaDePago == mañana).ToList();
-        //        var listaMes = sas.Where(s => s.FechaDePago >= primero && s.FechaDePago <= hoy).ToList();
-        //        var movimientosUltimos7Dias = sas.Where(s => s.FechaDePago >= haceUnaSemana && s.FechaDePago <= DateTime.Today);
-        //        var fechasUnicas = movimientosUltimos7Dias.Select(s => s.FechaDePago).Distinct().OrderByDescending(d => d).ToList();
-
-        //        var totalesPorDiaPorTarjeta = new List<object>();
-        //        foreach (var fecha in fechasUnicas)
-        //        {
-        //            int semanaActual = ObtenerSemanaDelMesActual();
-
-        //            var totalesPorTarjetaEnFecha = sas
-        //                .Where(s => s.SemanaMesOp == semanaActual) 
-        //                .GroupBy(s => new { s.FechaDePago, s.Tarjeta, s.DiaSemana })
-        //                .Select(group => new
-        //                {
-        //                    Fecha = group.Key.FechaDePago,
-        //                    Tarjeta = group.Key.Tarjeta,
-        //                    DiaSemana = group.Key.DiaSemana,
-        //                    TotalConDescuentoPorTarjeta = group.Sum(item => item.TotalConDescuentos)
-        //                })
-        //                .ToList();
-
-        //            totalesPorDiaPorTarjeta.AddRange(totalesPorTarjetaEnFecha);
-        //        }
-        //        var descuentosPorTarjeta = sas.GroupBy(s => s.Tarjeta)
-        //            .Select(group => new
-        //            {
-        //                Tarjeta = group.Key,
-        //                TotalConDescuento = group.Sum(item => item.TotalConDescuentos)
-        //            }).ToList();
-        //        double totalOperaciones = (double)sas.Count();
-        //        double totalConDescuentoCuotas1 = (double)listaMes.Where(s => s.Cuotas == 1).Sum(s => s.TotalConDescuentos ?? 0);
-        //        double totalConDescuentoCuotas2 = (double)listaMes.Where(s => s.Cuotas > 1).Sum(s => s.TotalConDescuentos ?? 0);
-
-        //        double totalNetoHoy = (double)listaHoy.Sum(s => s.TotalNeto);
-        //        double totalBrutoHoy = (double)listaHoy.Sum(s => s.TotalBruto);
-        //        double totalNetoMañana = (double)listaMañana.Sum(s => s.TotalNeto);
-        //        double totalBrutoMañana = (double)listaMañana.Sum(s => s.TotalBruto);
-        //        double totalNetoMes = (double)listaMes.Sum(s => s.TotalNeto);
-        //        double totalBrutoMes = (double)listaMes.Sum(s => s.TotalBruto);
-        //        double totalretencionesmes = (double)listaMes.Sum(s => s.RetencionImpositiva);
-        //        double totalivames = (double)listaMes.Sum(s => s.Arancel + s.Iva21);
-        //        double comparativahot = (double)listaHoy.Sum(s => s.TotalConDescuentos);
-        //        double comparativaHotmesanterior = (double)listaMismoDiaMesAnterior.Sum(s => s.TotalConDescuentos);
-        //        double porcentaje = comparativahot / (comparativaHotmesanterior != 0 ? comparativaHotmesanterior : 1);
-
-
-
-        //        var resultado = new
-        //        {
-        //            AñoActual = añoActual,
-        //            MesesHastaHoy = mesesHastaHoy,
-        //            SemanasPorMes = semanasPorMes,
-        //            TotalNetoHoy = totalNetoHoy,
-        //            TotalBrutoHoy = totalBrutoHoy,
-        //            TotalNetoMañana = totalNetoMañana,
-        //            TotalBrutoMañana = totalBrutoMañana,
-        //            TotalNetoMes = totalNetoMes,
-        //            TotalBrutoMes = totalBrutoMes,
-        //            Comparativahot = comparativahot,
-        //            ComparativaHotmesanterior = comparativaHotmesanterior,
-        //            Porcentaje = porcentaje,
-        //            DescuentosPorTarjeta = descuentosPorTarjeta,
-        //            TotalesPorDiaTarjeta = totalesPorDiaPorTarjeta,
-        //            Fantasiasnombre = fantasiasnombre,
-        //            TotalRetencionesMes = totalretencionesmes,
-        //            TotalIvaMes = totalivames,
-        //            TotalOperaciones = totalOperaciones,
-        //            TotalConDescuentoCuotas1 = totalConDescuentoCuotas1,
-        //            TotalConDescuentoCuotas2 = totalConDescuentoCuotas2,
-        //        };
-
-
-
-
-
-
-        //        return StatusCode(StatusCodes.Status200OK, resultado);
-
-        //    }
-        //    return Unauthorized("El token o el ID de la sesión no son válidos");
-        //}
         [HttpPost("base")]
         public async Task<ActionResult> Inicio([FromBody] VMDatosInicio request)
         {
             if (!string.IsNullOrEmpty(request.Token))
             {
+                var currentDate = DateTime.Today;
+                var currentWeek = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(currentDate, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
                 var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
-                var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario /*, request.Year, request.Month, request.Week, request.comercio*/);
-
-                var fantasiasnombre = ObtenerFantasiasNombre(sas);
-                var mesesHastaHoy = ObtenerMesesHastaHoy(request.Year, request.Month, request.Day);
-                var semanasPorMes = ObtenerSemanasPorMes(mesesHastaHoy, request.Year);
-
-                var listaMismoDiaMesAnterior = ObtenerListaMismoDiaMesAnterior(sas);
-                var listaHoy = ObtenerListaPorFecha(sas, DateTime.Today);
-                var listaMañana = ObtenerListaPorFecha(sas, DateTime.Today.AddDays(1));
-                var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), DateTime.Today);
-                var movimientosUltimos7Dias = ObtenerMovimientosUltimos7Dias(sas);
-                var fechasUnicas = ObtenerFechasUnicas(movimientosUltimos7Dias);
-
-                var totalesPorDiaPorTarjeta = ObtenerTotalesPorDiaPorTarjeta(sas, fechasUnicas);
-                var descuentosPorTarjeta = ObtenerDescuentosPorTarjeta(sas);
-                var totalOperaciones = ObtenerTotalOperaciones(sas);
-                var totalConDescuentoCuotas1 = ObtenerTotalConDescuentoCuotas(sas, 1);
-                var totalConDescuentoCuotas2 = ObtenerTotalConDescuentoCuotas(sas, 2);
-                var totalNetoHoy = ObtenerTotalNeto(listaHoy);
-                var totalBrutoHoy = ObtenerTotalBruto(listaHoy);
-                var totalNetoMañana = ObtenerTotalNeto(listaMañana);
-                var totalBrutoMañana = ObtenerTotalBruto(listaMañana);
-                var totalNetoMes = ObtenerTotalNeto(listaMes);
-                var totalBrutoMes = ObtenerTotalBruto(listaMes);
-               
-                var comparativahot = ObtenerComparativa(sas, listaHoy);
-                var comparativaHotmesanterior = ObtenerComparativa(sas, listaMismoDiaMesAnterior);
-                var porcentaje = ObtenerPorcentaje(comparativahot, comparativaHotmesanterior);
-
-                var resultado = new
+                var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario);
+                // Verificar si el año, mes y semana son actuales
+                if (request.Year == currentDate.Year && request.Month == currentDate.Month && request.Week == currentWeek)
                 {
-                    AñoActual = request.Year,
-                    MesesHastaHoy = mesesHastaHoy,
-                    SemanasPorMes = semanasPorMes,
-                    TotalNetoHoy = totalNetoHoy,
-                    TotalBrutoHoy = totalBrutoHoy,
-                    TotalNetoMañana = totalNetoMañana,
-                    TotalBrutoMañana = totalBrutoMañana,
-                    TotalNetoMes = totalNetoMes,
-                    TotalBrutoMes = totalBrutoMes,
-                    Comparativahoy = comparativahot,
-                    ComparativaHoymesanterior = comparativaHotmesanterior,
-                    Porcentaje = porcentaje,
-                    DescuentosPorTarjeta = descuentosPorTarjeta,
-                    TotalesPorDiaTarjeta = totalesPorDiaPorTarjeta,
-                    Fantasiasnombre = fantasiasnombre,
-                   
-                    TotalOperaciones = totalOperaciones,
-                    TotalConDescuentoCuotas1 = totalConDescuentoCuotas1,
-                    TotalConDescuentoCuotas2 = totalConDescuentoCuotas2,
-                };
 
-                return StatusCode(StatusCodes.Status200OK, resultado);
+
+                    // Verificar si el comercio es "Todos"
+                    if (request.comercio.ToLower() == "todos")
+                    {
+                        var fantasiasnombre = ObtenerFantasiasNombre(sas);
+                        var mesesHastaHoy = ObtenerMesesHastaHoy(request.Year, request.Month, request.Day);
+                        var semanasPorMes = ObtenerSemanasPorMes(mesesHastaHoy, request.Year);
+
+                        var listaMismoDiaMesAnterior = ObtenerListaMismoDiaMesAnterior(sas);
+                        var listaHoy = ObtenerListaPorFecha(sas, DateTime.Today);
+                       
+                        // Calcular la fecha de mañana
+                        DateTime fechaFin = DateTime.Today.AddDays(1);
+
+                        // Ajustar la fecha si mañana es sábado o domingo
+                        if (fechaFin.DayOfWeek == DayOfWeek.Saturday)
+                        {
+                            fechaFin = fechaFin.AddDays(2); // Ajustar al lunes (saltar sábado y domingo)
+                        }
+                        else if (fechaFin.DayOfWeek == DayOfWeek.Sunday)
+                        {
+                            fechaFin = fechaFin.AddDays(1); // Ajustar al lunes (saltar domingo)
+                        }
+
+                        // Llamar a la función con la fecha de inicio y la fecha fin ajustada
+                        var fechaInicio = new DateTime(request.Year, request.Month, 1);
+                        var listaMes = ObtenerListaPorRangoFecha(sas, fechaInicio, fechaFin);
+                        var listaMañana = ObtenerListaPorFecha(sas, fechaFin);
+                        var movimientosUltimos7Dias = ObtenerMovimientosUltimos7Dias(sas);
+                        var fechasUnicas = ObtenerFechasUnicas(movimientosUltimos7Dias);
+
+                        var totalesPorDiaPorTarjeta = ObtenerTotalesPorDiaPorTarjeta(sas, fechasUnicas);
+                        var descuentosPorTarjeta = ObtenerDescuentosPorTarjeta(sas);
+                        var totalOperaciones = ObtenerTotalOperaciones(sas);
+                        var totalConDescuentoCuotas1 = ObtenerTotalConDescuentoCuotas(sas, 1);
+                        var totalConDescuentoCuotas2 = ObtenerTotalConDescuentoCuotas(sas, 2);
+                        var totalNetoHoy = ObtenerTotalNeto(listaHoy);
+                        var totalBrutoHoy = ObtenerTotalBruto(listaHoy);
+                        var totalNetoMañana = ObtenerTotalNeto(listaMañana);
+                        var totalBrutoMañana = ObtenerTotalBruto(listaMañana);
+                        var totalNetoMes = ObtenerTotalNeto(listaMes);
+                        var totalBrutoMes = ObtenerTotalBruto(listaMes);
+
+                        var comparativahot = ObtenerComparativa(sas, listaHoy);
+                        var comparativaHotmesanterior = ObtenerComparativa(sas, listaMismoDiaMesAnterior);
+                        var porcentaje = ObtenerPorcentaje(comparativahot, comparativaHotmesanterior);
+
+                        var resultado = new
+                        {
+                            AñoActual = request.Year,
+                            MesesHastaHoy = mesesHastaHoy,
+                            SemanasPorMes = semanasPorMes,
+                            TotalNetoHoy = totalNetoHoy,
+                            TotalBrutoHoy = totalBrutoHoy,
+                            TotalNetoMañana = totalNetoMañana,
+                            TotalBrutoMañana = totalBrutoMañana,
+                            TotalNetoMes = totalNetoMes,
+                            TotalBrutoMes = totalBrutoMes,
+                            Comparativahoy = comparativahot,
+                            ComparativaHoymesanterior = comparativaHotmesanterior,
+                            Porcentaje = porcentaje,
+                            DescuentosPorTarjeta = descuentosPorTarjeta,
+                            TotalesPorDiaTarjeta = totalesPorDiaPorTarjeta,
+                            Fantasiasnombre = fantasiasnombre,
+
+                            TotalOperaciones = totalOperaciones,
+                            TotalConDescuentoCuotas1 = totalConDescuentoCuotas1,
+                            TotalConDescuentoCuotas2 = totalConDescuentoCuotas2,
+
+
+                            comparativadiasemana = "dia",
+                        };
+
+                        return StatusCode(StatusCodes.Status200OK, resultado);
+                    }
+                    else
+                    {
+                        sas = sas.Where(s => s.NombreComercio != null && s.NombreComercio.ToLower() == request.comercio.ToLower()).ToList();
+                        var fantasiasnombre = ObtenerFantasiasNombre(sas);
+                        var mesesHastaHoy = ObtenerMesesHastaHoy(request.Year, request.Month, request.Day);
+                        var semanasPorMes = ObtenerSemanasPorMes(mesesHastaHoy, request.Year);
+
+                        var listaMismoDiaMesAnterior = ObtenerListaMismoDiaMesAnterior(sas);
+                        var listaHoy = ObtenerListaPorFecha(sas, DateTime.Today);
+                        
+                        // Calcular la fecha de mañana
+                        DateTime fechaFin = DateTime.Today.AddDays(1);
+
+                        // Ajustar la fecha si mañana es sábado o domingo
+                        if (fechaFin.DayOfWeek == DayOfWeek.Saturday)
+                        {
+                            fechaFin = fechaFin.AddDays(2); // Ajustar al lunes (saltar sábado y domingo)
+                        }
+                        else if (fechaFin.DayOfWeek == DayOfWeek.Sunday)
+                        {
+                            fechaFin = fechaFin.AddDays(1); // Ajustar al lunes (saltar domingo)
+                        }
+
+                        // Llamar a la función con la fecha de inicio y la fecha fin ajustada
+                        var fechaInicio = new DateTime(request.Year, request.Month, 1);
+                        var listaMes = ObtenerListaPorRangoFecha(sas, fechaInicio, fechaFin);
+                        var listaMañana = ObtenerListaPorFecha(sas, fechaFin);
+                        var movimientosUltimos7Dias = ObtenerMovimientosUltimos7Dias(sas);
+                        var fechasUnicas = ObtenerFechasUnicas(movimientosUltimos7Dias);
+
+                        var totalesPorDiaPorTarjeta = ObtenerTotalesPorDiaPorTarjeta(sas, fechasUnicas);
+                        var descuentosPorTarjeta = ObtenerDescuentosPorTarjeta(sas);
+                        var totalOperaciones = ObtenerTotalOperaciones(sas);
+                        var totalConDescuentoCuotas1 = ObtenerTotalConDescuentoCuotas(sas, 1);
+                        var totalConDescuentoCuotas2 = ObtenerTotalConDescuentoCuotas(sas, 2);
+                        var totalNetoHoy = ObtenerTotalNeto(listaHoy);
+                        var totalBrutoHoy = ObtenerTotalBruto(listaHoy);
+                        var totalNetoMañana = ObtenerTotalNeto(listaMañana);
+                        var totalBrutoMañana = ObtenerTotalBruto(listaMañana);
+                        var totalNetoMes = ObtenerTotalNeto(listaMes);
+                        var totalBrutoMes = ObtenerTotalBruto(listaMes);
+
+                        var comparativahot = ObtenerComparativa(sas, listaHoy);
+                        var comparativaHotmesanterior = ObtenerComparativa(sas, listaMismoDiaMesAnterior);
+                        var porcentaje = ObtenerPorcentaje(comparativahot, comparativaHotmesanterior);
+
+                        var resultado = new
+                        {
+                            AñoActual = request.Year,
+                            MesesHastaHoy = mesesHastaHoy,
+                            SemanasPorMes = semanasPorMes,
+                            TotalNetoHoy = totalNetoHoy,
+                            TotalBrutoHoy = totalBrutoHoy,
+                            TotalNetoMañana = totalNetoMañana,
+                            TotalBrutoMañana = totalBrutoMañana,
+                            TotalNetoMes = totalNetoMes,
+                            TotalBrutoMes = totalBrutoMes,
+                            Comparativahoy = comparativahot,
+                            ComparativaHoymesanterior = comparativaHotmesanterior,
+                            Porcentaje = porcentaje,
+                            DescuentosPorTarjeta = descuentosPorTarjeta,
+                            TotalesPorDiaTarjeta = totalesPorDiaPorTarjeta,
+                            Fantasiasnombre = fantasiasnombre,
+
+                            TotalOperaciones = totalOperaciones,
+                            TotalConDescuentoCuotas1 = totalConDescuentoCuotas1,
+                            TotalConDescuentoCuotas2 = totalConDescuentoCuotas2,
+
+
+
+
+                            comparativadiasemana = "dia",
+                        };
+
+                        return StatusCode(StatusCodes.Status200OK, resultado);
+                    }
+
+                }
+                else
+                {
+                    // Verificar si el comercio es "Todos"
+                    if (request.comercio.ToLower() == "todos")
+                    {
+
+                        DateTime fechaInicial = GetFirstDayOfWeekInMonth(request.Year, request.Month, request.Week);
+                        DateTime fechaFinalDeLaSemana = GetLastDayOfWeek(fechaInicial);
+
+                        // Determinar si estamos en la misma semana del año actual
+                        int semanaActualDelSistema = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(DateTime.Today, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
+                        bool esLaMismaSemana = request.Week == semanaActualDelSistema && request.Year == DateTime.Today.Year;
+
+                        // Si es la misma semana, usar DateTime.Today, de lo contrario, usar el último día de la semana solicitada
+                        DateTime fechaFin = esLaMismaSemana ? DateTime.Today : fechaFinalDeLaSemana;
+
+                        // Continúa con el procesamiento usando fechaFin
+                        var listaFiltrada = sas.Where(s =>
+                            s.FechaDePago.HasValue &&
+                            s.FechaDePago.Value.Date >= fechaInicial.Date &&
+                            s.FechaDePago.Value.Date <= fechaFin.Date)
+                            .ToList();
+                        var fantasiasnombre = ObtenerFantasiasNombre(sas);
+                        var mesesHastaHoy = ObtenerMesesHastaHoy(fechaFinalDeLaSemana.Year, fechaFinalDeLaSemana.Month, fechaFinalDeLaSemana.Day);
+                        var semanasPorMes = ObtenerSemanasPorMes(mesesHastaHoy, fechaFinalDeLaSemana.Year);
+
+                        var listaMismoSemanaMesAnterior = ObtenerListaMismoSemanaMesAnterior(sas, fechaFinalDeLaSemana.Year,fechaFinalDeLaSemana.Month,request.Week);
+
+                      
+
+                        var listaMes = ObtenerListaPorRangoFecha(sas, fechaInicial, fechaFin);
+
+                        var movimientosUltimos7Dias = ObtenerMovimientosUltimos7Dias(listaFiltrada);
+                        var fechasUnicas = ObtenerFechasUnicas(movimientosUltimos7Dias);
+
+                        var totalesPorDiaPorTarjeta = ObtenerTotalesPorDiaPorTarjeta(listaFiltrada, fechasUnicas);
+                        var descuentosPorTarjeta = ObtenerDescuentosPorTarjeta(listaFiltrada);
+                        var totalOperaciones = ObtenerTotalOperaciones(listaFiltrada);
+                        var totalConDescuentoCuotas1 = ObtenerTotalConDescuentoCuotas(listaFiltrada, 1);
+                        var totalConDescuentoCuotas2 = ObtenerTotalConDescuentoCuotas(listaFiltrada, 2);
+                       
+                        var totalNetoMes = ObtenerTotalNeto(listaMes);
+                        var totalBrutoMes = ObtenerTotalBruto(listaMes);
+
+                        var comparativahot = ObtenerComparativa(sas, listaFiltrada);
+                        var comparativaHotmesanterior = ObtenerComparativa(sas, listaMismoSemanaMesAnterior);
+                        var porcentaje = ObtenerPorcentaje(comparativahot, comparativaHotmesanterior);
+
+                        var resultado = new
+                        {
+                            AñoActual = request.Year,
+                            MesesHastaHoy = mesesHastaHoy,
+                            SemanasPorMes = semanasPorMes,
+                            TotalNetoHoy = 0,
+                            TotalBrutoHoy = 0,
+                            TotalNetoMañana = 0,
+                            TotalBrutoMañana = 0,
+                            TotalNetoMes = totalNetoMes,
+                            TotalBrutoMes = totalBrutoMes,
+                            Comparativahoy = comparativahot,
+                            ComparativaHoymesanterior = comparativaHotmesanterior,
+                            Porcentaje = porcentaje,
+                            DescuentosPorTarjeta = descuentosPorTarjeta,
+                            TotalesPorDiaTarjeta = totalesPorDiaPorTarjeta,
+                            Fantasiasnombre = fantasiasnombre,
+
+                            TotalOperaciones = totalOperaciones,
+                            TotalConDescuentoCuotas1 = totalConDescuentoCuotas1,
+                            TotalConDescuentoCuotas2 = totalConDescuentoCuotas2,
+
+
+
+
+
+
+                            comparativadiasemana = "semana",
+                        };
+
+                        return StatusCode(StatusCodes.Status200OK, resultado);
+                    }
+                    else
+                    {
+                       // var fantasiasnombre = ObtenerFantasiasNombre(sas);
+                        sas = sas.Where(s => s.NombreComercio != null && s.NombreComercio.ToLower() == request.comercio.ToLower()).ToList();
+                        DateTime fechaInicial = GetFirstDayOfWeekInMonth(request.Year, request.Month, request.Week);
+                        DateTime fechaFinalDeLaSemana = GetLastDayOfWeek(fechaInicial);
+
+                        var listaFiltrada = sas.Where(s =>
+                         s.FechaDePago.HasValue &&
+                             s.FechaDePago.Value.Date >= fechaInicial.Date &&
+                             s.FechaDePago.Value.Date <= fechaFinalDeLaSemana.Date)
+                              .ToList();
+                       
+                        var mesesHastaHoy = ObtenerMesesHastaHoy(fechaFinalDeLaSemana.Year, fechaFinalDeLaSemana.Month, fechaFinalDeLaSemana.Day);
+                        var semanasPorMes = ObtenerSemanasPorMes(mesesHastaHoy, fechaFinalDeLaSemana.Year);
+
+                        var listaMismoSemanaMesAnterior = ObtenerListaMismoSemanaMesAnterior(sas, fechaFinalDeLaSemana.Year, fechaFinalDeLaSemana.Month, request.Week);
+
+                        DateTime fechaInicio = new DateTime(request.Year, request.Month, 1);
+                        DateTime fechaFin;
+
+                        // Determinar si estamos en el mes y año de la solicitud
+                        bool esMesActual = request.Year == DateTime.Now.Year && request.Month == DateTime.Now.Month;
+
+                        // Si es el mes y año actual, usar DateTime.Today, de lo contrario, usar el último día del mes de la solicitud
+                        fechaFin = esMesActual ? DateTime.Today : new DateTime(request.Year, request.Month, DateTime.DaysInMonth(request.Year, request.Month));
+
+                        var listaMes = ObtenerListaPorRangoFecha(sas, fechaInicio, fechaFin);
+
+                        var movimientosUltimos7Dias = ObtenerMovimientosUltimos7Dias(listaFiltrada);
+                        var fechasUnicas = ObtenerFechasUnicas(movimientosUltimos7Dias);
+
+                        var totalesPorDiaPorTarjeta = ObtenerTotalesPorDiaPorTarjeta(listaFiltrada, fechasUnicas);
+                        var descuentosPorTarjeta = ObtenerDescuentosPorTarjeta(listaFiltrada);
+                        var totalOperaciones = ObtenerTotalOperaciones(listaFiltrada);
+                        var totalConDescuentoCuotas1 = ObtenerTotalConDescuentoCuotas(listaFiltrada, 1);
+                        var totalConDescuentoCuotas2 = ObtenerTotalConDescuentoCuotas(listaFiltrada, 2);
+
+                        var totalNetoMes = ObtenerTotalNeto(listaMes);
+                        var totalBrutoMes = ObtenerTotalBruto(listaMes);
+
+                        var comparativahot = ObtenerComparativa(sas, listaFiltrada);
+                        var comparativaHotmesanterior = ObtenerComparativa(sas, listaMismoSemanaMesAnterior);
+                        var porcentaje = ObtenerPorcentaje(comparativahot, comparativaHotmesanterior);
+
+                        var resultado = new
+                        {
+                            AñoActual = request.Year,
+                            MesesHastaHoy = mesesHastaHoy,
+                            SemanasPorMes = semanasPorMes,
+                            TotalNetoHoy = 0,
+                            TotalBrutoHoy = 0,
+                            TotalNetoMañana = 0,
+                            TotalBrutoMañana = 0,
+                            TotalNetoMes = totalNetoMes,
+                            TotalBrutoMes = totalBrutoMes,
+                            Comparativahoy = comparativahot,
+                            ComparativaHoymesanterior = comparativaHotmesanterior,
+                            Porcentaje = porcentaje,
+                            DescuentosPorTarjeta = descuentosPorTarjeta,
+                            TotalesPorDiaTarjeta = totalesPorDiaPorTarjeta,
+                            //Fantasiasnombre = fantasiasnombre,
+
+                            TotalOperaciones = totalOperaciones,
+                            TotalConDescuentoCuotas1 = totalConDescuentoCuotas1,
+                            TotalConDescuentoCuotas2 = totalConDescuentoCuotas2,
+
+
+
+
+
+
+                            comparativadiasemana = "semana",
+                        };
+
+                        return StatusCode(StatusCodes.Status200OK, resultado);
+                    }
+                }
             }
 
             return Unauthorized("El token o el ID de la sesión no son válidos");
+        } 
+
+        private List<BaseDashboard> ObtenerListaMismoSemanaMesAnterior(List<BaseDashboard> sas, int year, int month, int week)
+{
+    // Calcular el primer y último día de la semana en el mes y año actual
+    DateTime primerDiaMesActual = new DateTime(year, month, 1);
+    DateTime primerDiaSemanaActual = GetFirstDayOfWeekInMonth(year, month, week);
+    DateTime ultimoDiaSemanaActual = GetLastDayOfWeek(primerDiaSemanaActual);
+
+    // Ajustar al mes anterior
+    DateTime primerDiaMesAnterior = primerDiaMesActual.AddMonths(-1);
+    int diasDiferencia = (primerDiaSemanaActual - primerDiaMesActual).Days;
+    DateTime primerDiaSemanaMesAnterior = primerDiaMesAnterior.AddDays(diasDiferencia);
+    DateTime ultimoDiaSemanaMesAnterior = GetLastDayOfWeek(primerDiaSemanaMesAnterior);
+
+    return sas.Where(s => 
+        s.FechaDePago.HasValue &&
+        s.FechaDePago.Value.Date >= primerDiaSemanaMesAnterior.Date &&
+        s.FechaDePago.Value.Date <= ultimoDiaSemanaMesAnterior.Date)
+        .ToList();
+}
+
+        private DateTime GetFirstDayOfWeekInMonth(int year, int month, int weekNumber)
+        {
+            var cultureInfo = CultureInfo.CurrentCulture;
+            var firstDayOfMonth = new DateTime(year, month, 1);
+            var dayOfWeek = cultureInfo.Calendar.GetDayOfWeek(firstDayOfMonth);
+            var firstDayOfWeek = cultureInfo.DateTimeFormat.FirstDayOfWeek;
+
+            var offset = (7 + (dayOfWeek - firstDayOfWeek)) % 7;
+            var firstWeekStart = firstDayOfMonth.AddDays(-offset);
+            var weekStart = firstWeekStart.AddDays((weekNumber - 1) * 7);
+
+            // Asegurarse de que la fecha de inicio esté dentro del mes especificado
+            return weekStart.Month == month ? weekStart : firstDayOfMonth;
+        }
+        private DateTime GetLastDayOfWeek(DateTime startDate)
+        {
+            var endDate = startDate.AddDays(6); // Asumiendo que una semana completa tiene 7 días
+
+            // Asegurarse de que la fecha final no exceda el último día del mes
+            var lastDayOfMonth = new DateTime(startDate.Year, startDate.Month, DateTime.DaysInMonth(startDate.Year, startDate.Month));
+            if (endDate > lastDayOfMonth)
+            {
+                endDate = lastDayOfMonth;
+            }
+
+            return endDate;
+        }
+        private int GetWeekOfYear(DateTime date)
+        {
+            // Ejemplo de cálculo de la semana del año
+            var cultureInfo = CultureInfo.CurrentCulture;
+            var calendarWeekRule = cultureInfo.DateTimeFormat.CalendarWeekRule;
+            var firstDayOfWeek = cultureInfo.DateTimeFormat.FirstDayOfWeek;
+
+            return cultureInfo.Calendar.GetWeekOfYear(date, calendarWeekRule, firstDayOfWeek);
+        }
+        private DateTime GetLastDayOfWeek(DateTime date, int weekNumber)
+        {
+            var cultureInfo = CultureInfo.CurrentCulture;
+            var calendar = cultureInfo.Calendar;
+            var firstDayOfWeek = cultureInfo.DateTimeFormat.FirstDayOfWeek;
+
+            // Encontrar el primer día de la semana del año
+            var firstDayOfYear = new DateTime(date.Year, 1, 1);
+            var daysOffset = firstDayOfWeek - firstDayOfYear.DayOfWeek;
+            var firstDayOfFirstWeek = firstDayOfYear.AddDays(daysOffset);
+
+            // Calcular el último día de la semana solicitada
+            var weekStart = firstDayOfFirstWeek.AddDays((weekNumber - 1) * 7);
+            var weekEnd = weekStart.AddDays(6); // Sumar 6 días para llegar al domingo
+
+            return weekEnd;
         }
         private HashSet<string> ObtenerFantasiasNombre(List<BaseDashboard> sas)
         {
@@ -321,23 +519,39 @@ namespace dash_aliados.Controllers
         }
         private List<BaseDashboard> ObtenerMovimientosUltimos7Dias(List<BaseDashboard> sas)
         {
-            DateTime haceUnaSemana = DateTime.Today.AddDays(-7);
-            return sas.Where(s => s.FechaDePago >= haceUnaSemana && s.FechaDePago <= DateTime.Today).ToList();
+            // Encuentra la fecha más reciente en 'sas' o usa la fecha actual si 'sas' está vacía
+            DateTime fechaMasReciente = sas.Max(s => s.FechaDePago) ?? DateTime.Today;
+
+            // Calcula la fecha de hace 7 días desde la fecha más reciente
+            DateTime haceUnaSemana = fechaMasReciente.AddDays(-7);
+
+            // Filtra 'sas' para obtener los movimientos de los últimos 7 días hasta la fecha más reciente
+            return sas.Where(s => s.FechaDePago.HasValue && s.FechaDePago.Value.Date >= haceUnaSemana.Date && s.FechaDePago.Value.Date <= fechaMasReciente.Date).ToList();
         }
+
 
         // Este método recibe una lista de movimientos y devuelve una lista de fechas únicas ordenadas de forma descendente
         public List<DateTime> ObtenerFechasUnicas(List<BaseDashboard> movimientosUltimos7Dias)
         {
-            // Encuentra el lunes más reciente
-            DateTime lunesDeEstaSemana = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Monday);
+            // Encuentra el primer día de la semana actual que pertenezca al mes en curso
+          
 
-            // Usa DateTime.Today como el límite superior en lugar del domingo
-            DateTime fechaHastaHoy = DateTime.Today;
+            // Encuentra la fecha más reciente en FechaDePago
+            DateTime fechaMasReciente = movimientosUltimos7Dias.Max(s => s.FechaDePago) ?? DateTime.MinValue;
+
+            DateTime primerDiaSemanaMesActual = fechaMasReciente.AddDays(-(int)fechaMasReciente.DayOfWeek + (int)DayOfWeek.Monday);
+            if (primerDiaSemanaMesActual.Month != fechaMasReciente.Month)
+            {
+                primerDiaSemanaMesActual = new DateTime(fechaMasReciente.Year, fechaMasReciente.Month, 1);
+            }
+
+            // Comprueba si la fecha más reciente es anterior a hoy
+            DateTime fechaHasta = fechaMasReciente < DateTime.Today ? fechaMasReciente : DateTime.Today;
 
             var fechasUnicas = movimientosUltimos7Dias
                 .Select(s => s.FechaDePago ?? DateTime.MinValue)
                 .Distinct()
-                .Where(d => d >= lunesDeEstaSemana && d <= fechaHastaHoy)
+                .Where(d => d >= primerDiaSemanaMesActual && d <= fechaHasta)
                 .OrderByDescending(d => d)
                 .ToList();
 
@@ -346,20 +560,32 @@ namespace dash_aliados.Controllers
 
 
 
+
+
         private Dictionary<string, List<object>> ObtenerTotalesPorDiaPorTarjeta(List<BaseDashboard> sas, List<DateTime> fechasUnicas)
         {
             var totalesPorDiaPorTarjeta = new Dictionary<string, List<object>>();
 
-            var fechasHastaHoy = fechasUnicas.Where(fecha => fecha.Date <= DateTime.Today).ToList();
+            DateTime fechaPagoMasReciente = fechasUnicas.Any() ? fechasUnicas.Max() : DateTime.MinValue;
+            DateTime fechaLimite = fechaPagoMasReciente < DateTime.Today ? fechaPagoMasReciente : DateTime.Today;
+
+            var fechasHastaHoy = fechasUnicas.Where(fecha => fecha.Date <= fechaLimite).ToList();
+
+            // Determinar la semana del mes para la fecha límite
+    
+
+
 
             foreach (var fecha in fechasHastaHoy)
             {
-                int semanaActual = ObtenerSemanaDelMesActual();
-
+                int semanaDelMes = fechaLimite < DateTime.Today ? ObtenerSemanaDelMes(fechaLimite) : ObtenerSemanaDelMesActual();
                 var totalesPorTarjetaEnFecha = sas
-                    .Where(s => s.SemanaMesOp == semanaActual && s.FechaDePago == fecha.Date)
-                    .GroupBy(s => s.NombreComercio.Replace(" ", ""))
-                    .ToList();
+      .Where(s => s.FechaDePago.HasValue &&
+                  s.FechaDePago.Value.Year == fecha.Year &&
+                  s.FechaDePago.Value.Month == fecha.Month &&
+                  s.FechaDePago.Value.Date == fecha.Date)
+      .GroupBy(s => s.NombreComercio.Replace(" ", ""))
+      .ToList();
 
                 foreach (var grupoTarjeta in totalesPorTarjetaEnFecha)
                 {
@@ -398,7 +624,11 @@ namespace dash_aliados.Controllers
             return totalesPorDiaPorTarjeta;
         }
 
-       
+        private int ObtenerSemanaDelMes(DateTime fecha)
+        {
+            var primeraSemanaDelMes = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(new DateTime(fecha.Year, fecha.Month, 1), CalendarWeekRule.FirstDay, DayOfWeek.Monday);
+            return CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(fecha, CalendarWeekRule.FirstDay, DayOfWeek.Monday) - primeraSemanaDelMes + 1;
+        }
 
         private int GetDayOfWeekNumber(string dayOfWeek)
         {

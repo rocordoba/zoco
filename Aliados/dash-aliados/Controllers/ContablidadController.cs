@@ -49,7 +49,7 @@ namespace dash_aliados.Controllers
                         var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), DateTime.Today);
                         var totalNetoHoy = ObtenerTotalNeto(listaHoy);
                         var totalBrutoHoy = ObtenerTotalBruto(listaHoy);
-
+                      var totalNetoMes = ObtenerTotalNeto(listaMes);
                         var totalOperaciones = ObtenerTotalOperaciones(listaMes);
                         var totalRetencionesMes = ObtenerTotalRetenciones(listaMes);
                         var totalIvaMes = ObtenerTotalIva(listaMes);
@@ -62,7 +62,7 @@ namespace dash_aliados.Controllers
                         var resultado = new
                         {
                             AñoActual = request.Year,
-
+                            TotalNetoMes = totalNetoMes,
                             TotalNetoHoy = totalNetoHoy,
                             TotalBrutoHoy = totalBrutoHoy,
                             TotalOperaciones = totalOperaciones,
@@ -87,7 +87,7 @@ namespace dash_aliados.Controllers
                         var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), DateTime.Today);
                         var totalNetoHoy = ObtenerTotalNeto(listaHoy);
                         var totalBrutoHoy = ObtenerTotalBruto(listaHoy);
-
+                        var totalNetoMes = ObtenerTotalNeto(listaMes);
                         var totalOperaciones = ObtenerTotalOperaciones(listaMes);
                         var totalRetencionesMes = ObtenerTotalRetenciones(listaMes);
                         var totalIvaMes = ObtenerTotalIva(listaMes);
@@ -100,7 +100,7 @@ namespace dash_aliados.Controllers
                         var resultado = new
                         {
                             AñoActual = request.Year,
-
+                            TotalNetoMes = totalNetoMes,
                             TotalNetoHoy = totalNetoHoy,
                             TotalBrutoHoy = totalBrutoHoy,
                             TotalOperaciones = totalOperaciones,
@@ -120,15 +120,11 @@ namespace dash_aliados.Controllers
                 }
                 else 
                 {
-                    //var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
-                    //var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario);
-
+                  
                     // Verificar si el comercio es "Todos"
                     if (request.comercio.ToLower() == "todos")
                     {
-                        //var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
-                        //var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario /*, request.Year, request.Month, request.Week, request.comercio*/);
-
+                        
                         DateTime fechaInicial = GetFirstDayOfWeekInMonth(request.Year, request.Month, request.Week);
                         DateTime fechaFinalDeLaSemana = GetLastDayOfWeek(fechaInicial);
 
@@ -140,7 +136,7 @@ namespace dash_aliados.Controllers
 
                         var listaHoy = ObtenerListaPorFecha(listaFiltrada, fechaFinalDeLaSemana);
                         var listaMes = ObtenerListaPorRangoFecha(listaFiltrada, fechaInicial, fechaFinalDeLaSemana);
-
+                        var totalNetoMes = ObtenerTotalNeto(listaMes);
                         var totalOperaciones = ObtenerTotalOperaciones(listaMes);
                         var totalRetencionesMes = ObtenerTotalRetenciones(listaMes);
                         var totalIvaMes = ObtenerTotalIva(listaMes);
@@ -153,7 +149,7 @@ namespace dash_aliados.Controllers
                         var resultado = new
                         {
                             AñoActual = request.Year,
-
+                            TotalNetoMes = totalNetoMes,
                             TotalNetoHoy = 0,
                             TotalBrutoHoy = 0,
                             TotalOperaciones = totalOperaciones,
@@ -184,7 +180,7 @@ namespace dash_aliados.Controllers
                                .ToList();
                         var listaHoy = ObtenerListaPorFecha(listaFiltrada, fechaFinalDeLaSemana);
                         var listaMes = ObtenerListaPorRangoFecha(listaFiltrada, fechaInicial, fechaFinalDeLaSemana);
-
+                        var totalNetoMes = ObtenerTotalNeto(listaMes);
                         var totalOperaciones = ObtenerTotalOperaciones(listaMes);
                         var totalRetencionesMes = ObtenerTotalRetenciones(listaMes);
                         var totalIvaMes = ObtenerTotalIva(listaMes);
@@ -197,7 +193,7 @@ namespace dash_aliados.Controllers
                         var resultado = new
                         {
                             AñoActual = request.Year,
-
+                            TotalNetoMes = totalNetoMes,
                             TotalNetoHoy = 0,
                             TotalBrutoHoy = 0,
                             TotalOperaciones = totalOperaciones,

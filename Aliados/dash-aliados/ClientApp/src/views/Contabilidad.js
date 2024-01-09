@@ -11,8 +11,7 @@ import Impuesto2CardsBn from "../components/Impuesto2CardsBn";
 
 const Contabilidad = () => {
   const { datosContabilidadContext } = useContext(DatosInicioContext);
- 
- 
+
   return (
     <div>
       <div className="d-xl-block d-none mt-4 pt-4 ">

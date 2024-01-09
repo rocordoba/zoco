@@ -41,7 +41,7 @@ const FormComentarioCalificar = () => {
     console.log("Datos a enviar:", datosConRating);
 
     try {
-      await fetch("/api/califico/califico", {
+        await fetch("/api/califico/calificocom", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

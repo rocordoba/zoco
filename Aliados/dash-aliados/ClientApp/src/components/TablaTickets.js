@@ -55,9 +55,13 @@ const TablaTickets = ({ listaMes }) => {
 
             const blob = await respuesta.blob();
             const urlDescarga = window.URL.createObjectURL(blob);
+            const fechaActual = new Date();
+            const fechaFormateada = fechaActual.toISOString().split('T')[0]; // Formato: 'YYYY-MM-DD'
+
+            // Crear el enlace con el nombre de archivo deseado
             const enlace = document.createElement('a');
             enlace.href = urlDescarga;
-            enlace.setAttribute('download', 'datos.xlsx');
+            enlace.setAttribute('download', `zoco_${fechaFormateada}.xlsx`); // Formato: 'zoco_YYYY-MM-DD.xlsx'
             document.body.appendChild(enlace);
             enlace.click();
             enlace.parentNode.removeChild(enlace);

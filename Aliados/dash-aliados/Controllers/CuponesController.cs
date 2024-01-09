@@ -47,10 +47,10 @@ namespace dash_aliados.Controllers
 
 
                         var listaHoy = ObtenerListaPorFecha(sas, DateTime.Today);
-                        var totalBrutoHoy = ObtenerTotalBruto(listaHoy);
+                       
                         var totalOperaciones = ObtenerTotalOperaciones(sas);
                         var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), DateTime.Today);
-
+                        var totalBrutoHoy = ObtenerTotalBruto(listaMes);
                         // Llamada al método para obtener las sumas por día
                         var sumasPorDia = ObtenerSumaPorDia(listaMes);
 
@@ -72,10 +72,10 @@ namespace dash_aliados.Controllers
                         sas = sas.Where(s => s.NombreComercio != null && s.NombreComercio.ToLower() == request.comercio.ToLower()).ToList();
 
                         var listaHoy = ObtenerListaPorFecha(sas, DateTime.Today);
-                        var totalBrutoHoy = ObtenerTotalBruto(listaHoy);
+                     
                         var totalOperaciones = ObtenerTotalOperaciones(sas);
                         var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), DateTime.Today);
-
+                        var totalBrutoHoy = ObtenerTotalBruto(listaMes);
                         // Llamada al método para obtener las sumas por día
                         var sumasPorDia = ObtenerSumaPorDia(listaMes);
 
@@ -110,7 +110,7 @@ namespace dash_aliados.Controllers
                         var listaMes = ObtenerListaPorRangoFecha(listaFiltrada, fechaInicial, fechaFinalDeLaSemana);
 
 
-                        var totalBrutoHoy = ObtenerTotalBruto(listaHoy);
+                        var totalBrutoHoy = ObtenerTotalBruto(listaMes);
                         var totalOperaciones = ObtenerTotalOperaciones(listaFiltrada);
 
 
@@ -146,7 +146,7 @@ namespace dash_aliados.Controllers
                         var listaMes = ObtenerListaPorRangoFecha(listaFiltrada, fechaInicial, fechaFinalDeLaSemana);
 
 
-                        var totalBrutoHoy = ObtenerTotalBruto(listaHoy);
+                        var totalBrutoHoy = ObtenerTotalBruto(listaMes);
                         var totalOperaciones = ObtenerTotalOperaciones(listaFiltrada);
 
 
@@ -182,7 +182,7 @@ namespace dash_aliados.Controllers
         }
         private double ObtenerTotalBruto(List<BaseDashboard> lista)
         {
-            return (double)lista.Sum(s => s.TotalBruto);
+            return (double)lista.Sum(s => s.TotalConDescuentos);
         }
         private double ObtenerTotalOperaciones(List<BaseDashboard> sas)
         {

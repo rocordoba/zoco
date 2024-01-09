@@ -306,13 +306,11 @@ namespace dash_aliados.Controllers
                 DateTime primerDiaMes = new DateTime(fechaMes.Year, fechaMes.Month, 1);
                 DateTime ultimoDiaMes = primerDiaMes.AddMonths(1).AddDays(-1);
 
-                DateTime fechaMesSiguiente = (fechaMes.Month == 12)
-                    ? new DateTime(fechaMes.Year + 1, 1, 1)
-                    : fechaMes.AddMonths(1);
+                // Calculo correcto de la fecha del mes siguiente
+                DateTime fechaMesSiguiente = fechaMes.AddMonths(1);
 
                 var datosMes = sas.Where(s => s.FechaDePago >= primerDiaMes && s.FechaDePago <= ultimoDiaMes).ToList();
 
-                // Continúa solo si hay datos en el mes actual
                 if (datosMes.Any())
                 {
                     decimal? totalBruto = datosMes.Sum(s => s.TotalBruto);
@@ -339,6 +337,7 @@ namespace dash_aliados.Controllers
 
             return resumenUltimos7Meses;
         }
+
 
 
 

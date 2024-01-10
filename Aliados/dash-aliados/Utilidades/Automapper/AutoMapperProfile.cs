@@ -12,6 +12,20 @@ namespace dash_aliados.Utilidades.Automapper
     {
         public AutoMapperProfile()
         {
+            #region Noticia
+            // Mapping from Noticia to VMNoticia
+            CreateMap<Noticia, VMNoticia>()
+                .ForMember(dest => dest.Fecha, opt => opt.MapFrom(src => src.Fecha.HasValue ? src.Fecha.Value.ToString("yyyy-MM-dd") : null))
+                .ForMember(dest => dest.Noticia1, opt => opt.MapFrom(src => src.Noticia1))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
+
+            // Mapping from VMNoticia to Noticia
+            CreateMap<VMNoticia, Noticia>()
+                .ForMember(dest => dest.Fecha, opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.Fecha) ? DateTime.Parse(src.Fecha) : (DateTime?)null))
+                .ForMember(dest => dest.Noticia1, opt => opt.MapFrom(src => src.Noticia1))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
+
+            #endregion
 
             #region Usuarios zoco
             CreateMap<Usuarios, VMUsuariosZoco>()

@@ -15,7 +15,10 @@ const context = [
     "/api/cupones/cupones",
     "/api/excel/excel",
     "/api/bienvenidopanel/bienvenidopanel",
-   
+    "/api/notificacion/noticias",
+    "/api/pdf/pdf",
+    "/api/acceso/cambiarClave", 
+    
 ];
 
 module.exports = function (app) {

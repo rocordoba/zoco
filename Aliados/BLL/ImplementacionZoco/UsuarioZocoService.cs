@@ -25,10 +25,38 @@ namespace BLL.ImplemtacionZoco
             _correoService = correoService;
         }
 
-        public Task<bool> CambiarClave(int IdUsuario, string ClaveActual, string ClaveNueva)
+        public async Task<bool> CambiarClave(int IdUsuario, string ClaveActual, string ClaveNueva)
         {
-            throw new NotImplementedException();
+            // Obtener el usuario por ID
+            Usuarios usuario = await _repositorioUser.Obtener(u => u.Id == IdUsuario);
+
+
+            // Verificar si el usuario existe
+            if (usuario == null)
+            {
+                return false; // Usuario no encontrado
+            }
+
+            // Verificar la clave actual
+            bool claveActualEsCorrecta = BCrypt.Net.BCrypt.Verify(ClaveActual, usuario.Password);
+
+            if (claveActualEsCorrecta)
+            {
+                // Encriptar la nueva clave
+                string claveNuevaEncriptada = BCrypt.Net.BCrypt.HashPassword(ClaveNueva);
+
+                // Actualizar la clave en la base de datos
+                usuario.Password = claveNuevaEncriptada;
+                await _repositorioUser.Editar(usuario);
+
+                return true; // Cambio de clave exitoso
+            }
+            else
+            {
+                return false; // Clave actual incorrecta
+            }
         }
+
 
         public async Task<Usuarios> Crear(Usuarios entidad)
         {

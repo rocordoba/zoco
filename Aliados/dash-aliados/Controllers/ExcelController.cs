@@ -29,7 +29,7 @@ namespace dash_aliados.Controllers
 
 
         [HttpPost("excel")]
-        public async Task<ActionResult> Excel([FromBody] VMDatosInicio request)
+        public async Task<ActionResult> Excel([FromBody] VMExcel request)
         {
             var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
             var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario);

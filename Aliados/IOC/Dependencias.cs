@@ -39,7 +39,7 @@ namespace IOC
             services.AddScoped<IBaseDashboardService, BaseDashboardService>();
             services.AddScoped<IInflacionService, InflacionService>();
             services.AddScoped<ICalificoComentarioService, CalificoService>();
-
+            services.AddScoped<INotificacionService, NotificacionService>();
 
 
 

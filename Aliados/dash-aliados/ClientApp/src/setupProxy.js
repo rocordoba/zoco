@@ -16,6 +16,7 @@ const context = [
     "/api/excel/excel",
     "/api/bienvenidopanel/bienvenidopanel",
     "/api/notificacion/noticias",
+    "/api/pdf/pdf",
    
 ];
 

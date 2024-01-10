@@ -69,6 +69,45 @@ const TablaTickets = ({ listaMes }) => {
             console.error('Hubo un error:', error);
         }
     };
+    const manejarClicDescargaPdf = async () => {
+        const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("userId");
+        const fechaActual = new Date();
+        const año = fechaActual.getFullYear();
+        const mes = fechaActual.getMonth() + 1;
+        const comercio = "todos"; // O cualquier valor que necesites
+
+        try {
+            const respuesta = await fetch('/api/pdf/pdf', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // Si tu API requiere un token de autenticación
+                },
+                body: JSON.stringify({
+                    token: token,
+                    Id: userId,
+                    Year: año,
+                    Month: mes,
+                    comercio: comercio
+                })
+            });
+
+            if (!respuesta.ok) {
+                throw new Error('La respuesta de la red no fue correcta');
+            }
+
+            const blob = await respuesta.blob();
+            const urlDescarga = window.URL.createObjectURL(blob);
+            const enlace = document.createElement('a');
+            enlace.href = urlDescarga;
+            enlace.setAttribute('download', `reporte_${año}-${mes}.pdf`);
+            document.body.appendChild(enlace);
+            enlace.click();
+            enlace.parentNode.removeChild(enlace);
+        } catch (error) {
+            console.error('Hubo un error:', error);
+        }
+    };
 
     useEffect(() => {
         buscarFecha();
@@ -96,30 +135,22 @@ const TablaTickets = ({ listaMes }) => {
             </div>
           </div>
           <div className="d-flex centrado-responsive">
-            <div className="btn-pdf-descargar centrado border-0 mx-2">
-              <a
-                className="text-decoration-none centrado-flex"
-                href={pdfPrueba}
-                download="Reporte Pdf Prueba"
-              >
-                <div className="my-3">
-                  <div>
-                    <div className="text-center">
-                      <img
-                        className="img-fluid icono-pdf-xls mb-1"
-                        src={pdf}
-                        alt="pdf"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <div className="d-flex justify-content-center align-items-center">
-                      <h6 className="text-white lato-bold fs-16">Descargar</h6>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
+                      <div className="btn-pdf-descargar centrado border-0 mx-2">
+                          <button
+                              className="text-decoration-none centrado-flex"
+                              onClick={manejarClicDescargaPdf}
+                          >
+                              <div className="my-3">
+                                  <div className="text-center">
+                                      <img className="img-fluid icono-pdf-xls mb-1" src={pdf} alt="pdf" />
+                                  </div>
+                                  <div className="d-flex justify-content-center align-items-center">
+                                      <h6 className="text-white lato-bold fs-16">Descargar PDF</h6>
+                                  </div>
+                              </div>
+                          </button>
+                      </div>
+
                       <div className="btn-pdf-descargar centrado border-0 mx-2">
                           <button
                               className="text-decoration-none centrado-flex"

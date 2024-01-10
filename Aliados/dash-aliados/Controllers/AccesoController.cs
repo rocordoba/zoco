@@ -65,39 +65,28 @@ namespace dash_aliados.Controllers
 
             return Ok(respuestaJson);
         }
-      
-        [HttpGet("califico")]
-        public async Task<ActionResult> califico([FromQuery] string token, [FromQuery] int id)
+        [HttpPost("cambiarClave")]
+        public async Task<IActionResult> CambiarClave([FromBody] VMCambioClave cambioClave)
         {
-            if (token != null)
+            if (cambioClave.ClaveNueva != cambioClave.ConfirmarClave)
             {
-                var usuario = await _usuariosService.Guardarcalificacion(id);
-                     
-
-                return Ok();
-            }
-            return Unauthorized("El token o el ID de la sesión no son válidos");
-        }
-
-            // API para listar los usuarios
-            [HttpGet("lista")]
-        public async Task<ActionResult<List<VMUsuarios>>> Lista()
-        
-        {
-            // Obtener la lista de usuarios
-            var usuarios = await _usuariosService.Lista();
-
-            // Si no hay usuarios, devolver un error
-            if (usuarios == null || usuarios.Count == 0)
-            {
-                return NotFound("No hay usuarios registrados");
+                return BadRequest("Las contraseñas nuevas no coinciden.");
             }
 
-            // Si hay usuarios, devolverlos como una lista de VMUsuarios
-            var usuariosVM = usuarios.Select(u => _mapper.Map<VMUsuarios>(u)).ToList(); // Usar el mapper para convertir la lista de usuarios
+            var resultado = await _usuariosService.CambiarClave(cambioClave.Id, cambioClave.ClaveActual, cambioClave.ClaveNueva);
 
-            return Ok(usuariosVM);
+            if (resultado)
+            {
+                return Ok("Contraseña cambiada con éxito.");
+            }
+            else
+            {
+                return BadRequest("No se pudo cambiar la contraseña.");
+            }
         }
+
+
+
 
     }
 }

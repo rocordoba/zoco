@@ -26,16 +26,31 @@ import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import trianguloModal from "../assets/img/triangulomodales.png";
 import trianguloModalDark from "../assets/img/triangulomodalesdark.png";
 import { DarkModeContext } from "../context/DarkModeContext";
-import { Button, Modal } from "react-bootstrap";
-import { useForm, Controller } from "react-hook-form";
-import { useRef } from "react";
+import { Button } from "react-bootstrap";
 import { useEffect } from "react";
-
+import ModalConfiguraciones from "./ModalConfiguraciones";
 
 const SidebarReact = () => {
   const [visible1, setVisible1] = useState(false);
-
   const [visible2, setVisible2] = useState(false);
+
+  const [notificaciones, setNotificaciones] = useState([]);
+  console.log("🚀 ~ SidebarReact ~ notificaciones:", notificaciones);
+
+  useEffect(() => {
+    const fetchNoticias = async () => {
+      try {
+        const response = await fetch("/api/notificacion/noticias");
+        const data = await response.json();
+        console.log("🚀 ~ fetchNoticias ~ data :", data);
+        setNotificaciones(data); // Asegúrate de que esto coincide con la estructura de tu API
+      } catch (error) {
+        console.error("Error al cargar noticias:", error);
+      }
+    };
+
+    fetchNoticias();
+  }, []);
 
   const verModalNotificacion = () => {
     setVisible1(!visible1);
@@ -241,180 +256,6 @@ const SidebarReact = () => {
 
   const [modalShowCompleta, setModalShowCompleta] = React.useState(false);
 
-  const [formData, setFormData] = useState({
-    anterior: "",
-    confirmar: "",
-    nueva: "",
-  });
-    const [noticias, setNoticias] = useState([]); 
-  //Modal configuraciones
-  function ModalConfiguraciones(props) {
-    const { show, onHide } = props;
-    const { control, handleSubmit, formState } = useForm();
-    const { errors } = formState;
-
-    const onSubmit = (data) => {
-      setFormData(data);
-      onHide();
-    };
-      const [noticias, setNoticias] = useState([]); // Estado para almacenar las noticias
-
-      useEffect(() => {
-          const fetchNoticias = async () => {
-              try {
-                  const response = await fetch('/api/notificacion/noticias');
-                  const data = await response.json();
-                  setNoticias(data); // Asegúrate de que esto coincide con la estructura de tu API
-              } catch (error) {
-                  console.error('Error al cargar noticias:', error);
-              }
-          };
-
-          fetchNoticias();
-      }, []);
-
-    return (
-      <Modal
-        {...props}
-        show={show}
-        onHide={onHide}
-        centered
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-      >
-        <Modal.Body
-          className={
-            darkMode
-              ? " modal-content-dark text-white "
-              : "modal-content text-black "
-          }
-        >
-          <section className="d-flex justify-content-between my-4">
-            <div className="ocultar-div"></div>
-            <div className="d-flex justify-content-center">
-              <h6 className="fs-18 lato-bold">Cambiar contraseña</h6>
-            </div>
-            <div>
-              <button className="border-0 btn-filtro-cruz" onClick={onHide}>
-                <FontAwesomeIcon className="fs-18 " icon={faXmark} />
-              </button>
-            </div>
-          </section>
-         
-          <div className="d-flex justify-content-center">
-            <form className="py-5 " onSubmit={handleSubmit(onSubmit)}>
-              <article>
-                <div>
-                  <label
-                    className="lato-bold fs-16-a-14 mb-2"
-                    htmlFor="anterior"
-                  >
-                    Ingresar contraseña anterior:
-                  </label>
-                </div>
-                <div>
-                  <Controller
-                    name="anterior"
-                    control={control}
-                    rules={{ required: "Campo requerido" }}
-                    render={({ field }) => (
-                      <input
-                        className="input-configuraciones border-0"
-                        style={{ padding: "10px" }}
-                        type="text"
-                        {...field}
-                      />
-                    )}
-                  />
-                  <div className="text-danger">
-                    {errors.anterior && (
-                      <p className="fs-16 lato-bold">
-                        {errors.anterior.message}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </article>
-              <article className="my-1">
-                <div>
-                  <label className="lato-bold fs-16-a-14 mb-2" htmlFor="nueva">
-                    Ingresar contraseña nueva:
-                  </label>
-                </div>
-                <div>
-                  <Controller
-                    name="nueva"
-                    control={control}
-                    rules={{ required: "Campo requerido" }}
-                    render={({ field }) => (
-                      <input
-                        className="input-configuraciones border-0"
-                        type="text"
-                        style={{ padding: "10px" }}
-                        {...field}
-                      />
-                    )}
-                  />
-                  <div className="text-danger ">
-                    {errors.nueva && (
-                      <p className="fs-16 lato-bold">{errors.nueva.message}</p>
-                    )}
-                  </div>
-                </div>
-              </article>
-              <article className="my-1">
-                <div>
-                  <label
-                    className="lato-bold fs-16-a-14 mb-2"
-                    htmlFor="confirmar"
-                  >
-                    Ingresar contraseña nueva otra vez:
-                  </label>
-                </div>
-                <div>
-                  <Controller
-                    name="confirmar"
-                    control={control}
-                    rules={{ required: "Campo requerido" }}
-                    render={({ field }) => (
-                      <input
-                        className="input-configuraciones border-0"
-                        type="text"
-                        style={{ padding: "10px" }}
-                        {...field}
-                      />
-                    )}
-                  />
-                  <div className="text-danger">
-                    {errors.confirmar && (
-                      <p className="fs-16 lato-bold">
-                        {errors.confirmar.message}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </article>
-              <div className="d-flex justify-content-center mt-5">
-                <button
-                  className={
-                    darkMode
-                      ? "btn-guardar-modal-configuraciones border-0 lato-bold text-dark "
-                      : "btn-guardar-modal-configuraciones border-0 lato-bold text-white"
-                  }
-                  type="submit"
-                >
-                  Guardar
-                </button>
-              </div>
-            </form>
-          </div>
-        </Modal.Body>
-      </Modal>
-    );
-  }
-
-  //click fuera del modal
-
   return (
     <>
       <section className={darkMode ? " sidebar-dark" : `sidebar `}>
@@ -458,64 +299,63 @@ const SidebarReact = () => {
             </div>
           </div>
           {/* caja campana  */}
-                  {visible1 && (
-                      <div>
-                          <div className="d-flex justify-content-center">
+          {visible1 && (
+            <div>
+              <div className="d-flex justify-content-center">
+                {darkMode ? (
+                  <div>
+                    <img
+                      className="img-fluid"
+                      src={trianguloModalDark}
+                      alt="triangulo modal"
+                    />
+                  </div>
+                ) : (
+                  <div>
+                    <img
+                      className="img-fluid"
+                      src={trianguloModal}
+                      alt="triangulo modal"
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="d-flex justify-content-center">
+                <div
+                  className={
+                    darkMode
+                      ? "caja-campana-dark scroll-especifico-dark"
+                      : "caja-campana scroll-especifico"
+                  }
+                >
+                  <div className="container px-4">
+                    <div className="d-flex flex-column justify-content-around">
+                      {notificaciones.map((notificacion, index) => (
+                        <div key={index}>
+                          <h6 className="fs-16 my-3">
+                            <span className="me-2">
                               {darkMode ? (
-                                  <div>
-                                      <img
-                                          className="img-fluid"
-                                          src={trianguloModalDark}
-                                          alt="triangulo modal"
-                                      />
-                                  </div>
+                                <FontAwesomeIcon
+                                  className="fs-8  color-blanco-items"
+                                  icon={faCircle}
+                                />
                               ) : (
-                                  <div>
-                                      <img
-                                          className="img-fluid"
-                                          src={trianguloModal}
-                                          alt="triangulo modal"
-                                      />
-                                  </div>
+                                <FontAwesomeIcon
+                                  className="fs-8  color-negro-items"
+                                  icon={faCircle}
+                                />
                               )}
-                          </div>
-                          <div className="d-flex justify-content-center">
-                              <div
-                                  className={
-                                      darkMode
-                                          ? "caja-campana-dark scroll-especifico-dark"
-                                          : "caja-campana scroll-especifico"
-                                  }
-                              >
-                                  <div className="container px-4">
-                                      <div className="d-flex flex-column justify-content-around">
-                                          {noticias.map((noticia, index) => (
-                                              <div key={index}>
-                                                  <h6 className="fs-16 my-3">
-                                                      <span className="me-2">
-                                                          {darkMode ? (
-                                                              <FontAwesomeIcon
-                                                                  className="fs-8  color-blanco-items"
-                                                                  icon={faCircle}
-                                                              />
-                                                          ) : (
-                                                              <FontAwesomeIcon
-                                                                  className="fs-8  color-negro-items"
-                                                                  icon={faCircle}
-                                                              />
-                                                          )}
-                                                      </span>
-                                                      {noticia.Noticia1}
-                                                  </h6>
-                                              </div>
-                                          ))}
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  )}
-
+                            </span>
+                            {notificacion.noticia1}
+                          </h6>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* caja cerrar sesion  */}
           {visible2 && (

@@ -4,9 +4,7 @@ import { DarkModeContext } from "../context/DarkModeContext";
 import formatearValores from "../helpers/formatearAPeso";
 
 const Impuesto2Cards = ({ datosBack }) => {
-  console.log("🚀 ~ Impuesto2Cards ~ datosBack :", datosBack);
   const { darkMode } = useContext(DarkModeContext);
-
   const {
     totalBrutoMes,
     totaldebito,

@@ -11,7 +11,6 @@ const DatosAnalisis = ({ datosBack }) => {
     totalConDescuentoCuotas2
 
   } = datosBack;
-  console.log("🚀 ~ DatosAnalisis ~ datosBack:", datosBack);
 
   const valoresFormateados = formatearValores(
     totalConDescuentoCuotas0,

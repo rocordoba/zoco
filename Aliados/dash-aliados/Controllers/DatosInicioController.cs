@@ -92,7 +92,6 @@ namespace dash_aliados.Controllers
                         var listaMañana = ObtenerListaPorFecha(sas, fechaFin);
                         var movimientosUltimos7Dias = ObtenerMovimientosUltimos7Dias(sas);
                         var fechasUnicas = ObtenerFechasUnicas(movimientosUltimos7Dias);
-                        var meses = ObtenerMesActualYAnterior(request.Month, request.Year);
 
                         var totalesPorDiaPorTarjeta = ObtenerTotalesPorDiaPorTarjeta(sas, fechasUnicas);
                         var descuentosPorTarjeta = ObtenerDescuentosPorTarjeta(sas);
@@ -128,9 +127,6 @@ namespace dash_aliados.Controllers
                             TotalesPorDiaTarjeta = totalesPorDiaPorTarjeta,
                             Fantasiasnombre = fantasiasnombre,
 
-
-
-                            Meses=meses,
                             TotalOperaciones = totalOperaciones,
                             TotalConDescuentoCuotas1 = totalConDescuentoCuotas1,
                             TotalConDescuentoCuotas2 = totalConDescuentoCuotas2,
@@ -538,17 +534,22 @@ namespace dash_aliados.Controllers
         // Este método recibe una lista de movimientos y devuelve una lista de fechas únicas ordenadas de forma descendente
         public List<DateTime> ObtenerFechasUnicas(List<BaseDashboard> movimientosUltimos7Dias)
         {
-            // Encuentra la fecha más reciente en 'movimientosUltimos7Dias' o usa la fecha actual si está vacía
-            DateTime fechaMasReciente = movimientosUltimos7Dias.Max(s => s.FechaOperacion) ?? DateTime.Today;
+            // Encuentra la fecha más reciente en FechaOperacion
+            DateTime fechaMasReciente = movimientosUltimos7Dias.Max(s => s.FechaOperacion) ?? DateTime.MinValue;
 
-            // Calcula la fecha de hace 7 días desde la fecha más reciente
-            DateTime haceUnaSemana = fechaMasReciente.AddDays(-6); // Incluye el día actual en el conteo de 7 días
+            DateTime primerDiaSemanaMesActual = fechaMasReciente.AddDays(-(int)fechaMasReciente.DayOfWeek + (int)DayOfWeek.Monday);
+            if (primerDiaSemanaMesActual.Month != fechaMasReciente.Month)
+            {
+                primerDiaSemanaMesActual = new DateTime(fechaMasReciente.Year, fechaMasReciente.Month, 1);
+            }
 
-            // Obtiene una lista de fechas únicas de los últimos 7 días
+            // Comprueba si la fecha más reciente es anterior a hoy
+            DateTime fechaHasta = fechaMasReciente < DateTime.Today ? fechaMasReciente : DateTime.Today;
+
             var fechasUnicas = movimientosUltimos7Dias
-                .Where(s => s.FechaOperacion.HasValue && s.FechaOperacion.Value.Date >= haceUnaSemana.Date && s.FechaOperacion.Value.Date <= fechaMasReciente.Date)
-                .Select(s => s.FechaOperacion.Value.Date)
+                .Select(s => s.FechaOperacion ?? DateTime.MinValue)
                 .Distinct()
+                .Where(d => d >= primerDiaSemanaMesActual && d <= fechaHasta)
                 .OrderByDescending(d => d)
                 .ToList();
 
@@ -564,14 +565,24 @@ namespace dash_aliados.Controllers
         {
             var totalesPorDiaPorTarjeta = new Dictionary<string, List<object>>();
 
-            // Asegurarse de que solo se consideren los últimos 7 días
-            var fechasHastaHoy = fechasUnicas.OrderByDescending(fecha => fecha).Take(7).OrderBy(fecha => fecha).ToList();
+            DateTime fechaOperacionMasReciente = fechasUnicas.Any() ? fechasUnicas.Max() : DateTime.MinValue;
+            DateTime fechaLimite = fechaOperacionMasReciente < DateTime.Today ? fechaOperacionMasReciente : DateTime.Today;
+
+            var fechasHastaHoy = fechasUnicas.Where(fecha => fecha.Date <= fechaLimite).ToList();
+
+
+            // Determinar la semana del mes para la fecha límite
+
+
 
             foreach (var fecha in fechasHastaHoy)
             {
+                int semanaDelMes = fechaLimite < DateTime.Today ? ObtenerSemanaDelMes(fechaLimite) : ObtenerSemanaDelMesActual();
                 var totalesPorTarjetaEnFecha = sas
-                    .Where(s => (s.FechaDePago.HasValue && s.FechaDePago.Value.Date == fecha) ||
-                                (s.FechaOperacion.HasValue && s.FechaOperacion.Value.Date == fecha))
+                    .Where(s => s.FechaOperacion.HasValue &&
+                                s.FechaOperacion.Value.Year == fecha.Year &&
+                                s.FechaOperacion.Value.Month == fecha.Month &&
+                                s.FechaOperacion.Value.Date == fecha.Date)
                     .GroupBy(s => s.NombreComercio.Replace(" ", ""))
                     .ToList();
 
@@ -582,23 +593,35 @@ namespace dash_aliados.Controllers
                         totalesPorDiaPorTarjeta[grupoTarjeta.Key] = new List<object>();
                     }
 
-                    var totalPorDia = grupoTarjeta.Sum(item => item.TotalConDescuentos);
+                    var totalesPorDia = grupoTarjeta
+                        .GroupBy(s => s.FechaOperacion)
+                        .Select(group => new
+                        {
+                            NombreComercio = grupoTarjeta.Key,
+                            DiaSemana = group.Key.Value.ToString("dddd"),
+                            TotalConDescuentoPorDia = group.Sum(item => item.TotalBruto)
+                        })
+                        .ToList();
 
-                    var totalPorDiaObj = new
-                    {
-                        NombreComercio = grupoTarjeta.Key,
-                        Fecha = fecha,
-                        TotalConDescuentoPorDia = totalPorDia
-                    };
-
-                    totalesPorDiaPorTarjeta[grupoTarjeta.Key].Add(totalPorDiaObj);
+                    totalesPorDiaPorTarjeta[grupoTarjeta.Key].AddRange(totalesPorDia);
                 }
             }
 
+            // Ordenar por días de la semana al finalizar todos los cálculos
+            foreach (var key in totalesPorDiaPorTarjeta.Keys.ToList())
+            {
+                totalesPorDiaPorTarjeta[key] = totalesPorDiaPorTarjeta[key]
+                    .OrderBy(obj =>
+                    {
+                        dynamic d = obj;
+                        return GetDayOfWeekNumber(d.DiaSemana);
+                    })
+                    .ToList();
+            }
+
+
             return totalesPorDiaPorTarjeta;
         }
-
-
 
         private int ObtenerSemanaDelMes(DateTime fecha)
         {
@@ -679,31 +702,6 @@ namespace dash_aliados.Controllers
 
             int semanaDelMes = (fechaHoy.Day + diaDeLaSemanaDelPrimerDia - 1) / 7 + 1;
             return semanaDelMes;
-        }
-        private List<string> ObtenerMesActualYAnterior(int month, int year)
-        {
-            List<string> meses = new List<string>();
-
-            // Obtener el mes actual
-            string mesActual = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);
-            meses.Add(char.ToUpper(mesActual[0]) + mesActual.Substring(1));
-
-            // Calcular y obtener el mes anterior
-            DateTime fechaAnterior;
-            if (month == 1)
-            {
-                // Si es enero, el mes anterior es diciembre del año anterior
-                fechaAnterior = new DateTime(year - 1, 12, 1);
-            }
-            else
-            {
-                fechaAnterior = new DateTime(year, month - 1, 1);
-            }
-
-            string mesAnterior = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(fechaAnterior.Month);
-            meses.Add(char.ToUpper(mesAnterior[0]) + mesAnterior.Substring(1));
-
-            return meses;
         }
 
 

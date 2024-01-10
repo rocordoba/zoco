@@ -51,8 +51,8 @@ namespace dash_aliados.Controllers
                         var totalCuotas = totalConDescuentoCuotas1 + totalConDescuentoCuotas2;
                         var tarea = ObtenerResumenUltimos7Meses(sas);
                         var resumenUltimos7Meses = tarea.Result;
-                        var totalNetoMes = ObtenerTotalNeto(listaMes);
-                        var totalBrutoMes = ObtenerTotalBruto(listaMes);
+                        var creditofacturacion = ObtenerTotalNeto(listaMes);
+                        var debitofacturacion = ObtenerTotalBruto(listaMes);
                         var debito = ObtenerTicketPromedio(listaMes, 0);
                         var credito = ObtenerTicketPromedio(listaMes, 1);
                         var porcentajeporcuotas = ObtenerPorcentaje(totalConDescuentoCuotas0, totalCuotas);
@@ -72,8 +72,8 @@ namespace dash_aliados.Controllers
                             Porcentajetipopago = porcentajetipopago,
                             Debito = debito,
                             Credito = credito,
-                            TotalNetoMes=totalNetoMes,
-                            TotalBrutoMes=totalBrutoMes,
+                            CreditoFacturacion = creditofacturacion,
+                            DebitoFacturacion=debitofacturacion,
                         };
 
                         return StatusCode(StatusCodes.Status200OK, resultado);
@@ -89,8 +89,8 @@ namespace dash_aliados.Controllers
                         var totalCuotas = totalConDescuentoCuotas1 + totalConDescuentoCuotas2;
                         var tarea = ObtenerResumenUltimos7Meses(sas);
                         var resumenUltimos7Meses = tarea.Result;
-                        var totalNetoMes = ObtenerTotalNeto(listaMes);
-                        var totalBrutoMes = ObtenerTotalBruto(listaMes);
+                        var creditofacturacion = ObtenerTotalNeto(listaMes);
+                        var debitofacturacion = ObtenerTotalBruto(listaMes);
                         var debito = ObtenerTicketPromedio(listaMes, 0);
                         var credito = ObtenerTicketPromedio(listaMes, 1);
                         var porcentajeporcuotas = ObtenerPorcentaje(totalConDescuentoCuotas0, totalCuotas);
@@ -110,8 +110,8 @@ namespace dash_aliados.Controllers
                             Porcentajetipopago = porcentajetipopago,
                             Debito = debito,
                             Credito = credito,
-                            TotalNetoMes = totalNetoMes,
-                            TotalBrutoMes = totalBrutoMes,
+                            CreditoFacturacion = creditofacturacion,
+                            DebitoFacturacion = debitofacturacion,
                         };
 
                         return StatusCode(StatusCodes.Status200OK, resultado);
@@ -146,8 +146,8 @@ namespace dash_aliados.Controllers
                         var totalCuotas = totalConDescuentoCuotas1 + totalConDescuentoCuotas2;
                         var tarea = ObtenerResumenUltimos7Meses(listaFiltradaUltimos7Meses);
                         var resumenUltimos7Meses = tarea.Result;
-                        var totalNetoMes = ObtenerTotalNeto(listaFiltrada);
-                        var totalBrutoMes = ObtenerTotalBruto(listaFiltrada);
+                        var creditofacturacion = ObtenerTotalNeto(listaFiltrada);
+                        var debitofacturacion = ObtenerTotalBruto(listaFiltrada);
                         var debito = ObtenerTicketPromedio(listaFiltrada, 0);
                         var credito = ObtenerTicketPromedio(listaFiltrada, 1);
                         var porcentajeporcuotas = ObtenerPorcentaje(totalConDescuentoCuotas0, totalCuotas);
@@ -167,8 +167,8 @@ namespace dash_aliados.Controllers
                             Porcentajetipopago = porcentajetipopago,
                             Debito = debito,
                             Credito = credito,
-                            TotalNetoMes = totalNetoMes,
-                            TotalBrutoMes = totalBrutoMes,
+                            CreditoFacturacion = creditofacturacion,
+                            DebitoFacturacion = debitofacturacion,
                         };
 
                         return StatusCode(StatusCodes.Status200OK, resultado);
@@ -201,8 +201,8 @@ namespace dash_aliados.Controllers
                         var totalCuotas = totalConDescuentoCuotas1 + totalConDescuentoCuotas2;
                         var tarea = ObtenerResumenUltimos7Meses(listaFiltradaUltimos7Meses);
                         var resumenUltimos7Meses = tarea.Result;
-                        var totalNetoMes = ObtenerTotalNeto(listaFiltrada);
-                        var totalBrutoMes = ObtenerTotalBruto(listaFiltrada);
+                        var creditofacturacion = ObtenerTotalNeto(listaFiltrada);
+                        var debitofacturacion = ObtenerTotalBruto(listaFiltrada);
                         var debito = ObtenerTicketPromedio(listaFiltrada, 0);
                         var credito = ObtenerTicketPromedio(listaFiltrada, 1);
                         var porcentajeporcuotas = ObtenerPorcentaje(totalConDescuentoCuotas0, totalCuotas);
@@ -222,8 +222,8 @@ namespace dash_aliados.Controllers
                             Porcentajetipopago = porcentajetipopago,
                             Debito = debito,
                             Credito = credito,
-                            TotalNetoMes = totalNetoMes,
-                            TotalBrutoMes = totalBrutoMes,
+                            CreditoFacturacion = creditofacturacion,
+                            DebitoFacturacion = debitofacturacion,
                         };
 
                         return StatusCode(StatusCodes.Status200OK, resultado);
@@ -397,13 +397,15 @@ namespace dash_aliados.Controllers
         }
         private double ObtenerTotalNeto(List<BaseDashboard> lista)
         {
-            return (double)lista.Sum(s => s.TotalConDescuentos);
+            return (double)lista.Where(s => s.Cuotas > 1).Sum(s => s.TotalBruto);
         }
+
 
         private double ObtenerTotalBruto(List<BaseDashboard> lista)
         {
-            return (double)lista.Sum(s => s.TotalBruto);
+            return (double)lista.Where(s => s.Cuotas == 0).Sum(s => s.TotalBruto);
         }
+
 
 
     }

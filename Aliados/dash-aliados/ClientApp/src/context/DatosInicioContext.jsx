@@ -3,8 +3,8 @@ import React, { createContext, useState, useEffect } from 'react';
 export const DatosInicioContext = createContext();
 
 export const DatosInicioProvider = ({ children }) => {
-  const [datosBackContext, setDatosBackContext] = useState({});
-
+    const [datosBackContext, setDatosBackContext] = useState({});
+    console.log(datosBackContext);
   useEffect(() => {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');

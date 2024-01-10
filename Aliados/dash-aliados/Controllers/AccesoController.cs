@@ -18,15 +18,17 @@ namespace dash_aliados.Controllers
     public class AccesoController : ControllerBase
     {
         private readonly IUsuarioZocoService _usuariosService;
+        private readonly ITokenService _tokenService; // Añadir el servicio de Token
         private readonly IMapper _mapper;
         private readonly string secretKey;
-        public AccesoController(IUsuarioZocoService usuariosService, IMapper mapper, IConfiguration config)
+
+        public AccesoController(IUsuarioZocoService usuariosService, ITokenService tokenService, IMapper mapper, IConfiguration config)
         {
             _usuariosService = usuariosService;
+            _tokenService = tokenService; // Inicializar el servicio de Token
             _mapper = mapper;
             secretKey = config.GetSection("settings").GetSection("secretkey").ToString();
         }
-
 
         [HttpPost("login")]
         public async Task<ActionResult<VMUsuariosZoco>> Login([FromBody] VMUsuarios usuario)
@@ -53,6 +55,9 @@ namespace dash_aliados.Controllers
             var tokenConfig = tokenHandler.CreateToken(tokenDescriptor);
 
             string tokenCreado = tokenHandler.WriteToken(tokenConfig);
+            DateTime fechaCreacion = DateTime.UtcNow;
+            DateTime fechaExpiracion = fechaCreacion.AddMinutes(60);
+            await _tokenService.GenerarActualizarTokenAsync(usuarioEncontrado.Id, tokenCreado, fechaCreacion, fechaExpiracion);
 
             var usuarioVM = _mapper.Map<VMUsuariosZoco>(usuarioEncontrado);
             var usuarioJson = JsonConvert.SerializeObject(usuarioEncontrado);

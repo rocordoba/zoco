@@ -9,7 +9,6 @@ import xls from "../assets/img/xls.png";
 const TablaTickets = ({ listaMes }) => {
   const [descargando, setDescargando] = useState(false);
   const [descargando2,setDescargando2] = useState(false);
-  console.log("🚀 ~ TablaTickets ~ descargando2:", descargando2)
   const { darkMode } = useContext(DarkModeContext);
   const listaDelMes = listaMes || [];
 

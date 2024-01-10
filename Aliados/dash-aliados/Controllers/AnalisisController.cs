@@ -397,7 +397,7 @@ namespace dash_aliados.Controllers
         }
         private double ObtenerTotalNeto(List<BaseDashboard> lista)
         {
-            return (double)lista.Where(s => s.Cuotas > 1).Sum(s => s.TotalBruto);
+            return (double)lista.Where(s => s.Cuotas >= 1).Sum(s => s.TotalBruto);
         }
 
 

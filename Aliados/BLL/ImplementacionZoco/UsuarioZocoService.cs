@@ -140,34 +140,8 @@ namespace BLL.ImplemtacionZoco
             // Si la verificación es exitosa, devuelve el usuario
             if (verified)
             {
-                // Lógica para manejar el token
-              //  var tokenActual = await _repositorioToken.Obtener(t => t.UsuarioId == usuario_encontrado.Id);
-
-                // Genera un nuevo token y las fechas
-                //string nuevoToken = GenerarToken(); // Asegúrate de implementar este método
-                DateTime ahora = DateTime.UtcNow;
-                DateTime expiracion = ahora.AddHours(1);
-
-                //if (tokenActual == null)
-                //{
-                //    // Crea un nuevo token si no existe
-                //    var token = new Token
-                //    {
-                //        UsuarioId = usuario_encontrado.Id,
-                //        Token1 = nuevoToken,
-                //        FechaCreacion = ahora,
-                //        FechaExpiracion = expiracion
-                //    };
-                //    await _repositorioToken.Crear(token);
-                //}
-                //else
-                //{
-                //    // Actualiza el token existente
-                //    tokenActual.Token1 = nuevoToken;
-                //    tokenActual.FechaCreacion = ahora;
-                //    tokenActual.FechaExpiracion = expiracion;
-                //    await _repositorioToken.Editar(tokenActual);
-                //}
+                // Lógica adicional si es necesaria
+                // Por ejemplo, generar y enviar un código de verificación
 
                 return usuario_encontrado;
             }

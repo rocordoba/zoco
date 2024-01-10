@@ -40,7 +40,7 @@ namespace IOC
             services.AddScoped<IInflacionService, InflacionService>();
             services.AddScoped<ICalificoComentarioService, CalificoService>();
             services.AddScoped<INotificacionService, NotificacionService>();
-
+            services.AddScoped<ITokenService, TokenService>();
 
 
 

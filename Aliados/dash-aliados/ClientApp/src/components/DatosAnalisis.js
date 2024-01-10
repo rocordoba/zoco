@@ -1,10 +1,24 @@
 import { useContext } from "react";
 import { DarkModeContext } from "../context/DarkModeContext";
+import formatearValores from "../helpers/formatearAPeso";
 
-const DatosAnalisis = ({datosBack}) => {
+const DatosAnalisis = ({ datosBack }) => {
   const { darkMode } = useContext(DarkModeContext);
-  const {totalOperaciones,totalCuotas, totalConDescuentoCuotas0, totalConDescuentoCuotas1} = datosBack;
+  const {
+    totalOperaciones,
+    totalConDescuentoCuotas0,
+    totalConDescuentoCuotas1,
+    totalConDescuentoCuotas2
 
+  } = datosBack;
+  console.log("🚀 ~ DatosAnalisis ~ datosBack:", datosBack);
+
+  const valoresFormateados = formatearValores(
+    totalConDescuentoCuotas0,
+    totalConDescuentoCuotas1,
+    totalConDescuentoCuotas2
+
+  );
   return (
     <section className="container">
       <div className="row">
@@ -35,7 +49,7 @@ const DatosAnalisis = ({datosBack}) => {
             }
           >
             <div className=" d-flex justify-content-center border-0 lato-bold fs-24">
-              $ {totalConDescuentoCuotas0}
+              $ {valoresFormateados[0]}
             </div>
           </button>
         </article>
@@ -49,7 +63,7 @@ const DatosAnalisis = ({datosBack}) => {
             }
           >
             <div className=" d-flex justify-content-center border-0 lato-bold fs-24">
-              ${totalConDescuentoCuotas0}
+              ${valoresFormateados[0]}
             </div>
           </button>
         </article>
@@ -64,7 +78,7 @@ const DatosAnalisis = ({datosBack}) => {
             }
           >
             <div className=" d-flex justify-content-center border-0 lato-bold fs-24">
-              $ {totalConDescuentoCuotas1}
+              $ {valoresFormateados[1] }
             </div>
           </button>
         </article>
@@ -78,7 +92,7 @@ const DatosAnalisis = ({datosBack}) => {
             }
           >
             <div className=" d-flex justify-content-center border-0 lato-bold fs-24">
-              $ {totalCuotas}
+              $ {valoresFormateados[2]}
             </div>
           </button>
         </div>

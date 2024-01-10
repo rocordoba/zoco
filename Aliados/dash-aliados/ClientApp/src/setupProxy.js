@@ -17,7 +17,8 @@ const context = [
     "/api/bienvenidopanel/bienvenidopanel",
     "/api/notificacion/noticias",
     "/api/pdf/pdf",
-   
+    "/api/acceso/cambiarClave", 
+    
 ];
 
 module.exports = function (app) {

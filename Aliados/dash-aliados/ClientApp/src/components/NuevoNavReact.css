@@ -1293,7 +1293,7 @@
     outline: 0;
     border: 1px solid #0c0c0c !important;
     width: 100% important;
-    background: #0c0c0c !important;
+    background: transparent linear-gradient(97deg, #292b2f 0%, #16181a 100%) 0% 0% no-repeat padding-box !important;
     border-radius: 50px !important;
     opacity: 1 !important;
   }

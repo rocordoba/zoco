@@ -31,7 +31,7 @@ namespace DAL.DBContext
         public virtual DbSet<Usuarios> Usuarios { get; set; } = null!;
         public virtual DbSet<UsuarioNo> UsuarioNos { get; set; } = null!;
 
-
+        public virtual DbSet<Token> Tokens { get; set; } = null!;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
@@ -40,6 +40,28 @@ namespace DAL.DBContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Token>(entity =>
+            {
+                entity.ToTable("tokens");
+
+                entity.Property(e => e.TokenId).HasColumnName("token_id");
+
+                entity.Property(e => e.FechaCreacion)
+                    .HasColumnType("datetime")
+                    .HasColumnName("fecha_creacion");
+
+                entity.Property(e => e.FechaExpiracion)
+                    .HasColumnType("datetime")
+                    .HasColumnName("fecha_expiracion");
+
+                entity.Property(e => e.Token1)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("token");
+
+                entity.Property(e => e.UsuarioId).HasColumnName("usuario_id");
+            });
+
             modelBuilder.Entity<BaseCuota>(entity =>
             {
                 entity.HasNoKey();

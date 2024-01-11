@@ -185,7 +185,6 @@ const NuevoNavReact = ({ name, ...props }) => {
   const [activeInicio, setActiveInicio] = useState(false);
 
   const [activeContabilidad, setActiveContabilidad] = useState(false);
-;
   const [activeAnalisis, setActiveAnalisis] = useState(false);
 
   const [activeTicket, setActiveTicket] = useState(false);
@@ -279,164 +278,6 @@ const NuevoNavReact = ({ name, ...props }) => {
   };
 
   const [modalShowCompleta, setModalShowCompleta] = React.useState(false);
-  const [formData, setFormData] = useState({
-    anterior: "",
-    confirmar: "",
-    nueva: "",
-  });
-
-  //Modal configuraciones
-  // function ModalConfiguraciones(props) {
-  //   const { show, onHide } = props;
-  //   const { control, handleSubmit, formState } = useForm();
-  //   const { errors } = formState;
-
-  //   const onSubmit = (data) => {
-  //     setFormData(data);
-  //     onHide();
-  //   };
-
-  //   return (
-  //     <Modal
-  //       {...props}
-  //       show={show}
-  //       onHide={onHide}
-  //       centered
-  //       size="lg"
-  //       aria-labelledby="contained-modal-title-vcenter"
-  //     >
-  //       <Modal.Body
-  //         className={
-  //           darkMode
-  //             ? " modal-content-dark text-white border-0"
-  //             : "modal-content border-0 text-black "
-  //         }
-  //       >
-  //         <section>
-  //           <div className="d-flex justify-content-end">
-  //             <FontAwesomeIcon
-  //               onClick={onHide}
-  //               className="fs-18 me-2"
-  //               icon={faXmark}
-  //             />
-  //           </div>
-  //         </section>
-  //         <section>
-  //           <div className="d-flex justify-content-center ">
-  //             <h6 className="fs-20 lato-bold  ">Cambiar contraseña</h6>
-  //           </div>
-  //         </section>
-  //         <div className="d-flex justify-content-center">
-  //           <form className="py-5 " onSubmit={handleSubmit(onSubmit)}>
-  //             <article>
-  //               <div>
-  //                 <label
-  //                   className="lato-bold fs-16-a-14 mb-2"
-  //                   htmlFor="anterior"
-  //                 >
-  //                   Ingresar contraseña anterior:
-  //                 </label>
-  //               </div>
-  //               <div>
-  //                 <Controller
-  //                   name="anterior"
-  //                   control={control}
-  //                   rules={{ required: "Campo requerido" }}
-  //                   render={({ field }) => (
-  //                     <input
-  //                       className="input-configuraciones border-0"
-  //                       style={{ padding: "10px" }}
-  //                       type="text"
-  //                       {...field}
-  //                     />
-  //                   )}
-  //                 />
-  //                 <div className="text-danger">
-  //                   {errors.anterior && (
-  //                     <p className="fs-16 lato-bold">
-  //                       {errors.anterior.message}
-  //                     </p>
-  //                   )}
-  //                 </div>
-  //               </div>
-  //             </article>
-  //             <article className="my-1">
-  //               <div>
-  //                 <label className="lato-bold fs-16-a-14 mb-2" htmlFor="nueva">
-  //                   Ingresar contraseña nueva:
-  //                 </label>
-  //               </div>
-  //               <div>
-  //                 <Controller
-  //                   name="nueva"
-  //                   control={control}
-  //                   rules={{ required: "Campo requerido" }}
-  //                   render={({ field }) => (
-  //                     <input
-  //                       className="input-configuraciones border-0"
-  //                       type="text"
-  //                       style={{ padding: "10px" }}
-  //                       {...field}
-  //                     />
-  //                   )}
-  //                 />
-  //                 <div className="text-danger ">
-  //                   {errors.nueva && (
-  //                     <p className="fs-16 lato-bold">{errors.nueva.message}</p>
-  //                   )}
-  //                 </div>
-  //               </div>
-  //             </article>
-  //             <article className="my-1">
-  //               <div>
-  //                 <label
-  //                   className="lato-bold fs-16-a-14 mb-2"
-  //                   htmlFor="confirmar"
-  //                 >
-  //                   Ingresar contraseña nueva otra vez:
-  //                 </label>
-  //               </div>
-  //               <div>
-  //                 <Controller
-  //                   name="confirmar"
-  //                   control={control}
-  //                   rules={{ required: "Campo requerido" }}
-  //                   render={({ field }) => (
-  //                     <input
-  //                       className="input-configuraciones border-0"
-  //                       type="text"
-  //                       style={{ padding: "10px" }}
-  //                       {...field}
-  //                     />
-  //                   )}
-  //                 />
-  //                 <div className="text-danger">
-  //                   {errors.confirmar && (
-  //                     <p className="fs-16 lato-bold">
-  //                       {errors.confirmar.message}
-  //                     </p>
-  //                   )}
-  //                 </div>
-  //               </div>
-  //             </article>
-  //             <div className="d-flex justify-content-center my-5">
-  //               <button
-  //                 className={
-  //                   darkMode
-  //                     ? "btn-guardar-modal-configuraciones border-0 lato-bold text-dark "
-  //                     : "btn-guardar-modal-configuraciones border-0 lato-bold text-white"
-  //                 }
-  //                 type="submit"
-  //               >
-  //                 Guardar
-  //               </button>
-  //             </div>
-  //           </form>
-  //         </div>
-  //       </Modal.Body>
-  //     </Modal>
-  //   );
-  // }
   const [mostrarOffcanvas, setMostrarOffcanvas] = useState(false);
 
   const cerrarOffcanvas = () => {
@@ -444,8 +285,8 @@ const NuevoNavReact = ({ name, ...props }) => {
   };
 
   const otroEvento = () => {
-    setVisible1(false)
-    setVisible2(false)
+    setVisible1(false);
+    setVisible2(false);
   };
 
   const handleClose2 = () => {
@@ -453,12 +294,28 @@ const NuevoNavReact = ({ name, ...props }) => {
     otroEvento();
   };
 
+  const [notificaciones, setNotificaciones] = useState([]);
+
+  useEffect(() => {
+    const fetchNoticias = async () => {
+      try {
+        const response = await fetch("/api/notificacion/noticias");
+        const data = await response.json();
+        setNotificaciones(data);
+      } catch (error) {
+        console.error("Error al cargar noticias:", error);
+      }
+    };
+
+    fetchNoticias();
+  }, []);
+
   return (
     <section className="container">
       <Offcanvas
         className={darkMode ? "bg-dark" : "bg-white"}
         show={mostrarOffcanvas}
-        onHide={ handleClose2}
+        onHide={handleClose2}
         {...props}
       >
         <Offcanvas.Header closeButton>
@@ -516,127 +373,26 @@ const NuevoNavReact = ({ name, ...props }) => {
                   >
                     <div className="container px-4">
                       <div className="d-flex flex-column justify-content-around">
-                        <div>
-                          <h6 className="fs-18 my-3">
-                            <span className="color-verde fs-26">
-                              <FontAwesomeIcon
-                                className="fs-8  color-verde"
-                                icon={faCircle}
-                              />
-                            </span>
-                            <span className="ms-2">
-                              Estimado aliado, nos complace informar el
-                              lanzamiento del tablero de control en estado beta
-                            </span>
-                          </h6>
-                        </div>
-                        <div>
-                          <h6 className="fs-18 my-3">
-                            <span className="fs-26">
-                              {darkMode ? (
-                                <FontAwesomeIcon
-                                  className="fs-8  color-blanco-items"
-                                  icon={faCircle}
-                                />
-                              ) : (
-                                <FontAwesomeIcon
-                                  className="fs-8  color-negro-items"
-                                  icon={faCircle}
-                                />
-                              )}
-                            </span>
-                            <span className="ms-2">
-                              De ahora en adelante, para realizar consultas debe
-                              contactar directamente al departamento de
-                              Liquidaciones a través del número: <br />
-                              381 3545 650
-                            </span>
-                          </h6>
-                        </div>{" "}
-                        <div>
-                          <h6 className="fs-18 my-3">
-                            <span className="fs-26">
-                              {darkMode ? (
-                                <FontAwesomeIcon
-                                  className="fs-8  color-blanco-items"
-                                  icon={faCircle}
-                                />
-                              ) : (
-                                <FontAwesomeIcon
-                                  className="fs-8  color-negro-items"
-                                  icon={faCircle}
-                                />
-                              )}
-                            </span>
-                            <span className="ms-2">
-                              Informamos que el error en donde no...
-                            </span>
-                          </h6>
-                        </div>
-                        <div>
-                          <h6 className="fs-18 my-3">
-                            <span className="color-verde fs-26">
-                              {darkMode ? (
-                                <FontAwesomeIcon
-                                  className="fs-8  color-blanco-items"
-                                  icon={faCircle}
-                                />
-                              ) : (
-                                <FontAwesomeIcon
-                                  className="fs-8  color-negro-items"
-                                  icon={faCircle}
-                                />
-                              )}
-                            </span>
-                            <span className="ms-2">
-                              Estimado aliado, nos complace informar el
-                              lanzamiento del tablero de control en estado beta
-                            </span>
-                          </h6>
-                        </div>
-                        <div>
-                          <h6 className="fs-18 my-3">
-                            <span className="fs-26">
-                              {darkMode ? (
-                                <FontAwesomeIcon
-                                  className="fs-8  color-blanco-items"
-                                  icon={faCircle}
-                                />
-                              ) : (
-                                <FontAwesomeIcon
-                                  className="fs-8  color-negro-items"
-                                  icon={faCircle}
-                                />
-                              )}
-                            </span>
-                            <span className="ms-2">
-                              De ahora en adelante, para realizar consultas debe
-                              contactar directamente al departamento de
-                              Liquidaciones a través del número: <br />
-                              381 3545 650
-                            </span>
-                          </h6>
-                        </div>{" "}
-                        <div>
-                          <h6 className="fs-18 my-3">
-                            <span className="fs-26">
-                              {darkMode ? (
-                                <FontAwesomeIcon
-                                  className="fs-8  color-blanco-items"
-                                  icon={faCircle}
-                                />
-                              ) : (
-                                <FontAwesomeIcon
-                                  className="fs-8  color-negro-items"
-                                  icon={faCircle}
-                                />
-                              )}
-                            </span>
-                            <span className="ms-2">
-                              Informamos que el error en donde no...
-                            </span>
-                          </h6>
-                        </div>
+                        {notificaciones.map((notificacion, index) => (
+                          <div key={index}>
+                            <h6 className="fs-16 my-3">
+                              <span className="me-2">
+                                {darkMode ? (
+                                  <FontAwesomeIcon
+                                    className="fs-8  color-blanco-items"
+                                    icon={faCircle}
+                                  />
+                                ) : (
+                                  <FontAwesomeIcon
+                                    className="fs-8  color-negro-items"
+                                    icon={faCircle}
+                                  />
+                                )}
+                              </span>
+                              {notificacion.noticia1}
+                            </h6>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -831,7 +587,7 @@ const NuevoNavReact = ({ name, ...props }) => {
                 </div>
               </NavLink>
             </div>
-            
+
             <div className="centrado my-2">
               <NavLink
                 end
@@ -886,7 +642,11 @@ const NuevoNavReact = ({ name, ...props }) => {
             <Button
               variant="primary"
               onClick={() => setMostrarOffcanvas(true)}
-              className={ darkMode ? "mobile-nav-btn-fabars-dark" :"mobile-nav-btn-fabars"}
+              className={
+                darkMode
+                  ? "mobile-nav-btn-fabars-dark"
+                  : "mobile-nav-btn-fabars"
+              }
             >
               <FaBars size={25} />
             </Button>

@@ -13,7 +13,7 @@ import TituloPagina from "../../components/TituloPagina";
 // import ModalEditable from "../components/ModalEditable";
 import PopUpCalificar from "../../components/PopUpCalificar";
 import { DatosInicioContext } from "../../context/DatosInicioContext";
-import ComportamientoGraficaNew from "../../components/ComportamientoGraficaNew";
+
 
 const Inicio = ({ califico, setCalifico }) => {
   const { darkMode } = useContext(DarkModeContext);

@@ -29,7 +29,7 @@ ChartJS.register(
 
 const GraficaData = ({ datos }) => {
   const { descuentosPorTarjeta } = datos || {};
-  console.log("🚀 ~ GraficaData ~ descuentosPorTarjeta:", descuentosPorTarjeta)
+  
   const [
     visa = {},
     masterCard = {},

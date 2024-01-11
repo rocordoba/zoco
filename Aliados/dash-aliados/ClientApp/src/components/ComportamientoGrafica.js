@@ -41,6 +41,7 @@ const ComportamientoGrafica = ({ datos }) => {
     totalesPorDiaTarjeta,
     porcentaje,
   } = datos;
+  console.log("🚀 ~ ComportamientoGrafica ~ datos:", datos)
   const totales = totalesPorDiaTarjeta || [];
 
 
@@ -52,7 +53,7 @@ const ComportamientoGrafica = ({ datos }) => {
   for (let tienda in totales) {
     if (totales.hasOwnProperty(tienda)) {
       // Obtener los días de esa tienda y añadirlos al array
-      diasArray = diasArray.concat(totales[tienda].map(valor => valor.diaSemana));
+      diasArray = diasArray.concat(totales[tienda].map(valor => valor.key));
     }
     
   }
@@ -79,10 +80,9 @@ const ComportamientoGrafica = ({ datos }) => {
   const datasets = tiendas.map((tienda) => {
     const valoresTienda = totales[tienda];
     const dias = valoresTienda.map((valor) => valor.diaSemana);
-    const totalConDescuentoPorDia = valoresTienda.map(
-      (valor) => valor.totalConDescuentoPorDia
+    const totalConDescuentoPorDias = valoresTienda.map(
+      (valor) => valor.value
     );
-
     return {
       label: tienda,
       borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
@@ -91,7 +91,7 @@ const ComportamientoGrafica = ({ datos }) => {
       backgroundColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
         Math.random() * 256
       )}, ${Math.floor(Math.random() * 256)}, 0)`,
-      data: totalConDescuentoPorDia,
+      data: totalConDescuentoPorDias,
     };
   });
 

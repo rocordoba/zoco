@@ -68,8 +68,8 @@ const ContenidoLogin = ({ onSubmit, datosMandados, setDatosMandados }) => {
           sessionStorage.setItem("userId", data.userId);
         } else {
           alert("Revisar usuario/contraseña");
-          setButtonText("Conectar"); // Restablecer el texto del botón
-          setIsLoading(false); // Det
+          setButtonText("Conectar"); 
+          setIsLoading(false); 
           setContador(contador + 1);
         }
       })

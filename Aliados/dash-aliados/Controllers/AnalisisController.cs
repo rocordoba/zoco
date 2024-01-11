@@ -32,6 +32,7 @@ namespace dash_aliados.Controllers
         [HttpPost("analisis")]
         public async Task<ActionResult> Analisis([FromBody] VMDatosInicio request)
         {
+            
             if (!string.IsNullOrEmpty(request.Token))
             {
                 var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);

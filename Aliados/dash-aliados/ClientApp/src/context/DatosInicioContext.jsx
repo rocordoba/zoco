@@ -9,11 +9,13 @@ export const DatosInicioProvider = ({ children }) => {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
     const currentDate = new Date();
+
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
     const week = Math.ceil(currentDate.getDate() / 7); // Obtener la semana actual
     const comercio = "Todos";
     const day = currentDate.getDay();
+
     const requestData = {
       token: token,
       id: userId,

@@ -11,10 +11,6 @@ const EvolucionMensualCelular = ({ datosBack}) => {
   const totalBruto7Meses = datosResumenUltimosMeses.map(
     (dato) => dato.totalBruto
   );
-  console.log(
-    "🚀 ~ file: EvolucionMensual3Barras.js:43 ~ EvolucionMensual3Barras ~ totalBruto7Meses:",
-    totalBruto7Meses
-  );
 
   const totalOperaciones = datosResumenUltimosMeses.map(
     (dato) => dato.cantidadDatos

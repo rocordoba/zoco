@@ -36,9 +36,16 @@ namespace BLL.ImplementacionZoco
 
             if (tokenActual != null)
             {
-                if (tokenActual.FechaExpiracion < DateTime.UtcNow)
+                if ( tokenActual.Token1 != nuevoToken)
                 {
-                    // Token existente está vencido, actualizarlo
+                    // Token existente está vencido o es diferente, actualizarlo
+                    tokenActual.Token1 = nuevoToken;
+                    tokenActual.FechaCreacion = fechaCreacion;
+                    tokenActual.FechaExpiracion = fechaExpiracion;
+                    await _repoToken.Editar(tokenActual);
+                }
+                else if(tokenActual.FechaExpiracion < DateTime.UtcNow)
+                {
                     tokenActual.Token1 = nuevoToken;
                     tokenActual.FechaCreacion = fechaCreacion;
                     tokenActual.FechaExpiracion = fechaExpiracion;
@@ -63,7 +70,9 @@ namespace BLL.ImplementacionZoco
 
 
         //public async Task<Token> GenerarTokenAsync(int usuarioId)
-        //{
+        //{ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzMzMzMzMzMzMzMyIsIm5iZiI6MTcwNDk4NDI5OCwiZ
+        //  XhwIjoxNzA0OTg0MzU4LCJpYXQiOjE3MDQ5ODQyOTh9.q-jsDdk-oKfZ2VYucxWP1q91wOPnS65PXo0OnHOE4g0
+
         //    var usuario = await _repoUsuario.Obtener(u => u.Id == usuarioId);
         //    if (usuario == null)
         //    {

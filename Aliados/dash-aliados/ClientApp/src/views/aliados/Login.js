@@ -25,8 +25,6 @@ const Login = () => {
             height: "100vh",
           }}
         >
-          {/* <ContenidoLoginNew datosMandados={datosMandados}
-            setDatosMandados={setDatosMandados} /> */}
           <ContenidoLogin
             onSubmit={onSubmit}
             datosMandados={datosMandados}

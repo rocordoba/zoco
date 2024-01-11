@@ -19,6 +19,7 @@ import {
   faCirclePause,
 } from "@fortawesome/free-solid-svg-icons";
 import { Bar, Line } from "react-chartjs-2";
+import convertirDecimalAPorcentaje from "../helpers/convertirPorcentajeADecimal";
 
 ChartJS.register(
   CategoryScale,
@@ -185,6 +186,8 @@ const ComportamientoGrafica = ({ datos }) => {
   let porcentajeFinal = numeroPorcentual.toFixed(2);
   let porcentajeNumero = porcentajeFinal;
 
+  let porcentajeEnteroComparativaDiaMes = convertirDecimalAPorcentaje(porcentajeNumero);
+
   const mostrarIcono = () => {
     if (porcentajeNumero > 0) {
       return (
@@ -264,7 +267,7 @@ const ComportamientoGrafica = ({ datos }) => {
                     <div className="d-flex">
                       <div>{mostrarIcono()}</div>
                       <span className="lato-bold fs-18">
-                        {porcentajeFinal} %
+                        {porcentajeEnteroComparativaDiaMes} %
                       </span>
                     </div>
                   </div>
@@ -319,7 +322,7 @@ const ComportamientoGrafica = ({ datos }) => {
                       <div className="d-flex">
                         <div>{mostrarIcono()}</div>
                         <span className="lato-bold fs-18">
-                          {porcentajeFinal} %
+                          {porcentajeEnteroComparativaDiaMes} %
                         </span>
                       </div>
                     </div>

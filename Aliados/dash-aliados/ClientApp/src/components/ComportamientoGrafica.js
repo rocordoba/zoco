@@ -41,7 +41,7 @@ const ComportamientoGrafica = ({ datos }) => {
     totalesPorDiaTarjeta,
     porcentaje,
   } = datos;
-  console.log("🚀 ~ ComportamientoGrafica ~ datos:", datos)
+
   const totales = totalesPorDiaTarjeta || [];
 
 

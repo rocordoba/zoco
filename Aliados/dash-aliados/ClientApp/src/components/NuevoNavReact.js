@@ -1,6 +1,6 @@
 import "./NuevoNavReact.css";
 import React, { useContext, useEffect, useState } from "react";
-import { Button, CloseButton, Modal } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { DarkModeContext } from "../context/DarkModeContext";
 import { FaBars } from "react-icons/fa";
@@ -9,7 +9,6 @@ import logoClaro from "../assets/img/logo-modo-oscuro.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBell,
-  faCalculator,
   faCircle,
   faFileInvoiceDollar,
   faFilter,
@@ -29,7 +28,6 @@ import Select from "react-select";
 import trianguloModal from "../assets/img/triangulomodales.png";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
-import { useForm, Controller } from "react-hook-form";
 import ModalConfiguracionesCel from "./ModalConfiguracionesCel";
 
 const optionsAnios = [
@@ -68,28 +66,6 @@ const optionsSemanas = [
   { value: "semana 28-31", label: "28-31" },
 ];
 
-// const options = [
-//   {
-//     name: "Enable backdrop (default)",
-//     scroll: false,
-//     backdrop: true,
-//   },
-//   {
-//     name: "Disable backdrop",
-//     scroll: false,
-//     backdrop: false,
-//   },
-//   {
-//     name: "Enable body scrolling",
-//     scroll: true,
-//     backdrop: false,
-//   },
-//   {
-//     name: "Enable both scrolling & backdrop",
-//     scroll: true,
-//     backdrop: true,
-//   },
-// ];
 
 const NuevoNavReact = ({ name, ...props }) => {
   //states del sidebar

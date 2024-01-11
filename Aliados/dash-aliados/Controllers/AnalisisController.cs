@@ -319,9 +319,6 @@ namespace dash_aliados.Controllers
                 DateTime primerDiaMes = new DateTime(fechaMes.Year, fechaMes.Month, 1);
                 DateTime ultimoDiaMes = primerDiaMes.AddMonths(1).AddDays(-1);
 
-                // Calculo correcto de la fecha del mes siguiente
-                DateTime fechaMesSiguiente = fechaMes.AddMonths(1);
-
                 var datosMes = sas.Where(s => s.FechaDePago >= primerDiaMes && s.FechaDePago <= ultimoDiaMes).ToList();
 
                 if (datosMes.Any())
@@ -329,7 +326,8 @@ namespace dash_aliados.Controllers
                     decimal? totalBruto = datosMes.Sum(s => s.TotalBruto);
                     int cantidadDatos = datosMes.Count;
 
-                    var inflacionMes = inflacion.FirstOrDefault(inf => inf.Fecha?.Month == fechaMesSiguiente.Month && inf.Fecha?.Year == fechaMesSiguiente.Year)?.Inflacion1 ?? 0;
+                    // Buscar la inflación que coincide con el mes y año de fechaMes
+                    var inflacionMes = inflacion.FirstOrDefault(inf => inf.Fecha?.Month == fechaMes.Month && inf.Fecha?.Year == fechaMes.Year)?.Inflacion1 ?? 0;
 
                     double? totalBrutoMenosInflacion = inflacionMes != 0
                         ? Convert.ToDouble(totalBruto) - (Convert.ToDouble(totalBruto) * inflacionMes / 100)
@@ -350,6 +348,7 @@ namespace dash_aliados.Controllers
 
             return resumenUltimos7Meses;
         }
+
 
 
 

@@ -16,8 +16,7 @@ const Calculadora = () => {
         <TituloPagina title="Calculadora" />
       </div>
       <div>
-      <TablaCalculadora />
-
+        <TablaCalculadora />
       </div>
       <div className="py-4">
         <Footer />

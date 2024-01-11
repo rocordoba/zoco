@@ -55,7 +55,7 @@ namespace dash_aliados.Controllers
                         var totalIvaMes = ObtenerTotalIva(listaMes);
                         var totalIva21Mes = ObtenerTotalIva21(listaMes);
                         var totalbrutomes = ObtenerTotalBruto(listaMes);
-                        var totaldebito = totalbrutomes * 21;
+                        var totaldebito = (totalbrutomes * 21) / 100;
                         var arancel = obtenerarancelmes(listaMes);
                         var ingresobruto = obteneringresobruto(listaMes);
                         var retencionganancia = obtenerretencionganancia(listaMes);

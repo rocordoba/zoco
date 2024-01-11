@@ -1,22 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
-import BienvenidoPanel from "../components/BienvenidoPanel";
-import DatosInicio from "../components/DatosInicio";
+import BienvenidoPanel from "../../components/BienvenidoPanel";
+import DatosInicio from "../../components/DatosInicio";
 
-import GraficaData from "../components/GraficaData";
-import Footer from "../components/Footer";
-import GraficaDataCelular from "../components/GraficaDataCelular";
-import { DarkModeContext } from "../context/DarkModeContext";
-import GraficaDataCelularDark from "../components/GraficaDataCelularDark";
-import ComportamientoGrafica from "../components/ComportamientoGrafica";
-import ScrollToTopButton from "../components/ScrollToTopButton";
-import TituloPagina from "../components/TituloPagina";
+import GraficaData from "../../components/GraficaData";
+import Footer from "../../components/Footer";
+import GraficaDataCelular from "../../components/GraficaDataCelular";
+import { DarkModeContext } from "../../context/DarkModeContext";
+import GraficaDataCelularDark from "../../components/GraficaDataCelularDark";
+import ComportamientoGrafica from "../../components/ComportamientoGrafica";
+import ScrollToTopButton from "../../components/ScrollToTopButton";
+import TituloPagina from "../../components/TituloPagina";
 // import ModalEditable from "../components/ModalEditable";
-import PopUpCalificar from "../components/PopUpCalificar";
-import { DatosInicioContext  } from "../context/DatosInicioContext";
+import PopUpCalificar from "../../components/PopUpCalificar";
+import { DatosInicioContext } from "../../context/DatosInicioContext";
+import ComportamientoGraficaNew from "../../components/ComportamientoGraficaNew";
 
 const Inicio = ({ califico, setCalifico }) => {
   const { darkMode } = useContext(DarkModeContext);
-  const {datosBackContext} = useContext(DatosInicioContext)
+  const { datosBackContext } = useContext(DatosInicioContext);
   const [contador, setContador] = useState(0);
   const [datosMandados, setDatosMandados] = useState();
 

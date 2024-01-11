@@ -131,9 +131,10 @@ namespace dash_aliados.Controllers
                             TotalOperaciones = totalOperaciones,
                             TotalConDescuentoCuotas1 = totalConDescuentoCuotas1,
                             TotalConDescuentoCuotas2 = totalConDescuentoCuotas2,
-
+                            
 
                             comparativadiasemana = "dia",
+                            ComparativaMes = "Enero"
                         };
 
                         return StatusCode(StatusCodes.Status200OK, resultado);

@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import BienvenidoPanel from "../components/BienvenidoPanel";
-import Footer from "../components/Footer";
-import DatosTickets from "../components/DatosTickets";
-import TablaTickets from "../components/TablaTickets";
-import ScrollToTopButton from "../components/ScrollToTopButton";
-import TituloPagina from "../components/TituloPagina";
-import { DatosInicioContext } from "../context/DatosInicioContext";
+import BienvenidoPanel from "../../components/BienvenidoPanel";
+import Footer from "../../components/Footer";
+import DatosTickets from "../../components/DatosTickets";
+import TablaTickets from "../../components/TablaTickets";
+import ScrollToTopButton from "../../components/ScrollToTopButton";
+import TituloPagina from "../../components/TituloPagina";
+import { DatosInicioContext } from "../../context/DatosInicioContext";
 
 const Tickets = () => {
   const { datosCuponesContext } = useContext(DatosInicioContext);

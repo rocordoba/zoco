@@ -167,9 +167,9 @@
 }
 
 .bg-card-impuestos {
-  width: 600px !important;
+  width: 48% !important;
   height: 450px !important;
-  background: transparent linear-gradient(142deg, #ffffff 0%, #e5e8ee 100%) 0%
+  background: transparent linear-gradient(142deg, #ffffff 0%, #e5e8ee 48%) 0%
     0% no-repeat padding-box !important;
   box-shadow: 5px 4px 16px #d0d7e2 !important;
   border-radius: 50px !important;
@@ -177,7 +177,7 @@
 }
 
 .bg-card-impuestos-dark {
-  width: 600px !important;
+  width: 48% !important;
   height: 450px !important;
   background: transparent linear-gradient(97deg, #292b2f 0%, #16181a 100%) 0% 0%
     no-repeat padding-box;
@@ -187,7 +187,7 @@
 }
 
 .bg-card-impuestos-bn {
-  width: 600px !important;
+  width: 48% !important;
   background: transparent linear-gradient(120deg, #ffffff 0%, #e5e8ee 100%) 0%
     0% no-repeat padding-box !important;
   box-shadow: 5px 4px 16px #d0d7e2 !important;
@@ -197,7 +197,7 @@
 }
 
 .bg-card-impuestos-bn-dark {
-  width: 600px !important;
+  width: 48% !important;
   background: transparent linear-gradient(97deg, #292b2f 0%, #16181a 100%) 0% 0%
     no-repeat padding-box;
   box-shadow: 5px 4px 16px #0c0c0c !important;
@@ -207,7 +207,7 @@
 }
 
 .contenido-card-width {
-  width: 600px !important;
+  width: 100% !important;
   height: 450px !important;
 }
 

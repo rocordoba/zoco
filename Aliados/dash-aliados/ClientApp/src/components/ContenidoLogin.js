@@ -14,8 +14,6 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 
-
-
 const ContenidoLogin = ({ onSubmit, datosMandados, setDatosMandados }) => {
   const [recuperar, setRecuperar] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +24,6 @@ const ContenidoLogin = ({ onSubmit, datosMandados, setDatosMandados }) => {
   const [buttonText, setButtonText] = useState("Conectar");
   const navigate = useNavigate();
   const [contador, setContador] = useState(0);
-
 
   const {
     reset,
@@ -313,7 +310,6 @@ const ContenidoLogin = ({ onSubmit, datosMandados, setDatosMandados }) => {
                       if (usuario && password) {
                         setIsLoading(true); // Cambiar al estado de carga si los campos no están vacíos
                         setButtonText("Conectar"); // Restablecer el texto del botón
-                       
                       } else {
                         // Realizar acciones si los campos están vacíos
                         // alert("Por favor, ingresa usuario y contraseña");

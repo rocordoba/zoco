@@ -44,24 +44,21 @@ namespace BLL.ImplementacionZoco
             var rubrosUnicos = tbrubro.Select(r => r.Rubro).Distinct().ToList();
 
             var inflacionesCoincidentes = await _repoInflacion.Consultar(i => rubrosUnicos.Contains(i.Rubro) || i.Rubro == "Total");
-            var meses = DateTime.Today.AddMonths(+1);
-            var ultimos7Meses = meses.AddMonths(-7); // Obtener la fecha hace 7 meses desde hoy
 
             var inflacionesFiltradas = inflacionesCoincidentes
-     .Where(i => i.Fecha >= ultimos7Meses && i.Fecha <= DateTime.Today)
-     .OrderByDescending(i => i.Fecha)
-     .Select(i => new Inflacion
-     {
-         Rubro = i.Rubro,
-         Fecha = i.Fecha,
-         Inflacion1 = i.Inflacion1,
-         // Otras propiedades que tenga el modelo Inflacion, excluyendo el campo "id"
-     })
-     .ToList();
+                .OrderByDescending(i => i.Fecha)
+                .Select(i => new Inflacion
+                {
+                    Rubro = i.Rubro,
+                    Fecha = i.Fecha,
+                    Inflacion1 = i.Inflacion1,
+                    // Otras propiedades que tenga el modelo Inflacion, excluyendo el campo "id"
+                })
+                .ToList();
 
             return inflacionesFiltradas;
-
         }
+
 
 
 

@@ -1,5 +1,4 @@
 import { Bar } from "react-chartjs-2";
-import formatearValores from "../helpers/formatearAPeso";
 import "./TripleGraficoAnalisis.css";
 import {
   Chart as ChartJS,
@@ -20,6 +19,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { DarkModeContext } from "../context/DarkModeContext";
+import convertirDecimalAPorcentaje from "../helpers/convertirPorcentajeADecimal";
 
 ChartJS.register(
   CategoryScale,
@@ -35,6 +35,7 @@ ChartJS.register(
 const TripleGraficoAnalisis = ({ datosBack }) => {
   const { darkMode } = useContext(DarkModeContext);
   const tickColor = darkMode ? "#fff" : "#292B2F";
+  
 
   const {
     debito,
@@ -45,115 +46,121 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
     debitoFacturacion,
     porcentajeporcuotas,
     porcentajeticket,
-    porcentajetipopago
+    porcentajetipopago,
   } = datosBack;
 
   let numeroPorcentual = porcentajeporcuotas || 0;
   let porcentajeFinal = numeroPorcentual.toFixed(2);
-  let porcentajeNumero = porcentajeFinal;
+  let porcentajeEnteroCuotas = convertirDecimalAPorcentaje(porcentajeFinal);
 
-  const mostrarIcono = () => {
-    if (porcentajeNumero > 0) {
-      return (
-        <div>
-          <FontAwesomeIcon
-            className="color-verde me-2 fs-25"
-            icon={faCircleUp}
-          />
-        </div>
-      );
-    } else if (porcentajeNumero === 0) {
-      return (
-        <div>
-          <FontAwesomeIcon
-            className="color-negro me-2 fs-25 fa-rotate-90"
-            icon={faCirclePause}
-          />
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <FontAwesomeIcon
-            className="color-rojo me-2 fs-25"
-            icon={faCircleArrowDown}
-          />
-        </div>
-      );
-    }
-  };
-
-
-  let numeroPorcentualTipoPago= porcentajetipopago || 0;
-  let porcentajeFinalTipoPago = numeroPorcentualTipoPago.toFixed(2);
-  let porcentajeNumeroTipoPago = porcentajeFinalTipoPago;
-
-  const mostrarIconoTipoPago = () => {
-    if (porcentajeNumeroTipoPago > 0) {
-      return (
-        <div>
-          <FontAwesomeIcon
-            className="color-verde me-2 fs-25"
-            icon={faCircleUp}
-          />
-        </div>
-      );
-    } else if (porcentajeNumeroTipoPago === 0) {
-      return (
-        <div>
-          <FontAwesomeIcon
-            className="color-negro me-2 fs-25 fa-rotate-90"
-            icon={faCirclePause}
-          />
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <FontAwesomeIcon
-            className="color-rojo me-2 fs-25"
-            icon={faCircleArrowDown}
-          />
-        </div>
-      );
-    }
-  };
-
-  let numeroPorcentualTicket = porcentajeticket
-  || 0;
+  let numeroPorcentualTicket = porcentajeticket || 0;
   let porcentajeFinalTicket = numeroPorcentualTicket.toFixed(2);
-  let porcentajeNumeroTicket = porcentajeFinalTicket;
+  let porcentajeEnteroFinalTicket = convertirDecimalAPorcentaje(porcentajeFinalTicket);
 
-  const mostrarIconoTicket = () => {
-    if (porcentajeNumeroTicket > 0) {
-      return (
-        <div>
-          <FontAwesomeIcon
-            className="color-verde me-2 fs-25"
-            icon={faCircleUp}
-          />
-        </div>
-      );
-    } else if (porcentajeNumeroTicket === 0) {
-      return (
-        <div>
-          <FontAwesomeIcon
-            className="color-negro me-2 fs-25 fa-rotate-90"
-            icon={faCirclePause}
-          />
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <FontAwesomeIcon
-            className="color-rojo me-2 fs-25"
-            icon={faCircleArrowDown}
-          />
-        </div>
-      );
-    }
-  };
+  let numeroPorcentualTipoPago = porcentajetipopago || 0;
+  let porcentajeFinalTipoPago = numeroPorcentualTipoPago.toFixed(2);
+  let porcentajeEnteroTipoPago = convertirDecimalAPorcentaje(porcentajeFinalTipoPago);
+  
+  // let porcentajeNumero = porcentajeFinal;
+
+  // const mostrarIcono = () => {
+  //   if (porcentajeNumero > 0) {
+  //     return (
+  //       <div>
+  //         <FontAwesomeIcon
+  //           className="color-verde me-2 fs-25"
+  //           icon={faCircleUp}
+  //         />
+  //       </div>
+  //     );
+  //   } else if (porcentajeNumero === 0) {
+  //     return (
+  //       <div>
+  //         <FontAwesomeIcon
+  //           className="color-negro me-2 fs-25 fa-rotate-90"
+  //           icon={faCirclePause}
+  //         />
+  //       </div>
+  //     );
+  //   } else {
+  //     return (
+  //       <div>
+  //         <FontAwesomeIcon
+  //           className="color-rojo me-2 fs-25"
+  //           icon={faCircleArrowDown}
+  //         />
+  //       </div>
+  //     );
+  //   }
+  // };
+
+ 
+  // let porcentajeNumeroTipoPago = porcentajeFinalTipoPago;
+
+  // const mostrarIconoTipoPago = () => {
+  //   if (porcentajeNumeroTipoPago > 0) {
+  //     return (
+  //       <div>
+  //         <FontAwesomeIcon
+  //           className="color-verde me-2 fs-25"
+  //           icon={faCircleUp}
+  //         />
+  //       </div>
+  //     );
+  //   } else if (porcentajeNumeroTipoPago === 0) {
+  //     return (
+  //       <div>
+  //         <FontAwesomeIcon
+  //           className="color-negro me-2 fs-25 fa-rotate-90"
+  //           icon={faCirclePause}
+  //         />
+  //       </div>
+  //     );
+  //   } else {
+  //     return (
+  //       <div>
+  //         <FontAwesomeIcon
+  //           className="color-rojo me-2 fs-25"
+  //           icon={faCircleArrowDown}
+  //         />
+  //       </div>
+  //     );
+  //   }
+  // };
+
+
+  // let porcentajeNumeroTicket = porcentajeFinalTicket;
+
+  // const mostrarIconoTicket = () => {
+  //   if (porcentajeNumeroTicket > 0) {
+  //     return (
+  //       <div>
+  //         <FontAwesomeIcon
+  //           className="color-verde me-2 fs-25"
+  //           icon={faCircleUp}
+  //         />
+  //       </div>
+  //     );
+  //   } else if (porcentajeNumeroTicket === 0) {
+  //     return (
+  //       <div>
+  //         <FontAwesomeIcon
+  //           className="color-negro me-2 fs-25 fa-rotate-90"
+  //           icon={faCirclePause}
+  //         />
+  //       </div>
+  //     );
+  //   } else {
+  //     return (
+  //       <div>
+  //         <FontAwesomeIcon
+  //           className="color-rojo me-2 fs-25"
+  //           icon={faCircleArrowDown}
+  //         />
+  //       </div>
+  //     );
+  //   }
+  // };
 
   // FACTURACION POR CUOTA
   var beneficios = [debitoFacturacion, creditoFacturacion];
@@ -203,7 +210,7 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
   });
 
   // TICKET PROMEDIO
-  var ticketValues = [ debito, credito];
+  var ticketValues = [debito, credito];
 
   var midataTickets = {
     labels: labels,
@@ -260,6 +267,9 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
                 options={misoptions}
               />
             </div>
+            <div >
+              <h6 className="fs-9 lato-bold text-center"> Diferencia entre Débito y Crédito</h6>
+              </div>
             <div className="d-flex justify-content-center ">
               <div
                 className={
@@ -270,8 +280,7 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
               >
                 <div>
                   <div className="d-flex">
-                    <div>{mostrarIcono()}</div>
-                    <span className="lato-bold fs-18">{porcentajeFinal} %</span>
+                    <span className="lato-bold fs-18">{porcentajeEnteroCuotas} %</span>
                   </div>
                 </div>
               </div>
@@ -293,6 +302,11 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
                 options={misoptions}
               />
             </div>
+            <div>
+              <h6 className="fs-9 lato-bold text-center">
+                Diferencia entre Débito y Crédito
+              </h6>
+            </div>
             <div className="d-flex justify-content-center ">
               <div
                 className={
@@ -301,10 +315,11 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
                     : "btn-comparativa centrado"
                 }
               >
-                 <div>
+                <div>
                   <div className="d-flex">
-                    <div>{mostrarIconoTicket()}</div>
-                    <span className="lato-bold fs-18">{porcentajeFinalTicket} %</span>
+                    <span className="lato-bold fs-18">
+                      {porcentajeEnteroFinalTicket} %
+                    </span>
                   </div>
                 </div>
               </div>
@@ -328,6 +343,9 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
                 options={misoptions}
               />
             </div>
+            <div >
+              <h6 className="fs-9 lato-bold text-center"> Diferencia entre Débito y Crédito</h6>
+              </div>
             <div className="d-flex justify-content-center ">
               <div
                 className={
@@ -338,8 +356,9 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
               >
                 <div>
                   <div className="d-flex">
-                    <div>{mostrarIconoTipoPago()}</div>
-                    <span className="lato-bold fs-18">{porcentajeFinalTipoPago} %</span>
+                    <span className="lato-bold fs-18">
+                      {porcentajeEnteroTipoPago} %
+                    </span>
                   </div>
                 </div>
               </div>

@@ -35,15 +35,13 @@ const SidebarReact = () => {
   const [visible2, setVisible2] = useState(false);
 
   const [notificaciones, setNotificaciones] = useState([]);
-  console.log("🚀 ~ SidebarReact ~ notificaciones:", notificaciones);
 
   useEffect(() => {
     const fetchNoticias = async () => {
       try {
         const response = await fetch("/api/notificacion/noticias");
         const data = await response.json();
-        console.log("🚀 ~ fetchNoticias ~ data :", data);
-        setNotificaciones(data); // Asegúrate de que esto coincide con la estructura de tu API
+        setNotificaciones(data); 
       } catch (error) {
         console.error("Error al cargar noticias:", error);
       }

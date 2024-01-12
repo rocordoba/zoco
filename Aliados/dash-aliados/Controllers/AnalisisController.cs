@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BLL.ImplementacionZoco;
 using BLL.Interfaces;
 using BLL.InterfacesZoco;
 using dash_aliados.Models.ViewModelsZoco;
@@ -20,25 +21,27 @@ namespace dash_aliados.Controllers
         private readonly IFantasiaComercioService _fantasiaService;
         private readonly IMapper _mapper;
         private readonly IInflacionService _inflacionService;
-
-        public AnalisisController(IBaseDashboardService sasService, IMapper mapper, IFantasiaComercioService fantasiaService, IUsuarioZocoService usuarioZoco,IInflacionService inflacionService)
+        private readonly ITokenService _tokenservice;
+        public AnalisisController(IBaseDashboardService sasService, ITokenService tok, IMapper mapper, IFantasiaComercioService fantasiaService, IUsuarioZocoService usuarioZoco,IInflacionService inflacionService)
         {
             _baseService = sasService;
             _fantasiaService = fantasiaService;
             _mapper = mapper;
             _usuarioZocoService = usuarioZoco;
             _inflacionService = inflacionService;
+            _tokenservice = tok;
         }
         [HttpPost("analisis")]
         public async Task<ActionResult> Analisis([FromBody] VMDatosInicio request)
         {
-            
-            if (!string.IsNullOrEmpty(request.Token))
+            bool esTokenValido = await _tokenservice.ValidarTokenAsync(request.Token);
+            if (esTokenValido == true)
             {
-                var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
+
+                var usuarioEncontrado = await _tokenservice.ObtenerTokenYUsuarioPorUsuarioIdAsync(request.Token);
                 var currentDate = DateTime.Today;
                 var currentWeek = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(currentDate, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
-                var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario);
+                var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.usuario.Usuario);
                 if (request.Year == currentDate.Year && request.Month == currentDate.Month && request.Week == currentWeek)
                 {
                     //   var inflacion = await _inflacionService.ObtenerPorRubro(usuarioEncontrado.Usuario);

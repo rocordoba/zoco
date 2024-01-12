@@ -20,13 +20,14 @@ namespace dash_aliados.Controllers
     {
         private readonly IBaseDashboardService _baseService;
         private readonly IUsuarioZocoService _usuarioZocoService;
-        private readonly IFantasiaComercioService _fantasiaService;
+        private readonly ITokenService _tokenservice;
+      
         private readonly IMapper _mapper;
 
-        public DatosInicioController(IBaseDashboardService sasService, IMapper mapper, IFantasiaComercioService fantasiaService, IUsuarioZocoService usuarioZoco)
+        public DatosInicioController(IBaseDashboardService sasService, IMapper mapper, ITokenService tok, IUsuarioZocoService usuarioZoco)
         {
             _baseService = sasService;
-            _fantasiaService = fantasiaService;
+            _tokenservice = tok;
             _mapper = mapper;
             _usuarioZocoService = usuarioZoco;
         }
@@ -53,12 +54,13 @@ namespace dash_aliados.Controllers
         [HttpPost("base")]
         public async Task<ActionResult> Inicio([FromBody] VMDatosInicio request)
         {
-            if (!string.IsNullOrEmpty(request.Token))
+            bool esTokenValido = await _tokenservice.ValidarTokenAsync(request.Token);
+            if (esTokenValido==true)
             {
                 var currentDate = DateTime.Today;
                 var currentWeek = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(currentDate, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
-                var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
-                var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario);
+                var usuarioEncontrado = await _tokenservice.ObtenerTokenYUsuarioPorUsuarioIdAsync(request.Token);
+                var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.usuario.Usuario);
                 // Verificar si el año, mes y semana son actuales
                 if (request.Year == currentDate.Year && request.Month == currentDate.Month && request.Week == currentWeek)
                 {

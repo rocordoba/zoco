@@ -73,7 +73,17 @@ namespace DAL.Implementacion
             return queryEntidad;
         }
 
+        public async Task<TEntity> ObtenerConRelaciones(Expression<Func<TEntity, bool>> filtro, params Expression<Func<TEntity, object>>[] includes)
+        {
+            IQueryable<TEntity> query = _dbContext.Set<TEntity>();
 
-        
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            return await query.FirstOrDefaultAsync(filtro);
+        }
+
     }
 }

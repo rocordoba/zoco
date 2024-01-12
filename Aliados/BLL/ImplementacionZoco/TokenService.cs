@@ -113,7 +113,8 @@ namespace BLL.ImplementacionZoco
 
             return true;
         }
-        public async Task<(Token token, Usuarios usuario)> ObtenerTokenYUsuarioPorTokenAsync(string valorToken)
+      
+        public async Task<(Token token, Usuarios usuario)> ObtenerTokenYUsuarioPorUsuarioIdAsync(string valorToken)
         {
             // Busca el token por su valor
             var token = await _repoToken.Obtener(t => t.Token1 == valorToken);
@@ -127,7 +128,5 @@ namespace BLL.ImplementacionZoco
 
             return (token, usuario);
         }
-
-
     }
 }

@@ -64,10 +64,6 @@ const ContenidoLogin = ({ onSubmit, datosMandados, setDatosMandados }) => {
           setIsActive(1);
           navigate("/aliados/inicio");
           recargarPagina();
-          // Almacenar el token y el ID del usuario en localStorage
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("userId", data.userId);
-
           // Almacenar el token y el ID del usuario en sessionStorage
           sessionStorage.setItem("token", data.token);
           sessionStorage.setItem("userId", data.userId);

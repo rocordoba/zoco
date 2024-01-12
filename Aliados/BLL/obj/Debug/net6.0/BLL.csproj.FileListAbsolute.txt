@@ -118,20 +118,8 @@ C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Al
 C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\BLL\obj\Debug\net6.0\BLL.pdb
 C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\BLL\obj\Debug\net6.0\ref\BLL.dll
 C:\Users\54381\Desktop\proyecto para conectar\Aliados Zoco-conectar\Aliados_2\Aliados\Aliados\BLL\obj\Debug\net6.0\BLL.sourcelink.json
-C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\BLL\bin\Debug\net6.0\BLL.deps.json
-C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\BLL\bin\Debug\net6.0\BLL.dll
-C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\BLL\bin\Debug\net6.0\BLL.pdb
-C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\BLL\bin\Debug\net6.0\DAL.dll
-C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\BLL\bin\Debug\net6.0\Entity.dll
-C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\BLL\bin\Debug\net6.0\DAL.pdb
-C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\BLL\bin\Debug\net6.0\Entity.pdb
 C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\BLL\obj\Debug\net6.0\BLL.csproj.AssemblyReference.cache
 C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\BLL\obj\Debug\net6.0\BLL.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\BLL\obj\Debug\net6.0\BLL.AssemblyInfoInputs.cache
 C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\BLL\obj\Debug\net6.0\BLL.AssemblyInfo.cs
 C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\BLL\obj\Debug\net6.0\BLL.csproj.CoreCompileInputs.cache
-C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\BLL\obj\Debug\net6.0\BLL.csproj.CopyComplete
-C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\BLL\obj\Debug\net6.0\BLL.dll
-C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\BLL\obj\Debug\net6.0\refint\BLL.dll
-C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\BLL\obj\Debug\net6.0\BLL.pdb
-C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\BLL\obj\Debug\net6.0\ref\BLL.dll

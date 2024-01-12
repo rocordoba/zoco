@@ -72,33 +72,9 @@ const BienvenidoPanel = () => {
     semanas: [],
     comercios: []
   });
+  console.log("🚀 ~ BienvenidoPanel ~ notificaciones:", notificaciones)
 
-  // ... código existente de useEffect ...
 
-  // Crear las opciones para los selectores a partir de los datos de notificaciones
-  const optionsAnios = notificaciones.anios.map(anio => ({
-    value: anio.toString(),
-    label: anio.toString()
-  }));
-
-  const optionsComercio = notificaciones.comercios.map(comercio => ({
-    value: comercio,
-    label: comercio
-  }));
-
-  const optionsMes = notificaciones.meses.map(mes => ({
-    value: mes.mes.toString(),
-    label: `${mes.mes}/${mes.año}` // Ajusta el formato según tus necesidades
-  }));
-
-  let optionsSemanas = [];
-  notificaciones.semanas.forEach(semana => {
-    semana.semanas.forEach(s => {
-      optionsSemanas.push({
-        value: `${semana.mes}/${semana.año}` // Ajusta el formato según tus necesidades
-      });
-    });
-  });
 
 
   const handleEnviarDatos = () => {
@@ -110,49 +86,43 @@ const BienvenidoPanel = () => {
     };
     setDatoCapturados(data);
     enviarDatosAlContexto()
-     // Mostrar SweetAlert2 aquí
-     Swal.fire({
-      title: "¡Filtrado!",
-      icon: "success",
-      confirmButtonText: "Ok",
-    });
   };
 
-  // const optionsAnios = [
-  //   { value: "2023", label: "2023" },
-  //   { value: "2022", label: "2022" },
-  //   { value: "2021", label: "2021" },
-  // ];
+  const optionsAnios = [
+    { value: "2023", label: "2023" },
+    { value: "2022", label: "2022" },
+    { value: "2021", label: "2021" },
+  ];
   
-  // const optionsMes = [
-  //   { value: "enero", label: "Enero" },
-  //   { value: "febrero", label: "Febrero" },
-  //   { value: "marzo", label: "Marzo" },
-  //   { value: "abril", label: "Abril" },
-  //   { value: "mayo", label: "Mayo" },
-  //   { value: "junio", label: "Junio" },
-  //   { value: "julio", label: "Julio" },
-  //   { value: "agosto", label: "Agosto" },
-  //   { value: "septiembre", label: "Septiembre" },
-  //   { value: "octubre", label: "Octubre" },
-  //   { value: "noviembre", label: "Noviembre" },
-  //   { value: "diciembre", label: "Diciembre" },
-  // ];
+  const optionsMes = [
+    { value: "enero", label: "Enero" },
+    { value: "febrero", label: "Febrero" },
+    { value: "marzo", label: "Marzo" },
+    { value: "abril", label: "Abril" },
+    { value: "mayo", label: "Mayo" },
+    { value: "junio", label: "Junio" },
+    { value: "julio", label: "Julio" },
+    { value: "agosto", label: "Agosto" },
+    { value: "septiembre", label: "Septiembre" },
+    { value: "octubre", label: "Octubre" },
+    { value: "noviembre", label: "Noviembre" },
+    { value: "diciembre", label: "Diciembre" },
+  ];
   
-  // const optionsComercio = [
-  //   { value: "Todos", label: "Todos" },
-  //   { value: "craft", label: "Craft" },
-  //   { value: "la Bandeña", label: "La Bandeña" },
-  //   { value: "casapan", label: "Casapan" },
-  // ];
+  const optionsComercio = [
+    { value: "Todos", label: "Todos" },
+    { value: "craft", label: "Craft" },
+    { value: "la Bandeña", label: "La Bandeña" },
+    { value: "casapan", label: "Casapan" },
+  ];
   
-  // const optionsSemanas = [
-  //   { value: "semana 1-7", label: "1-7" },
-  //   { value: "semana 7-14", label: "7-14" },
-  //   { value: "semana 14-21", label: "14-21" },
-  //   { value: "semana 21-28", label: "21-28" },
-  //   { value: "semana 28-31", label: "28-31" },
-  // ];
+  const optionsSemanas = [
+    { value: "semana 1-7", label: "1-7" },
+    { value: "semana 7-14", label: "7-14" },
+    { value: "semana 14-21", label: "14-21" },
+    { value: "semana 21-28", label: "21-28" },
+    { value: "semana 28-31", label: "28-31" },
+  ];
 
 
 

@@ -4,9 +4,10 @@
     "\\Aliados",
     "\\Aliados\\BLL",
     "\\Aliados\\BLL\\Implementacion",
+    "\\Aliados\\BLL\\InterfacesZoco",
     "\\Aliados\\dash-aliados",
     "\\Aliados\\dash-aliados\\Controllers"
   ],
-  "SelectedNode": "\\Aliados\\dash-aliados\\Controllers\\DatosInicioController.cs",
+  "SelectedNode": "\\Aliados\\BLL\\InterfacesZoco\\ITokenService.cs",
   "PreviewInSolutionExplorer": false
 }

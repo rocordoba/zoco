@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using BLL.ImplementacionZoco;
 using BLL.Interfaces;
 using BLL.InterfacesZoco;
 using dash_aliados.Models.ViewModelsZoco;
+using Entity.Entity;
 using Entity.Zoco;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,13 +17,13 @@ namespace dash_aliados.Controllers
         private readonly IBaseDashboardService _baseService;
         private readonly ICalificoComentarioService _ComentarioService;
         private readonly IUsuarioZocoService _usuarioZocoService;
-        private readonly IFantasiaComercioService _fantasiaService;
+      
         private readonly IMapper _mapper;
-
-        public CalificoController(ICalificoComentarioService calificocomentario,IBaseDashboardService sasService, IMapper mapper, IFantasiaComercioService fantasiaService, IUsuarioZocoService usuarioZoco)
+        private readonly ITokenService _tokenservice;
+        public CalificoController(ICalificoComentarioService calificocomentario,IBaseDashboardService sasService, IMapper mapper, ITokenService tok, IUsuarioZocoService usuarioZoco)
         {
             _baseService = sasService;
-            _fantasiaService = fantasiaService;
+            _tokenservice = tok;
             _mapper = mapper;
             _usuarioZocoService = usuarioZoco;
             _ComentarioService = calificocomentario;
@@ -29,14 +31,17 @@ namespace dash_aliados.Controllers
         [HttpPost("calificocom")]
         public async Task<ActionResult> calificocom([FromBody] VMCalificoCom request)
         {
-            if (!string.IsNullOrEmpty(request.Token))
+            bool esTokenValido = await _tokenservice.ValidarTokenAsync(request.Token);
+            if (esTokenValido == true)
             {
                 var entidad = _mapper.Map<CalificoCom>(request);
 
-                var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
+                var usuarioEncontrado = await _tokenservice.ObtenerTokenYUsuarioPorUsuarioIdAsync(request.Token);
+
+                entidad.UsuarioId = usuarioEncontrado.usuario.Id;
                 var califico = await _ComentarioService.Crear(entidad);
                 return StatusCode(StatusCodes.Status200OK);
-                // Aquí puedes realizar cualquier lógica adicional antes de guardar en la base de datos
+          
            
             }
 

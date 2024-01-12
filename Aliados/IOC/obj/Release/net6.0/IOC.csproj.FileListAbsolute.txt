@@ -1,0 +1,5 @@
+C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\IOC\obj\Release\net6.0\IOC.csproj.AssemblyReference.cache
+C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\IOC\obj\Release\net6.0\IOC.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\IOC\obj\Release\net6.0\IOC.AssemblyInfoInputs.cache
+C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\IOC\obj\Release\net6.0\IOC.AssemblyInfo.cs
+C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\IOC\obj\Release\net6.0\IOC.csproj.CoreCompileInputs.cache

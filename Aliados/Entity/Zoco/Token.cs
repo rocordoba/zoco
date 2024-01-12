@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 
 namespace Entity.Zoco
@@ -10,5 +11,6 @@ namespace Entity.Zoco
         public string? Token1 { get; set; }
         public DateTime? FechaCreacion { get; set; }
         public DateTime? FechaExpiracion { get; set; }
+        public virtual Usuarios Usuario { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using BLL.InterfacesZoco;
 using DAL.Interfaces;
+
 using Entity.Zoco;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -111,6 +113,20 @@ namespace BLL.ImplementacionZoco
 
             return true;
         }
+      
+        public async Task<(Token token, Usuarios usuario)> ObtenerTokenYUsuarioPorUsuarioIdAsync(string valorToken)
+        {
+            // Busca el token por su valor
+            var token = await _repoToken.Obtener(t => t.Token1 == valorToken);
 
+            Usuarios usuario = null;
+            if (token != null && token.UsuarioId.HasValue)
+            {
+                // Una vez que tienes el token, usa el UsuarioId para obtener los detalles del usuario.
+                usuario = await _repoUsuario.Obtener(u => u.Id == token.UsuarioId.Value);
+            }
+
+            return (token, usuario);
+        }
     }
 }

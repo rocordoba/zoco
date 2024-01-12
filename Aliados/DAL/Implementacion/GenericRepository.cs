@@ -18,8 +18,12 @@ namespace DAL.Implementacion
         {
             try
             {
+
                 TEntity entidad = await _dbContext.Set<TEntity>().FirstOrDefaultAsync(filtro);
+
+
                 return entidad;
+
             }
             catch {
                 throw;
@@ -67,13 +71,27 @@ namespace DAL.Implementacion
                 throw;
             }
         }
+
         public async Task<IQueryable<TEntity>> Consultar(Expression<Func<TEntity, bool>> filtro = null)
+
         {
             IQueryable<TEntity> queryEntidad = filtro == null ? _dbContext.Set<TEntity>() : _dbContext.Set<TEntity>().Where(filtro);
             return queryEntidad;
         }
 
+        public async Task<TEntity> ObtenerConRelaciones(Expression<Func<TEntity, bool>> filtro, params Expression<Func<TEntity, object>>[] includes)
+        {
+            IQueryable<TEntity> query = _dbContext.Set<TEntity>();
 
-        
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+
+            return await query.FirstOrDefaultAsync(filtro);
+
+        }
+
     }
 }

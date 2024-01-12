@@ -1,4 +1,5 @@
-﻿using Entity.Zoco;
+﻿
+using Entity.Zoco;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace BLL.InterfacesZoco
         Task<bool> ValidarTokenAsync(string token);
         Task<bool> EliminarTokenAsync(int usuarioId);
         Task<Token> GenerarActualizarTokenAsync(int usuarioId, string nuevoToken, DateTime fechaCreacion, DateTime fechaExpiracion);
+        Task<(Token token, Usuarios usuario)> ObtenerTokenYUsuarioPorUsuarioIdAsync(string valorToken);
+
     }
 }

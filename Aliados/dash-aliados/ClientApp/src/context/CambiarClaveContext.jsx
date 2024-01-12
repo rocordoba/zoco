@@ -4,11 +4,14 @@ import Swal from "sweetalert2";
 export const CambiarClaveContext = createContext();
 
 function CambiarClaveProvider(props) {
+
     const [formData, setFormData] = useState({
         anterior: "",
         confirmar: "",
         nueva: "",
       });
+
+      const apiUrlCalificar = process.env.REACT_APP_API_CALIFICAR_COM;
     
       const onSubmit = async (data) => {
         setFormData(data);
@@ -23,7 +26,7 @@ function CambiarClaveProvider(props) {
         };
     
         try {
-          await fetch("/api/acceso/cambiarClave", {
+          await fetch(apiUrlCalificar, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

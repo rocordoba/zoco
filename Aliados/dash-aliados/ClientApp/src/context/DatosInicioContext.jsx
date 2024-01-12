@@ -4,6 +4,10 @@ export const DatosInicioContext = createContext();
 
 export const DatosInicioProvider = ({ children }) => {
   const [datosBackContext, setDatosBackContext] = useState({});
+  const apiUrlInicio = process.env.REACT_APP_API_INICIO;
+  const apiUrlContabilidad = process.env.REACT_APP_API_CONTABILIDAD;
+  const apiUrlAnalisis = process.env.REACT_APP_API_ANALISIS;
+  const apiUrlCupones = process.env.REACT_APP_API_CUPONES;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -12,7 +16,7 @@ export const DatosInicioProvider = ({ children }) => {
 
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
-      const week = Math.ceil(currentDate.getDate() / 7);
+    const week = Math.ceil(currentDate.getDate() / 7);
     const comercio = "Todos";
     const day = currentDate.getDay();
 
@@ -27,7 +31,7 @@ export const DatosInicioProvider = ({ children }) => {
     };
 
     if (token && userId) {
-      fetch("/api/datosinicio/base", {
+      fetch(apiUrlInicio, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,50 +46,6 @@ export const DatosInicioProvider = ({ children }) => {
         })
         .then((data) => {
           setDatosBackContext(data);
-        })
-        .catch((error) => {
-          console.error("Error en la solicitud:", error);
-        });
-    }
-  }, []);
-
-  const [datosCuponesContext, setDatosCuponesContext] = useState({});
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
-    const week = Math.ceil(currentDate.getDate() / 7); // Obtener la semana actual
-    const comercio = "Todos";
-    const day = currentDate.getDay();
-    const requestData = {
-      token: token,
-      id: userId,
-      year: year,
-      month: month,
-      week: week,
-      comercio: comercio,
-      day: day,
-    };
-
-    if (token && userId) {
-      fetch(`/api/cupones/cupones`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestData),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setDatosCuponesContext(data);
         })
         .catch((error) => {
           console.error("Error en la solicitud:", error);
@@ -116,7 +76,7 @@ export const DatosInicioProvider = ({ children }) => {
     };
 
     if (token && userId) {
-      fetch(`/api/contablidad/contabilidad`, {
+      fetch(apiUrlContabilidad, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -158,7 +118,7 @@ export const DatosInicioProvider = ({ children }) => {
       day: day,
     };
     if (token && userId) {
-      fetch(`/api/analisis/analisis`, {
+      fetch(apiUrlAnalisis, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -173,6 +133,50 @@ export const DatosInicioProvider = ({ children }) => {
         })
         .then((data) => {
           setDatosAnalisisContext(data);
+        })
+        .catch((error) => {
+          console.error("Error en la solicitud:", error);
+        });
+    }
+  }, []);
+
+  const [datosCuponesContext, setDatosCuponesContext] = useState({});
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
+    const week = Math.ceil(currentDate.getDate() / 7); // Obtener la semana actual
+    const comercio = "Todos";
+    const day = currentDate.getDay();
+    const requestData = {
+      token: token,
+      id: userId,
+      year: year,
+      month: month,
+      week: week,
+      comercio: comercio,
+      day: day,
+    };
+
+    if (token && userId) {
+      fetch(apiUrlCupones, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setDatosCuponesContext(data);
         })
         .catch((error) => {
           console.error("Error en la solicitud:", error);

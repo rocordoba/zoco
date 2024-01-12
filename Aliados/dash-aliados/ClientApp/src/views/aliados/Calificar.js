@@ -7,7 +7,7 @@ import TituloPagina from "../../components/TituloPagina";
 
 const Calificar = () => {
   return (
-    <div >
+    <div>
       <div className="d-xl-block d-none mt-4 pt-4 ">
         <BienvenidoPanel />
       </div>
@@ -16,8 +16,7 @@ const Calificar = () => {
         <TituloPagina title="Calificar" />
       </div>
       <div className="my-4">
-
-      <FormComentarioCalificar />
+        <FormComentarioCalificar />
       </div>
       <div style={{ paddingBottom: "4rem", paddingTop: "4rem" }}>
         <Footer />

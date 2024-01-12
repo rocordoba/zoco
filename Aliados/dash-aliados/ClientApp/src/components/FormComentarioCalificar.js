@@ -11,13 +11,7 @@ const FormComentarioCalificar = () => {
   const [formComentarioData, setFormComentarioData] = useState({
     comentario: "",
   });
-
-  //const onSubmit = (event) => {
-  //  event.preventDefault();
-  //  const datosConRating = { ...formComentarioData, rating };
-  //  setRating(0);
-  //  setFormComentarioData({ comentario: "" });
-  //};
+  const apiUrlClave = process.env.REACT_APP_API_CAMBIAR_CLAVE;
 
   const isButtonDisabled = rating === 0;
 

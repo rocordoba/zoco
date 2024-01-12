@@ -5,7 +5,6 @@ const DatosInicio = ({datos }) => {
   const { darkMode } = useContext(DarkModeContext)
   const {totalBrutoMes, totalNetoMes, totalNetoMañana,totalNetoHoy} = datos;
 
-
   const formatearAPeso = (valor) => {
     const valorFormateado = new Intl.NumberFormat("es-AR", {
       style: "currency",

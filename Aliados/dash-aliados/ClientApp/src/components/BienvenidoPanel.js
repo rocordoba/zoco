@@ -16,9 +16,40 @@ const BienvenidoPanel = ({ datos }) => {
   const [notificaciones, setNotificaciones] = useState([]);
   console.log("🚀 ~ BienvenidoPanel ~ notificaciones:", notificaciones)
   
-  const handleEnviarDatos = () => {
 
-    // Aquí puedes preparar los datos para enviar al backend
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+   
+    const requestData = {
+      token: token,
+      id: userId,
+    };
+
+    if (token && userId) {
+      fetch('/api/bienvenidopanel/bienvenidopanel', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Error en la solicitud");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setNotificaciones(data);
+        })
+        .catch((error) => {
+          console.error("Error en la solicitud:", error);
+        });
+    }
+  }, []);
+
+  const handleEnviarDatos = () => {
     const data = {
       anio: selectedAnio?.value,
       mes: selectedMes?.value,

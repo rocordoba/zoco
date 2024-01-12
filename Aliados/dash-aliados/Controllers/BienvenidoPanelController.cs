@@ -53,11 +53,23 @@ namespace dash_aliados.Controllers
 
                     Semanas = sas
                         .Where(d => d.FechaDePago.HasValue)
-                        .Select(d => new { Año = d.FechaDePago.Value.Year, Mes = d.FechaDePago.Value.Month, Semana = GetWeekOfYear(d.FechaDePago.Value) })
-                        .Distinct()
-                        .OrderBy(w => w.Año)
-                        .ThenBy(w => w.Mes)
-                        .ThenBy(w => w.Semana)
+                        .GroupBy(d => new { Año = d.FechaDePago.Value.Year, Mes = d.FechaDePago.Value.Month })
+                        .OrderBy(g => g.Key.Año)
+                        .ThenBy(g => g.Key.Mes)
+                        .Select(g => new
+                        {
+                            Año = g.Key.Año,
+                            Mes = g.Key.Mes,
+                            Semanas = g.Select(d => new
+                            {
+                                Año = d.FechaDePago.Value.Year,
+                                Mes = d.FechaDePago.Value.Month,
+                                Semana = GetWeekOfMonth(d.FechaDePago.Value)
+                            })
+                            .Distinct()
+                            .OrderBy(w => w.Semana)
+                            .ToList()
+                        })
                         .ToList(),
 
                     Comercios = sas
@@ -76,12 +88,13 @@ namespace dash_aliados.Controllers
             return BadRequest("Token es nulo o vacío");
         }
 
-        // Método para obtener la semana del año
-        private int GetWeekOfYear(DateTime date)
+        // Método para obtener la semana del mes
+        private int GetWeekOfMonth(DateTime date)
         {
-            CultureInfo ci = CultureInfo.CurrentCulture;
-            int weekNum = ci.Calendar.GetWeekOfYear(date, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Sunday);
-            return weekNum;
+            var firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
+            var daysUntilDate = (date - firstDayOfMonth).Days;
+
+            return (daysUntilDate / 7) + 1;
         }
 
 

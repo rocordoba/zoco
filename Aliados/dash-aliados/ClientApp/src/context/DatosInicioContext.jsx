@@ -9,15 +9,26 @@ export const DatosInicioProvider = ({ children }) => {
   const apiUrlAnalisis = process.env.REACT_APP_API_ANALISIS;
   const apiUrlCupones = process.env.REACT_APP_API_CUPONES;
 
+  const [datos, setDatos] = useState(null);
+  console.log("🚀 ~ DatosInicioProvider ~ datos:", datos)
+  const {notificacionesHardcodeado
+   } = datos || [] 
+   console.log("🚀 ~ DatosInicioProvider ~ notificacionesHardcodeado:", notificacionesHardcodeado)
+
+  // La función para modificar los datos del contexto
+  const actualizarDatos = (nuevosDatos) => {
+      setDatos(nuevosDatos);
+  };
+
     useEffect(() => {
         const token = sessionStorage.getItem("token");
 
         if (token) {
             const currentDate = new Date();
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
-            const week = Math.ceil(currentDate.getDate() / 7);
-            const comercio = "Todos";
+            const year = notificacionesHardcodeado?.anio || currentDate.getFullYear();
+            const month = notificacionesHardcodeado?.mes || currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
+            const week = notificacionesHardcodeado?.semana || Math.ceil(currentDate.getDate() / 7);
+            const comercio = notificacionesHardcodeado?.comercio || "Todos";
             const day = currentDate.getDay();
 
             const requestData = {
@@ -54,7 +65,7 @@ export const DatosInicioProvider = ({ children }) => {
                     console.error("Error en la solicitud:", error);
                 });
         }
-    }, []);
+    }, [datos]);
 
     
 
@@ -192,6 +203,8 @@ export const DatosInicioProvider = ({ children }) => {
   return (
     <DatosInicioContext.Provider
       value={{
+        datos, 
+        actualizarDatos, 
         datosBackContext,
         setDatosBackContext,
         datosCuponesContext,
@@ -202,8 +215,11 @@ export const DatosInicioProvider = ({ children }) => {
         datosAnalisisContext,
         setDatosAnalisisContext,
       }}
+      
     >
       {children}
     </DatosInicioContext.Provider>
   );
 };
+  
+

@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import BienvenidoPanel from "../components/BienvenidoPanel";
-import Footer from "../components/Footer";
-import DatosContabilidad from "../components/DatosContabilidad";
-import ImpuestosCards from "../components/ImpuestosCards";
-import ScrollToTopButton from "../components/ScrollToTopButton";
-import TituloPagina from "../components/TituloPagina";
-import { DatosInicioContext } from "../context/DatosInicioContext";
-import Impuesto2Cards from "../components/Impuesto2Cards";
-import Impuesto2CardsBn from "../components/Impuesto2CardsBn";
+import BienvenidoPanel from "../../components/BienvenidoPanel";
+import Footer from "../../components/Footer";
+import DatosContabilidad from "../../components/DatosContabilidad";
+import ImpuestosCards from "../../components/ImpuestosCards";
+import ScrollToTopButton from "../../components/ScrollToTopButton";
+import TituloPagina from "../../components/TituloPagina";
+import { DatosInicioContext } from "../../context/DatosInicioContext";
+import Impuesto2Cards from "../../components/Impuesto2Cards";
+import Impuesto2CardsBn from "../../components/Impuesto2CardsBn";
 
 const Contabilidad = () => {
   const { datosContabilidadContext } = useContext(DatosInicioContext);

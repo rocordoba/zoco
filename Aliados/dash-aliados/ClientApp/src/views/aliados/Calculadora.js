@@ -1,9 +1,9 @@
 import React from "react";
-import BienvenidoPanel from "../components/BienvenidoPanel";
-import Footer from "../components/Footer";
-import TablaCalculadora from "../components/TablaCalculadora";
-import ScrollToTopButton from "../components/ScrollToTopButton";
-import TituloPagina from "../components/TituloPagina";
+import BienvenidoPanel from "../../components/BienvenidoPanel";
+import Footer from "../../components/Footer";
+import TablaCalculadora from "../../components/TablaCalculadora";
+import ScrollToTopButton from "../../components/ScrollToTopButton";
+import TituloPagina from "../../components/TituloPagina";
 
 const Calculadora = () => {
   return (
@@ -16,8 +16,7 @@ const Calculadora = () => {
         <TituloPagina title="Calculadora" />
       </div>
       <div>
-      <TablaCalculadora />
-
+        <TablaCalculadora />
       </div>
       <div className="py-4">
         <Footer />

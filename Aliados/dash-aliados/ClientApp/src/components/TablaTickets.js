@@ -4,11 +4,11 @@ import { DarkModeContext } from "../context/DarkModeContext";
 import "./TablaTickets.css";
 import pdf from "../assets/img/pdf.png";
 import xls from "../assets/img/xls.png";
-
+import { Spinner } from "react-bootstrap";
 
 const TablaTickets = ({ listaMes }) => {
   const [descargando, setDescargando] = useState(false);
-  const [descargando2,setDescargando2] = useState(false);
+  const [descargando2, setDescargando2] = useState(false);
   const { darkMode } = useContext(DarkModeContext);
   const listaDelMes = listaMes || [];
 
@@ -68,6 +68,7 @@ const TablaTickets = ({ listaMes }) => {
       document.body.appendChild(enlace);
       enlace.click();
       enlace.parentNode.removeChild(enlace);
+      setDescargando(false);
     } catch (error) {
       console.error("Hubo un error:", error);
       setDescargando(false);
@@ -109,6 +110,7 @@ const TablaTickets = ({ listaMes }) => {
       document.body.appendChild(enlace);
       enlace.click();
       enlace.parentNode.removeChild(enlace);
+      setDescargando2(false);
     } catch (error) {
       console.error("Hubo un error:", error);
       setDescargando2(false);
@@ -124,7 +126,8 @@ const TablaTickets = ({ listaMes }) => {
       <section className="container mt-3 mb-3 ">
         <div className="d-flex flex-wrap justify-content-between ">
           <div className="margin-centrado-responsive">
-            <div className="my-3">
+            <div className="my-3 d-flex">
+              <h6 className="my-3 me-3 fs-18-a-16">Filtrar: </h6>
               <div className="campo-busqueda">
                 <input
                   type="number"
@@ -143,21 +146,35 @@ const TablaTickets = ({ listaMes }) => {
           <div className="d-flex centrado-responsive">
             <div className="">
               <button
-                className={descargando2 ? "btn-pdf-descargar-disabled centrado border-0 mx-2" : "btn-pdf-descargar centrado border-0 mx-2"}
+                className={
+                  descargando2
+                    ? "btn-pdf-descargar-disabled centrado border-0 mx-2"
+                    : "btn-pdf-descargar centrado border-0 mx-2"
+                }
                 disabled={descargando2}
                 onClick={manejarClicDescargaPdf}
               >
                 <div className="my-3">
                   <div className="text-center">
-                    <img
-                      className="img-fluid icono-pdf-xls mb-1"
-                      src={pdf}
-                      alt="pdf"
-                    />
+                    {descargando2 ? (
+                      <div>
+                        <Spinner
+                          animation="border"
+                          role="status"
+                          variant="light"
+                        ></Spinner>
+                      </div>
+                    ) : (
+                      <img
+                        className="img-fluid icono-pdf-xls mb-1"
+                        src={pdf}
+                        alt="PDF"
+                      />
+                    )}
                   </div>
                   <div className="d-flex justify-content-center align-items-center">
                     <h6 className="text-white lato-bold fs-16">
-                      Descargar 
+                      {descargando ? "Cargando..." : "Descargar"}
                     </h6>
                   </div>
                 </div>
@@ -166,23 +183,35 @@ const TablaTickets = ({ listaMes }) => {
 
             <div className="">
               <button
-                 className={descargando ? "btn-pdf-descargar-disabled centrado border-0 mx-2" : "btn-pdf-descargar centrado border-0 mx-2"}
-                 disabled={descargando}
-                 onClick={manejarClicDescarga}
-             
-                
+                className={
+                  descargando
+                    ? "btn-pdf-descargar-disabled centrado border-0 mx-2"
+                    : "btn-pdf-descargar centrado border-0 mx-2"
+                }
+                disabled={descargando}
+                onClick={manejarClicDescarga}
               >
                 <div className="my-3">
                   <div className="text-center">
-                    <img
-                      className="img-fluid icono-pdf-xls mb-1"
-                      src={xls}
-                      alt="Excel"
-                    />
+                    {descargando ? (
+                      <div>
+                        <Spinner
+                          animation="border"
+                          role="status"
+                          variant="light"
+                        ></Spinner>
+                      </div>
+                    ) : (
+                      <img
+                        className="img-fluid icono-pdf-xls mb-1"
+                        src={xls}
+                        alt="Excel"
+                      />
+                    )}
                   </div>
                   <div className="d-flex justify-content-center align-items-center">
                     <h6 className="text-white lato-bold fs-16">
-                      Descargar 
+                      {descargando ? "Cargando..." : "Descargar"}
                     </h6>
                   </div>
                 </div>

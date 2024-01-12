@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import BienvenidoPanel from "../components/BienvenidoPanel";
-import Footer from "../components/Footer";
-import DatosAnalisis from "../components/DatosAnalisis";
-import EvolucionMensual3Barras from "../components/EvolucionMensual3Barras";
-import TripleGraficoAnalisis from "../components/TripleGraficoAnalisis";
-import ScrollToTopButton from "../components/ScrollToTopButton";
-import TituloPagina from "../components/TituloPagina";
-import { DatosInicioContext } from "../context/DatosInicioContext";
+import BienvenidoPanel from "../../components/BienvenidoPanel";
+import Footer from "../../components/Footer";
+import DatosAnalisis from "../../components/DatosAnalisis";
+import EvolucionMensual3Barras from "../../components/EvolucionMensual3Barras";
+import TripleGraficoAnalisis from "../../components/TripleGraficoAnalisis";
+import ScrollToTopButton from "../../components/ScrollToTopButton";
+import TituloPagina from "../../components/TituloPagina";
+import { DatosInicioContext } from "../../context/DatosInicioContext";
 
 const Analisis = () => {
 

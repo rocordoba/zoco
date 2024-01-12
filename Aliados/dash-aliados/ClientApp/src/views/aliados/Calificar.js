@@ -1,9 +1,9 @@
 import React from "react";
-import BienvenidoPanel from "../components/BienvenidoPanel";
-import Footer from "../components/Footer";
-import FormComentarioCalificar from "../components/FormComentarioCalificar";
-import ScrollToTopButton from "../components/ScrollToTopButton";
-import TituloPagina from "../components/TituloPagina";
+import BienvenidoPanel from "../../components/BienvenidoPanel";
+import Footer from "../../components/Footer";
+import FormComentarioCalificar from "../../components/FormComentarioCalificar";
+import ScrollToTopButton from "../../components/ScrollToTopButton";
+import TituloPagina from "../../components/TituloPagina";
 
 const Calificar = () => {
   return (

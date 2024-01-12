@@ -4,21 +4,105 @@ import { Controller, useForm } from "react-hook-form";
 import { DarkModeContext } from "../context/DarkModeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
 
 const ModalConfiguraciones = (props) => {
   const { show, onHide } = props;
   const { darkMode } = useContext(DarkModeContext);
   const { control, handleSubmit, formState } = useForm();
   const { errors } = formState;
-  const [formData, setFormData]= useState({
+  const [formData, setFormData] = useState({
     anterior: "",
     confirmar: "",
     nueva: "",
-  })
-  const onSubmit = (data) => {
+  });
+  // public string ClaveActual { get; set; }
+  // public string ClaveNueva { get; set; }
+  // public string ConfirmarClave { get; set; }
+  const onSubmit = async (data) => {
     setFormData(data);
-    onHide();
+    const token = localStorage.getItem("token");
+    const userId = parseInt(localStorage.getItem("userId"));
+    const datosPassword = {
+      Token: token,
+      Id: userId,
+      ClaveActual: data.anterior,
+      ClaveNueva: data.nueva,
+      ConfirmarClave: data.confirmar,
+    };
+
+    try {
+      await fetch("/api/acceso/cambiarClave", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(datosPassword),
+      });
+      Swal.fire({
+        title: "¡Enviado!",
+        text: "Tu contraseña fue cambiada con exito.",
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
+      onHide();
+    } catch (error) {
+      console.error("Hubo un error:", error);
+      Swal.fire({
+        title: "Error",
+        text: "Hubo un problema al cambiar la clave.",
+        icon: "error",
+        confirmButtonText: "Cerrar",
+      });
+    }
   };
+
+  // const onSubmit = async (event) => {
+  //   event.preventDefault();
+  //   const token = localStorage.getItem("token");
+  //   const userId = parseInt(localStorage.getItem("userId")); // Asegúrate de que userId sea un entero
+  //   const fechaActual = new Date().toISOString();
+
+  //   const datosConRating = {
+  //     Token: token,
+  //     UsuarioId: userId,
+  //     NumCalifico: rating,
+  //     Descripcion: formComentarioData.comentario,
+  //     Fecha: fechaActual,
+  //   };
+
+  //   console.log("Datos a enviar:", datosConRating);
+
+  //   try {
+  //       await fetch("/api/califico/calificocom", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(datosConRating),
+  //     });
+
+  //     // No hay lógica adicional después de la solicitud, por lo que no se espera respuesta
+  //     setRating(0);
+  //     setFormComentarioData({ comentario: "" });
+
+  //     // Mostrar SweetAlert2 aquí
+  //     Swal.fire({
+  //       title: "¡Enviado!",
+  //       text: "Tu comentario ha sido enviado con éxito.",
+  //       icon: "success",
+  //       confirmButtonText: "Ok",
+  //     });
+  //   } catch (error) {
+  //     console.error("Hubo un error:", error);
+  //     Swal.fire({
+  //       title: "Error",
+  //       text: "Hubo un problema al enviar tu comentario.",
+  //       icon: "error",
+  //       confirmButtonText: "Cerrar",
+  //     });
+  //   }
+  // };
 
   return (
     <div>

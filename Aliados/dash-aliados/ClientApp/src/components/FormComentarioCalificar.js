@@ -197,12 +197,15 @@ const FormComentarioCalificar = () => {
               type="text"
               name="comentario"
               value={formComentarioData.comentario}
-              onChange={(e) =>
-                setFormComentarioData({
-                  ...formComentarioData,
-                  comentario: e.target.value,
-                })
-              }
+              onChange={(e) => {
+                // Limitar el texto a 500 caracteres
+                if (e.target.value.length <= 500) {
+                  setFormComentarioData({
+                    ...formComentarioData,
+                    comentario: e.target.value,
+                  });
+                }
+              }}
             />
           </Form.Group>
         </div>

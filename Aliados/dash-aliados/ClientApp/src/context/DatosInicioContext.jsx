@@ -12,7 +12,7 @@ export const DatosInicioProvider = ({ children }) => {
 
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
-    const week = Math.ceil(currentDate.getDate() / 7); // Obtener la semana actual
+      const week = Math.ceil(currentDate.getDate() / 7);
     const comercio = "Todos";
     const day = currentDate.getDay();
 
@@ -94,8 +94,6 @@ export const DatosInicioProvider = ({ children }) => {
   }, []);
 
   const [datosMandados, setDatosMandados] = useState();
-  console.log("🚀 ~ DatosInicioProvider ~ datosMandados:", datosMandados)
-
   const [datosContabilidadContext, setDatosContabilidadContext] = useState({});
   useEffect(() => {
     const token = localStorage.getItem("token");

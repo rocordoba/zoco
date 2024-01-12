@@ -19,6 +19,7 @@ import {
   faCirclePause,
 } from "@fortawesome/free-solid-svg-icons";
 import { Bar, Line } from "react-chartjs-2";
+import convertirDecimalAPorcentaje from "../helpers/convertirPorcentajeADecimal";
 
 ChartJS.register(
   CategoryScale,
@@ -41,6 +42,7 @@ const ComportamientoGrafica = ({ datos }) => {
     totalesPorDiaTarjeta,
     porcentaje,
   } = datos;
+
   const totales = totalesPorDiaTarjeta || [];
 
 
@@ -52,7 +54,7 @@ const ComportamientoGrafica = ({ datos }) => {
   for (let tienda in totales) {
     if (totales.hasOwnProperty(tienda)) {
       // Obtener los días de esa tienda y añadirlos al array
-      diasArray = diasArray.concat(totales[tienda].map(valor => valor.diaSemana));
+      diasArray = diasArray.concat(totales[tienda].map(valor => valor.key));
     }
     
   }
@@ -79,10 +81,9 @@ const ComportamientoGrafica = ({ datos }) => {
   const datasets = tiendas.map((tienda) => {
     const valoresTienda = totales[tienda];
     const dias = valoresTienda.map((valor) => valor.diaSemana);
-    const totalConDescuentoPorDia = valoresTienda.map(
-      (valor) => valor.totalConDescuentoPorDia
+    const totalConDescuentoPorDias = valoresTienda.map(
+      (valor) => valor.value
     );
-
     return {
       label: tienda,
       borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
@@ -91,7 +92,7 @@ const ComportamientoGrafica = ({ datos }) => {
       backgroundColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
         Math.random() * 256
       )}, ${Math.floor(Math.random() * 256)}, 0)`,
-      data: totalConDescuentoPorDia,
+      data: totalConDescuentoPorDias,
     };
   });
 
@@ -185,6 +186,8 @@ const ComportamientoGrafica = ({ datos }) => {
   let porcentajeFinal = numeroPorcentual.toFixed(2);
   let porcentajeNumero = porcentajeFinal;
 
+  let porcentajeEnteroComparativaDiaMes = convertirDecimalAPorcentaje(porcentajeNumero);
+
   const mostrarIcono = () => {
     if (porcentajeNumero > 0) {
       return (
@@ -264,7 +267,7 @@ const ComportamientoGrafica = ({ datos }) => {
                     <div className="d-flex">
                       <div>{mostrarIcono()}</div>
                       <span className="lato-bold fs-18">
-                        {porcentajeFinal} %
+                        {porcentajeEnteroComparativaDiaMes} %
                       </span>
                     </div>
                   </div>
@@ -319,7 +322,7 @@ const ComportamientoGrafica = ({ datos }) => {
                       <div className="d-flex">
                         <div>{mostrarIcono()}</div>
                         <span className="lato-bold fs-18">
-                          {porcentajeFinal} %
+                          {porcentajeEnteroComparativaDiaMes} %
                         </span>
                       </div>
                     </div>

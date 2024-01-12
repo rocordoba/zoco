@@ -419,10 +419,10 @@ const NuevoNavReact = ({ name, ...props }) => {
                                 }
                                 onClick={() => setModalShowCompleta(true)}
                               >
-                                <FontAwesomeIcon className="" icon={faGear} />
-                                <span className="ms-2  lato-bold fs-14">
-                                  Configuraciones
-                                </span>
+                                 <FontAwesomeIcon className="" icon={faGear} />
+                              <span className="ms-2  lato-bold fs-10">
+                                Cambiar contraseña
+                              </span>
                               </Button>
                               <ModalConfiguracionesCel
                                 show={modalShowCompleta}
@@ -445,12 +445,10 @@ const NuevoNavReact = ({ name, ...props }) => {
                                   }
                                 >
                                   <div className="ms-3">
-                                    <FontAwesomeIcon
-                                      icon={faRightFromBracket}
-                                    />
-                                    <span className="ms-2 lato-bold fs-14">
-                                      Cerrar sesión
-                                    </span>
+                                  <FontAwesomeIcon icon={faRightFromBracket} />
+                                  <span className="ms-2 lato-bold fs-10">
+                                    Cerrar sesión
+                                  </span>
                                   </div>
                                 </div>
                               </NavLink>

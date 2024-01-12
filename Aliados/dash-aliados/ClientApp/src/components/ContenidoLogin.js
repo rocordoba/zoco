@@ -246,6 +246,7 @@ const ContenidoLogin = ({ onSubmit, datosMandados, setDatosMandados }) => {
                             placeholder="Usuario"
                             value={usuario}
                             onChange={(e) => setUsuario(e.target.value)}
+                            maxLength={12}
                           />
                         </Form.Group>
                       </div>
@@ -286,6 +287,7 @@ const ContenidoLogin = ({ onSubmit, datosMandados, setDatosMandados }) => {
                             placeholder="Contraseña"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            maxLength={20}
                           />
                         </Form.Group>
                       </div>

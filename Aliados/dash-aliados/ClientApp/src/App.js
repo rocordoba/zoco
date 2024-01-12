@@ -17,8 +17,7 @@ import { DatosInicioContext } from "./context/DatosInicioContext";
 function App() {
   const { darkMode } = useContext(DarkModeContext);
   const [navVisible, showNavbar] = useState(false);
-  const { califico, setCalifico } =
-    useContext(DatosInicioContext);
+  const { califico, setCalifico } = useContext(DatosInicioContext);
   return (
     <div className={darkMode ? "container-dark" : "container-light bg-gris"}>
       <BrowserRouter>
@@ -29,8 +28,7 @@ function App() {
                 darkMode ? "container-dark" : "container-light bg-gris"
               }
             >
-              <Login
-              />
+              <Login />
             </div>
           ) : (
             <div>

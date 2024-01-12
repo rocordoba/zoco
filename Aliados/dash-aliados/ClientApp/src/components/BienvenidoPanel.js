@@ -1,42 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Select from "react-select";
 import "./BienvenidoPanel.css";
 import { DarkModeContext } from "../context/DarkModeContext";
-const optionsAnios = [
-  { value: "2023", label: "2023" },
-  { value: "2022", label: "2022" },
-  { value: "2021", label: "2021" },
-];
 
-const optionsMes = [
-  { value: "enero", label: "Enero" },
-  { value: "febrero", label: "Febrero" },
-  { value: "marzo", label: "Marzo" },
-  { value: "abril", label: "Abril" },
-  { value: "mayo", label: "Mayo" },
-  { value: "junio", label: "Junio" },
-  { value: "julio", label: "Julio" },
-  { value: "agosto", label: "Agosto" },
-  { value: "septiembre", label: "Septiembre" },
-  { value: "octubre", label: "Octubre" },
-  { value: "noviembre", label: "Noviembre" },
-  { value: "diciembre", label: "Diciembre" },
-];
-
-const optionsComercio = [
-  { value: "Todos", label: "Todos" },
-  { value: "craft", label: "Craft" },
-  { value: "la Bandeña", label: "La Bandeña" },
-  { value: "casapan", label: "Casapan" },
-];
-
-const optionsSemanas = [
-  { value: "semana 1-7", label: "1-7" },
-  { value: "semana 7-14", label: "7-14" },
-  { value: "semana 14-21", label: "14-21" },
-  { value: "semana 21-28", label: "21-28" },
-  { value: "semana 28-31", label: "28-31" },
-];
 
 const BienvenidoPanel = ({ datos }) => {
   const { darkMode } = useContext(DarkModeContext);
@@ -47,12 +13,12 @@ const BienvenidoPanel = ({ datos }) => {
   const [selectedComercio, setSelectedComercio] = useState(null);
   const [selectedSemana, setSelectedSemana] = useState(null);
 
+  const [notificaciones, setNotificaciones] = useState([]);
+  console.log("🚀 ~ BienvenidoPanel ~ notificaciones:", notificaciones)
+  
   const handleEnviarDatos = () => {
+
     // Aquí puedes preparar los datos para enviar al backend
-    //  AñoActual = añoActual,
-    //    MesesHastaHoy = mesesHastaHoy,
-    //  SemanasPorMes = semanasPorMes,
-    //Fantasiasnombre = fantasiasnombre
     const data = {
       anio: selectedAnio?.value,
       mes: selectedMes?.value,
@@ -61,6 +27,44 @@ const BienvenidoPanel = ({ datos }) => {
     };
     setDatoCapturados(data);
   };
+
+  const optionsAnios = [
+    { value: "2023", label: "2023" },
+    { value: "2022", label: "2022" },
+    { value: "2021", label: "2021" },
+  ];
+  
+  const optionsMes = [
+    { value: "enero", label: "Enero" },
+    { value: "febrero", label: "Febrero" },
+    { value: "marzo", label: "Marzo" },
+    { value: "abril", label: "Abril" },
+    { value: "mayo", label: "Mayo" },
+    { value: "junio", label: "Junio" },
+    { value: "julio", label: "Julio" },
+    { value: "agosto", label: "Agosto" },
+    { value: "septiembre", label: "Septiembre" },
+    { value: "octubre", label: "Octubre" },
+    { value: "noviembre", label: "Noviembre" },
+    { value: "diciembre", label: "Diciembre" },
+  ];
+  
+  const optionsComercio = [
+    { value: "Todos", label: "Todos" },
+    { value: "craft", label: "Craft" },
+    { value: "la Bandeña", label: "La Bandeña" },
+    { value: "casapan", label: "Casapan" },
+  ];
+  
+  const optionsSemanas = [
+    { value: "semana 1-7", label: "1-7" },
+    { value: "semana 7-14", label: "7-14" },
+    { value: "semana 14-21", label: "14-21" },
+    { value: "semana 21-28", label: "21-28" },
+    { value: "semana 28-31", label: "28-31" },
+  ];
+
+
 
   return (
     <section
@@ -200,6 +204,7 @@ const BienvenidoPanel = ({ datos }) => {
                     Aplicar
                   </button>
                 </div>
+                
               </form>
             </div>
           </div>

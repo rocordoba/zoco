@@ -57,7 +57,7 @@
   }
   
   .select__control {
-
+    width: 80% !important;
     height: 44px !important;
     background-color: #b4c400 !important;
     border: 2px solid #999;

@@ -412,8 +412,8 @@ const SidebarReact = () => {
                               onClick={() => setModalShowCompleta(true)}
                             >
                               <FontAwesomeIcon className="" icon={faGear} />
-                              <span className="ms-2  lato-bold fs-14">
-                                Configuraciones
+                              <span className="ms-2  lato-bold fs-10">
+                                Cambiar contraseña
                               </span>
                             </Button>
                             <ModalConfiguraciones
@@ -437,7 +437,7 @@ const SidebarReact = () => {
                               >
                                 <div className="ms-3">
                                   <FontAwesomeIcon icon={faRightFromBracket} />
-                                  <span className="ms-2 lato-bold fs-14">
+                                  <span className="ms-2 lato-bold fs-10">
                                     Cerrar sesión
                                   </span>
                                 </div>

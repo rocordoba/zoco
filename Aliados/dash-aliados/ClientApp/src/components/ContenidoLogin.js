@@ -378,7 +378,7 @@ const ContenidoLogin = ({ onSubmit, datosMandados, setDatosMandados }) => {
             </div>
             <div className="text-center d-md-block d-none">
               <div className="d-flex justify-content-center">
-                <h6 className="fs-16 mb-1">
+                {/* <h6 className="fs-16 mb-1">
                   {" "}
                   ¿Problemas para ingresar?{" "}
                   <button
@@ -390,7 +390,19 @@ const ContenidoLogin = ({ onSubmit, datosMandados, setDatosMandados }) => {
                   >
                     Tocá aquí.
                   </button>
-                </h6>
+                </h6> */}
+                 <h6 className="fs-16 mb-1 me-2">
+                  {" "}
+                  ¿Problemas para ingresar?{" "}
+                  </h6>
+                 <a
+                    className="enlace lato-bold text-decoration-none fs-16"
+                    href="https://api.whatsapp.com/send/?phone=543813545650&text=Buenos%2Fas+d%C3%ADas%2Ftardes%2Cmi+CUIT+es%3A++tengo+una+consulta+sobre&type=phone_number&app_absent=0"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Tocá aquí.
+                  </a>
               </div>
             </div>
             <div className="text-center d-block d-md-none">

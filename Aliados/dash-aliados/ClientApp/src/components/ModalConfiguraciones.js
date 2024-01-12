@@ -4,56 +4,15 @@ import { Controller, useForm } from "react-hook-form";
 import { DarkModeContext } from "../context/DarkModeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import Swal from "sweetalert2";
+import { CambiarClaveContext } from "../context/CambiarClaveContext";
 
 const ModalConfiguraciones = (props) => {
   const { show, onHide } = props;
   const { darkMode } = useContext(DarkModeContext);
+  const {onSubmit} = useContext(CambiarClaveContext)
   const { control, handleSubmit, formState } = useForm();
   const { errors } = formState;
-  const [formData, setFormData] = useState({
-    anterior: "",
-    confirmar: "",
-    nueva: "",
-  });
 
-  const onSubmit = async (data) => {
-    setFormData(data);
-    const token = localStorage.getItem("token");
-    const userId = parseInt(localStorage.getItem("userId"));
-    const datosPassword = {
-      Token: token,
-      Id: userId,
-      ClaveActual: data.anterior,
-      ClaveNueva: data.nueva,
-      ConfirmarClave: data.confirmar,
-    };
-
-    try {
-      await fetch("/api/acceso/cambiarClave", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(datosPassword),
-      });
-      Swal.fire({
-        title: "¡Enviado!",
-        text: "Tu contraseña fue cambiada con exito.",
-        icon: "success",
-        confirmButtonText: "Ok",
-      });
-      onHide();
-    } catch (error) {
-      console.error("Hubo un error:", error);
-      Swal.fire({
-        title: "Error",
-        text: "Hubo un problema al cambiar la clave.",
-        icon: "error",
-        confirmButtonText: "Cerrar",
-      });
-    }
-  };
 
   return (
     <div>

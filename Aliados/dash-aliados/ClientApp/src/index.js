@@ -2,16 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { DarkModeProvider } from "./context/DarkModeContext";
-import "bootstrap/dist/js/bootstrap.bundle.min.js"; 
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { DatosInicioProvider } from "./context/DatosInicioContext";
+import { CambiarClaveProvider } from "./context/CambiarClaveContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <DarkModeProvider>
-    <DatosInicioProvider>
-    <App />
-    </DatosInicioProvider>
-   
+    <CambiarClaveProvider>
+      <DatosInicioProvider>
+        <App />
+      </DatosInicioProvider>
+    </CambiarClaveProvider>
   </DarkModeProvider>
 );

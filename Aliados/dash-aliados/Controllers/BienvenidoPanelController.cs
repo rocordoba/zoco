@@ -4,6 +4,7 @@ using BLL.InterfacesZoco;
 using dash_aliados.Models.ViewModelsZoco;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace dash_aliados.Controllers
 {
@@ -33,57 +34,56 @@ namespace dash_aliados.Controllers
                 var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
                 var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario);
 
-                var resultado = new List<dynamic>();
-
-                // Obtener nombres de comercio únicos y agregar "Todos" al inicio
-                var comercios = sas
-                    .Where(d => !string.IsNullOrEmpty(d.NombreComercio))
-                    .Select(d => d.NombreComercio)
-                    .Distinct()
-                    .ToList();
-                comercios.Insert(0, "Todos");
-
-                // Obtener años y meses únicos
-                var fechasUnicas = sas
-                    .Where(d => d.FechaDePago.HasValue)
-                    .Select(d => new { Año = d.FechaDePago.Value.Year, Mes = d.FechaDePago.Value.Month })
-                    .Distinct()
-                    .OrderBy(d => d.Año).ThenBy(d => d.Mes);
-
-                foreach (var fecha in fechasUnicas)
+                var resultado = new
                 {
-                    var semanasDelMes = new List<List<DateTime>>();
+                    Anios = sas
+                        .Where(d => d.FechaDePago.HasValue)
+                        .Select(d => d.FechaDePago.Value.Year)
+                        .Distinct()
+                        .OrderBy(a => a)
+                        .ToList(),
 
-                    var primerDiaMes = new DateTime(fecha.Año, fecha.Mes, 1);
-                    var ultimoDiaMes = primerDiaMes.AddMonths(1).AddDays(-1);
+                    Meses = sas
+                        .Where(d => d.FechaDePago.HasValue)
+                        .Select(d => new { Año = d.FechaDePago.Value.Year, Mes = d.FechaDePago.Value.Month })
+                        .Distinct()
+                        .OrderBy(fm => fm.Año)
+                        .ThenBy(fm => fm.Mes)
+                        .ToList(),
 
-                    var inicioSemana = primerDiaMes;
-                    var finSemana = inicioSemana.AddDays(6 - (int)inicioSemana.DayOfWeek);
+                    Semanas = sas
+                        .Where(d => d.FechaDePago.HasValue)
+                        .Select(d => new { Año = d.FechaDePago.Value.Year, Mes = d.FechaDePago.Value.Month, Semana = GetWeekOfYear(d.FechaDePago.Value) })
+                        .Distinct()
+                        .OrderBy(w => w.Año)
+                        .ThenBy(w => w.Mes)
+                        .ThenBy(w => w.Semana)
+                        .ToList(),
 
-                    while (inicioSemana <= ultimoDiaMes)
-                    {
-                        if (finSemana > ultimoDiaMes)
-                            finSemana = ultimoDiaMes;
+                    Comercios = sas
+                        .Where(d => !string.IsNullOrEmpty(d.NombreComercio))
+                        .Select(d => d.NombreComercio)
+                        .Distinct()
+                        .ToList()
+                };
 
-                        semanasDelMes.Add(Enumerable.Range(0, (finSemana - inicioSemana).Days + 1)
-                                                    .Select(i => inicioSemana.AddDays(i))
-                                                    .ToList());
-
-                        inicioSemana = finSemana.AddDays(1);
-                        finSemana = inicioSemana.AddDays(6 - (int)inicioSemana.DayOfWeek);
-                    }
-
-                    resultado.Add(new { Año = fecha.Año, Mes = fecha.Mes, Semanas = semanasDelMes });
-                }
-
-                // Agregar comercios al resultado
-                resultado.Add(new { Comercios = comercios });
+                // Agregar "Todos" al inicio de la lista de comercios
+                resultado.Comercios.Insert(0, "Todos");
 
                 return Ok(resultado);
             }
 
             return BadRequest("Token es nulo o vacío");
         }
+
+        // Método para obtener la semana del año
+        private int GetWeekOfYear(DateTime date)
+        {
+            CultureInfo ci = CultureInfo.CurrentCulture;
+            int weekNum = ci.Calendar.GetWeekOfYear(date, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Sunday);
+            return weekNum;
+        }
+
 
 
     }

@@ -4,22 +4,15 @@ import { Controller, useForm } from "react-hook-form";
 import { DarkModeContext } from "../context/DarkModeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { CambiarClaveContext } from "../context/CambiarClaveContext";
 
 const ModalConfiguracionesCel = (props) => {
     const { show, onHide } = props;
     const { darkMode } = useContext(DarkModeContext);
     const { control, handleSubmit, formState } = useForm();
     const { errors } = formState;
-    const [formData, setFormData]= useState({
-      anterior: "",
-      confirmar: "",
-      nueva: "",
-    })
-    const onSubmit = (data) => {
-      setFormData(data);
-      onHide();
-    };
-
+    const {onSubmit} = useContext(CambiarClaveContext)
+   
     return (
       <Modal
         {...props}
@@ -36,18 +29,15 @@ const ModalConfiguracionesCel = (props) => {
               : "modal-content border-0 text-black "
           }
         >
-          <section>
-            <div className="d-flex justify-content-end">
-              <FontAwesomeIcon
-                onClick={onHide}
-                className="fs-18 me-2"
-                icon={faXmark}
-              />
+           <section className="d-flex justify-content-between my-4">
+            <div className="ocultar-div"></div>
+            <div className="d-flex justify-content-center">
+              <h6 className="fs-18 lato-bold">Cambiar contraseña</h6>
             </div>
-          </section>
-          <section>
-            <div className="d-flex justify-content-center ">
-              <h6 className="fs-20 lato-bold  ">Cambiar contraseña</h6>
+            <div>
+              <button className="border-0 btn-filtro-cruz" onClick={onHide}>
+                <FontAwesomeIcon className="fs-18 mb-3" icon={faXmark} />
+              </button>
             </div>
           </section>
           <div className="d-flex justify-content-center">

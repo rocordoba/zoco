@@ -13,7 +13,6 @@ const ModalConfiguraciones = (props) => {
   const { control, handleSubmit, formState } = useForm();
   const { errors } = formState;
 
-
   return (
     <div>
       <Modal

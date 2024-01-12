@@ -41,6 +41,10 @@ const ContenidoLogin = ({ onSubmit, datosMandados, setDatosMandados }) => {
     reset();
   };
 
+  function recargarPagina() {
+    window.location.reload();
+}
+
   const onSubmit2 = () => {
     fetch("/api/acceso/login", {
       method: "POST",
@@ -59,6 +63,7 @@ const ContenidoLogin = ({ onSubmit, datosMandados, setDatosMandados }) => {
         if (data.token) {
           setIsActive(1);
           navigate("/aliados/inicio");
+          recargarPagina();
           // Almacenar el token y el ID del usuario en localStorage
           localStorage.setItem("token", data.token);
           localStorage.setItem("userId", data.userId);

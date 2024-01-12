@@ -5,46 +5,30 @@ import { DarkModeContext } from "../context/DarkModeContext";
 import { DatosInicioContext } from "../context/DatosInicioContext";
 import Swal from "sweetalert2";
 
-
 const BienvenidoPanel = () => {
   const { darkMode } = useContext(DarkModeContext);
   const [datoCapturados, setDatoCapturados] = useState({});
   const [isSearchable, setIsSearchable] = useState(true);
-  const [selectedAnio, setSelectedAnio] = useState(null);
   const [selectedMes, setSelectedMes] = useState(null);
   const [selectedComercio, setSelectedComercio] = useState(null);
-  const [selectedSemana, setSelectedSemana] = useState(null);
 
   const { actualizarDatos } = useContext(DatosInicioContext);
 
-
-  const notificacionesHardcodeado = {
-    anio: 2023,
-    mes: 12,
-    comercio: "Todos",
-    semana: 3,
-  }
-
-  const enviarDatosAlContexto = () => {
-    // Datos que deseas enviar al contexto
-    const nuevosDatos = { notificacionesHardcodeado };
-
-    // Llama a la función para actualizar los datos del contexto
-    actualizarDatos(nuevosDatos);
-};
-
+  const [notificaciones, setNotificaciones] = useState({
+    semanas: [],
+  });
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     const userId = localStorage.getItem("userId");
-   
+
     const requestData = {
       token: token,
       id: userId,
     };
 
     if (token && userId) {
-      fetch('/api/bienvenidopanel/bienvenidopanel', {
+      fetch("/api/bienvenidopanel/bienvenidopanel", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -58,6 +42,7 @@ const BienvenidoPanel = () => {
           return response.json();
         })
         .then((data) => {
+          console.log("Datos recibidos de la API:", data);
           setNotificaciones(data);
         })
         .catch((error) => {
@@ -65,17 +50,6 @@ const BienvenidoPanel = () => {
         });
     }
   }, []);
-
-  const [notificaciones, setNotificaciones] = useState({
-    anios: [],
-    meses: [],
-    semanas: [],
-    comercios: []
-  });
-  console.log("🚀 ~ BienvenidoPanel ~ notificaciones:", notificaciones)
-
-
-
 
   const handleEnviarDatos = () => {
     const data = {
@@ -85,46 +59,50 @@ const BienvenidoPanel = () => {
       semana: selectedSemana?.value,
     };
     setDatoCapturados(data);
-    enviarDatosAlContexto()
+    actualizarDatos(data);
   };
 
-  const optionsAnios = [
-    { value: "2023", label: "2023" },
-    { value: "2022", label: "2022" },
-    { value: "2021", label: "2021" },
-  ];
-  
-  const optionsMes = [
-    { value: "enero", label: "Enero" },
-    { value: "febrero", label: "Febrero" },
-    { value: "marzo", label: "Marzo" },
-    { value: "abril", label: "Abril" },
-    { value: "mayo", label: "Mayo" },
-    { value: "junio", label: "Junio" },
-    { value: "julio", label: "Julio" },
-    { value: "agosto", label: "Agosto" },
-    { value: "septiembre", label: "Septiembre" },
-    { value: "octubre", label: "Octubre" },
-    { value: "noviembre", label: "Noviembre" },
-    { value: "diciembre", label: "Diciembre" },
-  ];
-  
-  const optionsComercio = [
-    { value: "Todos", label: "Todos" },
-    { value: "craft", label: "Craft" },
-    { value: "la Bandeña", label: "La Bandeña" },
-    { value: "casapan", label: "Casapan" },
-  ];
-  
-  const optionsSemanas = [
-    { value: "semana 1-7", label: "1-7" },
-    { value: "semana 7-14", label: "7-14" },
-    { value: "semana 14-21", label: "14-21" },
-    { value: "semana 21-28", label: "21-28" },
-    { value: "semana 28-31", label: "28-31" },
-  ];
+  // const generarOpciones = () => {
 
+  //   const opcionesMeses = notificaciones.meses.map(mes => ({
+  //     value: mes,  // Asumiendo que 'mes' tiene un formato adecuado
+  //     label: mes.toString()
+  //   }));
 
+  //   const opcionesSemanas = notificaciones.semanas.map(semana => ({
+  //     value: semana,  // Asumiendo que 'semana' tiene un formato adecuado
+  //     label: semana.toString()
+  //   }));
+
+  //   const opcionesComercios = notificaciones.comercios.map(comercio => ({
+  //     value: comercio,
+  //     label: comercio
+  //   }));
+
+  //   return { opcionesAnios, opcionesMeses, opcionesSemanas, opcionesComercios };
+  // };
+  const opcionesSemanas = notificaciones.semanas.flatMap(anio =>
+    anio.meses.flatMap(mes =>
+      mes.semanas.map(semanaObj => {
+        const semanaNum = semanaObj.semana; // Accediendo al número de la semana
+        return {
+          value: semanaNum, // Usando el número de la semana como valor
+          label: `Semana: ${semanaNum}` // Usando el número de la semana en la etiqueta
+        };
+      })
+    )
+  );
+  
+
+  const opcionesAnios = notificaciones.semanas.map((anio) => ({
+    value: anio.año,
+    label: anio.año.toString(),
+  }));
+
+  const [selectedAnio, setSelectedAnio] = useState(null);
+  console.log("🚀 ~ BienvenidoPanel ~ selectedAnio:", selectedAnio);
+  const [selectedSemana, setSelectedSemana] = useState(null);
+  console.log("🚀 ~ BienvenidoPanel ~ selectedSemana:", selectedSemana);
 
   return (
     <section
@@ -154,30 +132,23 @@ const BienvenidoPanel = () => {
                 <article>
                   <label
                     htmlFor="exampleFormControlInput1"
-                    className="lato-bold fs-16 ms-3 "
+                    className="lato-bold fs-16 ms-3"
                   >
                     Año
                   </label>
                   <Select
                     value={selectedAnio}
-                    defaultInputValue={"2023"}
                     className="select__control_custom lato-bold"
                     classNamePrefix="select"
                     isSearchable={isSearchable}
                     name="anio"
-                    options={optionsAnios}
+                    options={opcionesAnios}
                     onChange={(selectedOption) =>
                       setSelectedAnio(selectedOption)
                     }
-                    styles={{
-                      control: (base) => ({
-                        ...base,
-                        textAlign: "center",
-                      }),
-                    }}
                   />
                 </article>
-                <article>
+                {/* <article>
                   <label
                     htmlFor="exampleFormControlInput1"
                     className="lato-bold fs-16 ms-3"
@@ -191,7 +162,7 @@ const BienvenidoPanel = () => {
                     classNamePrefix="select"
                     isSearchable={isSearchable}
                     name="mes"
-                    options={optionsMes}
+                    options={opcionesMeses}
                     onChange={(selectedOption) =>
                       setSelectedMes(selectedOption)
                     }
@@ -202,7 +173,7 @@ const BienvenidoPanel = () => {
                       }),
                     }}
                   />
-                </article>
+                </article> */}
                 <article>
                   <label
                     htmlFor="exampleFormControlInput1"
@@ -211,13 +182,12 @@ const BienvenidoPanel = () => {
                     Semanas
                   </label>
                   <Select
-                    value={selectedSemana}
-                    defaultInputValue={"1-7"}
                     className="select__control_custom lato-bold"
                     classNamePrefix="select"
                     isSearchable={isSearchable}
                     name="semanas"
-                    options={optionsSemanas}
+                    value={selectedSemana}
+                    options={opcionesSemanas}
                     onChange={(selectedOption) =>
                       setSelectedSemana(selectedOption)
                     }
@@ -229,7 +199,7 @@ const BienvenidoPanel = () => {
                     }}
                   />
                 </article>
-                <article>
+                {/* <article>
                   <label
                     htmlFor="exampleFormControlInput1"
                     className="lato-bold fs-16 ms-3"
@@ -243,7 +213,7 @@ const BienvenidoPanel = () => {
                     classNamePrefix="select"
                     isSearchable={isSearchable}
                     name="comercio"
-                    options={optionsComercio}
+                    options={opcionesComercios}
                     onChange={(selectedOption) =>
                       setSelectedComercio(selectedOption)
                     }
@@ -254,8 +224,8 @@ const BienvenidoPanel = () => {
                       }),
                     }}
                   />
-                </article>
-               
+                </article> */}
+
                 <div className="mt-4 me-1">
                   <button
                     className="cursor-point ov-btn-slide-left border-0 lato-bold fs-16 text-white"
@@ -265,7 +235,6 @@ const BienvenidoPanel = () => {
                     Aplicar
                   </button>
                 </div>
-                
               </form>
             </div>
           </div>

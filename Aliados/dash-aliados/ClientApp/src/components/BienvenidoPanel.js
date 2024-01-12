@@ -18,7 +18,7 @@ const BienvenidoPanel = ({ datos }) => {
   
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     const userId = localStorage.getItem("userId");
    
     const requestData = {

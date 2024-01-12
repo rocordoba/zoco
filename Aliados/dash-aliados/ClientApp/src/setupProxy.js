@@ -18,7 +18,7 @@ const context = [
     "/api/notificacion/noticias",
     "/api/pdf/pdf",
     "/api/acceso/cambiarClave", 
-    
+    "/api/acceso/logout",
 ];
 
 module.exports = function (app) {

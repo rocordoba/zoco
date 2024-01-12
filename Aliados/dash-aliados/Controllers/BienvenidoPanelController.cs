@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BLL.ImplementacionZoco;
 using BLL.Interfaces;
 using BLL.InterfacesZoco;
 using dash_aliados.Models.ViewModelsZoco;
@@ -14,13 +15,13 @@ namespace dash_aliados.Controllers
     {
         private readonly IBaseDashboardService _baseService;
         private readonly IUsuarioZocoService _usuarioZocoService;
-        private readonly IFantasiaComercioService _fantasiaService;
+        private readonly ITokenService _tokenservice;
         private readonly IMapper _mapper;
 
-        public BienvenidoPanelController(IBaseDashboardService sasService, IMapper mapper, IFantasiaComercioService fantasiaService, IUsuarioZocoService usuarioZoco)
+        public BienvenidoPanelController(IBaseDashboardService sasService, IMapper mapper, ITokenService tok, IUsuarioZocoService usuarioZoco)
         {
             _baseService = sasService;
-            _fantasiaService = fantasiaService;
+            _tokenservice = tok;
             _mapper = mapper;
             _usuarioZocoService = usuarioZoco;
         }
@@ -29,57 +30,44 @@ namespace dash_aliados.Controllers
 
         public async Task<ActionResult> bienvenidopanel([FromBody] VMBienvenidopanel request)
         {
-            if (!string.IsNullOrEmpty(request.Token))
+            bool esTokenValido = await _tokenservice.ValidarTokenAsync(request.Token);
+            if (esTokenValido == true)
             {
-                var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
-                var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario);
 
+                var usuarioEncontrado = await _tokenservice.ObtenerTokenYUsuarioPorUsuarioIdAsync(request.Token);
+                var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.usuario.Usuario);
                 var resultado = new
                 {
-                    Anios = sas
-                        .Where(d => d.FechaDePago.HasValue)
-                        .Select(d => d.FechaDePago.Value.Year)
-                        .Distinct()
-                        .OrderBy(a => a)
-                        .ToList(),
-
-                    Meses = sas
-                        .Where(d => d.FechaDePago.HasValue)
-                        .Select(d => new { Año = d.FechaDePago.Value.Year, Mes = d.FechaDePago.Value.Month })
-                        .Distinct()
-                        .OrderBy(fm => fm.Año)
-                        .ThenBy(fm => fm.Mes)
-                        .ToList(),
-
                     Semanas = sas
-                        .Where(d => d.FechaDePago.HasValue)
-                        .GroupBy(d => new { Año = d.FechaDePago.Value.Year, Mes = d.FechaDePago.Value.Month })
-                        .OrderBy(g => g.Key.Año)
-                        .ThenBy(g => g.Key.Mes)
-                        .Select(g => new
-                        {
-                            Año = g.Key.Año,
-                            Mes = g.Key.Mes,
-                            Semanas = g.Select(d => new
-                            {
-                                Año = d.FechaDePago.Value.Year,
-                                Mes = d.FechaDePago.Value.Month,
-                                Semana = GetWeekOfMonth(d.FechaDePago.Value)
-                            })
-                            .Distinct()
-                            .OrderBy(w => w.Semana)
-                            .ToList()
-                        })
-                        .ToList(),
+        .Where(d => d.FechaDePago.HasValue)
+        .GroupBy(d => d.FechaDePago.Value.Year)
+        .OrderBy(g => g.Key)
+        .Select(g => new
+        {
+            Año = g.Key,
+            Meses = g.GroupBy(d => d.FechaDePago.Value.Month)
+                     .OrderBy(mg => mg.Key)
+                     .Select(mg => new
+                     {
+                         Mes = mg.Key,
+                         Semanas = mg.Select(d => new { Semana = d.SemanaMesPago })
+                                     .Where(d => d.Semana.HasValue) // Asegúrate de que SemanaMesPago no sea nulo
+                                     .Distinct()
+                                     .OrderBy(w => w.Semana)
+                                     .ToList()
+                     })
+                     .ToList()
+        })
+        .ToList(),
 
                     Comercios = sas
                         .Where(d => !string.IsNullOrEmpty(d.NombreComercio))
                         .Select(d => d.NombreComercio)
                         .Distinct()
+                        .OrderBy(n => n)
                         .ToList()
                 };
 
-                // Agregar "Todos" al inicio de la lista de comercios
                 resultado.Comercios.Insert(0, "Todos");
 
                 return Ok(resultado);
@@ -88,15 +76,12 @@ namespace dash_aliados.Controllers
             return BadRequest("Token es nulo o vacío");
         }
 
-        // Método para obtener la semana del mes
-        private int GetWeekOfMonth(DateTime date)
+        private int GetWeekOfYear(DateTime date)
         {
-            var firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
-            var daysUntilDate = (date - firstDayOfMonth).Days;
-
-            return (daysUntilDate / 7) + 1;
+            CultureInfo ci = CultureInfo.CurrentCulture;
+            int weekNum = ci.Calendar.GetWeekOfYear(date, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Sunday);
+            return weekNum;
         }
-
 
 
     }

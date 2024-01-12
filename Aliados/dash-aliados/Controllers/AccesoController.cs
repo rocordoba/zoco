@@ -89,6 +89,35 @@ namespace dash_aliados.Controllers
                 return BadRequest("No se pudo cambiar la contraseña.");
             }
         }
+        [HttpPost("logout")]
+        public async Task<ActionResult> Logout([FromBody] VMToken request)
+        {
+            bool esTokenValido = await _tokenService.ValidarTokenAsync(request.Token);
+            if (esTokenValido)
+            {
+                var usuarioEncontrado = await _tokenService.ObtenerTokenYUsuarioPorUsuarioIdAsync(request.Token);
+                if (usuarioEncontrado.usuario != null)
+                {
+                    var resultado = await _tokenService.EliminarTokenAsync(usuarioEncontrado.usuario.Id);
+                    if (resultado)
+                    {
+                        return Ok("Sesión cerrada correctamente.");
+                    }
+                    else
+                    {
+                        return BadRequest("Error al cerrar sesión.");
+                    }
+                }
+                else
+                {
+                    return BadRequest("Usuario no encontrado.");
+                }
+            }
+            else
+            {
+                return BadRequest("Token inválido.");
+            }
+        }
 
 
 

@@ -15,25 +15,28 @@ namespace dash_aliados.Controllers
     {
         private readonly IBaseDashboardService _baseService;
         private readonly IUsuarioZocoService _usuarioZocoService;
-        private readonly IFantasiaComercioService _fantasiaService;
+    
         private readonly IMapper _mapper;
-
-        public ContablidadController(IBaseDashboardService sasService, IMapper mapper, IFantasiaComercioService fantasiaService, IUsuarioZocoService usuarioZoco)
+        private readonly ITokenService _tokenservice;
+        public ContablidadController(IBaseDashboardService sasService, IMapper mapper, ITokenService tok, IUsuarioZocoService usuarioZoco)
         {
             _baseService = sasService;
-            _fantasiaService = fantasiaService;
+            _tokenservice = tok;
             _mapper = mapper;
             _usuarioZocoService = usuarioZoco;
         }
         [HttpPost("contabilidad")]
         public async Task<ActionResult> Contabilidad([FromBody] VMDatosInicio request)
         {
-            if (!string.IsNullOrEmpty(request.Token))
+
+            bool esTokenValido = await _tokenservice.ValidarTokenAsync(request.Token);
+            if (esTokenValido == true)
             {
+
+                var usuarioEncontrado = await _tokenservice.ObtenerTokenYUsuarioPorUsuarioIdAsync(request.Token);
                 var currentDate = DateTime.Today;
                 var currentWeek = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(currentDate, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
-                var usuarioEncontrado = await _usuarioZocoService.ObtenerPorId(request.Id);
-                var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario);
+                var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.usuario.Usuario);
                 // Verificar si el año, mes y semana son actuales
                 if (request.Year == currentDate.Year && request.Month == currentDate.Month && request.Week == currentWeek)
                 {

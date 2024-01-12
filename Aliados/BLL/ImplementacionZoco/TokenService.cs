@@ -26,7 +26,9 @@ namespace BLL.ImplementacionZoco
             var token = await _repoToken.Obtener(t => t.UsuarioId == usuarioId);
             if (token != null)
             {
-                return await _repoToken.Eliminar(token);
+                token.Token1 = string.Empty; 
+                token.FechaExpiracion = DateTime.UtcNow; // Opcionalmente, puedes ajustar la fecha de expiración a la hora actual para invalidarlo
+                return await _repoToken.Editar(token);
             }
 
             return false;

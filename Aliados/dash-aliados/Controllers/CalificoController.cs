@@ -50,9 +50,12 @@ namespace dash_aliados.Controllers
         [HttpPost("califico")]
         public async Task<ActionResult> califico([FromBody] VMCalifico request)
         {
-            if (!string.IsNullOrEmpty(request.Token))
+            bool esTokenValido = await _tokenservice.ValidarTokenAsync(request.Token);
+            if (esTokenValido == true)
             {
+                var usuarioEncontrado = await _tokenservice.ObtenerTokenYUsuarioPorUsuarioIdAsync(request.Token);
                 var entidad = _mapper.Map<Califico>(request);
+                entidad.UsuarioId = usuarioEncontrado.usuario.Id;
                 var califico = await _ComentarioService.CrearComentario(entidad);
                 return StatusCode(StatusCodes.Status200OK);
                 // Aquí puedes realizar cualquier lógica adicional antes de guardar en la base de datos

@@ -16,9 +16,7 @@ const ModalConfiguraciones = (props) => {
     confirmar: "",
     nueva: "",
   });
-  // public string ClaveActual { get; set; }
-  // public string ClaveNueva { get; set; }
-  // public string ConfirmarClave { get; set; }
+
   const onSubmit = async (data) => {
     setFormData(data);
     const token = localStorage.getItem("token");
@@ -56,53 +54,6 @@ const ModalConfiguraciones = (props) => {
       });
     }
   };
-
-  // const onSubmit = async (event) => {
-  //   event.preventDefault();
-  //   const token = localStorage.getItem("token");
-  //   const userId = parseInt(localStorage.getItem("userId")); // Asegúrate de que userId sea un entero
-  //   const fechaActual = new Date().toISOString();
-
-  //   const datosConRating = {
-  //     Token: token,
-  //     UsuarioId: userId,
-  //     NumCalifico: rating,
-  //     Descripcion: formComentarioData.comentario,
-  //     Fecha: fechaActual,
-  //   };
-
-  //   console.log("Datos a enviar:", datosConRating);
-
-  //   try {
-  //       await fetch("/api/califico/calificocom", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(datosConRating),
-  //     });
-
-  //     // No hay lógica adicional después de la solicitud, por lo que no se espera respuesta
-  //     setRating(0);
-  //     setFormComentarioData({ comentario: "" });
-
-  //     // Mostrar SweetAlert2 aquí
-  //     Swal.fire({
-  //       title: "¡Enviado!",
-  //       text: "Tu comentario ha sido enviado con éxito.",
-  //       icon: "success",
-  //       confirmButtonText: "Ok",
-  //     });
-  //   } catch (error) {
-  //     console.error("Hubo un error:", error);
-  //     Swal.fire({
-  //       title: "Error",
-  //       text: "Hubo un problema al enviar tu comentario.",
-  //       icon: "error",
-  //       confirmButtonText: "Cerrar",
-  //     });
-  //   }
-  // };
 
   return (
     <div>

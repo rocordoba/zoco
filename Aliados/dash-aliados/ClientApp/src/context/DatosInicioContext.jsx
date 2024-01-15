@@ -10,70 +10,73 @@ export const DatosInicioProvider = ({ children }) => {
   const apiUrlCupones = process.env.REACT_APP_API_CUPONES;
 
   const [datos, setDatos] = useState(null);
-  console.log("🚀 ~ DatosInicioProvider ~ datos:", datos)
-  const {notificacionesHardcodeado
-   } = datos || [] 
-   console.log("🚀 ~ DatosInicioProvider ~ notificacionesHardcodeado:", notificacionesHardcodeado)
+  console.log("🚀 ~ DatosInicioProvider ~ datos:", datos);
+  const { notificacionesHardcodeado } = datos || [];
+  console.log(
+    "🚀 ~ DatosInicioProvider ~ notificacionesHardcodeado:",
+    notificacionesHardcodeado
+  );
 
   // La función para modificar los datos del contexto
   const actualizarDatos = (nuevosDatos) => {
-      setDatos(nuevosDatos);
+    setDatos(nuevosDatos);
   };
 
-    useEffect(() => {
-        const token = sessionStorage.getItem("token");
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
 
-        if (token) {
-            const currentDate = new Date();
-            const year = notificacionesHardcodeado?.anio || currentDate.getFullYear();
-            const month = notificacionesHardcodeado?.mes || currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
-            const week = notificacionesHardcodeado?.semana || Math.ceil(currentDate.getDate() / 7);
-            const comercio = notificacionesHardcodeado?.comercio || "Todos";
-            const day = currentDate.getDay();
+    if (token) {
+      const currentDate = new Date();
+      const year = notificacionesHardcodeado?.anio || currentDate.getFullYear();
+      const month =
+        notificacionesHardcodeado?.mes || currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
+      const week =
+        notificacionesHardcodeado?.semana ||
+        Math.ceil(currentDate.getDate() / 7);
+      const comercio = notificacionesHardcodeado?.comercio || "Todos";
+      const day = currentDate.getDay();
 
-            const requestData = {
-                //    token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzMzMzMzMzMzMzMyIsIm5iZiI6MTcwNTA2Mzg4NCwiZXhwIjoxNzA1MDYzOTQ0LCJpYXQiOjE3MDUwNjM4ODR9.aKMFYoueJqJJhrMzErDTqgVNEs30d3sn9P6etmgpbAs",
-                token: token,
-                year: year,
-                month: month,
-                week: week,
-                comercio: comercio,
-                day: day,
-            };
+      const requestData = {
+        //    token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzMzMzMzMzMzMzMyIsIm5iZiI6MTcwNTA2Mzg4NCwiZXhwIjoxNzA1MDYzOTQ0LCJpYXQiOjE3MDUwNjM4ODR9.aKMFYoueJqJJhrMzErDTqgVNEs30d3sn9P6etmgpbAs",
+        token: token,
+        year: year,
+        month: month,
+        week: week,
+        comercio: comercio,
+        day: day,
+      };
 
-            fetch(apiUrlInicio, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(requestData),
-            })
-                .then((response) => {
-                    if (response.status === 200) {
-                        return response.json();
-                    } else if (response.status === 401) {
-                        // Aqu� puedes manejar la l�gica para el estado 401
-                        console.error("Usuario no autorizado");
-                    } else {
-                        throw new Error("Error en la solicitud");
-                    }
-                })
-                .then((data) => {
-                    setDatosBackContext(data);
-                })
-                .catch((error) => {
-                    console.error("Error en la solicitud:", error);
-                });
-        }
-    }, [datos]);
-
-    
+      fetch(apiUrlInicio, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else if (response.status === 401) {
+            // Aqu� puedes manejar la l�gica para el estado 401
+            console.error("Usuario no autorizado");
+          } else {
+            throw new Error("Error en la solicitud");
+          }
+        })
+        .then((data) => {
+          setDatosBackContext(data);
+        })
+        .catch((error) => {
+          console.error("Error en la solicitud:", error);
+        });
+    }
+  }, [datos]);
 
   const [datosMandados, setDatosMandados] = useState();
   const [datosContabilidadContext, setDatosContabilidadContext] = useState({});
   useEffect(() => {
-      const token = sessionStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
+    const token = sessionStorage.getItem("token");
+    
 
     const currentDate = new Date();
     const year = currentDate.getFullYear();
@@ -83,7 +86,6 @@ export const DatosInicioProvider = ({ children }) => {
     const day = currentDate.getDay();
     const requestData = {
       token: token,
-      id: userId,
       year: year,
       month: month,
       week: week,
@@ -91,7 +93,7 @@ export const DatosInicioProvider = ({ children }) => {
       day: day,
     };
 
-    if (token && userId) {
+    if (token) {
       fetch(apiUrlContabilidad, {
         method: "POST",
         headers: {
@@ -116,8 +118,7 @@ export const DatosInicioProvider = ({ children }) => {
 
   const [datosAnalisisContext, setDatosAnalisisContext] = useState({});
   useEffect(() => {
-      const token = sessionStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
+    const token = sessionStorage.getItem("token");
     const currentDate = new Date();
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
@@ -126,14 +127,13 @@ export const DatosInicioProvider = ({ children }) => {
     const day = currentDate.getDay();
     const requestData = {
       token: token,
-      id: userId,
       year: year,
       month: month,
       week: week,
       comercio: comercio,
       day: day,
     };
-    if (token && userId) {
+    if (token) {
       fetch(apiUrlAnalisis, {
         method: "POST",
         headers: {
@@ -159,8 +159,7 @@ export const DatosInicioProvider = ({ children }) => {
   const [datosCuponesContext, setDatosCuponesContext] = useState({});
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
+    const token = sessionStorage.getItem("token");
     const currentDate = new Date();
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
@@ -169,7 +168,7 @@ export const DatosInicioProvider = ({ children }) => {
     const day = currentDate.getDay();
     const requestData = {
       token: token,
-      id: userId,
+  
       year: year,
       month: month,
       week: week,
@@ -177,7 +176,7 @@ export const DatosInicioProvider = ({ children }) => {
       day: day,
     };
 
-    if (token && userId) {
+    if (token) {
       fetch(apiUrlCupones, {
         method: "POST",
         headers: {
@@ -203,8 +202,8 @@ export const DatosInicioProvider = ({ children }) => {
   return (
     <DatosInicioContext.Provider
       value={{
-        datos, 
-        actualizarDatos, 
+        datos,
+        actualizarDatos,
         datosBackContext,
         setDatosBackContext,
         datosCuponesContext,
@@ -215,11 +214,8 @@ export const DatosInicioProvider = ({ children }) => {
         datosAnalisisContext,
         setDatosAnalisisContext,
       }}
-      
     >
       {children}
     </DatosInicioContext.Provider>
   );
 };
-  
-

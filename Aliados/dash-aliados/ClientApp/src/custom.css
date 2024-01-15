@@ -369,6 +369,10 @@ hr {
   line-height: 26px;
 }
 
+.bg-home{
+  background-color: white !important;
+
+}
 .container-dark {
   background-color: #292b2f !important;
   color: #fff;

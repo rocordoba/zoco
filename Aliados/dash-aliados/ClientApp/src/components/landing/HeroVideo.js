@@ -1,6 +1,7 @@
 import React from "react";
 import video from "../../assets/img/video.mp4";
 import logoNav from "../../assets/img/logo.png";
+import { Link } from "react-router-dom";
 
 const HeroVideo = () => {
   return (
@@ -60,13 +61,13 @@ const HeroVideo = () => {
                 </a>
               </li>
             </ul>
-            <form className="d-flex" role="search" id="btnIniciarSesion">
+            
               <div className="navbar-btn">
-                <a className="btn main-btn" href="../app_zoco/home/index.php">
+                <Link   className="btn main-btn" to="/login" >
                   Iniciar sesión
-                </a>
+                </Link>
               </div>
-            </form>
+           
           </div>
         </div>
       </article>

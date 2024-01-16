@@ -10,7 +10,7 @@ export const DatosInicioProvider = ({ children }) => {
   const apiUrlCupones = process.env.REACT_APP_API_CUPONES;
 
   const [datos, setDatos] = useState(null);
-  console.log("🚀 ~ DatosInicioProvider ~ datos:", datos);
+ 
 
   // La función para modificar los datos del contexto
   const actualizarDatos = (nuevosDatos) => {

@@ -13,13 +13,28 @@ import TituloPagina from "../../components/TituloPagina";
 // import ModalEditable from "../components/ModalEditable";
 import PopUpCalificar from "../../components/PopUpCalificar";
 import { DatosInicioContext } from "../../context/DatosInicioContext";
+import { useNavigate } from "react-router-dom";
 
 
 const Inicio = ({ califico, setCalifico }) => {
   const { darkMode } = useContext(DarkModeContext);
-  const { datosBackContext } = useContext(DatosInicioContext);
+  // de aqui saca los datos del context
+  const { datosBackContext,errorSesion } = useContext(DatosInicioContext);
   const [contador, setContador] = useState(0);
   const [datosMandados, setDatosMandados] = useState();
+  const navegacion = useNavigate();
+
+
+
+
+  useEffect(() => {
+    if(errorSesion === 401){
+      
+      navegacion("/")
+    
+    }
+
+  }, [errorSesion])
 
   return (
     <div>

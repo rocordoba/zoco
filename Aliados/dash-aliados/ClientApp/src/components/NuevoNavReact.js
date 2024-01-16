@@ -117,7 +117,7 @@ const NuevoNavReact = ({ name, ...props }) => {
   const [selectedMes, setSelectedMes] = useState(null);
   const [selectedComercio, setSelectedComercio] = useState(null);
   const [selectedSemana, setSelectedSemana] = useState(null);
-  console.log("🚀 ~ BienvenidoPanel ~ selectedSemana:", selectedSemana);
+  
   const [visibleModal, setVisibleModal] = useState(false);
   const { actualizarDatos } = useContext(DatosInicioContext);
   const [fechaInicio, setFechaInicio] = useState(null);
@@ -133,7 +133,7 @@ const NuevoNavReact = ({ name, ...props }) => {
     semana: "",
     comercio: "",
   });
-  console.log("🚀 ~ BienvenidoPanel ~ datosSelect:", datosSelect);
+
 
   const enviarDatosAlContexto = (datos) => {
     actualizarDatos(datos);

@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import "./custom.css";
 import { DarkModeContext } from "./context/DarkModeContext";
 import Inicio from "./views/aliados/Inicio";
@@ -18,11 +18,18 @@ import Home from "./views/landing/Home";
 function App() {
   const { darkMode } = useContext(DarkModeContext);
   const [navVisible, showNavbar] = useState(false);
-  const { califico, setCalifico } = useContext(DatosInicioContext);
+  const { califico, setCalifico, errorSesion } = useContext(DatosInicioContext);
+  const { datosBackContext } = useContext(DatosInicioContext);
+ 
 
   // Determina si el Navbar y el Sidebar deben mostrarse o no
   const showNavComponents =
     window.location.pathname !== "/" && window.location.pathname !== "/login";
+
+
+ 
+    
+
 
   return (
     <div className={darkMode ? "container-dark" : "container-light bg-gris"}>

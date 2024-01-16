@@ -31,7 +31,7 @@ const TablaTickets = ({ listaMes }) => {
   const manejarClicDescarga = async () => {
     // Desactivar el botón al iniciar la descarga
     setDescargando(true);
-    const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
     const userId = localStorage.getItem("userId");
     const fechaActual = new Date();
     const año = fechaActual.getFullYear();
@@ -76,7 +76,7 @@ const TablaTickets = ({ listaMes }) => {
   };
   const manejarClicDescargaPdf = async () => {
     setDescargando2(true);
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     const userId = localStorage.getItem("userId");
     const fechaActual = new Date();
     const año = fechaActual.getFullYear();

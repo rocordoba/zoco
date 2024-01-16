@@ -77,10 +77,10 @@ namespace dash_aliados.Controllers
 
                         var listaHoy = ObtenerListaPorFecha(sas, DateTime.Today);
                      
-                      //  var totalOperaciones = ObtenerTotalOperaciones(sas);
+                     
                         var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), DateTime.Today);
                         var totalBrutoHoy = ObtenerTotalBruto(listaMes);
-                        // Llamada al método para obtener las sumas por día
+                      
                         var sumasPorDia = ObtenerSumaPorDia(listaMes);
                         var totalOperaciones = ObtenerTotalOperaciones(listaMes);
                         var resultado = new
@@ -118,7 +118,7 @@ namespace dash_aliados.Controllers
                         var totalOperaciones = ObtenerTotalOperaciones(listaFiltrada);
 
 
-                        // Llamada al método para obtener las sumas por día
+                        
                         var sumasPorDia = ObtenerSumaPorDia(listaMes);
 
                         var resultado = new
@@ -154,7 +154,7 @@ namespace dash_aliados.Controllers
                         var totalOperaciones = ObtenerTotalOperaciones(listaFiltrada);
 
 
-                        // Llamada al método para obtener las sumas por día
+                    
                         var sumasPorDia = ObtenerSumaPorDia(listaMes);
 
                         var resultado = new
@@ -218,6 +218,7 @@ namespace dash_aliados.Controllers
                         TotalConDescuentos = group.Sum(item => item.TotalConDescuentos ?? 0)
                     }
                 })
+                .OrderByDescending(x => x.Fecha) 
                 .Select(x => new
                 {
                     Fecha = x.Fecha,
@@ -235,6 +236,7 @@ namespace dash_aliados.Controllers
 
             return sumasPorDia;
         }
+
         private DateTime GetFirstDayOfWeekInMonth(int year, int month, int weekNumber)
         {
             var cultureInfo = CultureInfo.CurrentCulture;

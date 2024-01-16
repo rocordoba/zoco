@@ -5,7 +5,8 @@ import "./TablaTickets.css";
 import pdf from "../assets/img/pdf.png";
 import xls from "../assets/img/xls.png";
 import { Spinner } from "react-bootstrap";
-
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 const TablaTickets = ({ listaMes }) => {
   const [descargando, setDescargando] = useState(false);
   const [descargando2, setDescargando2] = useState(false);
@@ -74,50 +75,98 @@ const TablaTickets = ({ listaMes }) => {
       setDescargando(false);
     }
   };
-  const manejarClicDescargaPdf = async () => {
-    setDescargando2(true);
-    const token = sessionStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
-    const fechaActual = new Date();
-    const año = fechaActual.getFullYear();
-    const mes = fechaActual.getMonth() + 1;
-    const comercio = "todos"; // O cualquier valor que necesites
+    const manejarClicDescargaPdf = async () => {
+        setDescargando2(true);
+        const token = sessionStorage.getItem("token");
+        const userId = localStorage.getItem("userId");
+        const fechaActual = new Date();
+        const año = fechaActual.getFullYear();
+        const mes = fechaActual.getMonth() + 1;
 
-    try {
-      const respuesta = await fetch("/api/pdf/pdf", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json", // Si tu API requiere un token de autenticación
-        },
-        body: JSON.stringify({
-          token: token,
-          Id: userId,
-          Year: año,
-          Month: mes,
-          comercio: comercio,
-        }),
-      });
+        try {
+            const respuesta = await fetch("/api/pdf/pdf", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    token: token,
+                    Id: userId,
+                    Year: año,
+                    Month: mes,
+                    comercio: "todos",
+                }),
+            });
 
-      if (!respuesta.ok) {
-        throw new Error("La respuesta de la red no fue correcta");
-      }
+            if (!respuesta.ok) {
+                throw new Error("La respuesta de la red no fue correcta");
+            }
 
-      const blob = await respuesta.blob();
-      const urlDescarga = window.URL.createObjectURL(blob);
-      const enlace = document.createElement("a");
-      enlace.href = urlDescarga;
-      enlace.setAttribute("download", `reporte_${año}-${mes}.pdf`);
-      document.body.appendChild(enlace);
-      enlace.click();
-      enlace.parentNode.removeChild(enlace);
-      setDescargando2(false);
-    } catch (error) {
-      console.error("Hubo un error:", error);
-      setDescargando2(false);
-    }
-  };
+            const datos = await respuesta.json();
+            console.log(datos);
+            const doc = new jsPDF();
 
-  useEffect(() => {
+            const head = [
+                [
+                    'TERMINAL', 'N OP', 'Fecha OP', 'Fecha Pago', 'N Cupón', 'N Tarjeta',
+                    'Tarjeta', 'Cuotas', 'Bruto', 'Costo Fin.', 'Costo Ant', 'Arancel',
+                    'IVA Arancel', 'Imp. Deb/Cred', 'Reten. IIBB', 'Ret. Ganancia', 'Ret. IVA', 'Total OP'
+                ]
+            ];
+
+            doc.autoTable({
+                head: head,
+                body: datos.map(item => [
+                    item.terminal, 
+                    item.nroOperacion, 
+                    item.fechaOperacion,
+                    item.fechaPago,
+                    item.nroCupon,
+                    item.nroTarjeta,
+                    item.tarjeta,
+                    item.cuotas,
+                    item.bruto,
+                    item.costoFinanciero,
+                    item.costoPorAnticipo,
+                    item.arancel,
+                    item.ivaArancel,
+                    item.impDebitoCredito,
+                    item.retencionIIBB,
+                    item.retencionGanancia,
+                    item.retencionIVA,
+                    item.totalOP
+                ]),
+                styles: {
+                    fontSize: 6,
+                    cellPadding: 1,
+                    overflow: 'visible',
+                    valign: 'middle',
+                    halign: 'center',
+                },
+                columnStyles: {
+                    0: { cellWidth: 'auto' }
+                },
+                headStyles: {
+                    fillColor: [220, 220, 220],
+                    textColor: [0, 0, 0],
+                    fontStyle: 'bold'
+                }
+            });
+
+            doc.save(`reporte_${año}-${mes}.pdf`);
+
+            setDescargando2(false);
+        } catch (error) {
+            console.error("Hubo un error:", error);
+            setDescargando2(false);
+        }
+    };
+
+
+
+
+
+    useEffect(() => {
     buscarFecha();
   }, [busqueda]);
 

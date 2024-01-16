@@ -27,8 +27,8 @@ const ContenidoHome = () => {
         <Hardware />
         <SinCostosOcultos />
         <MediosPago />
-        <PregFrecuentes />
-        <FooterLanding />
+        {/* <PregFrecuentes /> */}
+        {/* <FooterLanding /> */}
       </div>
     </div>
   );

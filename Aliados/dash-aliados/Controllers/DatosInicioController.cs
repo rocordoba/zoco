@@ -95,6 +95,7 @@ namespace dash_aliados.Controllers
                         var listaMañana = ObtenerListaPorFecha(sas, fechaFin);
                         var movimientosUltimos7Dias = ObtenerMovimientosUltimos7Dias(sas);
                         var fechasUnicas = ObtenerFechasUnicas(movimientosUltimos7Dias);
+                        var ComparativaMes = ObtenerMes(listaMes);
 
                         var totalesPorDiaPorTarjeta = ObtenerTotalesPorDiaPorTarjeta(sas, fechasUnicas);
                         var descuentosPorTarjeta = ObtenerDescuentosPorTarjeta(listaMes);
@@ -136,7 +137,7 @@ namespace dash_aliados.Controllers
                             
 
                             comparativadiasemana = "dia",
-                            ComparativaMes = "Enero"
+                            ComparativaMes = ComparativaMes,
                         };
 
                         return StatusCode(StatusCodes.Status200OK, resultado);
@@ -170,7 +171,7 @@ namespace dash_aliados.Controllers
                         var listaMañana = ObtenerListaPorFecha(sas, fechaFin);
                         var movimientosUltimos7Dias = ObtenerMovimientosUltimos7Dias(sas);
                         var fechasUnicas = ObtenerFechasUnicas(movimientosUltimos7Dias);
-
+                        var ComparativaMes = ObtenerMes(listaMes);
                         var totalesPorDiaPorTarjeta = ObtenerTotalesPorDiaPorTarjeta(sas, fechasUnicas);
                         var descuentosPorTarjeta = ObtenerDescuentosPorTarjeta(listaMes);
                         var totalOperaciones = ObtenerTotalOperaciones(sas);
@@ -211,7 +212,7 @@ namespace dash_aliados.Controllers
 
 
 
-
+                            ComparativaMes = ComparativaMes,
                             comparativadiasemana = "dia",
                         };
 
@@ -267,7 +268,7 @@ namespace dash_aliados.Controllers
                        
                         var totalNetoMes = ObtenerTotalNeto(listaMes);
                         var totalBrutoMes = ObtenerTotalBruto(listaMes);
-
+                        var ComparativaMes = ObtenerMes(listaMes);
                         var comparativahot = ObtenerComparativa(sas, listaFiltrada);
                         var comparativaHotmesanterior = ObtenerComparativa(sas, listaMismoSemanaMesAnterior);
                         var porcentaje = ObtenerPorcentaje(comparativahot, comparativaHotmesanterior);
@@ -297,7 +298,7 @@ namespace dash_aliados.Controllers
 
 
 
-
+                            ComparativaMes = ComparativaMes,
 
                             comparativadiasemana = "semana",
                         };
@@ -344,7 +345,7 @@ namespace dash_aliados.Controllers
 
                         var totalNetoMes = ObtenerTotalNeto(listaMes);
                         var totalBrutoMes = ObtenerTotalBruto(listaMes);
-
+                        var ComparativaMes = ObtenerMes(listaMes);
                         var comparativahot = ObtenerComparativa(sas, listaFiltrada);
                         var comparativaHotmesanterior = ObtenerComparativa(sas, listaMismoSemanaMesAnterior);
                         var porcentaje = ObtenerPorcentaje(comparativahot, comparativaHotmesanterior);
@@ -373,7 +374,7 @@ namespace dash_aliados.Controllers
 
 
 
-
+                            ComparativaMes = ComparativaMes,
 
 
                             comparativadiasemana = "semana",
@@ -385,7 +386,26 @@ namespace dash_aliados.Controllers
             }
 
             return Unauthorized("El token o el ID de la sesión no son válidos");
-        } 
+        }
+
+        private object ObtenerMes(List<BaseDashboard> lista)
+        {
+            if (lista == null || !lista.Any())
+            {
+                throw new ArgumentException("La lista no puede estar vacía");
+            }
+
+        
+            var fecha = lista.First(d => d.FechaDePago.HasValue).FechaDePago.Value;
+
+      
+            string mesActual = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(fecha.Month);
+
+           
+            string mesAnterior = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((fecha.Month - 1) == 0 ? 12 : fecha.Month - 1);
+
+            return new { MesActual = mesActual, MesAnterior = mesAnterior };
+        }
 
         private List<BaseDashboard> ObtenerListaMismoSemanaMesAnterior(List<BaseDashboard> sas, int year, int month, int week)
 {

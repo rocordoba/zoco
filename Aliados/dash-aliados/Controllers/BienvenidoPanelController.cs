@@ -26,46 +26,30 @@ namespace dash_aliados.Controllers
             _usuarioZocoService = usuarioZoco;
         }
         [HttpPost("bienvenidopanel")]
-
-
         public async Task<ActionResult> bienvenidopanel([FromBody] VMBienvenidopanel request)
         {
             bool esTokenValido = await _tokenservice.ValidarTokenAsync(request.Token);
-            if (esTokenValido == true)
+            if (esTokenValido)
             {
-
                 var usuarioEncontrado = await _tokenservice.ObtenerTokenYUsuarioPorUsuarioIdAsync(request.Token);
                 var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.usuario.Usuario);
+
+               
+                var fechaInicio = sas.Min(d => d.FechaOperacion);
+
+                
+                var fechaFin = sas.Max(d => d.FechaDePago);
+
                 var resultado = new
                 {
-                    Semanas = sas
-        .Where(d => d.FechaDePago.HasValue)
-        .GroupBy(d => d.FechaDePago.Value.Year)
-        .OrderBy(g => g.Key)
-        .Select(g => new
-        {
-            Año = g.Key,
-            Meses = g.GroupBy(d => d.FechaDePago.Value.Month)
-                     .OrderBy(mg => mg.Key)
-                     .Select(mg => new
-                     {
-                         Mes = mg.Key,
-                         Semanas = mg.Select(d => new { Semana = d.SemanaMesPago })
-                                     .Where(d => d.Semana.HasValue) // Asegúrate de que SemanaMesPago no sea nulo
-                                     .Distinct()
-                                     .OrderBy(w => w.Semana)
-                                     .ToList()
-                     })
-                     .ToList()
-        })
-        .ToList(),
-
                     Comercios = sas
                         .Where(d => !string.IsNullOrEmpty(d.NombreComercio))
                         .Select(d => d.NombreComercio)
                         .Distinct()
                         .OrderBy(n => n)
-                        .ToList()
+                        .ToList(),
+                    FechaInicio = fechaInicio,
+                    FechaFin = fechaFin
                 };
 
                 resultado.Comercios.Insert(0, "Todos");
@@ -75,6 +59,7 @@ namespace dash_aliados.Controllers
 
             return BadRequest("Token es nulo o vacío");
         }
+
 
         private int GetWeekOfYear(DateTime date)
         {

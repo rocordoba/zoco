@@ -4,6 +4,11 @@ import logoNav from "../../assets/img/logo.png";
 import { Link } from "react-router-dom";
 
 const HeroVideo = () => {
+
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <div data-bs-theme="dark">
       <article className="navbar navbar-expand-lg navbar-light fixed-top bg-light">
@@ -36,7 +41,7 @@ const HeroVideo = () => {
           <div className="collapse navbar-collapse" id="navbarCollapse">
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
               <li className="navbar-item">
-                <a className="nav-link" aria-current="page" href="#home">
+                <a className="nav-link" aria-current="page" onClick={scrollToTop}>
                   Home
                 </a>
               </li>

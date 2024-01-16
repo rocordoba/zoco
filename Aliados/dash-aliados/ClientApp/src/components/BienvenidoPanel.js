@@ -27,18 +27,11 @@ const BienvenidoPanel = () => {
     anio: "",
     mes: "",
     semana: "",
+    comercio: "",
   });
   console.log("🚀 ~ BienvenidoPanel ~ datosSelect:", datosSelect);
 
-  //const notificacionesHardcodeado = {
-  //  anio: 2023,
-  //  mes: 12,
-  //  comercio: "Todos",
-  //  semana: 3,
-  //}
-
   const enviarDatosAlContexto = (datos) => {
-    // Utiliza 'datos' para hacer lo que necesites
     actualizarDatos(datos);
   };
 
@@ -117,7 +110,7 @@ const BienvenidoPanel = () => {
   const actualizarMesesPorAnio = (anioSeleccionado) => {
     if (!fechaInicio || !fechaFin) return;
     setDatosSelect({
-      anio: anioSeleccionado,
+      anio: parseInt(anioSeleccionado),
     });
     const mesInicio =
       new Date(anioSeleccionado, 0, 1).getFullYear() ===
@@ -128,42 +121,21 @@ const BienvenidoPanel = () => {
     const mesFin = fechaFin.getMonth() >= mesInicio ? fechaFin.getMonth() : 11;
 
     const optionsMeses = [];
-    for (let mes = mesInicio; mes <= mesFin; mes++) {
-      let fechaActual = new Date(anioSeleccionado, mes, 1);
-      const nombreMes = fechaActual.toLocaleString("es", { month: "long" });
-      optionsMeses.push({ value: nombreMes.toLowerCase(), label: nombreMes });
-    }
+  for (let mes = mesInicio; mes <= mesFin; mes++) {
+    let fechaActual = new Date(anioSeleccionado, mes, 1);
+    const nombreMes = fechaActual.toLocaleString("es", { month: "long" });
+    optionsMeses.push({ value: mes + 1, label: nombreMes }); // Cambio aquí: usar mes + 1 como valor
+  }
 
-    setOptionsMes(optionsMeses);
-    setSelectedMes(null);
+  setOptionsMes(optionsMeses);
+  setSelectedMes(null);
   };
   const actualizarSemanasPorMes = (anioSeleccionado, mesSeleccionado) => {
-    const meses = {
-      enero: 0,
-      febrero: 1,
-      marzo: 2,
-      abril: 3,
-      mayo: 4,
-      junio: 5,
-      julio: 6,
-      agosto: 7,
-      septiembre: 8,
-      octubre: 9,
-      noviembre: 10,
-      diciembre: 11,
-    };
+    
 
-    const primerDiaMes = new Date(anioSeleccionado, meses[mesSeleccionado], 1);
-    const ultimoDiaMes = new Date(
-      anioSeleccionado,
-      meses[mesSeleccionado] + 1,
-      0
-    );
+    const primerDiaMes = new Date(anioSeleccionado, mesSeleccionado - 1, 1);
+    const ultimoDiaMes = new Date(anioSeleccionado, mesSeleccionado, 0);
 
-    setDatosSelect({
-      anio: anioSeleccionado,
-      mes: meses[mesSeleccionado] + 1,
-    });
     let diaActual = new Date(primerDiaMes.getTime());
     let semanas = [];
     let semana = [];
@@ -231,6 +203,14 @@ const BienvenidoPanel = () => {
     });
   };
 
+  const mandarComercio = (selectedComercio) => {
+    const valorComercioSeleccionado = selectedComercio;
+    setDatosSelect({
+      ...datosSelect,
+      comercio: valorComercioSeleccionado,
+    });
+  };
+
   const [notificaciones, setNotificaciones] = useState({
     anios: [],
     meses: [],
@@ -238,34 +218,34 @@ const BienvenidoPanel = () => {
     comercios: [],
   });
 
-  const handleEnviarDatos = () => {
-    if (!selectedAnio || !selectedMes || !selectedSemana || !selectedComercio) {
-      Swal.fire({
-        title: "Error",
-        text: "Por favor, selecciona todos los campos.",
-        icon: "error",
-        confirmButtonText: "Ok",
-      });
-      return;
-    }
+  useEffect(() => {
+    setDatosSelect({
+      anio: selectedAnio ? selectedAnio.value : 0, // Asegúrate de que el año sea un número
+      mes: selectedMes ? selectedMes.value : "",
+      semana: selectedSemana ? selectedSemana.value : "",
+      comercio: selectedComercio ? selectedComercio.value : "",
+    });
+  }, [selectedAnio, selectedMes, selectedSemana, selectedComercio]);
 
-    const data = {
-      anio: selectedAnio.value,
-      mes: selectedMes.value,
-      comercio: selectedComercio.value,
-      semana: selectedSemana.value,
-    };
-
-    setDatoCapturados(data);
-    enviarDatosAlContexto(data);
-
-    // Mostrar SweetAlert2 aquí
+const handleEnviarDatos = () => {
+  if (!selectedAnio || !selectedMes || !selectedSemana || !selectedComercio) {
     Swal.fire({
-      title: "¡Filtrado!",
-      icon: "success",
+      title: "Error",
+      text: "Por favor, selecciona todos los campos.",
+      icon: "error",
       confirmButtonText: "Ok",
     });
-  };
+    return;
+  }
+
+  enviarDatosAlContexto(datosSelect);
+
+  Swal.fire({
+    title: "¡Filtrado!",
+    icon: "success",
+    confirmButtonText: "Ok",
+  });
+};
 
   return (
     <section
@@ -307,8 +287,9 @@ const BienvenidoPanel = () => {
                     name="anio"
                     options={optionsAnios}
                     onChange={(selectedOption) => {
-                      setSelectedAnio(selectedOption);
-                      actualizarMesesPorAnio(selectedOption.value);
+                      // Convertir el valor seleccionado a un número antes de establecer el estado
+                      setSelectedAnio({ ...selectedOption, value: Number(selectedOption.value) });
+                      actualizarMesesPorAnio(Number(selectedOption.value));
                     }}
                     styles={{
                       control: (base) => ({
@@ -334,10 +315,7 @@ const BienvenidoPanel = () => {
                     options={optionsMes}
                     onChange={(selectedOption) => {
                       setSelectedMes(selectedOption);
-                      actualizarSemanasPorMes(
-                        selectedAnio.value,
-                        selectedOption.label
-                      );
+                      actualizarSemanasPorMes(selectedAnio.value, selectedOption.value);
                     }}
                     styles={{
                       control: (base) => ({
@@ -388,9 +366,10 @@ const BienvenidoPanel = () => {
                     isSearchable={isSearchable}
                     name="comercio"
                     options={optionsComercio}
-                    onChange={(selectedOption) =>
-                      setSelectedComercio(selectedOption)
-                    }
+                    onChange={(selectedOption) => {
+                      setSelectedComercio(selectedOption);
+                      mandarComercio(selectedOption.value);
+                    }}
                     styles={{
                       control: (base) => ({
                         ...base,

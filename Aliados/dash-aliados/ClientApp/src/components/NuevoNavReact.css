@@ -563,8 +563,8 @@
   }
   
   .modalbox {
-    width: 358px;
-    height: 564px;
+    width: 300px;
+    height: 450px;
     background: transparent linear-gradient(152deg, #ffffff 0%, #e5e8ee 100%) 0%
       0% no-repeat padding-box;
     box-shadow: 5px 4px 16px #00000080;
@@ -577,8 +577,8 @@
   }
   
   .modalbox-dark {
-    width: 358px;
-    height: 564px;
+    width: 300px;
+    height: 450px;
     background: transparent linear-gradient(152deg, #ffffff 0%, #e5e8ee 100%) 0%
       0% no-repeat padding-box;
     box-shadow: 5px 4px 16px #00000080;
@@ -624,7 +624,7 @@
   @media only screen and (max-width: 1200px) {
     .modalbox {
      
-      height: 564px;
+      height: 450px;
       background: transparent linear-gradient(152deg, #ffffff 0%, #e5e8ee 100%) 0%
         0% no-repeat padding-box;
       box-shadow: 5px 4px 16px #00000080;
@@ -639,7 +639,7 @@
   
     .modalbox-dark {
     
-      height: 564px;
+      height: 450px;
       background: transparent linear-gradient(97deg, #292b2f 0%, #16181a 100%) 0%
         0% no-repeat padding-box;
       box-shadow: 5px 4px 16px #0c0c0c !important;
@@ -664,7 +664,7 @@
   
     .modalbox {
       width: 100%;
-      height: 564px;
+      height: 450px;
       background: transparent linear-gradient(152deg, #ffffff 0%, #e5e8ee 100%) 0%
         0% no-repeat padding-box;
       box-shadow: 5px 4px 16px #00000080;
@@ -679,7 +679,7 @@
   
     .modalbox-dark {
       width: 100%;
-      height: 564px;
+      height: 450px;
       background: transparent linear-gradient(97deg, #292b2f 0%, #16181a 100%) 0%
         0% no-repeat padding-box;
       box-shadow: 5px 4px 16px #0c0c0c !important;

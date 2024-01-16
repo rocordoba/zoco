@@ -11,11 +11,6 @@ export const DatosInicioProvider = ({ children }) => {
 
   const [datos, setDatos] = useState(null);
   console.log("🚀 ~ DatosInicioProvider ~ datos:", datos);
-  const { notificacionesHardcodeado } = datos || [];
-  console.log(
-    "🚀 ~ DatosInicioProvider ~ notificacionesHardcodeado:",
-    notificacionesHardcodeado
-  );
 
   // La función para modificar los datos del contexto
   const actualizarDatos = (nuevosDatos) => {
@@ -27,13 +22,10 @@ export const DatosInicioProvider = ({ children }) => {
 
     if (token) {
       const currentDate = new Date();
-      const year = notificacionesHardcodeado?.anio || currentDate.getFullYear();
-      const month =
-        notificacionesHardcodeado?.mes || currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
-      const week =
-        notificacionesHardcodeado?.semana ||
-        Math.ceil(currentDate.getDate() / 7);
-      const comercio = notificacionesHardcodeado?.comercio || "Todos";
+      const year = datos?.anio || currentDate.getFullYear();
+      const month = datos?.mes || currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
+      const week = datos?.semana || Math.ceil(currentDate.getDate() / 7);
+      const comercio = datos?.comercio || "Todos";
       const day = currentDate.getDay();
 
       const requestData = {
@@ -76,13 +68,12 @@ export const DatosInicioProvider = ({ children }) => {
   const [datosContabilidadContext, setDatosContabilidadContext] = useState({});
   useEffect(() => {
     const token = sessionStorage.getItem("token");
-    
 
     const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
-    const week = Math.ceil(currentDate.getDate() / 7); // Obtener la semana actual
-    const comercio = "Todos";
+    const year = datos?.anio || currentDate.getFullYear();
+    const month = datos?.mes || currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
+    const week = datos?.semana || Math.ceil(currentDate.getDate() / 7);
+    const comercio = datos?.comercio || "Todos";
     const day = currentDate.getDay();
     const requestData = {
       token: token,
@@ -114,16 +105,16 @@ export const DatosInicioProvider = ({ children }) => {
           console.error("Error en la solicitud:", error);
         });
     }
-  }, []);
+  }, [datos]);
 
   const [datosAnalisisContext, setDatosAnalisisContext] = useState({});
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
-    const week = Math.ceil(currentDate.getDate() / 7); // Obtener la semana actual
-    const comercio = "Todos";
+    const year = datos?.anio || currentDate.getFullYear();
+    const month = datos?.mes || currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
+    const week = datos?.semana || Math.ceil(currentDate.getDate() / 7);
+    const comercio = datos?.comercio || "Todos";
     const day = currentDate.getDay();
     const requestData = {
       token: token,
@@ -154,21 +145,21 @@ export const DatosInicioProvider = ({ children }) => {
           console.error("Error en la solicitud:", error);
         });
     }
-  }, []);
+  }, [datos]);
 
   const [datosCuponesContext, setDatosCuponesContext] = useState({});
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
-    const week = Math.ceil(currentDate.getDate() / 7); // Obtener la semana actual
-    const comercio = "Todos";
+    const year = datos?.anio || currentDate.getFullYear();
+    const month = datos?.mes || currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
+    const week = datos?.semana || Math.ceil(currentDate.getDate() / 7);
+    const comercio = datos?.comercio || "Todos";
     const day = currentDate.getDay();
     const requestData = {
       token: token,
-  
+
       year: year,
       month: month,
       week: week,
@@ -197,7 +188,7 @@ export const DatosInicioProvider = ({ children }) => {
           console.error("Error en la solicitud:", error);
         });
     }
-  }, []);
+  }, [datos]);
 
   return (
     <DatosInicioContext.Provider

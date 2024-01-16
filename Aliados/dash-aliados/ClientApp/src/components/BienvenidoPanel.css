@@ -174,7 +174,6 @@
     background-color: #b4c400 !important;
     border-radius: 28px !important;
     position: relative;
-    z-index: 1;
     overflow: hidden;
     display: inline-block;
   }

@@ -62,6 +62,7 @@ namespace dash_aliados.Controllers
                         var arancel = obtenerarancelmes(listaMes);
                         var ingresobruto = obteneringresobruto(listaMes);
                         var retencionganancia = obtenerretencionganancia(listaMes);
+                   
                         var resultado = new
                         {
                             AñoActual = request.Year,

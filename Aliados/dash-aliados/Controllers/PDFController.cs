@@ -50,7 +50,7 @@ namespace dash_aliados.Controllers
 
                         // Crear una tabla con la cantidad de columnas necesarias
                         PdfPTable table = new PdfPTable(18); // El número de columnas debe coincidir con el número de celdas que agregues
-                        table.SetWidths(new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
+                        table.SetWidths(new float[] { 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
                         table.WidthPercentage = 100f; // Establecer el ancho de la tabla al 100% de la página
                         table.DefaultCell.Border = PdfPCell.NO_BORDER;
                         table.DefaultCell.Padding = 5;

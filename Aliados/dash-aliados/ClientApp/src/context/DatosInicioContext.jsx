@@ -159,7 +159,7 @@ export const DatosInicioProvider = ({ children }) => {
   const [datosCuponesContext, setDatosCuponesContext] = useState({});
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
     const userId = localStorage.getItem("userId");
     const currentDate = new Date();
     const year = currentDate.getFullYear();

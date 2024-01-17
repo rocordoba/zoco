@@ -16,13 +16,13 @@ import { DatosInicioContext } from "./context/DatosInicioContext";
 import Home from "./views/landing/Home";
 
 function App() {
-  const { darkMode } = useContext(DarkModeContext);
-  const [navVisible, showNavbar] = useState(false);
-  const { califico, setCalifico, errorSesion } = useContext(DatosInicioContext);
-  const { datosBackContext } = useContext(DatosInicioContext);
- 
+  
+    const { darkMode } = useContext(DarkModeContext);
+    const [navVisible, showNavbar] = useState(false);
+    const { califico, setCalifico, errorSesion } = useContext(DatosInicioContext);
+    const { datosBackContext, codigoRespuesta } = useContext(DatosInicioContext);
 
-  // Determina si el Navbar y el Sidebar deben mostrarse o no
+
   const showNavComponents =
     window.location.pathname !== "/" && window.location.pathname !== "/login";
 

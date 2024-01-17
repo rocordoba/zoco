@@ -140,7 +140,7 @@ const NuevoNavReact = ({ name, ...props }) => {
   };
 
   const procesarDatos = (data) => {
-    console.log("Respuesta de la API:", data);
+  //  console.log("Respuesta de la API:", data);
 
     const optionsComercio = data.comercios.map((comercio) => ({
       value: comercio.toLowerCase().replace(/\s+/g, ""),
@@ -203,7 +203,7 @@ const NuevoNavReact = ({ name, ...props }) => {
           return response.json();
         })
         .then((data) => {
-          console.log("Datos recibidos de la API:", data);
+     //     console.log("Datos recibidos de la API:", data);
           procesarDatos(data);
         })
         .catch((error) => {

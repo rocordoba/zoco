@@ -7,12 +7,63 @@ import TripleGraficoAnalisis from "../../components/TripleGraficoAnalisis";
 import ScrollToTopButton from "../../components/ScrollToTopButton";
 import TituloPagina from "../../components/TituloPagina";
 import { DatosInicioContext } from "../../context/DatosInicioContext";
-
+import { useNavigate } from "react-router-dom";
 const Analisis = () => {
+   
+    const { datosAnalisisContext, codigoRespuesta } = useContext(DatosInicioContext);
+    const navegacion = useNavigate();
+    const history = useNavigate();
+    function recargarPagina() {
+        window.location.reload();
 
-  const { datosAnalisisContext } = useContext(DatosInicioContext);
+    }
 
+    useEffect(() => {
+        const verificarToken = async () => {
+     
+            const token = sessionStorage.getItem("token") || null;
 
+            try {
+                const response = await fetch('/api/token/token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ Token: token })
+                });
+
+                if (response.ok) {
+                  
+                    console.log("Token válido");
+                } else {
+                  
+                    if (response.status === 401 || token === null) {
+                        history("/");
+                        recargarPagina();
+                    } else {
+                        throw new Error("Respuesta no satisfactoria del servidor");
+                    }
+                }
+            } catch (error) {
+              
+                console.error("Error al validar el token", error);
+            }
+        };
+
+        verificarToken();
+    }, [history]);
+    useEffect(() => {
+
+        const checkResponseCodeAndRedirect = () => {
+            if (codigoRespuesta !== null && codigoRespuesta !== 200) {
+
+                navegacion("/");
+                recargarPagina();
+            }
+        };
+
+        checkResponseCodeAndRedirect();
+    }, [codigoRespuesta]);
   return (
     <div>
       <div className="d-xl-block d-none mt-4 pt-4 ">

@@ -15,26 +15,66 @@ import PopUpCalificar from "../../components/PopUpCalificar";
 import { DatosInicioContext } from "../../context/DatosInicioContext";
 import { useNavigate } from "react-router-dom";
 
-
 const Inicio = ({ califico, setCalifico }) => {
   const { darkMode } = useContext(DarkModeContext);
   // de aqui saca los datos del context
-  const { datosBackContext,errorSesion } = useContext(DatosInicioContext);
+    const { datosBackContext, codigoRespuesta } = useContext(DatosInicioContext);
   const [contador, setContador] = useState(0);
   const [datosMandados, setDatosMandados] = useState();
   const navegacion = useNavigate();
+    const history = useNavigate();
 
+    function recargarPagina() {
+        window.location.reload();
 
-
-
-  useEffect(() => {
-    if(errorSesion === 401){
-      
-      navegacion("/")
-    
     }
+    useEffect(() => {
+        const verificarToken = async () => {
+           
+            const token = sessionStorage.getItem("token") || null;
 
-  }, [errorSesion])
+            try {
+                const response = await fetch('/api/token/token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ Token: token })
+                });
+
+                if (response.ok) {
+                   
+                    console.log("Token válido");
+                } else {
+                   
+                    if (response.status === 401 || token === null) {
+                        history("/");
+                        recargarPagina();
+                    } else {
+                        throw new Error("Respuesta no satisfactoria del servidor");
+                    }
+                }
+            } catch (error) {
+              
+                console.error("Error al validar el token", error);
+            }
+        };
+
+        verificarToken();
+    }, [history]);
+
+    useEffect(() => {
+    
+        const checkResponseCodeAndRedirect = () => {
+            if (codigoRespuesta !== null && codigoRespuesta !== 200) {
+                console.log(codigoRespuesta);
+                navegacion("/");
+                recargarPagina()
+            }
+        };
+
+        checkResponseCodeAndRedirect();
+    }, [codigoRespuesta]);
 
   return (
     <div>

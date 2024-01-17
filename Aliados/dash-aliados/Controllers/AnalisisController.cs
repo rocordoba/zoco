@@ -320,6 +320,12 @@ namespace dash_aliados.Controllers
             for (int i = 0; i < 7; i++)
             {
                 DateTime fechaMes = primerDiaMesActual.AddMonths(-i);
+                // Verificar si el año es el mismo que el de la fecha más reciente
+                if (fechaMes.Year != fechaMasReciente.Year)
+                {
+                    continue; // Saltar al siguiente ciclo si el año es diferente
+                }
+
                 DateTime primerDiaMes = new DateTime(fechaMes.Year, fechaMes.Month, 1);
                 DateTime ultimoDiaMes = primerDiaMes.AddMonths(1).AddDays(-1);
 
@@ -352,6 +358,7 @@ namespace dash_aliados.Controllers
 
             return resumenUltimos7Meses;
         }
+
 
 
 

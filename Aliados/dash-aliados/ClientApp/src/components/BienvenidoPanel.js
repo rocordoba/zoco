@@ -34,7 +34,7 @@ const BienvenidoPanel = () => {
   };
 
   const procesarDatos = (data) => {
-    console.log("Respuesta de la API:", data);
+ //   console.log("Respuesta de la API:", data);
 
     const optionsComercio = data.comercios.map((comercio) => ({
       value: comercio.toLowerCase().replace(/\s+/g, ""),
@@ -97,7 +97,7 @@ const BienvenidoPanel = () => {
           return response.json();
         })
         .then((data) => {
-          console.log("Datos recibidos de la API:", data);
+       //   console.log("Datos recibidos de la API:", data);
           procesarDatos(data);
         })
         .catch((error) => {
@@ -185,7 +185,7 @@ const BienvenidoPanel = () => {
       )} - ${finSemana.toLocaleDateString("es-ES", opcionesFormato)}`;
       const value = semana.semana;
 
-      console.log(value);
+    // console.log(value);
 
       return { label, value };
     });

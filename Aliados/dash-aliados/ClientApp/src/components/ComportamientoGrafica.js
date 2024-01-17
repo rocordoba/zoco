@@ -40,9 +40,10 @@ const ComportamientoGrafica = ({ datos }) => {
     comparativahoy,
     comparativaHoymesanterior,
     totalesPorDiaTarjeta,
-    porcentaje,
-  } = datos;
-
+      porcentaje,
+      ComparativaMes
+    } = datos;
+    const { mesActual, mesAnterior } = datos.comparativaMes || {};
   const totales = totalesPorDiaTarjeta || [];
 
 
@@ -136,7 +137,8 @@ const ComportamientoGrafica = ({ datos }) => {
 
   // grafica en Comparativa
   var beneficios = [comparativaHoymesanterior, comparativahoy];
-  var meses = ["Diciembre", "Enero"];
+    var meses = [mesAnterior, mesActual];
+
 
   var misoptions = {
     responsive: true,

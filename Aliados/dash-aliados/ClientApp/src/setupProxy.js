@@ -19,6 +19,7 @@ const context = [
     "/api/pdf/pdf",
     "/api/acceso/cambiarClave", 
     "/api/acceso/logout",
+    "/api/token/token",
 ];
 
 module.exports = function (app) {

@@ -19,8 +19,8 @@ const FormComentarioCalificar = () => {
     setRating(star);
   };
   const onSubmit = async (event) => {
-    event.preventDefault();
-    const token = localStorage.getItem("token");
+      event.preventDefault();
+      const token = sessionStorage.getItem("token");
     const userId = parseInt(localStorage.getItem("userId")); // Asegúrate de que userId sea un entero
     const fechaActual = new Date().toISOString();
 
@@ -32,7 +32,7 @@ const FormComentarioCalificar = () => {
       Fecha: fechaActual,
     };
 
-    console.log("Datos a enviar:", datosConRating);
+  //  console.log("Datos a enviar:", datosConRating);
 
     try {
         await fetch("/api/califico/calificocom", {

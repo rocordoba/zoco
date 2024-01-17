@@ -66,7 +66,6 @@ const ContenidoLogin = ({ onSubmit, datosMandados, setDatosMandados }) => {
           recargarPagina();
           // Almacenar el token y el ID del usuario en sessionStorage
           sessionStorage.setItem("token", data.token);
-          sessionStorage.setItem("userId", data.userId);
         } else {
           alert("Revisar usuario/contraseña");
           setButtonText("Conectar"); 

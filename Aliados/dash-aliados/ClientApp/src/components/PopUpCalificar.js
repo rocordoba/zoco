@@ -2,20 +2,21 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import "./PopUpCalificar.css";
 
-const PopUpCalificar = ({ califico, setCalifico }) => {
+const PopUpCalificar = () => {
   const [visible1, setVisible1] = useState(true);
   const verModalNotificacion = () => {
     setVisible1(!visible1);
   };
 
   const [datosCapturadosMetrica, setDatosCapturadosMetrica] = useState({});
-  console.log("🚀 ~ file: PopUpCalificar.js:12 ~ PopUpCalificar ~ datosCapturadosMetrica:", datosCapturadosMetrica)
+
   const { register, handleSubmit, reset } = useForm();
+    const [califico, setCalifico] = useState();
 
     const onSubmit = async (datos) => {
      /*   const token = localStorage.getItem("token");*/
         /*const userId = localStorage.getItem("userId");*/
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
         const usuarioId = localStorage.getItem('userId');
         const datosEnviar = {
             NumCalifico: datos.radio,

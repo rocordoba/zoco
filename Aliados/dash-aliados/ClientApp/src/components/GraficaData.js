@@ -29,17 +29,18 @@ ChartJS.register(
 
 const GraficaData = ({ datos }) => {
   const { descuentosPorTarjeta } = datos || {};
-  
+    console.log(descuentosPorTarjeta);
   const [
     visa = {},
-    masterCard = {},
-    cabal = {},
-    argencard = {},
-    amex = {},
+      masterCard = {},
+      argencard = {},
+      amex = {},
+      naranjax = {},
+      cabal = {},
     diners = {},
-    naranjax = {},
+  
   ] = descuentosPorTarjeta || [];
-
+    
   const visaTotalDescuento = visa.totalConDescuento || 0;
   const masterCardTotalDescuento = masterCard.totalConDescuento || 0;
   const cabalTotalDescuento = cabal.totalConDescuento || 0;
@@ -61,7 +62,7 @@ const GraficaData = ({ datos }) => {
   beneficios.sort((a, b) => b - a);
 
   // var beneficios = [1, 2, 3, 4, 5, 6, 7]
-  var tarjetas = ["Visa", "MasterCard", "Cabal", "Argencard", "Amex", "Diners", "Naranjax"];
+    var tarjetas = ["Visa", "MasterCard", "Argencard", "Amex", "Cabal", "Naranjax",  "Diners" ];
 
   // Obtener el índice original de la tarjeta después de ordenar los beneficios
   var tarjetasOrdenadas = tarjetas.slice().sort(function (a, b) {

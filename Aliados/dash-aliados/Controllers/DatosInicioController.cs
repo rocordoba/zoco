@@ -690,13 +690,38 @@ namespace dash_aliados.Controllers
 
         private List<object> ObtenerDescuentosPorTarjeta(List<BaseDashboard> sas)
         {
-            return sas.GroupBy(s => s.Tarjeta)
+            return sas.Select(s => new BaseDashboard
+            {
+                TarjetaTipo = NormalizarNombreTarjeta(s.TarjetaTipo),
+                TotalConDescuentos = s.TotalConDescuentos
+            })
+                      .GroupBy(s => s.TarjetaTipo)
                       .Select(group => new
                       {
                           Tarjeta = group.Key,
                           TotalConDescuento = group.Sum(item => item.TotalConDescuentos)
                       }).ToList<object>();
         }
+        private string NormalizarNombreTarjeta(string tarjetaTipo)
+        {
+            if (tarjetaTipo.Contains("Visa"))
+                return "Visa";
+            if (tarjetaTipo.Contains("Mastercard"))
+                return "Mastercard";
+            if (tarjetaTipo.Contains("Cabal"))
+                return "Cabal";
+            if (tarjetaTipo.Contains("Maestro"))
+                return "Argencard";
+            if (tarjetaTipo.Contains("American Express") || tarjetaTipo.Contains("Amex"))
+                return "American Express";
+            //if (tarjetaTipo.Contains("Argencard"))
+            //    return "Argencard";
+            if (tarjetaTipo.Contains("Naranja"))
+                return "Naranja";
+            // Agregar más lógica para otros tipos de tarjeta si es necesario
+            return tarjetaTipo;
+        }
+
 
         private double ObtenerTotalOperaciones(List<BaseDashboard> sas)
         {

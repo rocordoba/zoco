@@ -11,6 +11,7 @@ const context = [
     "/api/analisis/analisis",
     "/api/califico/calificocom",
     "/api/califico/califico",
+    "/api/califico/calificomes",
     "/api/contablidad/contabilidad",
     "/api/cupones/cupones",
     "/api/excel/excel",

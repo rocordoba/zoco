@@ -23,14 +23,14 @@ const Inicio = ({ califico, setCalifico }) => {
   const [datosMandados, setDatosMandados] = useState();
   const navegacion = useNavigate();
     const history = useNavigate();
-
+    const [estadoCalifico, setEstadoCalifico] = useState(null);
     function recargarPagina() {
         window.location.reload();
 
     }
     useEffect(() => {
         const verificarToken = async () => {
-            const token = sessionStorage.getItem("token") ;
+            const token = sessionStorage.getItem("token");
 
             try {
                 const response = await fetch('/api/token/token', {
@@ -42,7 +42,8 @@ const Inicio = ({ califico, setCalifico }) => {
                 });
 
                 if (response.ok) {
-                    console.log("Token válido");
+                    // Llama a obtenerCalifico solo si el token es válido
+                    obtenerCalifico(token);
                 } else {
                     if (response.status === 401 || token === null) {
                         navegacion("/");
@@ -64,9 +65,33 @@ const Inicio = ({ califico, setCalifico }) => {
             }
         };
 
+        const obtenerCalifico = async (token) => {
+            try {
+                const response = await fetch('/api/califico/calificomes', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ Token: token })
+                });
+
+                if (response.ok) {
+                    const resultadoCalifico = await response.json();
+
+
+                    console.log(resultadoCalifico);
+                    setEstadoCalifico(resultadoCalifico); // Actualiza el nuevo estado
+                } else {
+                    throw new Error("Error al obtener califico");
+                }
+            } catch (error) {
+                console.error("Error en la solicitud de califico", error);
+            }
+        };
+
         verificarToken();
         checkResponseCodeAndRedirect();
-    }, [history, codigoRespuesta]);
+    }, [history, codigoRespuesta, setCalifico]); // Asegúrate de incluir todas las dependencias necesarias
 
   return (
     <div>
@@ -82,7 +107,7 @@ const Inicio = ({ califico, setCalifico }) => {
         <DatosInicio datos={datosBackContext} />
       </div>
       {/* <ModalEditable /> */}
-      {califico === 1 && (
+          {estadoCalifico === false && (
         <>
           <PopUpCalificar califico={califico} setCalifico={setCalifico} />
         </>

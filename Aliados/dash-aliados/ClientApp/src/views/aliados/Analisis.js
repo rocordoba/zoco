@@ -32,7 +32,7 @@ const Analisis = () => {
                 });
 
                 if (response.ok) {
-                    console.log("Token válido");
+      
                 } else {
                     if (response.status === 401 || token === null) {
                         navegacion("/");

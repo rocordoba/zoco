@@ -64,6 +64,22 @@ namespace dash_aliados.Controllers
 
             return Unauthorized("El token o el ID de la sesión no son válidos");
         }
+        [HttpPost("calificomes")]
+        public async Task<ActionResult> calificomes([FromBody] VMToken request)
+        {
+            bool esTokenValido = await _tokenservice.ValidarTokenAsync(request.Token);
+            if (esTokenValido == true)
+            {
+                var usuarioEncontrado = await _tokenservice.ObtenerTokenYUsuarioPorUsuarioIdAsync(request.Token);
+                // var entidad = _mapper.Map<Califico>(request);
+                // entidad.UsuarioId = usuarioEncontrado.usuario.Id;
+                var califico = await _ComentarioService.Califico(usuarioEncontrado.usuario.Id);
+                return StatusCode(StatusCodes.Status200OK,califico);
+            
+            }
+
+            return Unauthorized("El token o el ID de la sesión no son válidos");
+        }
 
 
     }

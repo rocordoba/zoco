@@ -9,5 +9,6 @@ namespace BLL.InterfacesZoco
     {
         Task<CalificoCom> Crear(CalificoCom entidad);
         Task<Califico> CrearComentario(Califico entidad);
+        Task<bool> Califico(int IdUsuario);
     }
 }

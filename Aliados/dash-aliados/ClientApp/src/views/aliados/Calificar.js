@@ -5,16 +5,18 @@ import FormComentarioCalificar from "../../components/FormComentarioCalificar";
 import ScrollToTopButton from "../../components/ScrollToTopButton";
 import TituloPagina from "../../components/TituloPagina";
 import { useNavigate } from "react-router-dom";
+import { DatosInicioContext } from "../../context/DatosInicioContext";
 const Calificar = () => {
+    const {  codigoRespuesta } = useContext(DatosInicioContext);
     const history = useNavigate();
+    const navegacion = useNavigate();
     function recargarPagina() {
         window.location.reload();
        
     }
     useEffect(() => {
         const verificarToken = async () => {
-       
-            const token = sessionStorage.getItem("token") || null;
+            const token = sessionStorage.getItem("token");
 
             try {
                 const response = await fetch('/api/token/token', {
@@ -26,25 +28,31 @@ const Calificar = () => {
                 });
 
                 if (response.ok) {
-                    
                     console.log("Token válido");
                 } else {
-                    
                     if (response.status === 401 || token === null) {
-                        history("/");
+                        navegacion("/");
                         recargarPagina();
                     } else {
                         throw new Error("Respuesta no satisfactoria del servidor");
                     }
                 }
             } catch (error) {
-              
                 console.error("Error al validar el token", error);
             }
         };
 
+        const checkResponseCodeAndRedirect = () => {
+            if (codigoRespuesta !== null && codigoRespuesta !== 200) {
+                console.log(codigoRespuesta);
+                navegacion("/");
+                recargarPagina();
+            }
+        };
+
         verificarToken();
-    }, [history]);
+        checkResponseCodeAndRedirect();
+    }, [history, codigoRespuesta]);
    
   return (
     <div>

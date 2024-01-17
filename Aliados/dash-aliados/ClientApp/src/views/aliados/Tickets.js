@@ -11,6 +11,7 @@ const Tickets = () => {
     const { datosCuponesContext, codigoRespuesta } = useContext(DatosInicioContext);
   const { listaMes } = datosCuponesContext;
     const history = useNavigate();
+    const navegacion = useNavigate();
     function recargarPagina() {
         window.location.reload();
 
@@ -18,8 +19,7 @@ const Tickets = () => {
 
     useEffect(() => {
         const verificarToken = async () => {
-     
-            const token = sessionStorage.getItem("token") || null;
+            const token = sessionStorage.getItem("token");
 
             try {
                 const response = await fetch('/api/token/token', {
@@ -31,39 +31,31 @@ const Tickets = () => {
                 });
 
                 if (response.ok) {
-                 
                     console.log("Token válido");
                 } else {
-                  
                     if (response.status === 401 || token === null) {
-                        history("/");
+                        navegacion("/");
                         recargarPagina();
                     } else {
                         throw new Error("Respuesta no satisfactoria del servidor");
                     }
                 }
             } catch (error) {
-                
                 console.error("Error al validar el token", error);
             }
         };
 
+        const checkResponseCodeAndRedirect = () => {
+            if (codigoRespuesta !== null && codigoRespuesta !== 200) {
+                console.log(codigoRespuesta);
+                navegacion("/");
+                recargarPagina();
+            }
+        };
+
         verificarToken();
-    }, [history]);
-
-        const navegacion = useNavigate();
-        useEffect(() => {
-
-            const checkResponseCodeAndRedirect = () => {
-                if (codigoRespuesta !== null && codigoRespuesta !== 200) {
-
-                    navegacion("/");
-                    recargarPagina()
-                }
-            };
-
-            checkResponseCodeAndRedirect();
-        }, [codigoRespuesta]);
+        checkResponseCodeAndRedirect();
+    }, [history, codigoRespuesta]);
   return (
     <div>
       <div className="d-xl-block d-none mt-4 pt-4 ">

@@ -30,8 +30,7 @@ const Inicio = ({ califico, setCalifico }) => {
     }
     useEffect(() => {
         const verificarToken = async () => {
-           
-            const token = sessionStorage.getItem("token") || null;
+            const token = sessionStorage.getItem("token") ;
 
             try {
                 const response = await fetch('/api/token/token', {
@@ -43,38 +42,31 @@ const Inicio = ({ califico, setCalifico }) => {
                 });
 
                 if (response.ok) {
-                   
                     console.log("Token válido");
                 } else {
-                   
                     if (response.status === 401 || token === null) {
-                        history("/");
+                        navegacion("/");
                         recargarPagina();
                     } else {
                         throw new Error("Respuesta no satisfactoria del servidor");
                     }
                 }
             } catch (error) {
-              
                 console.error("Error al validar el token", error);
             }
         };
 
-        verificarToken();
-    }, [history]);
-
-    useEffect(() => {
-    
         const checkResponseCodeAndRedirect = () => {
             if (codigoRespuesta !== null && codigoRespuesta !== 200) {
                 console.log(codigoRespuesta);
                 navegacion("/");
-                recargarPagina()
+                recargarPagina();
             }
         };
 
+        verificarToken();
         checkResponseCodeAndRedirect();
-    }, [codigoRespuesta]);
+    }, [history, codigoRespuesta]);
 
   return (
     <div>

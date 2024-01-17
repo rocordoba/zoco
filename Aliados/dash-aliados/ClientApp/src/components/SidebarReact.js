@@ -49,7 +49,35 @@ const SidebarReact = () => {
 
     fetchNoticias();
   }, []);
+    const cerrarSesion = async () => {
+        const token = sessionStorage.getItem("token");
+        if (!token) {
+            console.error("No hay token en el almacenamiento de la sesión");
+            return;
+        }
 
+        try {
+            const response = await fetch("/api/acceso/logout", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ Token: token })
+            });
+
+            if (response.ok) {
+                console.log("Sesión cerrada correctamente");
+                // Aquí puedes redireccionar al usuario o realizar otras acciones necesarias después de cerrar sesión
+                sessionStorage.removeItem("token"); // Eliminar el token del sessionStorage
+                // Redireccionar al usuario, por ejemplo a la página de inicio de sesión
+                window.location.href = "/";
+            } else {
+                console.error("Error al cerrar sesión:", await response.text());
+            }
+        } catch (error) {
+            console.error("Error al realizar la solicitud de cierre de sesión:", error);
+        }
+    };
   const verModalNotificacion = () => {
     setVisible1(!visible1);
     setVisible2(false);
@@ -421,29 +449,16 @@ const SidebarReact = () => {
                               onHide={() => setModalShowCompleta(false)}
                             />
                           </div>
-                          <div className="centrado my-3">
-                            <NavLink
-                              end
-                              to="/"
-                              onClick={reloadPage}
-                              className=" border-0"
-                            >
-                              <div
-                                className={
-                                  darkMode
-                                    ? "d-flex btn-nav-cerrar-sesion-dark centrado "
-                                    : "d-flex btn-nav-cerrar-sesion centrado"
-                                }
-                              >
-                                <div className="ms-3">
-                                  <FontAwesomeIcon icon={faRightFromBracket} />
-                                  <span className="ms-2 lato-bold fs-10">
-                                    Cerrar sesión
-                                  </span>
-                                </div>
-                              </div>
-                            </NavLink>
-                          </div>
+                                                  <div className="centrado my-3">
+                                                      {/* Botón para cerrar sesión */}
+                                                      <button onClick={cerrarSesion} className={darkMode ? "d-flex btn-nav-cerrar-sesion-dark centrado" : "d-flex btn-nav-cerrar-sesion centrado"}>
+                                                          <div className="ms-3">
+                                                              <FontAwesomeIcon icon={faRightFromBracket} />
+                                                              <span className="ms-2 lato-bold fs-10">Cerrar sesión</span>
+                                                          </div>
+                                                      </button>
+                                                  </div>
+                          
                         </div>
                       </div>
                     </div>

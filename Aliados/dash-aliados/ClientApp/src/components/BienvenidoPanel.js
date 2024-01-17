@@ -238,11 +238,7 @@ const handleEnviarDatos = () => {
 
   enviarDatosAlContexto(datosSelect);
 
-  Swal.fire({
-    title: "¡Filtrado!",
-    icon: "success",
-    confirmButtonText: "Ok",
-  });
+  
 };
 
   return (

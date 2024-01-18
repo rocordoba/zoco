@@ -101,8 +101,9 @@ namespace dash_aliados.Controllers
                 {
                     if (request.comercio.ToLower() == "todos")
                     {
-                        DateTime fechaInicial = GetFirstDayOfWeekInMonth(request.Year, request.Month, request.Week);
-                        DateTime fechaFinalDeLaSemana = GetLastDayOfWeek(fechaInicial);
+                        DateTime fechaInicial = new DateTime(request.Year, request.Month, 1);
+                        DateTime fechaInicialsemana = GetFirstDayOfWeekInMonth(request.Year, request.Month, request.Week);
+                        DateTime fechaFinalDeLaSemana = GetLastDayOfWeek(fechaInicialsemana);
 
                         var listaFiltrada = sas.Where(s =>
                          s.FechaDePago.HasValue &&
@@ -137,8 +138,9 @@ namespace dash_aliados.Controllers
                     else
                     {
                         sas = sas.Where(s => s.NombreComercio != null && s.NombreComercio.ToLower() == request.comercio.ToLower()).ToList();
-                        DateTime fechaInicial = GetFirstDayOfWeekInMonth(request.Year, request.Month, request.Week);
-                        DateTime fechaFinalDeLaSemana = GetLastDayOfWeek(fechaInicial);
+                        DateTime fechaInicial = new DateTime(request.Year, request.Month, 1);
+                        DateTime fechaInicialsemana = GetFirstDayOfWeekInMonth(request.Year, request.Month, request.Week);
+                        DateTime fechaFinalDeLaSemana = GetLastDayOfWeek(fechaInicialsemana);
 
                         var listaFiltrada = sas.Where(s =>
                          s.FechaDePago.HasValue &&

@@ -128,70 +128,57 @@ const BienvenidoPanel = () => {
   setOptionsMes(optionsMeses);
   setSelectedMes(null);
   };
-  const actualizarSemanasPorMes = (anioSeleccionado, mesSeleccionado) => {
-    
+    const actualizarSemanasPorMes = (anioSeleccionado, mesSeleccionado) => {
+        const primerDiaMes = new Date(anioSeleccionado, mesSeleccionado - 1, 1);
+        const ultimoDiaMes = new Date(anioSeleccionado, mesSeleccionado, 0);
 
-    const primerDiaMes = new Date(anioSeleccionado, mesSeleccionado - 1, 1);
-    const ultimoDiaMes = new Date(anioSeleccionado, mesSeleccionado, 0);
+        let diaActual = new Date(primerDiaMes.getTime());
+        let semanas = [];
+        let semana = [];
+        let numeroSemanaDelMes = 0;
 
-    let diaActual = new Date(primerDiaMes.getTime());
-    let semanas = [];
-    let semana = [];
-    let numeroSemana = 0;
+        // Ajustar el primer día de la semana al lunes más cercano
+        if (diaActual.getDay() !== 1) {
+            diaActual.setDate(diaActual.getDate() - diaActual.getDay() + 1);
+        }
 
-    if (diaActual < fechaInicio) {
-      diaActual = new Date(fechaInicio.getTime());
-    }
+        // Iterar a través de los días del mes
+        for (let d = new Date(diaActual); d <= ultimoDiaMes; d.setDate(d.getDate() + 1)) {
+            if (d.getDate() === 1 || d.getDay() === 1) {
+                numeroSemanaDelMes++;
+            }
 
-    if (diaActual.getDay() !== 1) {
-      let diaInicioSemana = new Date(diaActual);
-      diaInicioSemana.setDate(
-        diaInicioSemana.getDate() - diaActual.getDay() + 1
-      );
+            // Detener el proceso si se alcanza la semana 5
+            if (numeroSemanaDelMes > 5) {
+                break;
+            }
 
-      for (
-        let d = new Date(diaInicioSemana);
-        d < diaActual;
-        d.setDate(d.getDate() + 1)
-      ) {
-        semana.push(new Date(d));
-      }
-    }
+            semana.push(new Date(d));
+            if (d.getDay() === 0 || d.getDate() === ultimoDiaMes.getDate()) {
+                semanas.push({ numeroSemanaDelMes, dias: [...semana] });
+                semana = [];
+            }
+        }
 
-    for (
-      let d = new Date(diaActual);
-      d <= ultimoDiaMes && d <= fechaFin;
-      d.setDate(d.getDate() + 1)
-    ) {
-      semana.push(new Date(d));
-      if (
-        d.getDay() === 0 ||
-        d.getDate() === ultimoDiaMes.getDate() ||
-        d.getDate() === fechaFin.getDate()
-      ) {
-        numeroSemana++;
-        semanas.push({ semana: numeroSemana, dias: [...semana] });
-        semana = [];
-      }
-    }
+        // Filtrar las semanas que caen dentro del rango de fechaInicio y fechaFin
+        const semanasFiltradas = semanas.filter(semana => {
+            const inicioSemana = semana.dias[0];
+            const finSemana = semana.dias[semana.dias.length - 1];
+            return (!fechaInicio || finSemana >= fechaInicio) && (!fechaFin || inicioSemana <= fechaFin);
+        });
 
-    const semanasFormateadas = semanas.map((semana) => {
-      const inicioSemana = semana.dias[0];
-      const finSemana = semana.dias[semana.dias.length - 1];
-      const opcionesFormato = { day: "2-digit", month: "long" };
-      const label = `${inicioSemana.toLocaleDateString(
-        "es-ES",
-        opcionesFormato
-      )} - ${finSemana.toLocaleDateString("es-ES", opcionesFormato)}`;
-      const value = semana.semana;
+        // Formatear las semanas para el uso en el front-end
+        const semanasFormateadas = semanasFiltradas.map(semana => {
+            const label = `Semana ${semana.numeroSemanaDelMes}`;
+            const value = semana.numeroSemanaDelMes;
 
-    // console.log(value);
+            return { label, value };
+        });
 
-      return { label, value };
-    });
+        setOptionsSemanas(semanasFormateadas);
+    };
 
-    setOptionsSemanas(semanasFormateadas);
-  };
+
 
   const mandarSemana = (selectedSemana) => {
     const valorSemanaSeleccionada = selectedSemana;

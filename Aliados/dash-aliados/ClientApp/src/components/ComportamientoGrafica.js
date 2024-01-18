@@ -44,9 +44,10 @@ const ComportamientoGrafica = ({ datos }) => {
       ComparativaMes
     } = datos;
     const { mesActual, mesAnterior } = datos.comparativaMes || {};
-  const totales = totalesPorDiaTarjeta || [];
-
-
+    const totales = totalesPorDiaTarjeta || [];
+ 
+    const comparativadiasemana = datos.comparativadiasemana;
+    console.log(comparativadiasemana);
   const tiendas = Object.keys(totales);
 
   // Crear un array para almacenar los días
@@ -253,7 +254,7 @@ const ComportamientoGrafica = ({ datos }) => {
                 }
               >
                 <h2 className="fs-18 text-center">
-                  Comparativa (igual día mes anterior)
+               Comparativa (igual {comparativadiasemana} mes anterior)
                 </h2>
                 <div className="d-flex justify-content-center ">
                   <Bar className="px-3" data={midata} options={misoptions} />
@@ -307,7 +308,7 @@ const ComportamientoGrafica = ({ datos }) => {
               <div className={darkMode ? " bg-grafica-dark" : "bg-grafica"}>
                 <h5 className="text-center py-4 lato-bold fs-16">
                   {" "}
-                  Comparativa (igual día mes anterior)
+            Comparativa (igual {comparativadiasemana} mes anterior)
                 </h5>
                 <div className="d-flex justify-content-center">
                   <Bar data={midata} options={misoptions} />

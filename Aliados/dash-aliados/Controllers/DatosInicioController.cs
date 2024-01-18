@@ -432,18 +432,24 @@ namespace dash_aliados.Controllers
             var cultureInfo = CultureInfo.CurrentCulture;
             var firstDayOfMonth = new DateTime(year, month, 1);
             var dayOfWeek = cultureInfo.Calendar.GetDayOfWeek(firstDayOfMonth);
-            var firstDayOfWeek = cultureInfo.DateTimeFormat.FirstDayOfWeek;
+            var firstDayOfWeek = DayOfWeek.Monday; // Ajustado para que la semana siempre comience en lunes
 
-            var offset = (7 + (dayOfWeek - firstDayOfWeek)) % 7;
+            var offset = dayOfWeek - firstDayOfWeek;
+            if (offset < 0)
+            {
+                offset += 7; // Ajuste para los casos donde el primer día del mes es después del lunes
+            }
+
             var firstWeekStart = firstDayOfMonth.AddDays(-offset);
             var weekStart = firstWeekStart.AddDays((weekNumber - 1) * 7);
 
             // Asegurarse de que la fecha de inicio esté dentro del mes especificado
             return weekStart.Month == month ? weekStart : firstDayOfMonth;
         }
+
         private DateTime GetLastDayOfWeek(DateTime startDate)
         {
-            var endDate = startDate.AddDays(6); // Asumiendo que una semana completa tiene 7 días
+            var endDate = startDate.AddDays(6); // El domingo es 6 días después del lunes
 
             // Asegurarse de que la fecha final no exceda el último día del mes
             var lastDayOfMonth = new DateTime(startDate.Year, startDate.Month, DateTime.DaysInMonth(startDate.Year, startDate.Month));
@@ -454,6 +460,7 @@ namespace dash_aliados.Controllers
 
             return endDate;
         }
+
         private int GetWeekOfYear(DateTime date)
         {
             // Ejemplo de cálculo de la semana del año
@@ -463,23 +470,23 @@ namespace dash_aliados.Controllers
 
             return cultureInfo.Calendar.GetWeekOfYear(date, calendarWeekRule, firstDayOfWeek);
         }
-        private DateTime GetLastDayOfWeek(DateTime date, int weekNumber)
-        {
-            var cultureInfo = CultureInfo.CurrentCulture;
-            var calendar = cultureInfo.Calendar;
-            var firstDayOfWeek = cultureInfo.DateTimeFormat.FirstDayOfWeek;
+        //private DateTime GetLastDayOfWeek(DateTime date, int weekNumber)
+        //{
+        //    var cultureInfo = CultureInfo.CurrentCulture;
+        //    var calendar = cultureInfo.Calendar;
+        //    var firstDayOfWeek = cultureInfo.DateTimeFormat.FirstDayOfWeek;
 
-            // Encontrar el primer día de la semana del año
-            var firstDayOfYear = new DateTime(date.Year, 1, 1);
-            var daysOffset = firstDayOfWeek - firstDayOfYear.DayOfWeek;
-            var firstDayOfFirstWeek = firstDayOfYear.AddDays(daysOffset);
+        //    // Encontrar el primer día de la semana del año
+        //    var firstDayOfYear = new DateTime(date.Year, 1, 1);
+        //    var daysOffset = firstDayOfWeek - firstDayOfYear.DayOfWeek;
+        //    var firstDayOfFirstWeek = firstDayOfYear.AddDays(daysOffset);
 
-            // Calcular el último día de la semana solicitada
-            var weekStart = firstDayOfFirstWeek.AddDays((weekNumber - 1) * 7);
-            var weekEnd = weekStart.AddDays(6); // Sumar 6 días para llegar al domingo
+        //    // Calcular el último día de la semana solicitada
+        //    var weekStart = firstDayOfFirstWeek.AddDays((weekNumber - 1) * 7);
+        //    var weekEnd = weekStart.AddDays(6); // Sumar 6 días para llegar al domingo
 
-            return weekEnd;
-        }
+        //    return weekEnd;
+        //}
         private HashSet<string> ObtenerFantasiasNombre(List<BaseDashboard> sas)
         {
             HashSet<string> fantasiasnombre = new HashSet<string>();
@@ -566,14 +573,14 @@ namespace dash_aliados.Controllers
             // Encuentra la fecha más reciente en FechaOperacion
             DateTime fechaMasReciente = movimientosUltimos7Dias.Max(s => s.FechaOperacion) ?? DateTime.MinValue;
 
-            // Ajusta el día de la semana para comenzar desde el lunes (0)
+            // Ajusta el día de la semana para comenzar desde el lunes
             int ajusteDiaDeLaSemana = (int)fechaMasReciente.DayOfWeek - 1;
-            if (ajusteDiaDeLaSemana < 0) // El domingo se convierte en -1, así que lo ajustamos a 6 (sábado)
+            if (ajusteDiaDeLaSemana < 0) // El domingo se convierte en -1, ajustarlo para que cuente como el final de la semana
             {
                 ajusteDiaDeLaSemana = 6;
             }
 
-            // Calcula el primer día de la semana actual
+            // Calcula el primer día de la semana actual (lunes)
             DateTime primerDiaSemanaMesActual = fechaMasReciente.AddDays(-ajusteDiaDeLaSemana);
 
             // Ajusta si el primer día de la semana está en el mes anterior
@@ -594,6 +601,8 @@ namespace dash_aliados.Controllers
 
             return fechasUnicas;
         }
+
+
 
 
 

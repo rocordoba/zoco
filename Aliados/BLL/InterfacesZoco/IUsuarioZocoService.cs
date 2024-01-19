@@ -20,8 +20,9 @@ namespace BLL.InterfacesZoco
             Task<Usuarios> ObtenerPorId(int IdUsuario);
             Task<bool> GuardarPefil(Usuarios entidad);
             Task<bool> CambiarClave(int IdUsuario, string ClaveActual, string ClaveNueva);
-            Task<bool> RestablecerClave(string Correo, string UrlPlantillaCorreo);
-
+           Task<bool> RestablecerClaveliquidaciones(int IdUsuario);
+           Task<bool> RestablecerClave(string Correo, string UrlPlantillaCorreo);
+            
         
     }
 }

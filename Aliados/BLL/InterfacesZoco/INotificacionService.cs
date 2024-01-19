@@ -10,5 +10,8 @@ namespace BLL.InterfacesZoco
     public interface INotificacionService
     {
         Task<List<Noticia>> Lista();
+        Task<Noticia> Crear(Noticia entidad);
+        Task<Noticia> Editar(Noticia entidad);
+        Task<bool> Eliminar(int IdNoticia);
     }
 }

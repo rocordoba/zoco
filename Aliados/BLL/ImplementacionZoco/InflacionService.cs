@@ -23,6 +23,46 @@ namespace BLL.ImplementacionZoco
 
         }
 
+        public async Task<Inflacion> Crear(Inflacion entidad)
+        {
+            if (entidad == null)
+            {
+                throw new ArgumentNullException(nameof(entidad));
+            }
+
+            return await _repoInflacion.Crear(entidad);
+        }
+
+        public async Task<Inflacion> Editar(Inflacion entidad)
+        {
+            if (entidad == null)
+            {
+                throw new ArgumentNullException(nameof(entidad));
+            }
+
+            var resultado = await _repoInflacion.Editar(entidad);
+            if (resultado)
+            {
+                return entidad;
+            }
+            else
+            {
+                throw new InvalidOperationException("No se pudo editar la inflación.");
+            }
+        }
+
+        public async Task<bool> Eliminar(int IdInflacion)
+        {
+            var inflacion = await _repoInflacion.Obtener(i => i.Id == IdInflacion);
+            if (inflacion == null)
+            {
+                throw new InvalidOperationException("Inflación no encontrada.");
+            }
+
+            return await _repoInflacion.Eliminar(inflacion);
+        }
+
+
 
 
 

@@ -2,6 +2,7 @@
 using BLL.InterfacesZoco;
 using DAL.Interfaces;
 using Entity.Zoco;
+using Microsoft.EntityFrameworkCore;
 //using Entity.Entity;
 using System;
 using System.Collections.Generic;
@@ -88,10 +89,27 @@ namespace BLL.ImplemtacionZoco
             }
         }
 
-        public Task<Usuarios> Editar(Usuarios entidad)
+        public async Task<Usuarios> Editar(Usuarios entidad)
         {
-            throw new NotImplementedException();
+            // Supongamos que _repositorioUser es tu repositorio genérico
+            Usuarios usuario_existe = await _repositorioUser.Obtener(u => u.Usuario == entidad.Usuario);
+
+            if (usuario_existe == null)
+            {
+                throw new Exception("Usuario no encontrado");
+            }
+
+            // Actualiza solamente los campos específicos
+            usuario_existe.Correo = entidad.Correo;
+            usuario_existe.Usuario = entidad.Usuario;
+            usuario_existe.Nombre = entidad.Nombre;
+
+            // Guarda los cambios en la base de datos usando el repositorio
+            await _repositorioUser.Editar(usuario_existe);
+
+            return usuario_existe;
         }
+
 
         public Task<bool> Eliminar(int IdUsuario)
         {
@@ -170,10 +188,24 @@ namespace BLL.ImplemtacionZoco
             throw new NotImplementedException();
         }
 
+        public async Task<bool> RestablecerClaveliquidaciones(int IdUsuario)
+        {
+            // Supongamos que _repositorioUser es tu repositorio genérico
+            Usuarios usuario = await _repositorioUser.Obtener(u => u.Id == IdUsuario);
 
+            if (usuario == null)
+            {
+                throw new Exception("Usuario no encontrado");
+            }
 
+            // Establece la nueva contraseña
+            string claveNueva = "1234";
+            usuario.Password = BCrypt.Net.BCrypt.HashPassword(claveNueva);
 
+            // Guarda los cambios en la base de datos usando el repositorio
+            bool resultado = await _repositorioUser.Editar(usuario);
 
-
+            return resultado;
+        }
     }
 }

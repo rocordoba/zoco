@@ -80,7 +80,7 @@ namespace dash_aliados.Controllers
                 //  var usuarioEncontrado = await _tokenservice.ObtenerTokenYUsuarioPorUsuarioIdAsync(request.Token);
 
                 //   entidad.UsuarioId = usuarioEncontrado.usuario.Id;
-                var califico = await _usuarioZocoService.Editar(entidad);
+                var editar = await _usuarioZocoService.Editar(entidad);
                 return StatusCode(StatusCodes.Status200OK);
 
 
@@ -96,10 +96,10 @@ namespace dash_aliados.Controllers
             {
                 var entidad = _mapper.Map<Usuarios>(request);
 
-                //  var usuarioEncontrado = await _tokenservice.ObtenerTokenYUsuarioPorUsuarioIdAsync(request.Token);
+             //    var usuarioEncontrado = await _tokenservice.ObtenerTokenYUsuarioPorUsuarioIdAsync(request.Token);
 
                 //   entidad.UsuarioId = usuarioEncontrado.usuario.Id;
-            //    var califico = await _usuarioZocoService.RestablecerClave(entidad);
+                  var restauro = await _usuarioZocoService.RestablecerClaveliquidaciones(entidad.Id);
                 return StatusCode(StatusCodes.Status200OK);
 
 

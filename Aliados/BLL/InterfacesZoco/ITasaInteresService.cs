@@ -10,5 +10,8 @@ namespace BLL.InterfacesZoco
     public interface ITasaInteresService
     {
         Task<List<TasaIntere>> Lista();
+        Task<TasaIntere> Crear(TasaIntere entidad);
+        Task<TasaIntere> Editar(TasaIntere entidad);
+     
     }
 }

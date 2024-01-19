@@ -12,6 +12,8 @@ namespace BLL.InterfacesZoco
         Task<List<Inflacion>> Lista();
 
         Task<List<Inflacion>> ObtenerPorRubro(string CuitAliado);
-   
+        Task<Inflacion> Crear(Inflacion entidad);
+        Task<Inflacion> Editar(Inflacion entidad);
+        Task<bool> Eliminar(int IdNoticia);
     }
 }

@@ -39,7 +39,7 @@ namespace dash_aliados.Controllers
 
                 if (sasLista == null || sasLista.Count == 0)
                 {
-                    return NotFound("No hay datos para la lista de Sas");
+                    return NotFound("No hay datos de usuarios");
                 }
 
 
@@ -50,5 +50,63 @@ namespace dash_aliados.Controllers
 
             return Ok();
         }
+        [HttpPost("crearusuario")]
+        public async Task<ActionResult> crearusuario([FromBody] VMUsuariosZoco request)
+        {
+            bool esTokenValido = await _tokenservice.ValidarTokenAsync(request.Token);
+            if (esTokenValido == true)
+            {
+                var entidad = _mapper.Map<Usuarios>(request);
+
+             //  var usuarioEncontrado = await _tokenservice.ObtenerTokenYUsuarioPorUsuarioIdAsync(request.Token);
+
+             //   entidad.UsuarioId = usuarioEncontrado.usuario.Id;
+                var califico = await _usuarioZocoService.Crear(entidad);
+                return StatusCode(StatusCodes.Status200OK);
+
+
+            }
+
+            return Unauthorized("El token o el ID de la sesión no son válidos");
+        }
+        [HttpPost("editarusuario")]
+        public async Task<ActionResult> editarusuario([FromBody] VMUsuariosZoco request)
+        {
+            bool esTokenValido = await _tokenservice.ValidarTokenAsync(request.Token);
+            if (esTokenValido == true)
+            {
+                var entidad = _mapper.Map<Usuarios>(request);
+
+                //  var usuarioEncontrado = await _tokenservice.ObtenerTokenYUsuarioPorUsuarioIdAsync(request.Token);
+
+                //   entidad.UsuarioId = usuarioEncontrado.usuario.Id;
+                var califico = await _usuarioZocoService.Editar(entidad);
+                return StatusCode(StatusCodes.Status200OK);
+
+
+            }
+
+            return Unauthorized("El token o el ID de la sesión no son válidos");
+        }
+        [HttpPost("restaurarclave")]
+        public async Task<ActionResult> restaurarclave([FromBody] VMUsuariosZoco request)
+        {
+            bool esTokenValido = await _tokenservice.ValidarTokenAsync(request.Token);
+            if (esTokenValido == true)
+            {
+                var entidad = _mapper.Map<Usuarios>(request);
+
+                //  var usuarioEncontrado = await _tokenservice.ObtenerTokenYUsuarioPorUsuarioIdAsync(request.Token);
+
+                //   entidad.UsuarioId = usuarioEncontrado.usuario.Id;
+            //    var califico = await _usuarioZocoService.RestablecerClave(entidad);
+                return StatusCode(StatusCodes.Status200OK);
+
+
+            }
+
+            return Unauthorized("El token o el ID de la sesión no son válidos");
+        }
+
     }
 }

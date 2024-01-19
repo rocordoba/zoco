@@ -120,7 +120,7 @@ const TablaTickets = ({ listaMes, datos}) => {
             // Agregar fondo a la primera página
             agregarFondo();
 
-            const titulo = "Detalle de Operaciones";
+            const titulo = "Detalle de Operaciones " + mes + "/" + año;
 
             // Obtener el ancho de la página
             const anchoPagina = doc.internal.pageSize.getWidth();

@@ -11,143 +11,113 @@ import { DarkModeContext } from "../context/DarkModeContext";
 
 const GraficaDataCelular = ({ datos }) => {
   const { darkMode } = useContext(DarkModeContext);
-  const descuentosPorTarjeta = datos.descuentosPorTarjeta || [];
+    const descuentosPorTarjeta = datos.descuentosPorTarjeta || [];
 
-  // Crear un objeto para mapear los datos dinámicos
-  const dataTarjeta = descuentosPorTarjeta.map((item) => ({
-    totalConDescuento: item.totalConDescuento,
-  }));
-
-  const numerosTarjeta = dataTarjeta.map((item) => item.totalConDescuento);
-
-  // Ordenar beneficios de mayor a menor
-  numerosTarjeta.sort((a, b) => b - a);
-
-  // Crear un array con los nombres de las tarjetas ordenados según los beneficios
-  const tarjetasOrdenadas = [
-    "Visa",
-    "MasterCard",
-    "Argencard",
-    "Amex",
-    "Diners",
-    "Cabal",
-    "Naranjax",
-  ];
-
-  const imagenes = {
-    Visa: visaPNG,
-    MasterCard: masterPNG,
-    Argencard: argencardPNG,
-    Amex: amexPNG,
-    Diners: dinersPNG,
-    Cabal: cabalPNG,
-    Naranjax: naranjaxPNG,
-  };
-
-  useEffect(() => {
-    const imageItems = {
-      id: "imageItems",
-      beforeDatasetsDraw(chart, args, pluginOptions) {
-        const {
-          ctx,
-          options,
-          data,
-          scales: { y },
-        } = chart;
-
-        ctx.save();
-        const imageSize = options.layout.padding.left;
-
-        data.datasets[0].image.forEach((_, index) => {
-          const logo = new Image();
-          const tarjeta = tarjetasOrdenadas[index];
-          logo.src = imagenes[tarjeta];
-          ctx.drawImage(
-            logo,
-            0,
-            y.getPixelForValue(index) - imageSize / 2,
-            imageSize,
-            imageSize
-          );
-        });
-      },
+    // Objeto de imágenes
+    const imagenes = {
+        Visa: visaPNG,
+        MasterCard: masterPNG,
+        Argencard: argencardPNG,
+        Amex: amexPNG,
+        Diners: dinersPNG,
+        Cabal: cabalPNG,
+        Naranjax: naranjaxPNG,
     };
 
-    const config = {
-      type: "bar",
-      data: {
-        labels: tarjetasOrdenadas,
-        datasets: [
-          {
-            label: "",
-            data: numerosTarjeta,
-            backgroundColor: ["#b4c400"],
-            borderColor: ["#b4c400"],
-            borderWidth: 1,
-            image: [
-              visaPNG,
-              masterPNG,
-              argencardPNG,
-              amexPNG,
-              dinersPNG,
-              cabalPNG,
-              naranjaxPNG,
-            ],
-          },
-        ],
-      },
-      options: {
-        layout: {
-          padding: {
-            left: 35,
-          },
-        },
-        indexAxis: "y",
-        scales: {
-          x: {
-            beginAtZero: true,
-            display: false,
-            grid: {
-              display: false,
-            },
-            ticks: {
-              font: {
-                size: 9,
-              },
-            },
-          },
-          y: {
-            beginAtZero: true,
-            display: false,
-            grid: {
-              display: false,
-            },
-            ticks: {
-              font: {
-                size: 9,
-              },
-            },
-          },
-        },
-        plugins: {
-          legend: {
-            display: false,
-          },
-        },
-      },
-      plugins: [imageItems],
-    };
+    // Ordenar y mapear descuentosPorTarjeta para obtener nombre, beneficio e imagen
+    const tarjetasConBeneficios = descuentosPorTarjeta
+        .sort((a, b) => b.totalConDescuento - a.totalConDescuento)
+        .map(tarjeta => ({
+            nombre: tarjeta.tarjeta,
+            beneficio: tarjeta.totalConDescuento || 0,
+            imagen: imagenes[tarjeta.tarjeta],
+        }));
 
-    const ctx = document.getElementById("myChart");
-    const existingChart = Chart.getChart(ctx);
+    useEffect(() => {
+        const imageItems = {
+            id: "imageItems",
+            beforeDatasetsDraw(chart, args, pluginOptions) {
+                const { ctx, options, data, scales: { y } } = chart;
 
-    if (existingChart) {
-      existingChart.destroy();
-    }
+                ctx.save();
+                const imageSize = options.layout.padding.left;
 
-    new Chart(ctx, config);
-  }, [descuentosPorTarjeta, imagenes, numerosTarjeta, tarjetasOrdenadas]);
+                data.datasets[0].data.forEach((_, index) => {
+                    const logo = new Image();
+                    logo.src = tarjetasConBeneficios[index].imagen;
+                    const imageY = y.getPixelForValue(data.labels[index]) - imageSize / 2;
+                    ctx.drawImage(logo, 0, imageY, imageSize, imageSize);
+                });
 
+                ctx.restore();
+            },
+        };
+
+        const config = {
+            type: "bar",
+            data: {
+                labels: tarjetasConBeneficios.map(t => t.nombre),
+                datasets: [
+                    {
+                        label: "",
+                        data: tarjetasConBeneficios.map(t => t.beneficio),
+                        backgroundColor: ["#b4c400"],
+                        borderColor: ["#b4c400"],
+                        borderWidth: 1,
+                    },
+                ],
+            },
+            options: {
+                layout: {
+                    padding: {
+                        left: 35,
+                    },
+                },
+                indexAxis: "y",
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        display: false,
+                        grid: {
+                            display: false,
+                        },
+                        ticks: {
+                            font: {
+                                size: 9,
+                            },
+                        },
+                    },
+                    y: {
+                        beginAtZero: true,
+                        display: false,
+                        grid: {
+                            display: false,
+                        },
+                        ticks: {
+                            font: {
+                                size: 9,
+                            },
+                        },
+                    },
+                },
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+            },
+            plugins: [imageItems],
+        };
+
+        const ctx = document.getElementById("myChart");
+        const existingChart = Chart.getChart(ctx);
+
+        if (existingChart) {
+            existingChart.destroy();
+        }
+
+        new Chart(ctx, config);
+    }, [descuentosPorTarjeta, tarjetasConBeneficios]);
   return (
     <div className="container">
       <div

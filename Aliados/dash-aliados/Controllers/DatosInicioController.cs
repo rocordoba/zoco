@@ -11,6 +11,7 @@ using dash_aliados.Models;
 using System;
 using Entity.Zoco;
 using System.Diagnostics.Eventing.Reader;
+using DocumentFormat.OpenXml.ExtendedProperties;
 
 namespace dash_aliados.Controllers
 {
@@ -711,22 +712,33 @@ namespace dash_aliados.Controllers
                           TotalConDescuento = group.Sum(item => item.TotalConDescuentos)
                       }).ToList<object>();
         }
+  //      const imagenes = {
+  //  Visa: visaImg,
+  //  MasterCard: masterImg,
+  //  Argencard: argencardImg,
+  //  Amex: amexImg,
+  //  Diners: dinersImg,
+  //  Cabal: cabalImg,
+  //  Naranjax: naranjaxImg,
+  //};
         private string NormalizarNombreTarjeta(string tarjetaTipo)
         {
             if (tarjetaTipo.Contains("Visa"))
                 return "Visa";
             if (tarjetaTipo.Contains("Mastercard"))
-                return "Mastercard";
+                return "MasterCard";
             if (tarjetaTipo.Contains("Cabal"))
                 return "Cabal";
             if (tarjetaTipo.Contains("Maestro"))
                 return "Argencard";
             if (tarjetaTipo.Contains("American Express") || tarjetaTipo.Contains("Amex"))
-                return "American Express";
+                return "Amex";
             //if (tarjetaTipo.Contains("Argencard"))
             //    return "Argencard";
             if (tarjetaTipo.Contains("Naranja"))
-                return "Naranja";
+                return "Naranjax";
+            if (tarjetaTipo.Contains("Diners"))
+                return "Diners";
             // Agregar más lógica para otros tipos de tarjeta si es necesario
             return tarjetaTipo;
         }

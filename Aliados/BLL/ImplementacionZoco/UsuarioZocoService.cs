@@ -108,9 +108,10 @@ namespace BLL.ImplemtacionZoco
             throw new NotImplementedException();
         }
 
-        public Task<List<Usuarios>> Lista()
+        public async Task<List<Usuarios>> Lista()
         {
-            throw new NotImplementedException();
+            IQueryable<Usuarios> query = await _repositorioUser.Consultar();
+            return query.ToList();
         }
 
         public string GenerateBCryptHash(string password)

@@ -28,46 +28,19 @@ ChartJS.register(
 );
 
 const GraficaData = ({ datos }) => {
-  const { descuentosPorTarjeta } = datos || {};
+    const { descuentosPorTarjeta = [] } = datos;
     console.log(descuentosPorTarjeta);
-  const [
-    visa = {},
-      masterCard = {},
-      argencard = {},
-      amex = {},
-      naranjax = {},
-      cabal = {},
-    diners = {},
-  
-  ] = descuentosPorTarjeta || [];
-    
-  const visaTotalDescuento = visa.totalConDescuento || 0;
-  const masterCardTotalDescuento = masterCard.totalConDescuento || 0;
-  const cabalTotalDescuento = cabal.totalConDescuento || 0;
-  const argencardTotalDescuento = argencard.totalConDescuento || 0;
-  const amexTotalDescuento = amex.totalConDescuento || 0;
-  const dinersTotalDescuento = diners.totalConDescuento || 0;
-  const naranjaxTotalDescuento = naranjax.totalConDescuento || 0;
 
-  var beneficios = [
-    visaTotalDescuento,
-    masterCardTotalDescuento,
-    cabalTotalDescuento,
-    argencardTotalDescuento,
-    amexTotalDescuento,
-    dinersTotalDescuento,
-    naranjaxTotalDescuento,
-  ];
-  // Ordenar beneficios de mayor a menor
-  beneficios.sort((a, b) => b - a);
+   
+    descuentosPorTarjeta.sort((a, b) => b.totalConDescuento - a.totalConDescuento);
+    console.log(descuentosPorTarjeta);
 
-  // var beneficios = [1, 2, 3, 4, 5, 6, 7]
-    var tarjetas = ["Visa", "MasterCard", "Argencard", "Amex", "Cabal", "Naranjax",  "Diners" ];
 
-  // Obtener el índice original de la tarjeta después de ordenar los beneficios
-  var tarjetasOrdenadas = tarjetas.slice().sort(function (a, b) {
-    return beneficios[tarjetas.indexOf(b)] - beneficios[tarjetas.indexOf(a)];
-  });
+    var beneficios = descuentosPorTarjeta.map(tarjeta => tarjeta.totalConDescuento || 0);
+    var tarjetasOrdenadas = descuentosPorTarjeta.map(tarjeta => tarjeta.tarjeta);
+
+
+
 
   const { darkMode } = useContext(DarkModeContext);
   const tickColor = darkMode ? "#fff" : "#292B2F";
@@ -99,7 +72,7 @@ const GraficaData = ({ datos }) => {
   };
 
   var midata = {
-    labels: tarjetas,
+      labels: tarjetasOrdenadas,
     datasets: [
       {
         label: "Monto$",

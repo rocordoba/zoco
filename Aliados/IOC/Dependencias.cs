@@ -41,7 +41,7 @@ namespace IOC
             services.AddScoped<ICalificoComentarioService, CalificoService>();
             services.AddScoped<INotificacionService, NotificacionService>();
             services.AddScoped<ITokenService, TokenService>();
-
+            services.AddScoped<ITasaInteresService, TasaInteresService>();
 
 
 

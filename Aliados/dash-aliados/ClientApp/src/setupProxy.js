@@ -21,6 +21,7 @@ const context = [
     "/api/acceso/cambiarClave", 
     "/api/acceso/logout",
     "/api/token/token",
+    "/api/tasainteres/tasainteres",
 ];
 
 module.exports = function (app) {

@@ -43,7 +43,7 @@ namespace dash_aliados.Controllers
                 if (request.Year == currentDate.Year && request.Month == currentDate.Month && request.Week == currentWeek)
                 {
 
-
+                    var fechaPagoMasActual = sas.Max(s => s.FechaDePago);
                     // Verificar si el comercio es "Todos"
                     if (request.comercio.ToLower() == "todos")
                     {
@@ -52,7 +52,7 @@ namespace dash_aliados.Controllers
                         var listaHoy = ObtenerListaPorFecha(sas, DateTime.Today);
                        
                         
-                        var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), DateTime.Today);
+                        var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), fechaPagoMasActual.Value);
                         var totalOperaciones = ObtenerTotalOperaciones(listaMes);
                         var totalBrutoHoy = ObtenerTotalBruto(listaMes);
                         // Llamada al método para obtener las sumas por día
@@ -78,7 +78,7 @@ namespace dash_aliados.Controllers
                         var listaHoy = ObtenerListaPorFecha(sas, DateTime.Today);
                      
                      
-                        var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), DateTime.Today);
+                        var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), fechaPagoMasActual.Value);
                         var totalBrutoHoy = ObtenerTotalBruto(listaMes);
                       
                         var sumasPorDia = ObtenerSumaPorDia(listaMes);

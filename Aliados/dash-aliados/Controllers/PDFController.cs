@@ -38,6 +38,7 @@ namespace dash_aliados.Controllers
                 var ultimoDiaMes = primerDiaMes.AddMonths(1).AddDays(-1);
 
                 var datosFiltrados = sas.Where(dato => dato.FechaDePago?.Date >= primerDiaMes && dato.FechaDePago?.Date <= ultimoDiaMes)
+                                    .OrderByDescending(dato => dato.FechaDePago) // Ordenar por FechaDePago de manera descendente
                                    .Select(dato => new
                                    {
                                        Terminal = dato.NroDeAutorizacion?.ToString() ?? "",
@@ -59,9 +60,38 @@ namespace dash_aliados.Controllers
                                        RetencionIVA = dato.RetencionIva?.ToString("N2") ?? "0.00",
                                        TotalOP = dato.TotalConDescuentos?.ToString("N2") ?? "0.00"
                                    })
-.ToList();
-
-                return Ok(datosFiltrados);
+                                        .ToList();
+                var sumas = datosFiltrados.Aggregate(new
+                {
+                    Bruto = "0.00",
+                    CostoFinanciero = "0.00",
+                    CostoPorAnticipo = "0.00",
+                    Arancel = "0.00",
+                    IvaArancel = "0.00",
+                    ImpDebitoCredito = "0.00",
+                    RetencionIIBB = "0.00",
+                    RetencionGanancia = "0.00",
+                    RetencionIVA = "0.00",
+                    TotalOP = "0.00"
+                }, (acc, item) => new
+                {
+                    Bruto = (Convert.ToDecimal(acc.Bruto) + Convert.ToDecimal(item.Bruto)).ToString("N2"),
+                    CostoFinanciero = (Convert.ToDecimal(acc.CostoFinanciero) + Convert.ToDecimal(item.CostoFinanciero)).ToString("N2"),
+                    CostoPorAnticipo = (Convert.ToDecimal(acc.CostoPorAnticipo) + Convert.ToDecimal(item.CostoPorAnticipo)).ToString("N2"),
+                    Arancel = (Convert.ToDecimal(acc.Arancel) + Convert.ToDecimal(item.Arancel)).ToString("N2"),
+                    IvaArancel = (Convert.ToDecimal(acc.IvaArancel) + Convert.ToDecimal(item.IvaArancel)).ToString("N2"),
+                    ImpDebitoCredito = (Convert.ToDecimal(acc.ImpDebitoCredito) + Convert.ToDecimal(item.ImpDebitoCredito)).ToString("N2"),
+                    RetencionIIBB = (Convert.ToDecimal(acc.RetencionIIBB) + Convert.ToDecimal(item.RetencionIIBB)).ToString("N2"),
+                    RetencionGanancia = (Convert.ToDecimal(acc.RetencionGanancia) + Convert.ToDecimal(item.RetencionGanancia)).ToString("N2"),
+                    RetencionIVA = (Convert.ToDecimal(acc.RetencionIVA) + Convert.ToDecimal(item.RetencionIVA)).ToString("N2"),
+                    TotalOP = (Convert.ToDecimal(acc.TotalOP) + Convert.ToDecimal(item.TotalOP)).ToString("N2")
+                });
+                var respuesta = new
+                {
+                    Datos = datosFiltrados,
+                    Sumas = sumas
+                };
+                return Ok(respuesta);
             }
             else
             {

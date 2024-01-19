@@ -45,9 +45,10 @@ namespace dash_aliados.Controllers
                 if (request.Year == currentDate.Year && request.Month == currentDate.Month && request.Week == currentWeek)
                 {
                     //   var inflacion = await _inflacionService.ObtenerPorRubro(usuarioEncontrado.Usuario);
+                    var fechaPagoMasActual = sas.Max(s => s.FechaDePago);
                     if (request.comercio.ToLower() == "todos")
                     {
-                        var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), DateTime.Today);
+                        var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), fechaPagoMasActual.Value);
                         var totalOperaciones = ObtenerTotalOperaciones(listaMes);
                         var totalConDescuentoCuotas0 = ObtenerTotalConDescuentoCuotas(listaMes, 0);
                         var totalConDescuentoCuotas1 = ObtenerTotalConDescuentoCuotas(listaMes, 1);
@@ -85,7 +86,7 @@ namespace dash_aliados.Controllers
                     else
                     {
                         sas = sas.Where(s => s.NombreComercio != null && s.NombreComercio.ToLower() == request.comercio.ToLower()).ToList();
-                        var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), DateTime.Today);
+                        var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), fechaPagoMasActual.Value);
                         var totalOperaciones = ObtenerTotalOperaciones(listaMes);
                         var totalConDescuentoCuotas0 = ObtenerTotalConDescuentoCuotas(listaMes, 0);
                         var totalConDescuentoCuotas1 = ObtenerTotalConDescuentoCuotas(listaMes, 1);

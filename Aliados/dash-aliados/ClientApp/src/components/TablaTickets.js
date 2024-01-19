@@ -7,7 +7,7 @@ import xls from "../assets/img/xls.png";
 import { Spinner } from "react-bootstrap";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-const TablaTickets = ({ listaMes }) => {
+const TablaTickets = ({ listaMes, datos}) => {
   const [descargando, setDescargando] = useState(false);
   const [descargando2, setDescargando2] = useState(false);
   const { darkMode } = useContext(DarkModeContext);
@@ -35,8 +35,8 @@ const TablaTickets = ({ listaMes }) => {
       const token = sessionStorage.getItem("token");
     const userId = localStorage.getItem("userId");
     const fechaActual = new Date();
-    const año = fechaActual.getFullYear();
-    const mes = fechaActual.getMonth() + 1;
+      const año = datos?.anio || fechaActual.getFullYear();
+      const mes = datos?.mes || fechaActual.getMonth() + 1;
 
     try {
       const respuesta = await fetch("/api/excel/excel", {
@@ -64,8 +64,8 @@ const TablaTickets = ({ listaMes }) => {
 
       // Crear el enlace con el nombre de archivo deseado
       const enlace = document.createElement("a");
-      enlace.href = urlDescarga;
-      enlace.setAttribute("download", `zoco_${fechaFormateada}.xlsx`); // Formato: 'zoco_YYYY-MM-DD.xlsx'
+        enlace.href = urlDescarga; 
+        enlace.setAttribute("download", `reporte_Zoco_${año}-${mes}.xlsx`); // Formato: 'zoco_YYYY-MM-DD.xlsx'
       document.body.appendChild(enlace);
       enlace.click();
       enlace.parentNode.removeChild(enlace);
@@ -77,11 +77,12 @@ const TablaTickets = ({ listaMes }) => {
   };
     const manejarClicDescargaPdf = async () => {
         setDescargando2(true);
+
         const token = sessionStorage.getItem("token");
         const userId = localStorage.getItem("userId");
         const fechaActual = new Date();
-        const año = fechaActual.getFullYear();
-        const mes = fechaActual.getMonth() + 1;
+        const año = datos?.anio || fechaActual.getFullYear();
+        const mes = datos?.mes || fechaActual.getMonth() + 1;
 
         try {
             const respuesta = await fetch("/api/pdf/pdf", {
@@ -101,11 +102,60 @@ const TablaTickets = ({ listaMes }) => {
             if (!respuesta.ok) {
                 throw new Error("La respuesta de la red no fue correcta");
             }
+            const respuestaJson = await respuesta.json();
+            
+            const { datos: datosFiltrados, sumas } = respuestaJson;
+        
 
-            const datos = await respuesta.json();
-            console.log(datos);
             const doc = new jsPDF();
 
+            const imgData = '/fondopdf.png'; // Ruta relativa a la imagen en la carpeta public
+
+            // Función para agregar el fondo
+            const agregarFondo = () => {
+                doc.addImage(imgData, 'PNG', 0, 0, doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight());
+            };
+
+
+            // Agregar fondo a la primera página
+            agregarFondo();
+
+            const titulo = "Detalle de Operaciones";
+
+            // Obtener el ancho de la página
+            const anchoPagina = doc.internal.pageSize.getWidth();
+
+            // Obtener el ancho del título
+            const anchoTitulo = doc.getStringUnitWidth(titulo) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+
+            // Calcular la posición x centrada
+            const posXCentrada = (anchoPagina - anchoTitulo) / 2;
+
+            // Agregar el título centrado en la primera página
+            doc.text(titulo, posXCentrada, 10); 
+
+            // Crear la tabla de sumas
+            const tablaSumas = [
+                ['Bruto', sumas.bruto],
+                ['Costo Fin.', sumas.costoFinanciero],
+                ['Costo Ant', sumas.costoPorAnticipo],
+                ['Arancel', sumas.arancel],
+                ['IVA Arancel', sumas.ivaArancel],
+                ['Imp. Deb/Cred', sumas.impDebitoCredito],
+                ['Reten. IIBB', sumas.retencionIIBB],
+                ['Ret. Ganancia', sumas.retencionGanancia],
+                ['Ret. IVA', sumas.retencionIVA],
+                ['Total OP', sumas.totalOP]
+            ].map(item => [item[0], `$${item[1]}`]);
+
+
+
+            doc.autoTable({
+                body: tablaSumas,
+                // Aquí puedes ajustar los estilos según sea necesario
+            });
+
+            // Definición de la cabecera de la tabla principal
             const head = [
                 [
                     'TERMINAL', 'N OP', 'Fecha OP', 'Fecha Pago', 'N Cupón', 'N Tarjeta',
@@ -114,11 +164,12 @@ const TablaTickets = ({ listaMes }) => {
                 ]
             ];
 
+            // Configuración de la tabla principal
             doc.autoTable({
                 head: head,
-                body: datos.map(item => [
-                    item.terminal, 
-                    item.nroOperacion, 
+                body: datosFiltrados.map(item => [
+                    item.terminal,
+                    item.nroOperacion,
                     item.fechaOperacion,
                     item.fechaPago,
                     item.nroCupon,
@@ -150,10 +201,17 @@ const TablaTickets = ({ listaMes }) => {
                     fillColor: [220, 220, 220],
                     textColor: [0, 0, 0],
                     fontStyle: 'bold'
+                },
+                didDrawPage: (data) => {
+                    // Agregar fondo en cada nueva página
+                    if (data.pageCount > 1) {
+                        agregarFondo();
+                    }
                 }
             });
 
-            doc.save(`reporte_${año}-${mes}.pdf`);
+            // Guardar el documento PDF
+            doc.save(`reporte_Zoco_${año}-${mes}.pdf`);
 
             setDescargando2(false);
         } catch (error) {
@@ -161,6 +219,8 @@ const TablaTickets = ({ listaMes }) => {
             setDescargando2(false);
         }
     };
+
+
 
 
 

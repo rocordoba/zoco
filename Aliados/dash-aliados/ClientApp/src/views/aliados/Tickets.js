@@ -8,7 +8,7 @@ import TituloPagina from "../../components/TituloPagina";
 import { DatosInicioContext } from "../../context/DatosInicioContext";
 import { useNavigate } from "react-router-dom";
 const Tickets = () => {
-    const { datosCuponesContext, codigoRespuesta } = useContext(DatosInicioContext);
+    const { datosCuponesContext, codigoRespuesta, datos } = useContext(DatosInicioContext);
   const { listaMes } = datosCuponesContext;
     const history = useNavigate();
     const navegacion = useNavigate();
@@ -68,7 +68,7 @@ const Tickets = () => {
       <div className="my-3">
         <DatosTickets  datosCuponesContext={datosCuponesContext}/>
       </div>
-      <TablaTickets listaMes={listaMes} />
+          <TablaTickets listaMes={listaMes} datos={datos} />
       <div className="py-4">
         <Footer />
       </div>

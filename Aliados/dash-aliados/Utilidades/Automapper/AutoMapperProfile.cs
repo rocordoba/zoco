@@ -12,6 +12,20 @@ namespace dash_aliados.Utilidades.Automapper
     {
         public AutoMapperProfile()
         {
+            #region TasaInteres
+            // Mapping from Noticia to VMNoticia
+            CreateMap<TasaIntere, VMTasaInteres>()
+                .ForMember(dest => dest.Fechavencimiento, opt => opt.MapFrom(src => src.Fechavencimiento.HasValue ? src.Fechavencimiento.Value.ToString("yyyy-MM-dd") : null))
+                .ForMember(dest => dest.Descripciontasa, opt => opt.MapFrom(src => src.Descripciontasa))
+                .ForMember(dest => dest.Tasa, opt => opt.MapFrom(src => src.Tasa.HasValue ? src.Tasa.Value.ToString() : null));
+
+            // Mapping from VMNoticia to Noticia
+            CreateMap<VMTasaInteres, TasaIntere>()
+                .ForMember(dest => dest.Fechavencimiento, opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.Fechavencimiento) ? DateTime.Parse(src.Fechavencimiento) : (DateTime?)null))
+                .ForMember(dest => dest.Descripciontasa, opt => opt.MapFrom(src => src.Descripciontasa))
+                .ForMember(dest => dest.Tasa, opt => opt.MapFrom(src=>(int?)int.Parse(src.Tasa)));
+
+            #endregion
             #region Noticia
             // Mapping from Noticia to VMNoticia
             CreateMap<Noticia, VMNoticia>()

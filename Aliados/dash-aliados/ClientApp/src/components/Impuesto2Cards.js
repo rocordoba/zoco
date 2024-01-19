@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext,useEffect,useState } from "react";
 import "./ImpuestosCards.css";
 import { DarkModeContext } from "../context/DarkModeContext";
 import formatearValores from "../helpers/formatearAPeso";
@@ -13,7 +13,8 @@ const Impuesto2Cards = ({ datosBack }) => {
     arancel,
     totalIva21Mes,
     ingresobruto,
-    retencionganancia,
+      retencionganancia,
+      retecionIva,
   } = datosBack;
 
   const valoresFormateados = formatearValores(
@@ -22,7 +23,8 @@ const Impuesto2Cards = ({ datosBack }) => {
     arancel,
     totalIva21Mes,
     ingresobruto,
-    retencionganancia
+      retencionganancia,
+      retecionIva,
   );
 
   return (
@@ -83,8 +85,8 @@ const Impuesto2Cards = ({ datosBack }) => {
               <hr className="hr-card-impuestos" />
               <div className="text-center">
                 <div className="d-flex justify-content-between flex-wrap mx-2 my-2">
-                  <div className="fs-16-a-14 lato-bold">Total ventas</div>
-                  <div className="fs-16-a-14 lato-bold">$ 12.677,49</div>
+                <div className="fs-16-a-14 lato-bold">Total Ret. IVA</div>
+                                  <div className="fs-16-a-14 lato-bold">$ {valoresFormateados[6]}</div>
                 </div>
               </div>
             </article>

@@ -64,13 +64,28 @@ const BienvenidoPanel = () => {
         1
       );
     }
+      const añoActual = new Date().getFullYear();
+      const mesActual = new Date().toLocaleString("es", { month: "long" });
 
+      // Función para obtener el número de la semana
+      const obtenerNumeroSemana = (fecha) => {
+          const inicioDeAño = new Date(fecha.getFullYear(), 0, 1);
+          const diff = fecha - inicioDeAño;
+          const semana = Math.ceil((diff / 86400000 + inicioDeAño.getDay() + 1) / 7);
+          return semana;
+      };
+
+      // Obtener la semana actual
+      const semanaActual = obtenerNumeroSemana(new Date());
     setOptionsComercio(optionsComercio);
     setOptionsAnios(optionsAnios);
     setOptionsMes(optionsMeses);
     setOptionsSemanas(optionsSemanas);
     setFechaInicio(fechaInicio);
-    setFechaFin(fechaFin);
+      setFechaFin(fechaFin);
+      setSelectedAnio({ value: añoActual.toString(), label: añoActual.toString() });
+      setSelectedMes({ value: mesActual.toLowerCase(), label: mesActual });
+      setSelectedSemana({ value: semanaActual.toString(), label: semanaActual.toString() });
   };
 
   useEffect(() => {

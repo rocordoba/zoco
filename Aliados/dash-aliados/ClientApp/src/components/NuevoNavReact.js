@@ -139,163 +139,165 @@ const NuevoNavReact = ({ name, ...props }) => {
     actualizarDatos(datos);
   };
 
-  const procesarDatos = (data) => {
-  //  console.log("Respuesta de la API:", data);
+    const procesarDatos = (data) => {
+        //   console.log("Respuesta de la API:", data);
 
-    const optionsComercio = data.comercios.map((comercio) => ({
-      value: comercio.toLowerCase().replace(/\s+/g, ""),
-      label: comercio,
-    }));
+        const optionsComercio = data.comercios.map((comercio) => ({
+            value: comercio.toLowerCase().replace(/\s+/g, ""),
+            label: comercio,
+        }));
 
-    const fechaInicio = new Date(data.fechaInicio);
-    const fechaFin = new Date(data.fechaFin);
+        const fechaInicio = new Date(data.fechaInicio);
+        const fechaFin = new Date(data.fechaFin);
 
-    const optionsAnios = [];
-    for (
-      let año = fechaInicio.getFullYear();
-      año <= fechaFin.getFullYear();
-      año++
-    ) {
-      optionsAnios.push({ value: año.toString(), label: año.toString() });
-    }
+        const optionsAnios = [];
+        for (
+            let año = fechaInicio.getFullYear();
+            año <= fechaFin.getFullYear();
+            año++
+        ) {
+            optionsAnios.push({ value: año.toString(), label: año.toString() });
+        }
 
-    const optionsMeses = [];
-    let fechaActual = fechaInicio;
-    while (fechaActual <= fechaFin) {
-      const mes = fechaActual.toLocaleString("es", { month: "long" });
-      optionsMeses.push({ value: mes.toLowerCase(), label: mes });
-      fechaActual = new Date(
-        fechaActual.getFullYear(),
-        fechaActual.getMonth() + 1,
-        1
-      );
-    }
+        const optionsMeses = [];
+        let fechaActual = fechaInicio;
+        while (fechaActual <= fechaFin) {
+            const mes = fechaActual.toLocaleString("es", { month: "long" });
+            optionsMeses.push({ value: mes.toLowerCase(), label: mes });
+            fechaActual = new Date(
+                fechaActual.getFullYear(),
+                fechaActual.getMonth() + 1,
+                1
+            );
+        }
+        const añoActual = new Date().getFullYear();
+        const mesActual = new Date().toLocaleString("es", { month: "long" });
 
-    setOptionsComercio(optionsComercio);
-    setOptionsAnios(optionsAnios);
-    setOptionsMes(optionsMeses);
-    setOptionsSemanas(optionsSemanas);
-    setFechaInicio(fechaInicio);
-    setFechaFin(fechaFin);
-  };
+        // Función para obtener el número de la semana
+        const obtenerNumeroSemana = (fecha) => {
+            const inicioDeAño = new Date(fecha.getFullYear(), 0, 1);
+            const diff = fecha - inicioDeAño;
+            const semana = Math.ceil((diff / 86400000 + inicioDeAño.getDay() + 1) / 7);
+            return semana;
+        };
 
-  useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
-
-    const requestData = {
-      token: token,
-      id: userId,
+        // Obtener la semana actual
+        const semanaActual = obtenerNumeroSemana(new Date());
+        setOptionsComercio(optionsComercio);
+        setOptionsAnios(optionsAnios);
+        setOptionsMes(optionsMeses);
+        setOptionsSemanas(optionsSemanas);
+        setFechaInicio(fechaInicio);
+        setFechaFin(fechaFin);
+        setSelectedAnio({ value: añoActual.toString(), label: añoActual.toString() });
+        setSelectedMes({ value: mesActual.toLowerCase(), label: mesActual });
+        setSelectedSemana({ value: semanaActual.toString(), label: semanaActual.toString() });
     };
 
-    if (token && userId) {
-      fetch("/api/bienvenidopanel/bienvenidopanel", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestData),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Error en la solicitud");
-          }
-          return response.json();
-        })
-        .then((data) => {
-     //     console.log("Datos recibidos de la API:", data);
-          procesarDatos(data);
-        })
-        .catch((error) => {
-          console.error("Error en la solicitud:", error);
+    useEffect(() => {
+        const token = sessionStorage.getItem("token");
+        const userId = localStorage.getItem("userId");
+
+        const requestData = {
+            token: token,
+            id: userId,
+        };
+
+        if (token && userId) {
+            fetch("/api/bienvenidopanel/bienvenidopanel", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(requestData),
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Error en la solicitud");
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    //   console.log("Datos recibidos de la API:", data);
+                    procesarDatos(data);
+                })
+                .catch((error) => {
+                    console.error("Error en la solicitud:", error);
+                });
+        }
+    }, []);
+    const actualizarMesesPorAnio = (anioSeleccionado) => {
+        if (!fechaInicio || !fechaFin) return;
+        setDatosSelect({
+            anio: parseInt(anioSeleccionado),
         });
-    }
-  }, []);
-  const actualizarMesesPorAnio = (anioSeleccionado) => {
-    if (!fechaInicio || !fechaFin) return;
-    setDatosSelect({
-      anio: parseInt(anioSeleccionado),
-    });
-    const mesInicio =
-      new Date(anioSeleccionado, 0, 1).getFullYear() ===
-      fechaInicio.getFullYear()
-        ? fechaInicio.getMonth()
-        : 0;
+        const mesInicio =
+            new Date(anioSeleccionado, 0, 1).getFullYear() ===
+                fechaInicio.getFullYear()
+                ? fechaInicio.getMonth()
+                : 0;
 
-    const mesFin = fechaFin.getMonth() >= mesInicio ? fechaFin.getMonth() : 11;
+        const mesFin = fechaFin.getMonth() >= mesInicio ? fechaFin.getMonth() : 11;
 
-    const optionsMeses = [];
-    for (let mes = mesInicio; mes <= mesFin; mes++) {
-      let fechaActual = new Date(anioSeleccionado, mes, 1);
-      const nombreMes = fechaActual.toLocaleString("es", { month: "long" });
-      optionsMeses.push({ value: mes + 1, label: nombreMes }); // Cambio aquí: usar mes + 1 como valor
-    }
+        const optionsMeses = [];
+        for (let mes = mesInicio; mes <= mesFin; mes++) {
+            let fechaActual = new Date(anioSeleccionado, mes, 1);
+            const nombreMes = fechaActual.toLocaleString("es", { month: "long" });
+            optionsMeses.push({ value: mes + 1, label: nombreMes }); // Cambio aquí: usar mes + 1 como valor
+        }
 
-    setOptionsMes(optionsMeses);
-    setSelectedMes(null);
-  };
-  const actualizarSemanasPorMes = (anioSeleccionado, mesSeleccionado) => {
-    const primerDiaMes = new Date(anioSeleccionado, mesSeleccionado - 1, 1);
-    const ultimoDiaMes = new Date(anioSeleccionado, mesSeleccionado, 0);
+        setOptionsMes(optionsMeses);
+        setSelectedMes(null);
+    };
+    const actualizarSemanasPorMes = (anioSeleccionado, mesSeleccionado) => {
+        const primerDiaMes = new Date(anioSeleccionado, mesSeleccionado - 1, 1);
+        const ultimoDiaMes = new Date(anioSeleccionado, mesSeleccionado, 0);
 
-    let diaActual = new Date(primerDiaMes.getTime());
-    let semanas = [];
-    let semana = [];
-    let numeroSemana = 0;
+        let diaActual = new Date(primerDiaMes.getTime());
+        let semanas = [];
+        let semana = [];
+        let numeroSemanaDelMes = 0;
 
-    if (diaActual < fechaInicio) {
-      diaActual = new Date(fechaInicio.getTime());
-    }
+        // Ajustar el primer día de la semana al lunes más cercano
+        if (diaActual.getDay() !== 1) {
+            diaActual.setDate(diaActual.getDate() - diaActual.getDay() + 1);
+        }
 
-    if (diaActual.getDay() !== 1) {
-      let diaInicioSemana = new Date(diaActual);
-      diaInicioSemana.setDate(
-        diaInicioSemana.getDate() - diaActual.getDay() + 1
-      );
+        // Iterar a través de los días del mes
+        for (let d = new Date(diaActual); d <= ultimoDiaMes; d.setDate(d.getDate() + 1)) {
+            if (d.getDate() === 1 || d.getDay() === 1) {
+                numeroSemanaDelMes++;
+            }
 
-      for (
-        let d = new Date(diaInicioSemana);
-        d < diaActual;
-        d.setDate(d.getDate() + 1)
-      ) {
-        semana.push(new Date(d));
-      }
-    }
+            // Detener el proceso si se alcanza la semana 5
+            if (numeroSemanaDelMes > 5) {
+                break;
+            }
 
-    for (
-      let d = new Date(diaActual);
-      d <= ultimoDiaMes && d <= fechaFin;
-      d.setDate(d.getDate() + 1)
-    ) {
-      semana.push(new Date(d));
-      if (
-        d.getDay() === 0 ||
-        d.getDate() === ultimoDiaMes.getDate() ||
-        d.getDate() === fechaFin.getDate()
-      ) {
-        numeroSemana++;
-        semanas.push({ semana: numeroSemana, dias: [...semana] });
-        semana = [];
-      }
-    }
+            semana.push(new Date(d));
+            if (d.getDay() === 0 || d.getDate() === ultimoDiaMes.getDate()) {
+                semanas.push({ numeroSemanaDelMes, dias: [...semana] });
+                semana = [];
+            }
+        }
 
-    const semanasFormateadas = semanas.map((semana) => {
-      const inicioSemana = semana.dias[0];
-      const finSemana = semana.dias[semana.dias.length - 1];
-      const opcionesFormato = { day: "2-digit", month: "long" };
-      const label = `${inicioSemana.toLocaleDateString(
-        "es-ES",
-        opcionesFormato
-      )} - ${finSemana.toLocaleDateString("es-ES", opcionesFormato)}`;
-      const value = semana.semana;
+        // Filtrar las semanas que caen dentro del rango de fechaInicio y fechaFin
+        const semanasFiltradas = semanas.filter(semana => {
+            const inicioSemana = semana.dias[0];
+            const finSemana = semana.dias[semana.dias.length - 1];
+            return (!fechaInicio || finSemana >= fechaInicio) && (!fechaFin || inicioSemana <= fechaFin);
+        });
 
-      console.log(value);
+        // Formatear las semanas para el uso en el front-end
+        const semanasFormateadas = semanasFiltradas.map(semana => {
+            const label = `Semana ${semana.numeroSemanaDelMes}`;
+            const value = semana.numeroSemanaDelMes;
 
-      return { label, value };
-    });
+            return { label, value };
+        });
 
-    setOptionsSemanas(semanasFormateadas);
-  };
+        setOptionsSemanas(semanasFormateadas);
+    };
 
   const mandarSemana = (selectedSemana) => {
     const valorSemanaSeleccionada = selectedSemana;
@@ -335,11 +337,7 @@ const NuevoNavReact = ({ name, ...props }) => {
 
     enviarDatosAlContexto(datosSelect);
 
-    Swal.fire({
-      title: "¡Filtrado!",
-      icon: "success",
-      confirmButtonText: "Ok",
-    });
+  
   };
 
   const verModalFilter = () => {

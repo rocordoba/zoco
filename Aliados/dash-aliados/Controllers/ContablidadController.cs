@@ -40,8 +40,8 @@ namespace dash_aliados.Controllers
                 // Verificar si el año, mes y semana son actuales
                 if (request.Year == currentDate.Year && request.Month == currentDate.Month && request.Week == currentWeek)
                 {
-                   
-                   
+
+                    var fechaPagoMasActual = sas.Max(s => s.FechaDePago);
                     // Verificar si el comercio es "Todos"
                     if (request.comercio.ToLower() == "todos")
                     {
@@ -49,7 +49,7 @@ namespace dash_aliados.Controllers
                         //var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.Usuario /*, request.Year, request.Month, request.Week, request.comercio*/);
 
                         var listaHoy = ObtenerListaPorFecha(sas, DateTime.Today);
-                        var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), DateTime.Today);
+                        var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), fechaPagoMasActual.Value);
                         var totalNetoHoy = ObtenerTotalNeto(listaHoy);
                         var totalBrutoHoy = ObtenerTotalBruto(listaHoy);
                       var totalNetoMes = ObtenerTotalNeto(listaMes);
@@ -62,7 +62,7 @@ namespace dash_aliados.Controllers
                         var arancel = obtenerarancelmes(listaMes);
                         var ingresobruto = obteneringresobruto(listaMes);
                         var retencionganancia = obtenerretencionganancia(listaMes);
-                   
+                        var retencioniva = ObtenerTotalRetencionesIva(listaMes);
                         var resultado = new
                         {
                             AñoActual = request.Year,
@@ -78,6 +78,7 @@ namespace dash_aliados.Controllers
                             TotalBrutoMes = totalbrutomes,
                             Ingresobruto = ingresobruto,
                             Retencionganancia = retencionganancia,
+                            RetecionIva = retencioniva,
 
                         };
 
@@ -88,7 +89,7 @@ namespace dash_aliados.Controllers
                         sas = sas.Where(s => s.NombreComercio != null && s.NombreComercio.ToLower() == request.comercio.ToLower()).ToList();
 
                         var listaHoy = ObtenerListaPorFecha(sas, DateTime.Today);
-                        var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), DateTime.Today);
+                        var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), fechaPagoMasActual.Value);
                         var totalNetoHoy = ObtenerTotalNeto(listaHoy);
                         var totalBrutoHoy = ObtenerTotalBruto(listaHoy);
                         var totalNetoMes = ObtenerTotalNeto(listaMes);
@@ -101,6 +102,7 @@ namespace dash_aliados.Controllers
                         var arancel = obtenerarancelmes(listaMes);
                         var ingresobruto = obteneringresobruto(listaMes);
                         var retencionganancia = obtenerretencionganancia(listaMes);
+                        var retencioniva = ObtenerTotalRetencionesIva(listaMes);
                         var resultado = new
                         {
                             AñoActual = request.Year,
@@ -116,6 +118,7 @@ namespace dash_aliados.Controllers
                             TotalBrutoMes = totalbrutomes,
                             Ingresobruto = ingresobruto,
                             Retencionganancia = retencionganancia,
+                            RetecionIva = retencioniva,
 
                         };
 
@@ -150,6 +153,7 @@ namespace dash_aliados.Controllers
                         var arancel = obtenerarancelmes(listaMes);
                         var ingresobruto = obteneringresobruto(listaMes);
                         var retencionganancia = obtenerretencionganancia(listaMes);
+                        var retencioniva = ObtenerTotalRetencionesIva(listaMes);
                         var resultado = new
                         {
                             AñoActual = request.Year,
@@ -165,6 +169,7 @@ namespace dash_aliados.Controllers
                             TotalBrutoMes = totalbrutomes,
                             Ingresobruto = ingresobruto,
                             Retencionganancia = retencionganancia,
+                            RetecionIva = retencioniva,
 
                         };
 
@@ -194,6 +199,7 @@ namespace dash_aliados.Controllers
                         var arancel = obtenerarancelmes(listaMes);
                         var ingresobruto = obteneringresobruto(listaMes);
                         var retencionganancia = obtenerretencionganancia(listaMes);
+                        var retencioniva = ObtenerTotalRetencionesIva(listaMes);
                         var resultado = new
                         {
                             AñoActual = request.Year,
@@ -209,6 +215,7 @@ namespace dash_aliados.Controllers
                             TotalBrutoMes = totalbrutomes,
                             Ingresobruto = ingresobruto,
                             Retencionganancia = retencionganancia,
+                            RetecionIva = retencioniva,
 
                         };
 
@@ -315,6 +322,10 @@ namespace dash_aliados.Controllers
         private double ObtenerTotalRetenciones(List<BaseDashboard> lista)
         {
             return (double)lista.Sum(s => s.RetencionImpositiva);
+        }
+        private double ObtenerTotalRetencionesIva(List<BaseDashboard> lista)
+        {
+            return (double)lista.Sum(s => s.RetencionIva);
         }
         private double ObtenerTotalIva(List<BaseDashboard> lista)
         {

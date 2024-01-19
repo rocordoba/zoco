@@ -11,8 +11,8 @@ const DatosContabilidad = ({ datosBack }) => {
     totalNetoMes,
     totalRetencionesMes,
     totalIvaMes
-  );
-
+    );
+  
   const { darkMode } = useContext(DarkModeContext);
   return (
     <section className="container ">

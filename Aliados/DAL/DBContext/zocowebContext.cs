@@ -30,7 +30,7 @@ namespace DAL.DBContext
         public virtual DbSet<RolMenu> RolMenus { get; set; } = null!;
         public virtual DbSet<Usuarios> Usuarios { get; set; } = null!;
         public virtual DbSet<UsuarioNo> UsuarioNos { get; set; } = null!;
-
+        public virtual DbSet<TasaIntere> TasaInteres { get; set; } = null!;
         public virtual DbSet<Token> Tokens { get; set; } = null!;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -40,6 +40,23 @@ namespace DAL.DBContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<TasaIntere>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.Property(e => e.Descripciontasa)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("descripciontasa");
+
+                entity.Property(e => e.Fechavencimiento)
+                    .HasColumnType("date")
+                    .HasColumnName("fechavencimiento");
+
+                entity.Property(e => e.Tasa)
+                    .HasColumnType("decimal(5, 2)")
+                    .HasColumnName("tasa");
+            });
             modelBuilder.Entity<Token>(entity =>
             {
                 entity.ToTable("tokens");

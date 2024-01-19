@@ -236,7 +236,7 @@ const ComportamientoGrafica = ({ datos }) => {
               }
             >
               <h2 className="fs-18 text-center pb-3" style={{ top: "0%" }}>
-                Facturación por rubro
+                              Comportamiento de ventas
               </h2>
               <div className="d-flex justify-content-center">
                 <Line className="px-3" data={data} options={options} />
@@ -291,7 +291,7 @@ const ComportamientoGrafica = ({ datos }) => {
               >
                 <h5 className="text-center py-4 lato-bold fs-16">
                   {" "}
-                  Comportamiento de ventas
+                                  Comportamiento de ventas
                 </h5>
                 <div className="d-flex justify-content-center">
                   <Line

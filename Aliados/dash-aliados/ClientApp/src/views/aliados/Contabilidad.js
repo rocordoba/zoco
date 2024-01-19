@@ -18,6 +18,8 @@ const Contabilidad = () => {
         window.location.reload();
      
     }
+    const [contabilidad, setdatoscontabilidad] = useState([]);
+   
     useEffect(() => {
         const verificarToken = async () => {
             const token = sessionStorage.getItem("token");
@@ -32,7 +34,7 @@ const Contabilidad = () => {
                 });
 
                 if (response.ok) {
-                   
+                    obtenerTasaInteres();
                 } else {
                     if (response.status === 401 || token === null) {
                         navegacion("/");
@@ -44,6 +46,27 @@ const Contabilidad = () => {
             } catch (error) {
                 console.error("Error al validar el token", error);
             }
+        }; const obtenerTasaInteres = async () => {
+            try {
+                const response = await fetch('/api/tasainteres/tasainteres', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // Asegúrate de incluir cualquier encabezado de autenticación si es necesario
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setdatoscontabilidad(data);
+                   
+                    // Aquí puedes manejar los datos recibidos como prefieras
+                } else {
+                    throw new Error("No se pudieron obtener los datos de TasaInteres");
+                }
+            } catch (error) {
+                console.error("Error al obtener datos de TasaInteres", error);
+            }
         };
 
         const checkResponseCodeAndRedirect = () => {
@@ -53,10 +76,11 @@ const Contabilidad = () => {
                 recargarPagina();
             }
         };
-
+     
         verificarToken();
         checkResponseCodeAndRedirect();
     }, [history, codigoRespuesta]);
+ 
   return (
     <div>
       <div className="d-xl-block d-none mt-4 pt-4 ">
@@ -75,12 +99,12 @@ const Contabilidad = () => {
           <Impuesto2Cards datosBack={datosContabilidadContext} />
         </div>
         <div className="py-2">
-          <Impuesto2CardsBn />
+                  <Impuesto2CardsBn DatosTasa={contabilidad} />
         </div>
       </section>
       <section className="d-block d-lg-none">
         <div className="py-5">
-        <ImpuestosCards datosBack={datosContabilidadContext} /> 
+                  <ImpuestosCards datosBack={datosContabilidadContext} DatosTasa={contabilidad} />
         </div>
       </section>
       <div className="py-4">

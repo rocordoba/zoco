@@ -55,6 +55,14 @@ namespace dash_aliados.Controllers
                         var totalConDescuentoCuotas1 = ObtenerTotalConDescuentoCuotas(listaMes, 1);
                         var totalConDescuentoCuotas2 = ObtenerTotalConDescuentoCuotas(listaMes, 2);
                         var cuotas = ObtenerCuotasYTotales(listaMes);
+                        var datosImportantes = cuotas
+         .Select(cuota => new
+         {
+             Cuota = cuota.Cuota,
+             TotalBruto = cuota.TotalBruto
+             // Puedes agregar aquí cualquier otra lógica de transformación o filtrado
+         })
+         .ToList();
                         var totalCuotas = totalConDescuentoCuotas1 + totalConDescuentoCuotas2;
                         var tarea = ObtenerResumenUltimos7Meses(sas);
                         var resumenUltimos7Meses = tarea.Result;
@@ -81,8 +89,8 @@ namespace dash_aliados.Controllers
                             Credito = credito,
                             CreditoFacturacion = creditofacturacion,
                             DebitoFacturacion = debitofacturacion,
-                            Cuotas = cuotas
-                        
+                            Cuotas = datosImportantes
+
                         };
 
                         return StatusCode(StatusCodes.Status200OK, resultado);
@@ -98,6 +106,14 @@ namespace dash_aliados.Controllers
                         var totalCuotas = totalConDescuentoCuotas1 + totalConDescuentoCuotas2;
                         var tarea = ObtenerResumenUltimos7Meses(sas);
                         var cuotas = ObtenerCuotasYTotales(listaMes);
+                        var datosImportantes = cuotas
+      .Select(cuota => new
+      {
+          Cuota = cuota.Cuota,
+          TotalBruto = cuota.TotalBruto
+          // Puedes agregar aquí cualquier otra lógica de transformación o filtrado
+      })
+      .ToList();
                         var resumenUltimos7Meses = tarea.Result;
                         var creditofacturacion = ObtenerTotalNeto(listaMes);
                         var debitofacturacion = ObtenerTotalBruto(listaMes);
@@ -122,7 +138,7 @@ namespace dash_aliados.Controllers
                             Credito = credito,
                             CreditoFacturacion = creditofacturacion,
                             DebitoFacturacion = debitofacturacion,
-                            Cuotas = cuotas
+                            Cuotas = datosImportantes
 
                         };
 
@@ -156,11 +172,20 @@ namespace dash_aliados.Controllers
                         var totalConDescuentoCuotas1 = ObtenerTotalConDescuentoCuotas(listaFiltrada, 1);
                         var totalConDescuentoCuotas2 = ObtenerTotalConDescuentoCuotas(listaFiltrada, 2);
                         var totalCuotas = totalConDescuentoCuotas1 + totalConDescuentoCuotas2;
+
                         var tarea = ObtenerResumenUltimos7Meses(listaFiltradaUltimos7Meses);
                         var resumenUltimos7Meses = tarea.Result;
                         var creditofacturacion = ObtenerTotalNeto(listaFiltrada);
                         var debitofacturacion = ObtenerTotalBruto(listaFiltrada);
                         var cuotas = ObtenerCuotasYTotales(listaFiltrada);
+                        var datosImportantes = cuotas
+.Select(cuota => new
+{
+Cuota = cuota.Cuota,
+TotalBruto = cuota.TotalBruto
+    // Puedes agregar aquí cualquier otra lógica de transformación o filtrado
+})
+.ToList();
                         var debito = ObtenerTicketPromedio(listaFiltrada, 0);
                         var credito = ObtenerTicketPromedio(listaFiltrada, 1);
                         var porcentajeporcuotas = ObtenerPorcentaje(totalConDescuentoCuotas0, totalCuotas);
@@ -182,8 +207,7 @@ namespace dash_aliados.Controllers
                             Credito = credito,
                             CreditoFacturacion = creditofacturacion,
                             DebitoFacturacion = debitofacturacion,
-                            Cuotas = cuotas
-
+                            Cuotas = datosImportantes
                         };
 
                         return StatusCode(StatusCodes.Status200OK, resultado);
@@ -221,6 +245,14 @@ namespace dash_aliados.Controllers
                         var debito = ObtenerTicketPromedio(listaFiltrada, 0);
                         var credito = ObtenerTicketPromedio(listaFiltrada, 1);
                         var cuotas = ObtenerCuotasYTotales(listaFiltrada);
+                        var datosImportantes = cuotas
+.Select(cuota => new
+{
+Cuota = cuota.Cuota,
+TotalBruto = cuota.TotalBruto
+    // Puedes agregar aquí cualquier otra lógica de transformación o filtrado
+})
+.ToList();
                         var porcentajeporcuotas = ObtenerPorcentaje(totalConDescuentoCuotas0, totalCuotas);
                         var porcentajeticket = ObtenerPorcentaje(debito, credito);
                         var porcentajetipopago = ObtenerPorcentaje(totalConDescuentoCuotas0, totalConDescuentoCuotas1);
@@ -240,7 +272,7 @@ namespace dash_aliados.Controllers
                             Credito = credito,
                             CreditoFacturacion = creditofacturacion,
                             DebitoFacturacion = debitofacturacion,
-                            Cuotas = cuotas
+                            Cuotas = datosImportantes
 
                         };
 

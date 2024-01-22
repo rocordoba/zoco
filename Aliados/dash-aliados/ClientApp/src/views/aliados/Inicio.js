@@ -18,80 +18,78 @@ import { useNavigate } from "react-router-dom";
 const Inicio = ({ califico, setCalifico }) => {
   const { darkMode } = useContext(DarkModeContext);
   // de aqui saca los datos del context
-    const { datosBackContext, codigoRespuesta } = useContext(DatosInicioContext);
+  const { datosBackContext, codigoRespuesta } = useContext(DatosInicioContext);
   const [contador, setContador] = useState(0);
   const [datosMandados, setDatosMandados] = useState();
   const navegacion = useNavigate();
-    const history = useNavigate();
-    const [estadoCalifico, setEstadoCalifico] = useState(null);
-    function recargarPagina() {
-        window.location.reload();
+  const history = useNavigate();
+  const [estadoCalifico, setEstadoCalifico] = useState(null);
+  function recargarPagina() {
+    window.location.reload();
+  }
+  useEffect(() => {
+    const verificarToken = async () => {
+      const token = sessionStorage.getItem("token");
 
-    }
-    useEffect(() => {
-        const verificarToken = async () => {
-            const token = sessionStorage.getItem("token");
+      try {
+        const response = await fetch("/api/token/token", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ Token: token }),
+        });
 
-            try {
-                const response = await fetch('/api/token/token', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ Token: token })
-                });
+        if (response.ok) {
+          // Llama a obtenerCalifico solo si el token es vï¿½lido
+          obtenerCalifico(token);
+        } else {
+          if (response.status === 401 || token === null) {
+            navegacion("/");
+            recargarPagina();
+          } else {
+            throw new Error("Respuesta no satisfactoria del servidor");
+          }
+        }
+      } catch (error) {
+        console.error("Error al validar el token", error);
+      }
+    };
 
-                if (response.ok) {
-                    // Llama a obtenerCalifico solo si el token es válido
-                    obtenerCalifico(token);
-                } else {
-                    if (response.status === 401 || token === null) {
-                        navegacion("/");
-                        recargarPagina();
-                    } else {
-                        throw new Error("Respuesta no satisfactoria del servidor");
-                    }
-                }
-            } catch (error) {
-                console.error("Error al validar el token", error);
-            }
-        };
+    const checkResponseCodeAndRedirect = () => {
+      if (codigoRespuesta !== null && codigoRespuesta !== 200) {
+        console.log(codigoRespuesta);
+        navegacion("/");
+        recargarPagina();
+      }
+    };
 
-        const checkResponseCodeAndRedirect = () => {
-            if (codigoRespuesta !== null && codigoRespuesta !== 200) {
-                console.log(codigoRespuesta);
-                navegacion("/");
-                recargarPagina();
-            }
-        };
+    const obtenerCalifico = async (token) => {
+      try {
+        const response = await fetch("/api/califico/calificomes", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ Token: token }),
+        });
 
-        const obtenerCalifico = async (token) => {
-            try {
-                const response = await fetch('/api/califico/calificomes', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ Token: token })
-                });
+        if (response.ok) {
+          const resultadoCalifico = await response.json();
 
-                if (response.ok) {
-                    const resultadoCalifico = await response.json();
+          console.log(resultadoCalifico);
+          setEstadoCalifico(resultadoCalifico); // Actualiza el nuevo estado
+        } else {
+          throw new Error("Error al obtener califico");
+        }
+      } catch (error) {
+        console.error("Error en la solicitud de califico", error);
+      }
+    };
 
-
-                    console.log(resultadoCalifico);
-                    setEstadoCalifico(resultadoCalifico); // Actualiza el nuevo estado
-                } else {
-                    throw new Error("Error al obtener califico");
-                }
-            } catch (error) {
-                console.error("Error en la solicitud de califico", error);
-            }
-        };
-
-        verificarToken();
-        checkResponseCodeAndRedirect();
-    }, [history, codigoRespuesta, setCalifico]); // Asegúrate de incluir todas las dependencias necesarias
+    verificarToken();
+    checkResponseCodeAndRedirect();
+  }, [history, codigoRespuesta, setCalifico]); // Asegï¿½rate de incluir todas las dependencias necesarias
 
   return (
     <div>
@@ -107,7 +105,7 @@ const Inicio = ({ califico, setCalifico }) => {
         <DatosInicio datos={datosBackContext} />
       </div>
       {/* <ModalEditable /> */}
-          {estadoCalifico === false && (
+      {estadoCalifico === false && (
         <>
           <PopUpCalificar califico={califico} setCalifico={setCalifico} />
         </>

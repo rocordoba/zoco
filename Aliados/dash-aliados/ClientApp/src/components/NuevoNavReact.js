@@ -31,6 +31,7 @@ import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import ModalConfiguracionesCel from "./ModalConfiguracionesCel";
 import { DatosInicioContext } from "../context/DatosInicioContext";
 import Swal from "sweetalert2";
+import NotificacionIndicador from "./NotificacionIndicador";
 
 const optionsAnios = [
   { value: "2023", label: "2023" },
@@ -517,6 +518,8 @@ const NuevoNavReact = ({ name, ...props }) => {
     fetchNoticias();
   }, []);
 
+  const [hayNotificacionesNoVistas, setHayNotificacionesNoVistas] = useState(true);
+
   return (
     <section className="container">
       <Offcanvas
@@ -544,13 +547,18 @@ const NuevoNavReact = ({ name, ...props }) => {
                 />
               </div>
 
-              <div className="zoom">
-                <FontAwesomeIcon
-                  className={activadoIconoCampana()}
-                  onClick={verModalNotificacion}
-                  icon={faBell}
-                />
-              </div>
+              <div className="zoom" style={{ position: "relative" }}>
+            {hayNotificacionesNoVistas && <NotificacionIndicador count={"!"} />}
+              <FontAwesomeIcon
+                onClick={() => {
+                  verModalNotificacion();
+                  setVisible2(false);
+                  setHayNotificacionesNoVistas(false);
+                }}
+                className={activadoIconoCampana()}
+                icon={faBell}
+              />
+            </div>
 
               <div className="zoom">
                 <FontAwesomeIcon

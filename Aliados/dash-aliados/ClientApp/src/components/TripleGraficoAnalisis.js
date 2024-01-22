@@ -46,9 +46,10 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
     debitoFacturacion,
     porcentajeporcuotas,
     porcentajeticket,
-    porcentajetipopago,
-  } = datosBack;
-
+      porcentajetipopago,
+    cuotas
+    } = datosBack;
+    console.log(cuotas);
   let numeroPorcentual = porcentajeporcuotas || 0;
   let porcentajeFinal = numeroPorcentual.toFixed(2);
   let porcentajeEnteroCuotas = convertirDecimalAPorcentaje(porcentajeFinal);

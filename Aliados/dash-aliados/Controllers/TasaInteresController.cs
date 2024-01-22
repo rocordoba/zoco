@@ -35,7 +35,9 @@ namespace dash_aliados.Controllers
 
             // Primero intenta obtener las tasas del mes actual
             var sasListaFiltrada = sasLista.Where(tasa =>
-                tasa.Fechavencimiento?.Month == mesActual && tasa.Fechavencimiento?.Year == añoActual).ToList();
+         tasa.Fechavencimiento != null &&
+         (tasa.Fechavencimiento.Value.Month == mesActual && tasa.Fechavencimiento.Value.Year == añoActual))
+         .ToList();
 
             // Si no encuentra tasas del mes actual, busca las del mes anterior
             if (sasListaFiltrada.Count == 0)

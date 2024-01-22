@@ -38,8 +38,10 @@ namespace dash_aliados.Controllers
                 var currentDate = DateTime.Today;
                 var currentWeek = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(currentDate, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
                 var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.usuario.Usuario);
-                //   var inflacion = await _inflacionService.ObtenerPorRubro(usuarioEncontrado.Usuario);
-                // Verificar si el año, mes y semana son actuales
+                if (sas == null)
+                {
+                    return NotFound("Datos no disponibles");
+                }
                 if (request.Year == currentDate.Year && request.Month == currentDate.Month && request.Week == currentWeek)
                 {
 
@@ -188,7 +190,7 @@ namespace dash_aliados.Controllers
         }
         private double ObtenerTotalBruto(List<BaseDashboard> lista)
         {
-            return (double)lista.Sum(s => s.TotalConDescuentos);
+            return (double)(lista.Sum(s => s.TotalConDescuentos) ?? 0);
         }
         private double ObtenerTotalOperaciones(List<BaseDashboard> sas)
         {
@@ -202,6 +204,10 @@ namespace dash_aliados.Controllers
 
         public List<object> ObtenerSumaPorDia(List<BaseDashboard> lista)
         {
+            if (lista == null)
+            {
+                return new List<object>();
+            }
             var sumasPorDia = lista
                 .GroupBy(item => item.FechaDePago)
                 .Select(group => new

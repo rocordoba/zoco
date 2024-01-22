@@ -103,6 +103,8 @@ namespace dash_aliados.Controllers
                         var totalOperaciones = ObtenerTotalOperaciones(sas);
                         var totalConDescuentoCuotas1 = ObtenerTotalConDescuentoCuotas(sas, 1);
                         var totalConDescuentoCuotas2 = ObtenerTotalConDescuentoCuotas(sas, 2);
+
+
                         var totalNetoHoy = ObtenerTotalNeto(listaHoy);
                         var totalBrutoHoy = ObtenerTotalBruto(listaHoy);
                         var totalNetoMañana = ObtenerTotalNeto(listaMañana);
@@ -343,7 +345,7 @@ namespace dash_aliados.Controllers
                         var totalOperaciones = ObtenerTotalOperaciones(listaFiltrada);
                         var totalConDescuentoCuotas1 = ObtenerTotalConDescuentoCuotas(listaFiltrada, 1);
                         var totalConDescuentoCuotas2 = ObtenerTotalConDescuentoCuotas(listaFiltrada, 2);
-
+                     
                         var totalNetoMes = ObtenerTotalNeto(listaMes);
                         var totalBrutoMes = ObtenerTotalBruto(listaMes);
                         var ComparativaMes = ObtenerMes(listaMes);
@@ -571,6 +573,12 @@ namespace dash_aliados.Controllers
         // Este método recibe una lista de movimientos y devuelve una lista de fechas únicas ordenadas de forma descendente
         public List<DateTime> ObtenerFechasUnicas(List<BaseDashboard> movimientosUltimos7Dias)
         {
+
+
+            if (movimientosUltimos7Dias == null || !movimientosUltimos7Dias.Any())
+            {
+                return new List<DateTime>();
+            }
             // Encuentra la fecha más reciente en FechaOperacion
             DateTime fechaMasReciente = movimientosUltimos7Dias.Max(s => s.FechaOperacion) ?? DateTime.MinValue;
 
@@ -613,6 +621,10 @@ namespace dash_aliados.Controllers
 
         private Dictionary<string, List<KeyValuePair<string, decimal>>> ObtenerTotalesPorDiaPorTarjeta(List<BaseDashboard> sas, List<DateTime> fechasUnicas)
         {
+            if (sas == null || fechasUnicas == null || !sas.Any() || !fechasUnicas.Any())
+            {
+                return new Dictionary<string, List<KeyValuePair<string, decimal>>>();
+            }
             var totalesPorDiaPorTarjeta = new Dictionary<string, Dictionary<string, decimal>>();
 
             foreach (var fecha in fechasUnicas)
@@ -756,15 +768,15 @@ namespace dash_aliados.Controllers
         }
         private double ObtenerTotalNeto(List<BaseDashboard> lista)
         {
-            return (double)lista.Sum(s => s.TotalConDescuentos);
+            return (double)(lista.Sum(s => s.TotalConDescuentos) ?? 0);
         }
 
         private double ObtenerTotalBruto(List<BaseDashboard> lista)
         {
-            return (double)lista.Sum(s => s.TotalBruto);
+            return (double)(lista.Sum(s => s.TotalBruto) ?? 0);
         }
 
-     
+
 
         private double ObtenerComparativa(List<BaseDashboard> sas, List<BaseDashboard> lista)
         {
@@ -773,9 +785,10 @@ namespace dash_aliados.Controllers
 
         private double ObtenerPorcentaje(double comparativaHoy, double comparativaDiaAnterior)
         {
-            var resultadoResta = comparativaHoy - comparativaDiaAnterior;
-            var resultado = (resultadoResta / comparativaHoy);
-            return resultado;
+            if (comparativaHoy == 0) return 0;
+
+            var diferencia = comparativaHoy - comparativaDiaAnterior;
+            return diferencia / comparativaHoy;
         }
 
 

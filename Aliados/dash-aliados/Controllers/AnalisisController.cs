@@ -6,6 +6,7 @@ using dash_aliados.Models.ViewModelsZoco;
 using Entity.Zoco;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
 
@@ -53,44 +54,7 @@ namespace dash_aliados.Controllers
                         var totalConDescuentoCuotas0 = ObtenerTotalConDescuentoCuotas(listaMes, 0);
                         var totalConDescuentoCuotas1 = ObtenerTotalConDescuentoCuotas(listaMes, 1);
                         var totalConDescuentoCuotas2 = ObtenerTotalConDescuentoCuotas(listaMes, 2);
-                        var totalCuotas = totalConDescuentoCuotas1 + totalConDescuentoCuotas2;
-                        var tarea = ObtenerResumenUltimos7Meses(sas);
-                        var resumenUltimos7Meses = tarea.Result;
-                        var creditofacturacion = ObtenerTotalNeto(listaMes);
-                        var debitofacturacion = ObtenerTotalBruto(listaMes);
-                        var debito = ObtenerTicketPromedio(listaMes, 0);
-                        var credito = ObtenerTicketPromedio(listaMes, 1);
-                        var porcentajeporcuotas = ObtenerPorcentaje(totalConDescuentoCuotas0, totalCuotas);
-                        var porcentajeticket = ObtenerPorcentaje(debito, credito);
-                        var porcentajetipopago = ObtenerPorcentaje(totalConDescuentoCuotas0, totalConDescuentoCuotas1);
-                        var resultado = new
-                        {
-                            AñoActual = request.Year,
-                            TotalOperaciones = totalOperaciones,
-                            TotalConDescuentoCuotas0 = totalConDescuentoCuotas0,
-                            TotalConDescuentoCuotas1 = totalConDescuentoCuotas1,
-                            TotalConDescuentoCuotas2 = totalConDescuentoCuotas2,
-                            TotalCuotas = totalCuotas,
-                            ResumenUltimos7Meses = resumenUltimos7Meses,
-                            Porcentajeporcuotas = porcentajeporcuotas,
-                            Porcentajeticket = porcentajeticket,
-                            Porcentajetipopago = porcentajetipopago,
-                            Debito = debito,
-                            Credito = credito,
-                            CreditoFacturacion = creditofacturacion,
-                            DebitoFacturacion=debitofacturacion,
-                        };
-
-                        return StatusCode(StatusCodes.Status200OK, resultado);
-                    }
-                    else
-                    {
-                        sas = sas.Where(s => s.NombreComercio != null && s.NombreComercio.ToLower() == request.comercio.ToLower()).ToList();
-                        var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), fechaPagoMasActual.Value);
-                        var totalOperaciones = ObtenerTotalOperaciones(listaMes);
-                        var totalConDescuentoCuotas0 = ObtenerTotalConDescuentoCuotas(listaMes, 0);
-                        var totalConDescuentoCuotas1 = ObtenerTotalConDescuentoCuotas(listaMes, 1);
-                        var totalConDescuentoCuotas2 = ObtenerTotalConDescuentoCuotas(listaMes, 2);
+                        var cuotas = ObtenerCuotasYTotales(listaMes);
                         var totalCuotas = totalConDescuentoCuotas1 + totalConDescuentoCuotas2;
                         var tarea = ObtenerResumenUltimos7Meses(sas);
                         var resumenUltimos7Meses = tarea.Result;
@@ -117,6 +81,49 @@ namespace dash_aliados.Controllers
                             Credito = credito,
                             CreditoFacturacion = creditofacturacion,
                             DebitoFacturacion = debitofacturacion,
+                            Cuotas = cuotas
+                        
+                        };
+
+                        return StatusCode(StatusCodes.Status200OK, resultado);
+                    }
+                    else
+                    {
+                        sas = sas.Where(s => s.NombreComercio != null && s.NombreComercio.ToLower() == request.comercio.ToLower()).ToList();
+                        var listaMes = ObtenerListaPorRangoFecha(sas, new DateTime(request.Year, request.Month, 1), fechaPagoMasActual.Value);
+                        var totalOperaciones = ObtenerTotalOperaciones(listaMes);
+                        var totalConDescuentoCuotas0 = ObtenerTotalConDescuentoCuotas(listaMes, 0);
+                        var totalConDescuentoCuotas1 = ObtenerTotalConDescuentoCuotas(listaMes, 1);
+                        var totalConDescuentoCuotas2 = ObtenerTotalConDescuentoCuotas(listaMes, 2);
+                        var totalCuotas = totalConDescuentoCuotas1 + totalConDescuentoCuotas2;
+                        var tarea = ObtenerResumenUltimos7Meses(sas);
+                        var cuotas = ObtenerCuotasYTotales(listaMes);
+                        var resumenUltimos7Meses = tarea.Result;
+                        var creditofacturacion = ObtenerTotalNeto(listaMes);
+                        var debitofacturacion = ObtenerTotalBruto(listaMes);
+                        var debito = ObtenerTicketPromedio(listaMes, 0);
+                        var credito = ObtenerTicketPromedio(listaMes, 1);
+                        var porcentajeporcuotas = ObtenerPorcentaje(totalConDescuentoCuotas0, totalCuotas);
+                        var porcentajeticket = ObtenerPorcentaje(debito, credito);
+                        var porcentajetipopago = ObtenerPorcentaje(totalConDescuentoCuotas0, totalConDescuentoCuotas1);
+                        var resultado = new
+                        {
+                            AñoActual = request.Year,
+                            TotalOperaciones = totalOperaciones,
+                            TotalConDescuentoCuotas0 = totalConDescuentoCuotas0,
+                            TotalConDescuentoCuotas1 = totalConDescuentoCuotas1,
+                            TotalConDescuentoCuotas2 = totalConDescuentoCuotas2,
+                            TotalCuotas = totalCuotas,
+                            ResumenUltimos7Meses = resumenUltimos7Meses,
+                            Porcentajeporcuotas = porcentajeporcuotas,
+                            Porcentajeticket = porcentajeticket,
+                            Porcentajetipopago = porcentajetipopago,
+                            Debito = debito,
+                            Credito = credito,
+                            CreditoFacturacion = creditofacturacion,
+                            DebitoFacturacion = debitofacturacion,
+                            Cuotas = cuotas
+
                         };
 
                         return StatusCode(StatusCodes.Status200OK, resultado);
@@ -153,6 +160,7 @@ namespace dash_aliados.Controllers
                         var resumenUltimos7Meses = tarea.Result;
                         var creditofacturacion = ObtenerTotalNeto(listaFiltrada);
                         var debitofacturacion = ObtenerTotalBruto(listaFiltrada);
+                        var cuotas = ObtenerCuotasYTotales(listaFiltrada);
                         var debito = ObtenerTicketPromedio(listaFiltrada, 0);
                         var credito = ObtenerTicketPromedio(listaFiltrada, 1);
                         var porcentajeporcuotas = ObtenerPorcentaje(totalConDescuentoCuotas0, totalCuotas);
@@ -174,6 +182,8 @@ namespace dash_aliados.Controllers
                             Credito = credito,
                             CreditoFacturacion = creditofacturacion,
                             DebitoFacturacion = debitofacturacion,
+                            Cuotas = cuotas
+
                         };
 
                         return StatusCode(StatusCodes.Status200OK, resultado);
@@ -210,6 +220,7 @@ namespace dash_aliados.Controllers
                         var debitofacturacion = ObtenerTotalBruto(listaFiltrada);
                         var debito = ObtenerTicketPromedio(listaFiltrada, 0);
                         var credito = ObtenerTicketPromedio(listaFiltrada, 1);
+                        var cuotas = ObtenerCuotasYTotales(listaFiltrada);
                         var porcentajeporcuotas = ObtenerPorcentaje(totalConDescuentoCuotas0, totalCuotas);
                         var porcentajeticket = ObtenerPorcentaje(debito, credito);
                         var porcentajetipopago = ObtenerPorcentaje(totalConDescuentoCuotas0, totalConDescuentoCuotas1);
@@ -229,6 +240,8 @@ namespace dash_aliados.Controllers
                             Credito = credito,
                             CreditoFacturacion = creditofacturacion,
                             DebitoFacturacion = debitofacturacion,
+                            Cuotas = cuotas
+
                         };
 
                         return StatusCode(StatusCodes.Status200OK, resultado);
@@ -238,6 +251,27 @@ namespace dash_aliados.Controllers
 
             return Unauthorized("El token o el ID de la sesión no son válidos");
         }
+
+        private List<(double Cuota, decimal TotalBruto)> ObtenerCuotasYTotales(List<BaseDashboard> listaMes)
+        {
+            var cuotasYTotales = listaMes
+                .Where(s => s.Cuotas.HasValue && s.TotalBruto.HasValue) // Asegúrate de que Cuotas y TotalBruto no sean nulos
+                .GroupBy(s => s.Cuotas.Value) // Agrupa por el valor de Cuotas
+                .Select(g => new
+                {
+                    Cuota = g.Key,
+                    TotalBruto = g.Sum(x => x.TotalBruto.Value) // Suma de TotalBruto para cada grupo de Cuota
+                })
+                .OrderByDescending(d => d.Cuota) // Ordena por Cuota de manera descendente
+                .Select(d => (d.Cuota, d.TotalBruto)) // Selecciona solo los campos necesarios
+                .ToList();
+
+            return cuotasYTotales;
+        }
+
+
+
+
         private DateTime GetFirstDayOfWeekInMonth(int year, int month, int weekNumber)
         {
             var cultureInfo = CultureInfo.CurrentCulture;
@@ -310,6 +344,10 @@ namespace dash_aliados.Controllers
         }
         public async Task<List<object>> ObtenerResumenUltimos7Meses(List<BaseDashboard> sas)
         {
+            if (sas == null || !sas.Any())
+            {
+                return new List<object>();
+            }
             DateTime fechaMasReciente = sas.Max(s => s.FechaDePago) ?? DateTime.Today;
             DateTime primerDiaMesActual = new DateTime(fechaMasReciente.Year, fechaMasReciente.Month, 1);
 
@@ -375,6 +413,8 @@ namespace dash_aliados.Controllers
 
         private double ObtenerPorcentaje(double comparativaHoy, double comparativaDiaAnterior)
         {
+            if (comparativaHoy == 0) return 0;
+
             var compa = comparativaHoy - comparativaDiaAnterior;
             var resultado = compa / comparativaHoy;
             return resultado;
@@ -392,7 +432,8 @@ namespace dash_aliados.Controllers
                 var totaloperaciones = (double)sas.Count(s => s.Cuotas == cuotas && s.FechaDePago.HasValue && s.FechaDePago.Value.Month == fechaMasReciente.Month && s.FechaDePago.Value.Year == fechaMasReciente.Year);
 
                 var ticket = totaltipo / totaloperaciones;
-                return ticket;
+                return totaloperaciones > 0 ? totaltipo / totaloperaciones : 0;
+
             }
             else
             {
@@ -402,9 +443,10 @@ namespace dash_aliados.Controllers
                 var totaloperaciones = (double)sas.Count(s => s.Cuotas >= cuotas && s.FechaDePago.HasValue && s.FechaDePago.Value.Month == fechaMasReciente.Month && s.FechaDePago.Value.Year == fechaMasReciente.Year);
 
                 var ticket = totaltipo / totaloperaciones;
-                return ticket;
+                return totaloperaciones > 0 ? totaltipo / totaloperaciones : 0;
+
             }
-         
+
         }
         private double ObtenerTotalNeto(List<BaseDashboard> lista)
         {

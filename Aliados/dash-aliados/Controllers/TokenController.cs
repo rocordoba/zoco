@@ -26,7 +26,9 @@ namespace dash_aliados.Controllers
             bool esTokenValido = await _tokenservice.ValidarTokenAsync(request.Token);
             if (esTokenValido)
             {
-                return Ok("Token válido");
+                var usuarioEncontrado = await _tokenservice.ObtenerTokenYUsuarioPorUsuarioIdAsync(request.Token);
+
+                return StatusCode(StatusCodes.Status200OK, usuarioEncontrado.usuario.TipoUsuario);
             }
             else
             {

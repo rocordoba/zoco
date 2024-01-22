@@ -136,30 +136,23 @@ const TablaTickets = ({ listaMes, datos}) => {
 
             // Crear la tabla de sumas
             const tablaSumas = [
-                `Bruto: $${sumas.bruto}`,
-                `Costo Fin.: $${sumas.costoFinanciero}`,
-                `Costo Ant: $${sumas.costoPorAnticipo}`,
-                `Arancel: $${sumas.arancel}`,
-                `IVA Arancel: $${sumas.ivaArancel}`,
-                `Imp. Deb/Cred: $${sumas.impDebitoCredito}`,
-                `Reten. IIBB: $${sumas.retencionIIBB}`,
-                `Ret. Ganancia: $${sumas.retencionGanancia}`,
-                `Ret. IVA: $${sumas.retencionIVA}`,
-                `Total OP: $${sumas.totalOP}`
-            ].map(item => [item]);
+                ['Bruto', sumas.bruto],
+                ['Costo Fin.', sumas.costoFinanciero],
+                ['Costo Ant', sumas.costoPorAnticipo],
+                ['Arancel', sumas.arancel],
+                ['IVA Arancel', sumas.ivaArancel],
+                ['Imp. Deb/Cred', sumas.impDebitoCredito],
+                ['Reten. IIBB', sumas.retencionIIBB],
+                ['Ret. Ganancia', sumas.retencionGanancia],
+                ['Ret. IVA', sumas.retencionIVA],
+                ['Total OP', sumas.totalOP]
+            ].map(item => [item[0], `$${item[1]}`]);
+
+
 
             doc.autoTable({
                 body: tablaSumas,
-                styles: {
-                    fontSize: 8, // Reducir el tamaño de la fuente
-                    cellPadding: 1, // Reducir el padding de la celda
-                    overflow: 'linebreak', // Ajustar el texto para que no se salga de la celda
-                    halign: 'left', // Alinear horizontalmente a la izquierda
-                },
-                columnStyles: {
-                    0: { cellWidth: 'auto' } // Ajustar el ancho de la columna automáticamente
-                },
-                theme: 'plain' // Usar un tema plano para la tabla
+                // Aquí puedes ajustar los estilos según sea necesario
             });
 
             // Definición de la cabecera de la tabla principal

@@ -280,7 +280,7 @@ namespace dash_aliados.Controllers
         }
         private object obtenerretencionganancia(List<BaseDashboard> listaMes)
         {
-            return (double)listaMes.Sum(s => s.RetencionGanacia);
+            return (double)(listaMes.Sum(s => s.RetencionGanacia) ?? 0);
         }
 
         private object obteneringresobruto(List<BaseDashboard> listaMes)
@@ -299,7 +299,7 @@ namespace dash_aliados.Controllers
         }
         private double ObtenerTotalIva21(List<BaseDashboard> listaMes)
         {
-            return (double)listaMes.Sum(s => s.Iva21);
+            return (double)(listaMes.Sum(s => s.Iva21) ?? 0);
         }
 
 
@@ -313,7 +313,7 @@ namespace dash_aliados.Controllers
         }
         private double ObtenerTotalNeto(List<BaseDashboard> lista)
         {
-            return (double)lista.Sum(s => s.TotalConDescuentos);
+            return (double)(lista.Sum(s => s.TotalConDescuentos) ?? 0);
         }
         private double ObtenerTotalBruto(List<BaseDashboard> lista)
         {

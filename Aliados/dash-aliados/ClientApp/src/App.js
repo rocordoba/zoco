@@ -22,14 +22,8 @@ function App() {
     const { califico, setCalifico, errorSesion } = useContext(DatosInicioContext);
     const { datosBackContext, codigoRespuesta } = useContext(DatosInicioContext);
 
-
   const showNavComponents =
     window.location.pathname !== "/" && window.location.pathname !== "/login";
-
-
- 
-    
-
 
   return (
     <div className={darkMode ? "container-dark" : "container-light bg-gris"}>

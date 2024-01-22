@@ -285,7 +285,11 @@ const SidebarReact = () => {
   };
 
   const [modalShowCompleta, setModalShowCompleta] = React.useState(false);
-  const [hayNotificacionesNoVistas, setHayNotificacionesNoVistas] = useState(true);
+  const [hayNotificacionesNoVistas, setHayNotificacionesNoVistas] =
+    useState(true);
+
+  const [rolUsuario, setRolUsuario] = useState(0);
+
   return (
     <>
       <section className={darkMode ? " sidebar-dark" : `sidebar `}>
@@ -307,7 +311,9 @@ const SidebarReact = () => {
             </div>
 
             <div className="zoom" style={{ position: "relative" }}>
-            {hayNotificacionesNoVistas && <NotificacionIndicador count={"!"} />}
+              {hayNotificacionesNoVistas && (
+                <NotificacionIndicador count={"!"} />
+              )}
               <FontAwesomeIcon
                 onClick={() => {
                   verModalNotificacion();
@@ -484,157 +490,181 @@ const SidebarReact = () => {
             </div>
           )}
         </div>
-        <div className="centrado my-2">
-          <NavLink
-            end
-            to="/aliados/inicio"
-            className=" border-0"
-            onClick={ocultarModalesInicio}
-          >
-            <div style={{ width: "160px" }}>
-              <div className={activado()}>
-                <div className="icono">
-                  <FontAwesomeIcon icon={faHouse} />
-                </div>
-                <div className="texto">
-                  <span className="lato-bold fs-16"> Inicio</span>
-                </div>
-              </div>
-            </div>
-          </NavLink>
-        </div>
-        <div className="centrado my-2">
-          <NavLink
-            end
-            to="/aliados/contabilidad"
-            className=" border-0"
-            onClick={ocultarModalesContabilidad}
-          >
-            <div style={{ width: "160px" }}>
-              <div className={activadoContabilidad()}>
-                <div className="icono">
-                  <FontAwesomeIcon icon={faFileInvoiceDollar} />
-                </div>
-                <div className="texto">
-                  <span className="lato-bold fs-16"> Contabilidad</span>
-                </div>
-              </div>
-            </div>
-          </NavLink>
-        </div>
-        {/* <div className="centrado my-2">
-          <NavLink
-            end
-            to="/aliados/calculadora"
-            className=" border-0"
-            onClick={ocultarModalesCalculadora}
-          >
-            <div style={{ width: "160px" }}>
-              <div className={activadoCalculadora()}>
-                <div className="icono">
-                  <FontAwesomeIcon icon={faCalculator} />
-                </div>
-                <div className="texto">
-                  <span className="lato-bold fs-16">Calculadora</span>
-                </div>
-              </div>
-            </div>
-          </NavLink>
-        </div> */}
-        <div className="centrado my-2">
-          <NavLink
-            end
-            to="/aliados/analisis"
-            className=" border-0"
-            onClick={ocultarModalesAnalisis}
-          >
-            <div style={{ width: "160px" }}>
-              <div className={activadoAnalisis()}>
-                <div className="icono">
-                  <FontAwesomeIcon icon={faMagnifyingGlassChart} />
-                </div>
-                <div className="texto">
-                  <span className="lato-bold fs-16">Análisis</span>
-                </div>
-              </div>
-            </div>
-          </NavLink>
-        </div>
-        <div className="centrado my-2">
-          <NavLink
-            end
-            to="/aliados/cupones"
-            className=" border-0"
-            onClick={ocultarModalesTickets}
-          >
-            <div style={{ width: "160px" }}>
-              <div className={activadoTickets()}>
-                <div className="icono">
-                  <FontAwesomeIcon icon={faReceipt} />
-                </div>
-                <div className="texto">
-                  <span className="lato-bold fs-16">Cupones</span>
-                </div>
-              </div>
-            </div>
-          </NavLink>
-        </div>
 
-        <div className="centrado my-2">
-          <NavLink
-            end
-            to="/aliados/calificar"
-            className=" border-0"
-            onClick={ocultarModalesCalificar}
-          >
-            <div style={{ width: "160px" }}>
-              <div className={activadoCalificar()}>
-                <div className="icono">
-                  <FontAwesomeIcon icon={faStar} />
-                </div>
-                <div className="texto">
-                  <span className="lato-bold fs-16">Calificar</span>
-                </div>
-              </div>
-            </div>
-          </NavLink>
-        </div>
-
-        <div
-          className={
-            visible1 === true || visible2 === true
-              ? " text-center"
-              : "py-5 text-center"
-          }
-        >
-          <div className="centrado my-2" onClick={ocultarModales}>
-            <a
-              href="https://api.whatsapp.com/send/?phone=543813545650&text=Buenos%2Fas+d%C3%ADas%2Ftardes%2Cmi+CUIT+es%3A++tengo+una+consulta+sobre&type=phone_number&app_absent=0"
-              target="_blank"
-              rel="noreferrer"
-              className=" border-0 "
-              style={{ width: "160px" }}
-            >
-              <div
-                className={
-                  darkMode ? " d-flex btn-grid-dark " : " d-flex btn-grid "
-                }
+        {rolUsuario === 0 ? (
+          <>
+            <div className="centrado my-2">
+              <NavLink
+                end
+                to="/aliados/inicio"
+                className=" border-0"
+                onClick={ocultarModalesInicio}
               >
-                <div className="icono">
-                  <FontAwesomeIcon icon={faWhatsapp} />
+                <div style={{ width: "160px" }}>
+                  <div className={activado()}>
+                    <div className="icono">
+                      <FontAwesomeIcon icon={faHouse} />
+                    </div>
+                    <div className="texto">
+                      <span className="lato-bold fs-16"> Inicio</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="texto">
-                  <span className="lato-bold fs-16">Whatsapp</span>
+              </NavLink>
+            </div>
+            <div className="centrado my-2">
+              <NavLink
+                end
+                to="/aliados/contabilidad"
+                className=" border-0"
+                onClick={ocultarModalesContabilidad}
+              >
+                <div style={{ width: "160px" }}>
+                  <div className={activadoContabilidad()}>
+                    <div className="icono">
+                      <FontAwesomeIcon icon={faFileInvoiceDollar} />
+                    </div>
+                    <div className="texto">
+                      <span className="lato-bold fs-16"> Contabilidad</span>
+                    </div>
+                  </div>
+                </div>
+              </NavLink>
+            </div>
+            {/* <div className="centrado my-2">
+        <NavLink
+          end
+          to="/aliados/calculadora"
+          className=" border-0"
+          onClick={ocultarModalesCalculadora}
+        >
+          <div style={{ width: "160px" }}>
+            <div className={activadoCalculadora()}>
+              <div className="icono">
+                <FontAwesomeIcon icon={faCalculator} />
+              </div>
+              <div className="texto">
+                <span className="lato-bold fs-16">Calculadora</span>
+              </div>
+            </div>
+          </div>
+        </NavLink>
+      </div> */}
+            <div className="centrado my-2">
+              <NavLink
+                end
+                to="/aliados/analisis"
+                className=" border-0"
+                onClick={ocultarModalesAnalisis}
+              >
+                <div style={{ width: "160px" }}>
+                  <div className={activadoAnalisis()}>
+                    <div className="icono">
+                      <FontAwesomeIcon icon={faMagnifyingGlassChart} />
+                    </div>
+                    <div className="texto">
+                      <span className="lato-bold fs-16">Análisis</span>
+                    </div>
+                  </div>
+                </div>
+              </NavLink>
+            </div>
+            <div className="centrado my-2">
+              <NavLink
+                end
+                to="/aliados/cupones"
+                className=" border-0"
+                onClick={ocultarModalesTickets}
+              >
+                <div style={{ width: "160px" }}>
+                  <div className={activadoTickets()}>
+                    <div className="icono">
+                      <FontAwesomeIcon icon={faReceipt} />
+                    </div>
+                    <div className="texto">
+                      <span className="lato-bold fs-16">Cupones</span>
+                    </div>
+                  </div>
+                </div>
+              </NavLink>
+            </div>
+
+            <div className="centrado my-2">
+              <NavLink
+                end
+                to="/aliados/calificar"
+                className=" border-0"
+                onClick={ocultarModalesCalificar}
+              >
+                <div style={{ width: "160px" }}>
+                  <div className={activadoCalificar()}>
+                    <div className="icono">
+                      <FontAwesomeIcon icon={faStar} />
+                    </div>
+                    <div className="texto">
+                      <span className="lato-bold fs-16">Calificar</span>
+                    </div>
+                  </div>
+                </div>
+              </NavLink>
+            </div>
+            <div
+              className={
+                visible1 === true || visible2 === true
+                  ? " text-center"
+                  : "py-5 text-center"
+              }
+            >
+              <div className="centrado my-2" onClick={ocultarModales}>
+                <a
+                  href="https://api.whatsapp.com/send/?phone=543813545650&text=Buenos%2Fas+d%C3%ADas%2Ftardes%2Cmi+CUIT+es%3A++tengo+una+consulta+sobre&type=phone_number&app_absent=0"
+                  target="_blank"
+                  rel="noreferrer"
+                  className=" border-0 "
+                  style={{ width: "160px" }}
+                >
+                  <div
+                    className={
+                      darkMode ? " d-flex btn-grid-dark " : " d-flex btn-grid "
+                    }
+                  >
+                    <div className="icono">
+                      <FontAwesomeIcon icon={faWhatsapp} />
+                    </div>
+                    <div className="texto">
+                      <span className="lato-bold fs-16">Whatsapp</span>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <img
+                className="img-fluid img-qr mt-3 pb-1"
+                src={darkMode ? qrClaro : qr}
+                alt="codigo qr"
+              />
+            </div>
+          </>
+        ) : (
+          <div className="centrado my-2">
+            <NavLink
+              end
+              to="/aliados/calificar"
+              className=" border-0"
+              onClick={ocultarModalesCalificar}
+            >
+              <div style={{ width: "160px" }}>
+                <div className={activadoCalificar()}>
+                  <div className="icono">
+                    <FontAwesomeIcon icon={faStar} />
+                  </div>
+                  <div className="texto">
+                    <span className="lato-bold fs-16">prueba de rol</span>
+                  </div>
                 </div>
               </div>
-            </a>
+            </NavLink>
           </div>
-          <img
-            className="img-fluid img-qr mt-3 pb-1"
-            src={darkMode ? qrClaro : qr}
-            alt="codigo qr"
-          />
-        </div>
+        )}
       </section>
     </>
   );

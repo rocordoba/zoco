@@ -8,66 +8,63 @@ export const DatosInicioProvider = ({ children }) => {
   const apiUrlContabilidad = process.env.REACT_APP_API_CONTABILIDAD;
   const apiUrlAnalisis = process.env.REACT_APP_API_ANALISIS;
   const apiUrlCupones = process.env.REACT_APP_API_CUPONES;
-   const [codigoRespuesta, setCodigoRespuesta] = useState(null);
+  const [codigoRespuesta, setCodigoRespuesta] = useState(null);
 
   const [datos, setDatos] = useState(null);
- 
 
   // La función para modificar los datos del contexto
   const actualizarDatos = (nuevosDatos) => {
     setDatos(nuevosDatos);
   };
 
-    useEffect(() => {
-        const token = sessionStorage.getItem("token");
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
 
-        if (token) {
-            const currentDate = new Date();
-            const year = datos?.anio || currentDate.getFullYear();
-            const month = datos?.mes || currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
-            const week = datos?.semana || Math.ceil(currentDate.getDate() / 7);
-            const comercio = datos?.comercio || "Todos";
-            const day = currentDate.getDay();
+    if (token) {
+      const currentDate = new Date();
+      const year = datos?.anio || currentDate.getFullYear();
+      const month = datos?.mes || currentDate.getMonth() + 1; // Sumar 1 porque los meses van de 0 a 11
+      const week = datos?.semana || Math.ceil(currentDate.getDate() / 7);
+      const comercio = datos?.comercio || "Todos";
+      const day = currentDate.getDay();
 
-            const requestData = {
-              //  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzMzMzMzMzMzMzMyIsIm5iZiI6MTcwNTA2Mzg4NCwiZXhwIjoxNzA5NjAwMjAwLCJpYXQiOjE3MDUwNjM4ODR9.aKMFYoueJqJJhrMzErDTqgVNEs30d3sn9P6etmgpbAs",
-                 token: token,
-                year: year,
-                month: month,
-                week: week,
-                comercio: comercio,
-                day: day,
-            };
+      const requestData = {
+        //  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzMzMzMzMzMzMzMyIsIm5iZiI6MTcwNTA2Mzg4NCwiZXhwIjoxNzA5NjAwMjAwLCJpYXQiOjE3MDUwNjM4ODR9.aKMFYoueJqJJhrMzErDTqgVNEs30d3sn9P6etmgpbAs",
+        token: token,
+        year: year,
+        month: month,
+        week: week,
+        comercio: comercio,
+        day: day,
+      };
 
-            fetch(apiUrlInicio, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(requestData),
-            })
-                .then((response) => {
-
-                    if (response.status === 200) {
-                        setCodigoRespuesta(200);
-                        return response.json();
-                    } else if (response.status === 401) {
-                        setCodigoRespuesta(401);
-                        console.error("Usuario no autorizado");
-                    } else {
-                        setCodigoRespuesta(400);
-                        throw new Error("Error en la solicitud");
-                    }
-                })
-                .then((data) => {
-                    setDatosBackContext(data);
-                })
-                .catch((error) => {
-                    console.error("Error en la solicitud:", error);
-                });
-        }
-    }, [datos, codigoRespuesta]);
-
+      fetch(apiUrlInicio, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            setCodigoRespuesta(200);
+            return response.json();
+          } else if (response.status === 401) {
+            setCodigoRespuesta(401);
+            console.error("Usuario no autorizado");
+          } else {
+            setCodigoRespuesta(400);
+            throw new Error("Error en la solicitud");
+          }
+        })
+        .then((data) => {
+          setDatosBackContext(data);
+        })
+        .catch((error) => {
+          console.error("Error en la solicitud:", error);
+        });
+    }
+  }, [datos, codigoRespuesta]);
 
   const [datosMandados, setDatosMandados] = useState();
   const [datosContabilidadContext, setDatosContabilidadContext] = useState({});
@@ -97,18 +94,17 @@ export const DatosInicioProvider = ({ children }) => {
         },
         body: JSON.stringify(requestData),
       })
-          .then((response) => {
-
-              if (response.status === 200) {
-                  setCodigoRespuesta(200);
-                  return response.json();
-              } else if (response.status === 401) {
-                  setCodigoRespuesta(401);
-                  console.error("Usuario no autorizado");
-              } else {
-                  setCodigoRespuesta(400);
-                  throw new Error("Error en la solicitud");
-              }
+        .then((response) => {
+          if (response.status === 200) {
+            setCodigoRespuesta(200);
+            return response.json();
+          } else if (response.status === 401) {
+            setCodigoRespuesta(401);
+            console.error("Usuario no autorizado");
+          } else {
+            setCodigoRespuesta(400);
+            throw new Error("Error en la solicitud");
+          }
         })
         .then((data) => {
           setDatosContabilidadContext(data);
@@ -144,19 +140,18 @@ export const DatosInicioProvider = ({ children }) => {
         },
         body: JSON.stringify(requestData),
       })
-          .then((response) => {
-
-              if (response.status === 200) {
-                  setCodigoRespuesta(200);
-                  return response.json();
-              } else if (response.status === 401) {
-                  setCodigoRespuesta(401);
-                  console.error("Usuario no autorizado");
-              } else {
-                  setCodigoRespuesta(400);
-                  throw new Error("Error en la solicitud");
-              }
-          })
+        .then((response) => {
+          if (response.status === 200) {
+            setCodigoRespuesta(200);
+            return response.json();
+          } else if (response.status === 401) {
+            setCodigoRespuesta(401);
+            console.error("Usuario no autorizado");
+          } else {
+            setCodigoRespuesta(400);
+            throw new Error("Error en la solicitud");
+          }
+        })
         .then((data) => {
           setDatosAnalisisContext(data);
         })

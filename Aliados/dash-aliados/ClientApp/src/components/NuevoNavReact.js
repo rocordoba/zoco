@@ -532,7 +532,36 @@ const NuevoNavReact = ({ name, ...props }) => {
 
   const [hayNotificacionesNoVistas, setHayNotificacionesNoVistas] =
     useState(true);
-  const [rolUsuario, setRolUsuario] = useState(0);
+  const [usuarioRol, setUsuarioRol] = useState();
+
+  useEffect(() => {
+    const verificarToken = async () => {
+      const token = sessionStorage.getItem("token");
+
+      try {
+        const response = await fetch("/api/token/token", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ Token: token }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Error en la respuesta del servidor");
+        }
+
+        const datosRecibido = await response.json();
+        setUsuarioRol(datosRecibido);
+        // Aquí puedes hacer algo con el rol
+        // Por ejemplo, guardarlo en el estado o realizar alguna lógica basada en el rol
+      } catch (error) {
+        console.error("Error al validar el token", error);
+      }
+    };
+
+    verificarToken();
+  }, [usuarioRol]);
 
   return (
     <section className="container">
@@ -720,7 +749,7 @@ const NuevoNavReact = ({ name, ...props }) => {
             )}
           </div>
           {/* botones navlink */}
-          {rolUsuario === 0 ? (
+          {usuarioRol === 0 ? (
             <>
               <div className="mt-4">
                 <div className="centrado my-2">

@@ -289,36 +289,34 @@ const SidebarReact = () => {
     useState(true);
   const [usuarioRol, setUsuarioRol] = useState();
 
-    useEffect(() => {
-      const verificarToken = async () => {
-        const token = sessionStorage.getItem("token");
-        
-        try {
-          const response = await fetch("/api/token/token", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ Token: token }),
-          });
-    
-          if (!response.ok) {
-            throw new Error('Error en la respuesta del servidor');
-          }
-    
-          const datosRecibido = await response.json();
-          setUsuarioRol(datosRecibido)
-          // Aquí puedes hacer algo con el rol
-          // Por ejemplo, guardarlo en el estado o realizar alguna lógica basada en el rol
-        } catch (error) {
-          console.error("Error al validar el token", error);
-        }
-      };
-    
-      verificarToken();
-    }, [usuarioRol]);
+  useEffect(() => {
+    const verificarToken = async () => {
+      const token = sessionStorage.getItem("token");
 
- 
+      try {
+        const response = await fetch("/api/token/token", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ Token: token }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Error en la respuesta del servidor");
+        }
+
+        const datosRecibido = await response.json();
+        setUsuarioRol(datosRecibido);
+        // Aquí puedes hacer algo con el rol
+        // Por ejemplo, guardarlo en el estado o realizar alguna lógica basada en el rol
+      } catch (error) {
+        console.error("Error al validar el token", error);
+      }
+    };
+
+    verificarToken();
+  }, [usuarioRol]);
 
   return (
     <>

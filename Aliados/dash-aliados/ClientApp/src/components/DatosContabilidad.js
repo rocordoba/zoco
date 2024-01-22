@@ -26,7 +26,7 @@ const DatosContabilidad = ({ datosBack }) => {
                 : "container-light bg-data  border-0 quitar-cursor-pointer"
             }
           >
-            <div className=" d-flex justify-content-center border-0 lato-bold fs-24">
+            <div className=" d-flex justify-content-center border-0 lato-bold fs-22">
               $ {valoresFormateados[0]}
             </div>
           </button>
@@ -41,7 +41,7 @@ const DatosContabilidad = ({ datosBack }) => {
                 : "container-light bg-data  border-0 quitar-cursor-pointer"
             }
           >
-            <div className=" d-flex justify-content-center border-0 lato-bold fs-24">
+            <div className=" d-flex justify-content-center border-0 lato-bold fs-22">
               $ {valoresFormateados[1]}
             </div>
           </button>
@@ -56,7 +56,7 @@ const DatosContabilidad = ({ datosBack }) => {
                 : "container-light bg-data  border-0 quitar-cursor-pointer"
             }
           >
-            <div className=" d-flex justify-content-center border-0 lato-bold fs-24">
+            <div className=" d-flex justify-content-center border-0 lato-bold fs-22">
               $ {valoresFormateados[2]}
             </div>
           </button>
@@ -71,7 +71,7 @@ const DatosContabilidad = ({ datosBack }) => {
                 : "container-light bg-data  border-0 quitar-cursor-pointer"
             }
           >
-            <div className=" d-flex justify-content-center border-0 lato-bold fs-24">
+            <div className=" d-flex justify-content-center border-0 lato-bold fs-22">
               $ {valoresFormateados[3]}
             </div>
           </button>

@@ -2,7 +2,7 @@
   margin: 0;
   margin-top: 0px;
   padding: 0;
-  width: 19%;
+  width: 15% !important;
   height: 100vh;
   background: transparent linear-gradient(158deg, #ffffff 0%, #e5e8ee 100%) 0%
     0% padding-box;
@@ -17,7 +17,7 @@
   margin: 0;
   margin-top: 0px;
   padding: 0;
-  width: 19%;
+  width: 15% !important;
   height: 100vh;
   background: transparent linear-gradient(97deg, #292b2f 0%, #16181a 100%) 0% 0%
     no-repeat padding-box;

@@ -19,8 +19,8 @@ const FormComentarioCalificar = () => {
     setRating(star);
   };
   const onSubmit = async (event) => {
-      event.preventDefault();
-      const token = sessionStorage.getItem("token");
+    event.preventDefault();
+    const token = sessionStorage.getItem("token");
     const userId = parseInt(localStorage.getItem("userId")); // Asegúrate de que userId sea un entero
     const fechaActual = new Date().toISOString();
 
@@ -32,10 +32,10 @@ const FormComentarioCalificar = () => {
       Fecha: fechaActual,
     };
 
-  //  console.log("Datos a enviar:", datosConRating);
+    //  console.log("Datos a enviar:", datosConRating);
 
     try {
-        await fetch("/api/califico/calificocom", {
+      await fetch("/api/califico/calificocom", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,7 +68,7 @@ const FormComentarioCalificar = () => {
   const { darkMode } = useContext(DarkModeContext);
   return (
     <section className="container">
-      <form className="pb-0 pb-lg-5" onSubmit={onSubmit}>
+      <form className="pb-0" onSubmit={onSubmit}>
         {/* escritorio */}
         <article className=" d-none d-lg-block">
           <div

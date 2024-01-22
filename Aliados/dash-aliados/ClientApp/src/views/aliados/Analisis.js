@@ -9,54 +9,52 @@ import TituloPagina from "../../components/TituloPagina";
 import { DatosInicioContext } from "../../context/DatosInicioContext";
 import { useNavigate } from "react-router-dom";
 const Analisis = () => {
-   
-    const { datosAnalisisContext, codigoRespuesta } = useContext(DatosInicioContext);
-    const navegacion = useNavigate();
-    const history = useNavigate();
-    function recargarPagina() {
-        window.location.reload();
+  const { datosAnalisisContext, codigoRespuesta } =
+    useContext(DatosInicioContext);
+  const navegacion = useNavigate();
+  const history = useNavigate();
+  function recargarPagina() {
+    window.location.reload();
+  }
 
-    }
+  useEffect(() => {
+    const verificarToken = async () => {
+      const token = sessionStorage.getItem("token");
 
-    useEffect(() => {
-        const verificarToken = async () => {
-            const token = sessionStorage.getItem("token");
+      try {
+        const response = await fetch("/api/token/token", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ Token: token }),
+        });
 
-            try {
-                const response = await fetch('/api/token/token', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ Token: token })
-                });
+        if (response.ok) {
+        } else {
+          if (response.status === 401 || token === null) {
+            navegacion("/");
+            recargarPagina();
+          } else {
+            throw new Error("Respuesta no satisfactoria del servidor");
+          }
+        }
+      } catch (error) {
+        console.error("Error al validar el token", error);
+      }
+    };
 
-                if (response.ok) {
-      
-                } else {
-                    if (response.status === 401 || token === null) {
-                        navegacion("/");
-                        recargarPagina();
-                    } else {
-                        throw new Error("Respuesta no satisfactoria del servidor");
-                    }
-                }
-            } catch (error) {
-                console.error("Error al validar el token", error);
-            }
-        };
+    const checkResponseCodeAndRedirect = () => {
+      if (codigoRespuesta !== null && codigoRespuesta !== 200) {
+        console.log(codigoRespuesta);
+        navegacion("/");
+        recargarPagina();
+      }
+    };
 
-        const checkResponseCodeAndRedirect = () => {
-            if (codigoRespuesta !== null && codigoRespuesta !== 200) {
-                console.log(codigoRespuesta);
-                navegacion("/");
-                recargarPagina();
-            }
-        };
-
-        verificarToken();
-        checkResponseCodeAndRedirect();
-    }, [history, codigoRespuesta]);
+    verificarToken();
+    checkResponseCodeAndRedirect();
+  }, [history, codigoRespuesta]);
   return (
     <div>
       <div className="d-xl-block d-none mt-4 pt-4 ">

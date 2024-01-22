@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\Entity\\Entity.csproj": {}
+    "C:\\Users\\54381\\Desktop\\aliados - nuevo\\dash-completo\\Aliados\\Entity\\Entity.csproj": {}
   },
   "projects": {
-    "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\Entity\\Entity.csproj": {
+    "C:\\Users\\54381\\Desktop\\aliados - nuevo\\dash-completo\\Aliados\\Entity\\Entity.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\Entity\\Entity.csproj",
+        "projectUniqueName": "C:\\Users\\54381\\Desktop\\aliados - nuevo\\dash-completo\\Aliados\\Entity\\Entity.csproj",
         "projectName": "Entity",
-        "projectPath": "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\Entity\\Entity.csproj",
-        "packagesPath": "C:\\Users\\JOSEC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\JOSEC\\Documents\\GitHub\\dash-completo\\Aliados\\Entity\\obj\\",
+        "projectPath": "C:\\Users\\54381\\Desktop\\aliados - nuevo\\dash-completo\\Aliados\\Entity\\Entity.csproj",
+        "packagesPath": "C:\\Users\\54381\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\54381\\Desktop\\aliados - nuevo\\dash-completo\\Aliados\\Entity\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\JOSEC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\54381\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -73,7 +73,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -119,3 +119,19 @@ C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\DAL\obj\Debug\net6.0\DAL.d
 C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\DAL\obj\Debug\net6.0\refint\DAL.dll
 C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\DAL\obj\Debug\net6.0\DAL.pdb
 C:\Users\JOSEC\Documents\GitHub\dash-completo\Aliados\DAL\obj\Debug\net6.0\ref\DAL.dll
+C:\Users\54381\Desktop\aliados - nuevo\dash-completo\Aliados\DAL\bin\Debug\net6.0\DAL.deps.json
+C:\Users\54381\Desktop\aliados - nuevo\dash-completo\Aliados\DAL\bin\Debug\net6.0\DAL.dll
+C:\Users\54381\Desktop\aliados - nuevo\dash-completo\Aliados\DAL\bin\Debug\net6.0\DAL.pdb
+C:\Users\54381\Desktop\aliados - nuevo\dash-completo\Aliados\DAL\bin\Debug\net6.0\Entity.dll
+C:\Users\54381\Desktop\aliados - nuevo\dash-completo\Aliados\DAL\bin\Debug\net6.0\Entity.pdb
+C:\Users\54381\Desktop\aliados - nuevo\dash-completo\Aliados\DAL\obj\Debug\net6.0\DAL.csproj.AssemblyReference.cache
+C:\Users\54381\Desktop\aliados - nuevo\dash-completo\Aliados\DAL\obj\Debug\net6.0\DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\54381\Desktop\aliados - nuevo\dash-completo\Aliados\DAL\obj\Debug\net6.0\DAL.AssemblyInfoInputs.cache
+C:\Users\54381\Desktop\aliados - nuevo\dash-completo\Aliados\DAL\obj\Debug\net6.0\DAL.AssemblyInfo.cs
+C:\Users\54381\Desktop\aliados - nuevo\dash-completo\Aliados\DAL\obj\Debug\net6.0\DAL.csproj.CoreCompileInputs.cache
+C:\Users\54381\Desktop\aliados - nuevo\dash-completo\Aliados\DAL\obj\Debug\net6.0\DAL.sourcelink.json
+C:\Users\54381\Desktop\aliados - nuevo\dash-completo\Aliados\DAL\obj\Debug\net6.0\DAL.csproj.CopyComplete
+C:\Users\54381\Desktop\aliados - nuevo\dash-completo\Aliados\DAL\obj\Debug\net6.0\DAL.dll
+C:\Users\54381\Desktop\aliados - nuevo\dash-completo\Aliados\DAL\obj\Debug\net6.0\refint\DAL.dll
+C:\Users\54381\Desktop\aliados - nuevo\dash-completo\Aliados\DAL\obj\Debug\net6.0\DAL.pdb
+C:\Users\54381\Desktop\aliados - nuevo\dash-completo\Aliados\DAL\obj\Debug\net6.0\ref\DAL.dll

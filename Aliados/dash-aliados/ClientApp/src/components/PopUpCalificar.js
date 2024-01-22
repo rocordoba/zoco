@@ -67,7 +67,7 @@ const PopUpCalificar = () => {
           <>
             {visible1 && (
               <div className="modalShadow centrado">
-                <div className="container centrado caja-popup">
+                <div className="centrado caja-popup">
                   <div className="">
                     <div className=" ">
                       <h6 className="lato-bold fs-24-a-18  color-verde mb-5">
@@ -283,7 +283,7 @@ const PopUpCalificar = () => {
                               </div>
                               <div className="">
                                 <div className="">
-                                  <h6 className=" fs-16-a-14">Muy probable</h6>
+                                  <h6 className=" fs-16">Muy probable</h6>
                                 </div>
                                 <label
                                   className="lato-bold fs-16 "

@@ -34,7 +34,7 @@ const BienvenidoPanel = () => {
   };
 
   const procesarDatos = (data) => {
- //   console.log("Respuesta de la API:", data);
+    //   console.log("Respuesta de la API:", data);
 
     const optionsComercio = data.comercios.map((comercio) => ({
       value: comercio.toLowerCase().replace(/\s+/g, ""),
@@ -64,40 +64,45 @@ const BienvenidoPanel = () => {
         1
       );
     }
-      const añoActual = new Date().getFullYear();
-      const mesActual = new Date().toLocaleString("es", { month: "long" });
+    const añoActual = new Date().getFullYear();
+    const mesActual = new Date().toLocaleString("es", { month: "long" });
 
-      // Función para obtener el número de la semana
-      const obtenerNumeroSemana = (fecha) => {
-          const inicioDeAño = new Date(fecha.getFullYear(), 0, 1);
-          const diff = fecha - inicioDeAño;
-          const semana = Math.ceil((diff / 86400000 + inicioDeAño.getDay() + 1) / 7);
-          return semana;
-      };
+    // Función para obtener el número de la semana
+    const obtenerNumeroSemana = (fecha) => {
+      const inicioDeAño = new Date(fecha.getFullYear(), 0, 1);
+      const diff = fecha - inicioDeAño;
+      const semana = Math.ceil(
+        (diff / 86400000 + inicioDeAño.getDay() + 1) / 7
+      );
+      return semana;
+    };
 
-      // Obtener la semana actual
-      const semanaActual = obtenerNumeroSemana(new Date());
+    // Obtener la semana actual
+    const semanaActual = obtenerNumeroSemana(new Date());
     setOptionsComercio(optionsComercio);
     setOptionsAnios(optionsAnios);
     setOptionsMes(optionsMeses);
     setOptionsSemanas(optionsSemanas);
     setFechaInicio(fechaInicio);
-      setFechaFin(fechaFin);
-      setSelectedAnio({ value: añoActual.toString(), label: añoActual.toString() });
-      setSelectedMes({ value: mesActual.toLowerCase(), label: mesActual });
-      setSelectedSemana({ value: semanaActual.toString(), label: semanaActual.toString() });
+    setFechaFin(fechaFin);
+    setSelectedAnio({
+      value: añoActual.toString(),
+      label: añoActual.toString(),
+    });
+    setSelectedMes({ value: mesActual.toLowerCase(), label: mesActual });
+    setSelectedSemana({
+      value: semanaActual.toString(),
+      label: semanaActual.toString(),
+    });
   };
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
-
     const requestData = {
       token: token,
-      id: userId,
     };
 
-    if (token && userId) {
+    if (token ) {
       fetch("/api/bienvenidopanel/bienvenidopanel", {
         method: "POST",
         headers: {
@@ -112,7 +117,7 @@ const BienvenidoPanel = () => {
           return response.json();
         })
         .then((data) => {
-       //   console.log("Datos recibidos de la API:", data);
+          //   console.log("Datos recibidos de la API:", data);
           procesarDatos(data);
         })
         .catch((error) => {
@@ -134,66 +139,71 @@ const BienvenidoPanel = () => {
     const mesFin = fechaFin.getMonth() >= mesInicio ? fechaFin.getMonth() : 11;
 
     const optionsMeses = [];
-  for (let mes = mesInicio; mes <= mesFin; mes++) {
-    let fechaActual = new Date(anioSeleccionado, mes, 1);
-    const nombreMes = fechaActual.toLocaleString("es", { month: "long" });
-    optionsMeses.push({ value: mes + 1, label: nombreMes }); // Cambio aquí: usar mes + 1 como valor
-  }
+    for (let mes = mesInicio; mes <= mesFin; mes++) {
+      let fechaActual = new Date(anioSeleccionado, mes, 1);
+      const nombreMes = fechaActual.toLocaleString("es", { month: "long" });
+      optionsMeses.push({ value: mes + 1, label: nombreMes }); // Cambio aquí: usar mes + 1 como valor
+    }
 
-  setOptionsMes(optionsMeses);
-  setSelectedMes(null);
+    setOptionsMes(optionsMeses);
+    setSelectedMes(null);
   };
-    const actualizarSemanasPorMes = (anioSeleccionado, mesSeleccionado) => {
-        const primerDiaMes = new Date(anioSeleccionado, mesSeleccionado - 1, 1);
-        const ultimoDiaMes = new Date(anioSeleccionado, mesSeleccionado, 0);
+  const actualizarSemanasPorMes = (anioSeleccionado, mesSeleccionado) => {
+    const primerDiaMes = new Date(anioSeleccionado, mesSeleccionado - 1, 1);
+    const ultimoDiaMes = new Date(anioSeleccionado, mesSeleccionado, 0);
 
-        let diaActual = new Date(primerDiaMes.getTime());
-        let semanas = [];
-        let semana = [];
-        let numeroSemanaDelMes = 0;
+    let diaActual = new Date(primerDiaMes.getTime());
+    let semanas = [];
+    let semana = [];
+    let numeroSemanaDelMes = 0;
 
-        // Ajustar el primer día de la semana al lunes más cercano
-        if (diaActual.getDay() !== 1) {
-            diaActual.setDate(diaActual.getDate() - diaActual.getDay() + 1);
-        }
+    // Ajustar el primer día de la semana al lunes más cercano
+    if (diaActual.getDay() !== 1) {
+      diaActual.setDate(diaActual.getDate() - diaActual.getDay() + 1);
+    }
 
-        // Iterar a través de los días del mes
-        for (let d = new Date(diaActual); d <= ultimoDiaMes; d.setDate(d.getDate() + 1)) {
-            if (d.getDate() === 1 || d.getDay() === 1) {
-                numeroSemanaDelMes++;
-            }
+    // Iterar a través de los días del mes
+    for (
+      let d = new Date(diaActual);
+      d <= ultimoDiaMes;
+      d.setDate(d.getDate() + 1)
+    ) {
+      if (d.getDate() === 1 || d.getDay() === 1) {
+        numeroSemanaDelMes++;
+      }
 
-            // Detener el proceso si se alcanza la semana 5
-            if (numeroSemanaDelMes > 5) {
-                break;
-            }
+      // Detener el proceso si se alcanza la semana 5
+      if (numeroSemanaDelMes > 5) {
+        break;
+      }
 
-            semana.push(new Date(d));
-            if (d.getDay() === 0 || d.getDate() === ultimoDiaMes.getDate()) {
-                semanas.push({ numeroSemanaDelMes, dias: [...semana] });
-                semana = [];
-            }
-        }
+      semana.push(new Date(d));
+      if (d.getDay() === 0 || d.getDate() === ultimoDiaMes.getDate()) {
+        semanas.push({ numeroSemanaDelMes, dias: [...semana] });
+        semana = [];
+      }
+    }
 
-        // Filtrar las semanas que caen dentro del rango de fechaInicio y fechaFin
-        const semanasFiltradas = semanas.filter(semana => {
-            const inicioSemana = semana.dias[0];
-            const finSemana = semana.dias[semana.dias.length - 1];
-            return (!fechaInicio || finSemana >= fechaInicio) && (!fechaFin || inicioSemana <= fechaFin);
-        });
+    // Filtrar las semanas que caen dentro del rango de fechaInicio y fechaFin
+    const semanasFiltradas = semanas.filter((semana) => {
+      const inicioSemana = semana.dias[0];
+      const finSemana = semana.dias[semana.dias.length - 1];
+      return (
+        (!fechaInicio || finSemana >= fechaInicio) &&
+        (!fechaFin || inicioSemana <= fechaFin)
+      );
+    });
 
-        // Formatear las semanas para el uso en el front-end
-        const semanasFormateadas = semanasFiltradas.map(semana => {
-            const label = `Semana ${semana.numeroSemanaDelMes}`;
-            const value = semana.numeroSemanaDelMes;
+    // Formatear las semanas para el uso en el front-end
+    const semanasFormateadas = semanasFiltradas.map((semana) => {
+      const label = `Semana ${semana.numeroSemanaDelMes}`;
+      const value = semana.numeroSemanaDelMes;
 
-            return { label, value };
-        });
+      return { label, value };
+    });
 
-        setOptionsSemanas(semanasFormateadas);
-    };
-
-
+    setOptionsSemanas(semanasFormateadas);
+  };
 
   const mandarSemana = (selectedSemana) => {
     const valorSemanaSeleccionada = selectedSemana;
@@ -227,21 +237,19 @@ const BienvenidoPanel = () => {
     });
   }, [selectedAnio, selectedMes, selectedSemana, selectedComercio]);
 
-const handleEnviarDatos = () => {
-  if (!selectedAnio || !selectedMes || !selectedSemana || !selectedComercio) {
-    Swal.fire({
-      title: "Error",
-      text: "Por favor, selecciona todos los campos.",
-      icon: "error",
-      confirmButtonText: "Ok",
-    });
-    return;
-  }
+  const handleEnviarDatos = () => {
+    if (!selectedAnio || !selectedMes || !selectedSemana || !selectedComercio) {
+      Swal.fire({
+        title: "Error",
+        text: "Por favor, selecciona todos los campos.",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return;
+    }
 
-  enviarDatosAlContexto(datosSelect);
-
-  
-};
+    enviarDatosAlContexto(datosSelect);
+  };
 
   return (
     <section
@@ -257,7 +265,7 @@ const handleEnviarDatos = () => {
             <h6 className="text-center heavy-900 fs-16 ms-2">
               {" "}
               Bienvenido/a al <br />{" "}
-              <span className="text-center heavy-900 color-verde fs-25 line-h-26">
+              <span className="text-center heavy-900 color-verde fs-25-a-16 line-h-26">
                 {" "}
                 Panel de Control
               </span>{" "}
@@ -284,7 +292,10 @@ const handleEnviarDatos = () => {
                     options={optionsAnios}
                     onChange={(selectedOption) => {
                       // Convertir el valor seleccionado a un número antes de establecer el estado
-                      setSelectedAnio({ ...selectedOption, value: Number(selectedOption.value) });
+                      setSelectedAnio({
+                        ...selectedOption,
+                        value: Number(selectedOption.value),
+                      });
                       actualizarMesesPorAnio(Number(selectedOption.value));
                     }}
                     styles={{
@@ -311,7 +322,10 @@ const handleEnviarDatos = () => {
                     options={optionsMes}
                     onChange={(selectedOption) => {
                       setSelectedMes(selectedOption);
-                      actualizarSemanasPorMes(selectedAnio.value, selectedOption.value);
+                      actualizarSemanasPorMes(
+                        selectedAnio.value,
+                        selectedOption.value
+                      );
                     }}
                     styles={{
                       control: (base) => ({

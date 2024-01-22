@@ -66,7 +66,7 @@ const Calificar = () => {
       <div className="my-4">
         <FormComentarioCalificar />
       </div>
-      <div style={{ paddingBottom: "4rem", paddingTop: "4rem" }}>
+      <div style={{ paddingBottom: "2rem", paddingTop: "1rem" }}>
         <Footer />
       </div>
     </div>

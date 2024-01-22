@@ -65,7 +65,7 @@ namespace dash_aliados.Controllers
             {
                 usuario = _mapper.Map<VMUsuariosZoco>(usuarioVM),
                 token = tokenCreado,
-                userId = usuarioEncontrado.Id
+                rol = usuarioEncontrado.TipoUsuario
             };
 
             return Ok(respuestaJson);

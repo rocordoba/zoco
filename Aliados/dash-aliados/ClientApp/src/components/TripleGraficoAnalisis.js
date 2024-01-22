@@ -257,8 +257,9 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
               darkMode ? " bg-grafica-dark px-5 pb-4" : "bg-grafica px-5 pb-4"
             }
           >
-            <h2 className="fs-18-a-16 py-4 text-center">
-              Facturación por cuota
+                      <h2 className="fs-18-a-16 py-4 text-center">
+                          Ventas por tipo de pago
+             
             </h2>
             <div className="d-flex justify-content-center ">
               <Bar
@@ -334,7 +335,8 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
             }
           >
             <h2 className="fs-18-a-16 py-4 text-center">
-              Ventas por tipo de pago
+                   Facturación por cuota      
+                aca iria  facturacion por todos los tipos de pago
             </h2>
             <div className="d-flex justify-content-center ">
               <Bar

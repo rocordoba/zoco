@@ -773,12 +773,11 @@ namespace dash_aliados.Controllers
 
         private double ObtenerPorcentaje(double comparativaHoy, double comparativaDiaAnterior)
         {
-
             var resultadoResta = comparativaHoy - comparativaDiaAnterior;
-            var resultado = resultadoResta / comparativaHoy;
+            var resultado = (resultadoResta / comparativaHoy);
             return resultado;
-
         }
+
 
 
         public int ObtenerSemanaDelMesActual()

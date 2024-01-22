@@ -21,8 +21,6 @@ function App() {
   const { califico, setCalifico, errorSesion } = useContext(DatosInicioContext);
   const { datosBackContext, codigoRespuesta } = useContext(DatosInicioContext);
   const [usuarioRol, setUsuarioRol] = useState();
-  console.log("🚀 ~ App ~ usuarioRol:", usuarioRol)
-
   const showNavComponents =
     window.location.pathname !== "/" && window.location.pathname !== "/login";
 

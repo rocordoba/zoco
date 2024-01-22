@@ -7,55 +7,74 @@ import ScrollToTopButton from "../../components/ScrollToTopButton";
 import TituloPagina from "../../components/TituloPagina";
 import { DatosInicioContext } from "../../context/DatosInicioContext";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 const Tickets = () => {
-    const { datosCuponesContext, codigoRespuesta, datos } = useContext(DatosInicioContext);
+  const { datosCuponesContext, codigoRespuesta, datos } =
+    useContext(DatosInicioContext);
   const { listaMes } = datosCuponesContext;
-    const history = useNavigate();
-    const navegacion = useNavigate();
-    function recargarPagina() {
-        window.location.reload();
+  const history = useNavigate();
+  const navegacion = useNavigate();
+  function recargarPagina() {
+    window.location.reload();
+  }
 
-    }
+  useEffect(() => {
+    const verificarToken = async () => {
+      const token = sessionStorage.getItem("token");
 
-    useEffect(() => {
-        const verificarToken = async () => {
-            const token = sessionStorage.getItem("token");
+      try {
+        const response = await fetch("/api/token/token", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ Token: token }),
+        });
 
-            try {
-                const response = await fetch('/api/token/token', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ Token: token })
-                });
-
-                if (response.ok) {
-                  
-                } else {
-                    if (response.status === 401 || token === null) {
-                        navegacion("/");
-                        recargarPagina();
-                    } else {
-                        throw new Error("Respuesta no satisfactoria del servidor");
-                    }
-                }
-            } catch (error) {
-                console.error("Error al validar el token", error);
-            }
-        };
-
-        const checkResponseCodeAndRedirect = () => {
-            if (codigoRespuesta !== null && codigoRespuesta !== 200) {
-                console.log(codigoRespuesta);
+        if (response.ok) {
+        } else {
+          if (codigoRespuesta !== null && codigoRespuesta !== 200) {
+            console.log(codigoRespuesta);
+            Swal.fire({
+              title: "Sesión expirada.",
+              text: "Inicie sesión nuevamente.",
+              icon: "error",
+              confirmButtonText: "Ok",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // Aquí manejamos la navegación y la recarga de la página después de que el usuario hace clic en "Ok"
                 navegacion("/");
                 recargarPagina();
-            }
-        };
+              }
+            });
+          }
+        }
+      } catch (error) {
+        console.error("Error al validar el token", error);
+      }
+    };
 
-        verificarToken();
-        checkResponseCodeAndRedirect();
-    }, [history, codigoRespuesta]);
+    const checkResponseCodeAndRedirect = () => {
+      if (codigoRespuesta !== null && codigoRespuesta !== 200) {
+        console.log(codigoRespuesta);
+        Swal.fire({
+          title: "Sesión expirada.",
+          text: "Inicie sesión nuevamente.",
+          icon: "error",
+          confirmButtonText: "Ok",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Aquí manejamos la navegación y la recarga de la página después de que el usuario hace clic en "Ok"
+            navegacion("/");
+            recargarPagina();
+          }
+        });
+      }
+    };
+
+    verificarToken();
+    checkResponseCodeAndRedirect();
+  }, [history, codigoRespuesta]);
   return (
     <div>
       <div className="d-xl-block d-none mt-4 pt-4 ">
@@ -66,9 +85,9 @@ const Tickets = () => {
         <TituloPagina title="Cupones" />
       </div>
       <div className="my-3">
-        <DatosTickets  datosCuponesContext={datosCuponesContext}/>
+        <DatosTickets datosCuponesContext={datosCuponesContext} />
       </div>
-          <TablaTickets listaMes={listaMes} datos={datos} />
+      <TablaTickets listaMes={listaMes} datos={datos} />
       <div className="py-4">
         <Footer />
       </div>

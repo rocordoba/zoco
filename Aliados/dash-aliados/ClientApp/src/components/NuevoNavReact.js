@@ -118,7 +118,7 @@ const NuevoNavReact = ({ name, ...props }) => {
   const [selectedMes, setSelectedMes] = useState(null);
   const [selectedComercio, setSelectedComercio] = useState(null);
   const [selectedSemana, setSelectedSemana] = useState(null);
-  
+
   const [visibleModal, setVisibleModal] = useState(false);
   const { actualizarDatos } = useContext(DatosInicioContext);
   const [fechaInicio, setFechaInicio] = useState(null);
@@ -135,170 +135,184 @@ const NuevoNavReact = ({ name, ...props }) => {
     comercio: "",
   });
 
-
   const enviarDatosAlContexto = (datos) => {
     actualizarDatos(datos);
   };
 
-    const procesarDatos = (data) => {
-        //   console.log("Respuesta de la API:", data);
+  const procesarDatos = (data) => {
+    //   console.log("Respuesta de la API:", data);
 
-        const optionsComercio = data.comercios.map((comercio) => ({
-            value: comercio.toLowerCase().replace(/\s+/g, ""),
-            label: comercio,
-        }));
+    const optionsComercio = data.comercios.map((comercio) => ({
+      value: comercio.toLowerCase().replace(/\s+/g, ""),
+      label: comercio,
+    }));
 
-        const fechaInicio = new Date(data.fechaInicio);
-        const fechaFin = new Date(data.fechaFin);
+    const fechaInicio = new Date(data.fechaInicio);
+    const fechaFin = new Date(data.fechaFin);
 
-        const optionsAnios = [];
-        for (
-            let año = fechaInicio.getFullYear();
-            año <= fechaFin.getFullYear();
-            año++
-        ) {
-            optionsAnios.push({ value: año.toString(), label: año.toString() });
-        }
+    const optionsAnios = [];
+    for (
+      let año = fechaInicio.getFullYear();
+      año <= fechaFin.getFullYear();
+      año++
+    ) {
+      optionsAnios.push({ value: año.toString(), label: año.toString() });
+    }
 
-        const optionsMeses = [];
-        let fechaActual = fechaInicio;
-        while (fechaActual <= fechaFin) {
-            const mes = fechaActual.toLocaleString("es", { month: "long" });
-            optionsMeses.push({ value: mes.toLowerCase(), label: mes });
-            fechaActual = new Date(
-                fechaActual.getFullYear(),
-                fechaActual.getMonth() + 1,
-                1
-            );
-        }
-        const añoActual = new Date().getFullYear();
-        const mesActual = new Date().toLocaleString("es", { month: "long" });
+    const optionsMeses = [];
+    let fechaActual = fechaInicio;
+    while (fechaActual <= fechaFin) {
+      const mes = fechaActual.toLocaleString("es", { month: "long" });
+      optionsMeses.push({ value: mes.toLowerCase(), label: mes });
+      fechaActual = new Date(
+        fechaActual.getFullYear(),
+        fechaActual.getMonth() + 1,
+        1
+      );
+    }
+    const añoActual = new Date().getFullYear();
+    const mesActual = new Date().toLocaleString("es", { month: "long" });
 
-        // Función para obtener el número de la semana
-        const obtenerNumeroSemana = (fecha) => {
-            const inicioDeAño = new Date(fecha.getFullYear(), 0, 1);
-            const diff = fecha - inicioDeAño;
-            const semana = Math.ceil((diff / 86400000 + inicioDeAño.getDay() + 1) / 7);
-            return semana;
-        };
-
-        // Obtener la semana actual
-        const semanaActual = obtenerNumeroSemana(new Date());
-        setOptionsComercio(optionsComercio);
-        setOptionsAnios(optionsAnios);
-        setOptionsMes(optionsMeses);
-        setOptionsSemanas(optionsSemanas);
-        setFechaInicio(fechaInicio);
-        setFechaFin(fechaFin);
-        setSelectedAnio({ value: añoActual.toString(), label: añoActual.toString() });
-        setSelectedMes({ value: mesActual.toLowerCase(), label: mesActual });
-        setSelectedSemana({ value: semanaActual.toString(), label: semanaActual.toString() });
+    // Función para obtener el número de la semana
+    const obtenerNumeroSemana = (fecha) => {
+      const inicioDeAño = new Date(fecha.getFullYear(), 0, 1);
+      const diff = fecha - inicioDeAño;
+      const semana = Math.ceil(
+        (diff / 86400000 + inicioDeAño.getDay() + 1) / 7
+      );
+      return semana;
     };
 
-    useEffect(() => {
-        const token = sessionStorage.getItem("token");
-        const userId = localStorage.getItem("userId");
+    // Obtener la semana actual
+    const semanaActual = obtenerNumeroSemana(new Date());
+    setOptionsComercio(optionsComercio);
+    setOptionsAnios(optionsAnios);
+    setOptionsMes(optionsMeses);
+    setOptionsSemanas(optionsSemanas);
+    setFechaInicio(fechaInicio);
+    setFechaFin(fechaFin);
+    setSelectedAnio({
+      value: añoActual.toString(),
+      label: añoActual.toString(),
+    });
+    setSelectedMes({ value: mesActual.toLowerCase(), label: mesActual });
+    setSelectedSemana({
+      value: semanaActual.toString(),
+      label: semanaActual.toString(),
+    });
+  };
 
-        const requestData = {
-            token: token,
-            id: userId,
-        };
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
 
-        if (token && userId) {
-            fetch("/api/bienvenidopanel/bienvenidopanel", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(requestData),
-            })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error("Error en la solicitud");
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    //   console.log("Datos recibidos de la API:", data);
-                    procesarDatos(data);
-                })
-                .catch((error) => {
-                    console.error("Error en la solicitud:", error);
-                });
-        }
-    }, []);
-    const actualizarMesesPorAnio = (anioSeleccionado) => {
-        if (!fechaInicio || !fechaFin) return;
-        setDatosSelect({
-            anio: parseInt(anioSeleccionado),
-        });
-        const mesInicio =
-            new Date(anioSeleccionado, 0, 1).getFullYear() ===
-                fechaInicio.getFullYear()
-                ? fechaInicio.getMonth()
-                : 0;
-
-        const mesFin = fechaFin.getMonth() >= mesInicio ? fechaFin.getMonth() : 11;
-
-        const optionsMeses = [];
-        for (let mes = mesInicio; mes <= mesFin; mes++) {
-            let fechaActual = new Date(anioSeleccionado, mes, 1);
-            const nombreMes = fechaActual.toLocaleString("es", { month: "long" });
-            optionsMeses.push({ value: mes + 1, label: nombreMes }); // Cambio aquí: usar mes + 1 como valor
-        }
-
-        setOptionsMes(optionsMeses);
-        setSelectedMes(null);
+    const requestData = {
+      token: token,
+      id: userId,
     };
-    const actualizarSemanasPorMes = (anioSeleccionado, mesSeleccionado) => {
-        const primerDiaMes = new Date(anioSeleccionado, mesSeleccionado - 1, 1);
-        const ultimoDiaMes = new Date(anioSeleccionado, mesSeleccionado, 0);
 
-        let diaActual = new Date(primerDiaMes.getTime());
-        let semanas = [];
-        let semana = [];
-        let numeroSemanaDelMes = 0;
-
-        // Ajustar el primer día de la semana al lunes más cercano
-        if (diaActual.getDay() !== 1) {
-            diaActual.setDate(diaActual.getDate() - diaActual.getDay() + 1);
-        }
-
-        // Iterar a través de los días del mes
-        for (let d = new Date(diaActual); d <= ultimoDiaMes; d.setDate(d.getDate() + 1)) {
-            if (d.getDate() === 1 || d.getDay() === 1) {
-                numeroSemanaDelMes++;
-            }
-
-            // Detener el proceso si se alcanza la semana 5
-            if (numeroSemanaDelMes > 5) {
-                break;
-            }
-
-            semana.push(new Date(d));
-            if (d.getDay() === 0 || d.getDate() === ultimoDiaMes.getDate()) {
-                semanas.push({ numeroSemanaDelMes, dias: [...semana] });
-                semana = [];
-            }
-        }
-
-        // Filtrar las semanas que caen dentro del rango de fechaInicio y fechaFin
-        const semanasFiltradas = semanas.filter(semana => {
-            const inicioSemana = semana.dias[0];
-            const finSemana = semana.dias[semana.dias.length - 1];
-            return (!fechaInicio || finSemana >= fechaInicio) && (!fechaFin || inicioSemana <= fechaFin);
+    if (token && userId) {
+      fetch("/api/bienvenidopanel/bienvenidopanel", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Error en la solicitud");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          //   console.log("Datos recibidos de la API:", data);
+          procesarDatos(data);
+        })
+        .catch((error) => {
+          console.error("Error en la solicitud:", error);
         });
+    }
+  }, []);
+  const actualizarMesesPorAnio = (anioSeleccionado) => {
+    if (!fechaInicio || !fechaFin) return;
+    setDatosSelect({
+      anio: parseInt(anioSeleccionado),
+    });
+    const mesInicio =
+      new Date(anioSeleccionado, 0, 1).getFullYear() ===
+      fechaInicio.getFullYear()
+        ? fechaInicio.getMonth()
+        : 0;
 
-        // Formatear las semanas para el uso en el front-end
-        const semanasFormateadas = semanasFiltradas.map(semana => {
-            const label = `Semana ${semana.numeroSemanaDelMes}`;
-            const value = semana.numeroSemanaDelMes;
+    const mesFin = fechaFin.getMonth() >= mesInicio ? fechaFin.getMonth() : 11;
 
-            return { label, value };
-        });
+    const optionsMeses = [];
+    for (let mes = mesInicio; mes <= mesFin; mes++) {
+      let fechaActual = new Date(anioSeleccionado, mes, 1);
+      const nombreMes = fechaActual.toLocaleString("es", { month: "long" });
+      optionsMeses.push({ value: mes + 1, label: nombreMes }); // Cambio aquí: usar mes + 1 como valor
+    }
 
-        setOptionsSemanas(semanasFormateadas);
-    };
+    setOptionsMes(optionsMeses);
+    setSelectedMes(null);
+  };
+  const actualizarSemanasPorMes = (anioSeleccionado, mesSeleccionado) => {
+    const primerDiaMes = new Date(anioSeleccionado, mesSeleccionado - 1, 1);
+    const ultimoDiaMes = new Date(anioSeleccionado, mesSeleccionado, 0);
+
+    let diaActual = new Date(primerDiaMes.getTime());
+    let semanas = [];
+    let semana = [];
+    let numeroSemanaDelMes = 0;
+
+    // Ajustar el primer día de la semana al lunes más cercano
+    if (diaActual.getDay() !== 1) {
+      diaActual.setDate(diaActual.getDate() - diaActual.getDay() + 1);
+    }
+
+    // Iterar a través de los días del mes
+    for (
+      let d = new Date(diaActual);
+      d <= ultimoDiaMes;
+      d.setDate(d.getDate() + 1)
+    ) {
+      if (d.getDate() === 1 || d.getDay() === 1) {
+        numeroSemanaDelMes++;
+      }
+
+      // Detener el proceso si se alcanza la semana 5
+      if (numeroSemanaDelMes > 5) {
+        break;
+      }
+
+      semana.push(new Date(d));
+      if (d.getDay() === 0 || d.getDate() === ultimoDiaMes.getDate()) {
+        semanas.push({ numeroSemanaDelMes, dias: [...semana] });
+        semana = [];
+      }
+    }
+
+    // Filtrar las semanas que caen dentro del rango de fechaInicio y fechaFin
+    const semanasFiltradas = semanas.filter((semana) => {
+      const inicioSemana = semana.dias[0];
+      const finSemana = semana.dias[semana.dias.length - 1];
+      return (
+        (!fechaInicio || finSemana >= fechaInicio) &&
+        (!fechaFin || inicioSemana <= fechaFin)
+      );
+    });
+
+    // Formatear las semanas para el uso en el front-end
+    const semanasFormateadas = semanasFiltradas.map((semana) => {
+      const label = `Semana ${semana.numeroSemanaDelMes}`;
+      const value = semana.numeroSemanaDelMes;
+
+      return { label, value };
+    });
+
+    setOptionsSemanas(semanasFormateadas);
+  };
 
   const mandarSemana = (selectedSemana) => {
     const valorSemanaSeleccionada = selectedSemana;
@@ -337,8 +351,6 @@ const NuevoNavReact = ({ name, ...props }) => {
     }
 
     enviarDatosAlContexto(datosSelect);
-
-  
   };
 
   const verModalFilter = () => {
@@ -518,7 +530,38 @@ const NuevoNavReact = ({ name, ...props }) => {
     fetchNoticias();
   }, []);
 
-  const [hayNotificacionesNoVistas, setHayNotificacionesNoVistas] = useState(true);
+  const [hayNotificacionesNoVistas, setHayNotificacionesNoVistas] =
+    useState(true);
+  const [usuarioRol, setUsuarioRol] = useState();
+
+  useEffect(() => {
+    const verificarToken = async () => {
+      const token = sessionStorage.getItem("token");
+
+      try {
+        const response = await fetch("/api/token/token", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ Token: token }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Error en la respuesta del servidor");
+        }
+
+        const datosRecibido = await response.json();
+        setUsuarioRol(datosRecibido);
+        // Aquí puedes hacer algo con el rol
+        // Por ejemplo, guardarlo en el estado o realizar alguna lógica basada en el rol
+      } catch (error) {
+        console.error("Error al validar el token", error);
+      }
+    };
+
+    verificarToken();
+  }, [usuarioRol]);
 
   return (
     <section className="container">
@@ -548,17 +591,19 @@ const NuevoNavReact = ({ name, ...props }) => {
               </div>
 
               <div className="zoom" style={{ position: "relative" }}>
-            {hayNotificacionesNoVistas && <NotificacionIndicador count={"!"} />}
-              <FontAwesomeIcon
-                onClick={() => {
-                  verModalNotificacion();
-                  setVisible2(false);
-                  setHayNotificacionesNoVistas(false);
-                }}
-                className={activadoIconoCampana()}
-                icon={faBell}
-              />
-            </div>
+                {hayNotificacionesNoVistas && (
+                  <NotificacionIndicador count={"!"} />
+                )}
+                <FontAwesomeIcon
+                  onClick={() => {
+                    verModalNotificacion();
+                    setVisible2(false);
+                    setHayNotificacionesNoVistas(false);
+                  }}
+                  className={activadoIconoCampana()}
+                  icon={faBell}
+                />
+              </div>
 
               <div className="zoom">
                 <FontAwesomeIcon
@@ -704,47 +749,49 @@ const NuevoNavReact = ({ name, ...props }) => {
             )}
           </div>
           {/* botones navlink */}
-          <div className="mt-4">
-            <div className="centrado my-2">
-              <NavLink
-                end
-                to="/aliados/inicio"
-                className=" border-0 text-decoration-none"
-                onClick={aparecerScroll}
-              >
-                <div style={{ width: "160px" }}>
-                  <div className={activado()}>
-                    <div className="icono">
-                      <FontAwesomeIcon icon={faHouse} />
+          {usuarioRol === 0 ? (
+            <>
+              <div className="mt-4">
+                <div className="centrado my-2">
+                  <NavLink
+                    end
+                    to="/aliados/inicio"
+                    className=" border-0 text-decoration-none"
+                    onClick={aparecerScroll}
+                  >
+                    <div style={{ width: "160px" }}>
+                      <div className={activado()}>
+                        <div className="icono">
+                          <FontAwesomeIcon icon={faHouse} />
+                        </div>
+                        <div className="texto">
+                          <span className="lato-bold fs-16"> Inicio</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="texto">
-                      <span className="lato-bold fs-16"> Inicio</span>
-                    </div>
-                  </div>
+                  </NavLink>
                 </div>
-              </NavLink>
-            </div>
 
-            <div className="centrado my-2">
-              <NavLink
-                end
-                to="/aliados/contabilidad"
-                className=" border-0 text-decoration-none"
-                onClick={aparecerScroll}
-              >
-                <div style={{ width: "160px" }}>
-                  <div className={activadoContabilidad()}>
-                    <div className="icono">
-                      <FontAwesomeIcon icon={faFileInvoiceDollar} />
+                <div className="centrado my-2">
+                  <NavLink
+                    end
+                    to="/aliados/contabilidad"
+                    className=" border-0 text-decoration-none"
+                    onClick={aparecerScroll}
+                  >
+                    <div style={{ width: "160px" }}>
+                      <div className={activadoContabilidad()}>
+                        <div className="icono">
+                          <FontAwesomeIcon icon={faFileInvoiceDollar} />
+                        </div>
+                        <div className="texto">
+                          <span className="lato-bold fs-16"> Contabilidad</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="texto">
-                      <span className="lato-bold fs-16"> Contabilidad</span>
-                    </div>
-                  </div>
+                  </NavLink>
                 </div>
-              </NavLink>
-            </div>
-            {/* <div className="centrado my-2">
+                {/* <div className="centrado my-2">
               <NavLink
                 end
                 to="/aliados/calculadora"
@@ -763,88 +810,114 @@ const NuevoNavReact = ({ name, ...props }) => {
                 </div>
               </NavLink>
             </div> */}
-            <div className="centrado my-2">
-              <NavLink
-                end
-                to="/aliados/analisis"
-                className=" border-0 text-decoration-none"
-                onClick={aparecerScroll}
-              >
-                <div style={{ width: "160px" }}>
-                  <div className={activadoAnalisis()}>
-                    <div className="icono">
-                      <FontAwesomeIcon icon={faMagnifyingGlassChart} />
+                <div className="centrado my-2">
+                  <NavLink
+                    end
+                    to="/aliados/analisis"
+                    className=" border-0 text-decoration-none"
+                    onClick={aparecerScroll}
+                  >
+                    <div style={{ width: "160px" }}>
+                      <div className={activadoAnalisis()}>
+                        <div className="icono">
+                          <FontAwesomeIcon icon={faMagnifyingGlassChart} />
+                        </div>
+                        <div className="texto">
+                          <span className="lato-bold fs-16">Análisis</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="texto">
-                      <span className="lato-bold fs-16">Análisis</span>
-                    </div>
-                  </div>
+                  </NavLink>
                 </div>
-              </NavLink>
-            </div>
 
-            <div className="centrado my-2">
-              <NavLink
-                end
-                to="/aliados/cupones"
-                className=" border-0 text-decoration-none"
-                onClick={aparecerScroll}
-              >
-                <div style={{ width: "160px" }}>
-                  <div className={activadoTickets()}>
-                    <div className="icono">
-                      <FontAwesomeIcon icon={faReceipt} />
+                <div className="centrado my-2">
+                  <NavLink
+                    end
+                    to="/aliados/cupones"
+                    className=" border-0 text-decoration-none"
+                    onClick={aparecerScroll}
+                  >
+                    <div style={{ width: "160px" }}>
+                      <div className={activadoTickets()}>
+                        <div className="icono">
+                          <FontAwesomeIcon icon={faReceipt} />
+                        </div>
+                        <div className="texto">
+                          <span className="lato-bold fs-16">Cupones</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="texto">
-                      <span className="lato-bold fs-16">Cupones</span>
-                    </div>
-                  </div>
+                  </NavLink>
                 </div>
-              </NavLink>
-            </div>
 
-            <div className="centrado my-2">
-              <NavLink
-                end
-                to="/aliados/calificar"
-                className=" border-0 text-decoration-none"
-                onClick={aparecerScroll}
-              >
-                <div style={{ width: "160px" }}>
-                  <div className={activadoCalculadora()}>
-                    <div className="icono">
-                      <FontAwesomeIcon icon={faStar} />
+                <div className="centrado my-2">
+                  <NavLink
+                    end
+                    to="/aliados/calificar"
+                    className=" border-0 text-decoration-none"
+                    onClick={aparecerScroll}
+                  >
+                    <div style={{ width: "160px" }}>
+                      <div className={activadoCalculadora()}>
+                        <div className="icono">
+                          <FontAwesomeIcon icon={faStar} />
+                        </div>
+                        <div className="texto">
+                          <span className="lato-bold fs-16">Calificar</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="texto">
-                      <span className="lato-bold fs-16">Calificar</span>
-                    </div>
-                  </div>
+                  </NavLink>
                 </div>
-              </NavLink>
-            </div>
-            <div className="centrado my-2" onClick={aparecerScroll}>
-              <a
-                href="https://api.whatsapp.com/send/?phone=543813545650&text=Buenos%2Fas+d%C3%ADas%2Ftardes%2Cmi+CUIT+es%3A++tengo+una+consulta+sobre&type=phone_number&app_absent=0"
-                target="_blank"
-                rel="noreferrer"
-                className=" border-0 text-decoration-none"
-                style={{ width: "160px" }}
-              >
-                <div
-                  className={
-                    darkMode ? " d-flex btn-grid-dark " : " d-flex btn-grid "
-                  }
+                <div className="centrado my-2" onClick={aparecerScroll}>
+                  <a
+                    href="https://api.whatsapp.com/send/?phone=543813545650&text=Buenos%2Fas+d%C3%ADas%2Ftardes%2Cmi+CUIT+es%3A++tengo+una+consulta+sobre&type=phone_number&app_absent=0"
+                    target="_blank"
+                    rel="noreferrer"
+                    className=" border-0 text-decoration-none"
+                    style={{ width: "160px" }}
+                  >
+                    <div
+                      className={
+                        darkMode
+                          ? " d-flex btn-grid-dark "
+                          : " d-flex btn-grid "
+                      }
+                    >
+                      <div className="icono">
+                        <FontAwesomeIcon icon={faWhatsapp} />
+                      </div>
+                      <div className="texto">
+                        <span className="lato-bold fs-16">Whatsapp</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="centrado my-2">
+                <NavLink
+                  end
+                  to="/aliados/calificar"
+                  className=" border-0 text-decoration-none"
+                  onClick={aparecerScroll}
                 >
-                  <div className="icono">
-                    <FontAwesomeIcon icon={faWhatsapp} />
+                  <div style={{ width: "160px" }}>
+                    <div className={activadoCalculadora()}>
+                      <div className="icono">
+                        <FontAwesomeIcon icon={faStar} />
+                      </div>
+                      <div className="texto">
+                        <span className="lato-bold fs-16">Prueba rol</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="texto">
-                    <span className="lato-bold fs-16">Whatsapp</span>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
+                </NavLink>
+              </div>
+            </>
+          )}
         </Offcanvas.Body>
       </Offcanvas>
       <section

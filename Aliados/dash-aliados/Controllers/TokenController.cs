@@ -27,12 +27,12 @@ namespace dash_aliados.Controllers
             if (esTokenValido)
             {
                 var usuarioEncontrado = await _tokenservice.ObtenerTokenYUsuarioPorUsuarioIdAsync(request.Token);
-
-                return StatusCode(StatusCodes.Status200OK, usuarioEncontrado.usuario.TipoUsuario);
+                var rol = usuarioEncontrado.usuario.TipoUsuario;
+                return StatusCode(StatusCodes.Status200OK, rol);
             }
             else
             {
-             
+
                 return StatusCode(StatusCodes.Status401Unauthorized, "Token inválido");
             }
         }

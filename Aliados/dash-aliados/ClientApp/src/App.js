@@ -16,20 +16,16 @@ import { DatosInicioContext } from "./context/DatosInicioContext";
 import Home from "./views/landing/Home";
 
 function App() {
-  
-    const { darkMode } = useContext(DarkModeContext);
-    const [navVisible, showNavbar] = useState(false);
-    const { califico, setCalifico, errorSesion } = useContext(DatosInicioContext);
-    const { datosBackContext, codigoRespuesta } = useContext(DatosInicioContext);
-
-
+  const { darkMode } = useContext(DarkModeContext);
+  const [navVisible, showNavbar] = useState(false);
+  const { califico, setCalifico, errorSesion } = useContext(DatosInicioContext);
+  const { datosBackContext, codigoRespuesta } = useContext(DatosInicioContext);
+  const [usuarioRol, setUsuarioRol] = useState();
   const showNavComponents =
     window.location.pathname !== "/" && window.location.pathname !== "/login";
 
-
  
     
-
 
   return (
     <div className={darkMode ? "container-dark" : "container-light bg-gris"}>
@@ -38,10 +34,10 @@ function App() {
           {showNavComponents && (
             <div>
               <div className="d-xl-none d-block my-3 ">
-                <NuevoNavReact />
+                <NuevoNavReact  />
               </div>
               <article className="d-xl-block d-none bg-gris">
-                <SidebarReact visible={navVisible} show={showNavbar} />
+                <SidebarReact  visible={navVisible} show={showNavbar} />
               </article>
             </div>
           )}

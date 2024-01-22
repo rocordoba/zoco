@@ -56,7 +56,7 @@ namespace dash_aliados.Controllers
 
             string tokenCreado = tokenHandler.WriteToken(tokenConfig);
             DateTime fechaCreacion = DateTime.UtcNow;
-            DateTime fechaExpiracion = fechaCreacion.AddMinutes(60);
+            DateTime fechaExpiracion = fechaCreacion.AddMinutes(30);
             await _tokenService.GenerarActualizarTokenAsync(usuarioEncontrado.Id, tokenCreado, fechaCreacion, fechaExpiracion);
 
             var usuarioVM = _mapper.Map<VMUsuariosZoco>(usuarioEncontrado);

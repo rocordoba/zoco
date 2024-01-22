@@ -8,6 +8,7 @@ import ScrollToTopButton from "../../components/ScrollToTopButton";
 import TituloPagina from "../../components/TituloPagina";
 import { DatosInicioContext } from "../../context/DatosInicioContext";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 const Analisis = () => {
   const { datosAnalisisContext, codigoRespuesta } =
     useContext(DatosInicioContext);
@@ -33,8 +34,18 @@ const Analisis = () => {
         if (response.ok) {
         } else {
           if (response.status === 401 || token === null) {
-            navegacion("/");
-            recargarPagina();
+            Swal.fire({
+              title: "Sesión expirada.",
+              text: "Inicie sesión nuevamente.",
+              icon: "error",
+              confirmButtonText: "Ok",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // Aquí manejas la navegación y la recarga de la página después de que el usuario hace clic en "Ok"
+                navegacion("/");
+                recargarPagina();
+              }
+            });
           } else {
             throw new Error("Respuesta no satisfactoria del servidor");
           }
@@ -47,8 +58,18 @@ const Analisis = () => {
     const checkResponseCodeAndRedirect = () => {
       if (codigoRespuesta !== null && codigoRespuesta !== 200) {
         console.log(codigoRespuesta);
-        navegacion("/");
-        recargarPagina();
+        Swal.fire({
+          title: "Sesión expirada.",
+          text: "Inicie sesión nuevamente.",
+          icon: "error",
+          confirmButtonText: "Ok",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Aquí manejamos la navegación y la recarga de la página después de que el usuario hace clic en "Ok"
+            navegacion("/");
+            recargarPagina();
+          }
+        });
       }
     };
 

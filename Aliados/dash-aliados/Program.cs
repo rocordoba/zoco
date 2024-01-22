@@ -28,7 +28,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie(option =>
     {
         option.LoginPath = "/Acceso/Login";
-        option.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+        option.ExpireTimeSpan = TimeSpan.FromMinutes(30);
     });
 
 

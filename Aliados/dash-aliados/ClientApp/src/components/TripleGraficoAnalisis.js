@@ -35,7 +35,6 @@ ChartJS.register(
 const TripleGraficoAnalisis = ({ datosBack }) => {
   const { darkMode } = useContext(DarkModeContext);
   const tickColor = darkMode ? "#fff" : "#292B2F";
-  
 
   const {
     debito,
@@ -46,22 +45,26 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
     debitoFacturacion,
     porcentajeporcuotas,
     porcentajeticket,
-      porcentajetipopago,
-    cuotas
-    } = datosBack;
-    
+    porcentajetipopago,
+    cuotas,
+  } = datosBack;
+
   let numeroPorcentual = porcentajeporcuotas || 0;
   let porcentajeFinal = numeroPorcentual.toFixed(2);
   let porcentajeEnteroCuotas = convertirDecimalAPorcentaje(porcentajeFinal);
 
   let numeroPorcentualTicket = porcentajeticket || 0;
   let porcentajeFinalTicket = numeroPorcentualTicket.toFixed(2);
-  let porcentajeEnteroFinalTicket = convertirDecimalAPorcentaje(porcentajeFinalTicket);
+  let porcentajeEnteroFinalTicket = convertirDecimalAPorcentaje(
+    porcentajeFinalTicket
+  );
 
   let numeroPorcentualTipoPago = porcentajetipopago || 0;
   let porcentajeFinalTipoPago = numeroPorcentualTipoPago.toFixed(2);
-  let porcentajeEnteroTipoPago = convertirDecimalAPorcentaje(porcentajeFinalTipoPago);
-  
+  let porcentajeEnteroTipoPago = convertirDecimalAPorcentaje(
+    porcentajeFinalTipoPago
+  );
+
   // let porcentajeNumero = porcentajeFinal;
 
   // const mostrarIcono = () => {
@@ -95,7 +98,6 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
   //   }
   // };
 
- 
   // let porcentajeNumeroTipoPago = porcentajeFinalTipoPago;
 
   // const mostrarIconoTipoPago = () => {
@@ -128,7 +130,6 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
   //     );
   //   }
   // };
-
 
   // let porcentajeNumeroTicket = porcentajeFinalTicket;
 
@@ -229,22 +230,36 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
     dataset.barThickness = 30;
   });
 
+  const cuotasExtraidas = cuotas || [];
+
+  // Filtrar las cuotas para excluir aquellas con valor 0
+  const cuotasFiltradas = cuotasExtraidas.filter((cuota) => cuota.cuota !== 0);
+  // Ordenar las cuotas de menor a mayor
+  const cuotasOrdenadasPorCuota = cuotasFiltradas.sort(
+    (a, b) => a.cuota - b.cuota
+  );
+
+  var beneficios = cuotasOrdenadasPorCuota.map(
+    (cuota) => cuota.totalBruto || 0
+  );
+  var cuotasOrdenadas = cuotasOrdenadasPorCuota.map((cuota) => cuota.cuota);
+
   // VENTAS POR TIPO DE PAGO
   var ventasValues = [totalConDescuentoCuotas0, totalConDescuentoCuotas1];
 
   var midataVentas = {
-    labels: labels,
+    labels: cuotasOrdenadas,
     datasets: [
       {
-        label: "Valores",
-        data: ventasValues,
+        label: "Monto$",
+        data: beneficios,
         backgroundColor: "#B4C400",
       },
     ],
   };
 
   midataVentas.datasets.forEach(function (dataset) {
-    dataset.barPercentage = 0.4;
+    dataset.barPercentage = 1;
     dataset.barThickness = 30;
   });
 
@@ -258,9 +273,8 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
               darkMode ? " bg-grafica-dark px-5 pb-4" : "bg-grafica px-5 pb-4"
             }
           >
-                      <h2 className="fs-18-a-16 py-4 text-center">
-                          Ventas por tipo de pago
-             
+            <h2 className="fs-18-a-16 py-4 text-center">
+              Ventas por tipo de pago
             </h2>
             <div className="d-flex justify-content-center ">
               <Bar
@@ -269,9 +283,12 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
                 options={misoptions}
               />
             </div>
-            <div >
-              <h6 className="fs-9 lato-bold text-center"> Diferencia entre Débito y Crédito</h6>
-              </div>
+            <div>
+              <h6 className="fs-9 lato-bold text-center">
+                {" "}
+                Diferencia entre Débito y Crédito
+              </h6>
+            </div>
             <div className="d-flex justify-content-center ">
               <div
                 className={
@@ -282,7 +299,9 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
               >
                 <div>
                   <div className="d-flex">
-                    <span className="lato-bold fs-18">{porcentajeEnteroCuotas} %</span>
+                    <span className="lato-bold fs-18">
+                      {porcentajeEnteroCuotas} %
+                    </span>
                   </div>
                 </div>
               </div>
@@ -336,8 +355,7 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
             }
           >
             <h2 className="fs-18-a-16 py-4 text-center">
-                   Facturación por cuota      
-                aca iria  facturacion por todos los tipos de pago
+              Facturación por tipo de cuota
             </h2>
             <div className="d-flex justify-content-center ">
               <Bar
@@ -345,26 +363,6 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
                 data={midataVentas}
                 options={misoptions}
               />
-            </div>
-            <div >
-              <h6 className="fs-9 lato-bold text-center"> Diferencia entre Débito y Crédito</h6>
-              </div>
-            <div className="d-flex justify-content-center ">
-              <div
-                className={
-                  darkMode
-                    ? " btn-comparativa-dark centrado"
-                    : "btn-comparativa centrado"
-                }
-              >
-                <div>
-                  <div className="d-flex">
-                    <span className="lato-bold fs-18">
-                      {porcentajeEnteroTipoPago} %
-                    </span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </article>

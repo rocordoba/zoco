@@ -29,14 +29,12 @@ ChartJS.register(
 
 const GraficaData = ({ datos }) => {
     const { descuentosPorTarjeta = [] } = datos;
-    console.log(descuentosPorTarjeta);
 
    
     descuentosPorTarjeta.sort((a, b) => b.totalConDescuento - a.totalConDescuento);
-    console.log(descuentosPorTarjeta);
 
 
-    var beneficios = descuentosPorTarjeta.map(tarjeta => tarjeta.totalConDescuento || 0);
+    var beneficios = descuentosPorTarjeta.map(tarjeta => tarjeta.totalConDsecuento || 0);
     var tarjetasOrdenadas = descuentosPorTarjeta.map(tarjeta => tarjeta.tarjeta);
 
 

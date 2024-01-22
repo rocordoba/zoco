@@ -288,7 +288,11 @@ const SidebarReact = () => {
   const [hayNotificacionesNoVistas, setHayNotificacionesNoVistas] =
     useState(true);
 
-  const [rolUsuario, setRolUsuario] = useState(0);
+    const rolNumber = sessionStorage.getItem("rol")
+    
+    const [rolUsuario, setRolUsuario] = useState(rolNumber);
+
+
 
   return (
     <>

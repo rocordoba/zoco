@@ -2,12 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\Aliados",
-    "\\Aliados\\BLL",
     "\\Aliados\\BLL\\Implementacion",
     "\\Aliados\\BLL\\InterfacesZoco",
     "\\Aliados\\dash-aliados",
     "\\Aliados\\dash-aliados\\Controllers"
   ],
-  "SelectedNode": "\\Aliados\\BLL\\InterfacesZoco\\ITokenService.cs",
+  "SelectedNode": "\\Aliados\\dash-aliados\\Controllers\\DatosInicioController.cs",
   "PreviewInSolutionExplorer": false
 }

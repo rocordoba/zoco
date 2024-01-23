@@ -28,17 +28,19 @@ ChartJS.register(
 );
 
 const GraficaData = ({ datos }) => {
-    const { descuentosPorTarjeta = [] } = datos;
+  const { descuentosPorTarjeta = [] } = datos;
 
-   
-    descuentosPorTarjeta.sort((a, b) => b.totalConDescuento - a.totalConDescuento);
+  descuentosPorTarjeta.sort(
+    (a, b) => b.totalConDescuento - a.totalConDescuento
+  );
 
+  var beneficios = descuentosPorTarjeta.map(
+    (tarjeta) => tarjeta.totalConDescuento || 0
+  );
 
-    var beneficios = descuentosPorTarjeta.map(tarjeta => tarjeta.totalConDsecuento || 0);
-    var tarjetasOrdenadas = descuentosPorTarjeta.map(tarjeta => tarjeta.tarjeta);
-
-
-
+  var tarjetasOrdenadas = descuentosPorTarjeta.map(
+    (tarjeta) => tarjeta.tarjeta
+  );
 
   const { darkMode } = useContext(DarkModeContext);
   const tickColor = darkMode ? "#fff" : "#292B2F";
@@ -70,7 +72,7 @@ const GraficaData = ({ datos }) => {
   };
 
   var midata = {
-      labels: tarjetasOrdenadas,
+    labels: tarjetasOrdenadas,
     datasets: [
       {
         label: "Monto$",
@@ -108,11 +110,11 @@ const GraficaData = ({ datos }) => {
         />
         {darkMode ? (
           <>
-            <TarjetasLogoBlanco  tarjetasOrdenadas={tarjetasOrdenadas}/>
+            <TarjetasLogoBlanco tarjetasOrdenadas={tarjetasOrdenadas} />
           </>
         ) : (
           <>
-            <TarjetasLogo  tarjetasOrdenadas={tarjetasOrdenadas}/>
+            <TarjetasLogo tarjetasOrdenadas={tarjetasOrdenadas} />
           </>
         )}
       </article>

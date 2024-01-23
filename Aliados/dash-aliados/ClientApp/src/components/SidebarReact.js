@@ -50,6 +50,7 @@ const SidebarReact = () => {
 
     fetchNoticias();
   }, []);
+
   const cerrarSesion = async () => {
     const token = sessionStorage.getItem("token");
     if (!token) {
@@ -82,6 +83,7 @@ const SidebarReact = () => {
       );
     }
   };
+  
   const verModalNotificacion = () => {
     setVisible1(!visible1);
     setVisible2(false);

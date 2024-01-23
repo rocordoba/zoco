@@ -183,6 +183,7 @@ const FormComentarioCalificar = () => {
           <Form.Group as={Col} md="12" controlId="validationCustom01">
             <Form.Control
               as="textarea"
+              disabled={isButtonDisabled}
               className={
                 darkMode
                   ? "form-control input-comentarios-calificar-dark border-0 px-5 py-4 text-white"

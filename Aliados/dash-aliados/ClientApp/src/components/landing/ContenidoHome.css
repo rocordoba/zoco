@@ -103,7 +103,7 @@ box-shadow: 0.4rem 0.4px 0.4rem #cacdd3, -0.4rem -0.4rem 0.4rem #ffffff !importa
 
 .navbar-btn {
   align-items: center !important;
-  text-align: right !important;
+  text-align: left !important;
 }
 
 .navbar-nav .nav-link.active, .navbar-nav .nav-link.show {

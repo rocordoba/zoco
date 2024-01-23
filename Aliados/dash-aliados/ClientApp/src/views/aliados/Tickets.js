@@ -17,13 +17,14 @@ const Tickets = () => {
   function recargarPagina() {
     window.location.reload();
   }
+  const apiUrlToken = process.env.REACT_APP_API_TOKEN;
 
   useEffect(() => {
     const verificarToken = async () => {
       const token = sessionStorage.getItem("token");
 
       try {
-        const response = await fetch("/api/token/token", {
+        const response = await fetch(apiUrlToken, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

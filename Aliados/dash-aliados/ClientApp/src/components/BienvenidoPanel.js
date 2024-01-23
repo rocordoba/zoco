@@ -96,6 +96,8 @@ const BienvenidoPanel = () => {
     });
   };
 
+const apiUrlBienvenidoPanel = process.env.REACT_APP_API_BIENVENIDO_PANEL;
+
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     const requestData = {
@@ -103,7 +105,7 @@ const BienvenidoPanel = () => {
     };
 
     if (token ) {
-      fetch("/api/bienvenidopanel/bienvenidopanel", {
+      fetch(apiUrlBienvenidoPanel, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

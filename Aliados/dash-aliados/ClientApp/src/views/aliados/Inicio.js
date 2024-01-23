@@ -28,12 +28,15 @@ const Inicio = ({ califico, setCalifico }) => {
   function recargarPagina() {
     window.location.reload();
   }
+  const apiUrlToken = process.env.REACT_APP_API_TOKEN;
+  const apiUrlCalifico = process.env.REACT_APP_API_CALIFICAR_COM;
+
   useEffect(() => {
     const verificarToken = async () => {
       const token = sessionStorage.getItem("token");
 
       try {
-        const response = await fetch("/api/token/token", {
+        const response = await fetch(apiUrlToken, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -87,7 +90,7 @@ const Inicio = ({ califico, setCalifico }) => {
 
     const obtenerCalifico = async (token) => {
       try {
-        const response = await fetch("/api/califico/calificomes", {
+        const response = await fetch(apiUrlCalifico, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

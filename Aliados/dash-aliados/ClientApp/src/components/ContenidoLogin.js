@@ -45,8 +45,10 @@ const ContenidoLogin = ({ onSubmit, datosMandados, setDatosMandados }) => {
     window.location.reload();
 }
 
+const apiUrlLogin= process.env.REACT_APP_API_LOGIN
+
   const onSubmit2 = () => {
-    fetch("/api/acceso/login", {
+    fetch(apiUrlLogin, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

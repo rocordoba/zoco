@@ -145,6 +145,8 @@ const NuevoNavReact = ({ name, ...props }) => {
     });
   };
 
+  const apiUrlBienvenidoPanel = process.env.REACT_APP_API_BIENVENIDO_PANEL;
+
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     const userId = localStorage.getItem("userId");
@@ -155,7 +157,7 @@ const NuevoNavReact = ({ name, ...props }) => {
     };
 
     if (token && userId) {
-      fetch("/api/bienvenidopanel/bienvenidopanel", {
+      fetch(apiUrlBienvenidoPanel, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -458,11 +460,14 @@ const NuevoNavReact = ({ name, ...props }) => {
   };
 
   const [notificaciones, setNotificaciones] = useState([]);
+  const apiUrlNotificaciones = process.env.REACT_APP_API_NOTIFICACIONES;
+  const apiUrlLogout = process.env.REACT_APP_API_LOGOUT;
+  const apiUrlToken = process.env.REACT_APP_API_TOKEN;
 
   useEffect(() => {
     const fetchNoticias = async () => {
       try {
-        const response = await fetch("/api/notificacion/noticias");
+        const response = await fetch(apiUrlNotificaciones);
         const data = await response.json();
         setNotificaciones(data);
       } catch (error) {
@@ -482,7 +487,7 @@ const NuevoNavReact = ({ name, ...props }) => {
       const token = sessionStorage.getItem("token");
 
       try {
-        const response = await fetch("/api/token/token", {
+        const response = await fetch(apiUrlToken, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -515,7 +520,7 @@ const NuevoNavReact = ({ name, ...props }) => {
     }
 
     try {
-      const response = await fetch("/api/acceso/logout", {
+      const response = await fetch(apiUrlLogout, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

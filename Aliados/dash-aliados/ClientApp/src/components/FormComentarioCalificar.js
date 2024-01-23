@@ -11,7 +11,7 @@ const FormComentarioCalificar = () => {
   const [formComentarioData, setFormComentarioData] = useState({
     comentario: "",
   });
-  const apiUrlClave = process.env.REACT_APP_API_CAMBIAR_CLAVE;
+
 
   const isButtonDisabled = rating === 0;
 
@@ -34,8 +34,10 @@ const FormComentarioCalificar = () => {
 
     //  console.log("Datos a enviar:", datosConRating);
 
+    const apiUrlCalificoCom = process.env.REACT_APP_API_CALIFICAR_COM
+
     try {
-      await fetch("/api/califico/calificocom", {
+      await fetch(apiUrlCalificoCom, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -37,10 +37,13 @@ const SidebarReact = () => {
 
   const [notificaciones, setNotificaciones] = useState([]);
 
+  const apiUrlNotificaciones = process.env.REACT_APP_API_NOTIFICACIONES;
+  const apiUrlLogout = process.env.REACT_APP_API_LOGOUT;
+  
   useEffect(() => {
     const fetchNoticias = async () => {
       try {
-        const response = await fetch("/api/notificacion/noticias");
+        const response = await fetch(apiUrlNotificaciones);
         const data = await response.json();
         setNotificaciones(data);
       } catch (error) {
@@ -59,7 +62,7 @@ const SidebarReact = () => {
     }
 
     try {
-      const response = await fetch("/api/acceso/logout", {
+      const response = await fetch(apiUrlLogout, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -83,7 +86,7 @@ const SidebarReact = () => {
       );
     }
   };
-  
+
   const verModalNotificacion = () => {
     setVisible1(!visible1);
     setVisible2(false);
@@ -290,13 +293,14 @@ const SidebarReact = () => {
   const [hayNotificacionesNoVistas, setHayNotificacionesNoVistas] =
     useState(true);
   const [usuarioRol, setUsuarioRol] = useState();
+  const apiUrlToken = process.env.REACT_APP_API_TOKEN;
 
   useEffect(() => {
     const verificarToken = async () => {
       const token = sessionStorage.getItem("token");
 
       try {
-        const response = await fetch("/api/token/token", {
+        const response = await fetch(apiUrlToken, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

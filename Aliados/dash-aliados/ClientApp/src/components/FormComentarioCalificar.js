@@ -20,12 +20,12 @@ const FormComentarioCalificar = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     const token = sessionStorage.getItem("token");
-    const userId = parseInt(localStorage.getItem("userId")); // Asegúrate de que userId sea un entero
+     // Asegúrate de que userId sea un entero
     const fechaActual = new Date().toISOString();
 
     const datosConRating = {
       Token: token,
-      UsuarioId: userId,
+     
       NumCalifico: rating,
       Descripcion: formComentarioData.comentario,
       Fecha: fechaActual,

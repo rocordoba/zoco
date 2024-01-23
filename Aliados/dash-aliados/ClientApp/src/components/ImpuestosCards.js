@@ -65,7 +65,7 @@ const ImpuestosCards = ({ datosBack, DatosTasa }) => {
     fechasVencimiento.length > 0 ? fechasVencimiento[0] : "Cargando...";
   const fechaSegunda =
     fechasVencimiento.length > 0 ? fechasVencimiento[1] : "Cargando...";
-  console.log(valoresFormateados);
+ 
   return (
     <section className="container">
       <div className="row">

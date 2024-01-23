@@ -11,22 +11,22 @@ function CambiarClaveProvider(props) {
         nueva: "",
       });
 
-      const apiUrlCalificar = process.env.REACT_APP_API_CALIFICAR_COM;
+      const apiUrlClave = process.env.REACT_APP_API_CAMBIAR_CLAVE;
     
       const onSubmit = async (data) => {
         setFormData(data);
-        const token = localStorage.getItem("token");
-        const userId = parseInt(localStorage.getItem("userId"));
+        const token =sessionStorage.getItem("token");
+
         const datosPassword = {
           Token: token,
-          Id: userId,
+  
           ClaveActual: data.anterior,
           ClaveNueva: data.nueva,
           ConfirmarClave: data.confirmar,
         };
     
         try {
-          await fetch(apiUrlCalificar, {
+          await fetch(apiUrlClave, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

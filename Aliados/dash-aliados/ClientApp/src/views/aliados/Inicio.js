@@ -88,9 +88,10 @@ const Inicio = ({ califico, setCalifico }) => {
       }
     };
 
+      const apiUrlCalificoMes = process.env.REACT_APP_API_CALIFICO_MES;
     const obtenerCalifico = async (token) => {
       try {
-        const response = await fetch(apiUrlCalifico, {
+        const response = await fetch(apiUrlCalificoMes, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

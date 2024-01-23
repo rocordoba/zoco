@@ -15,6 +15,8 @@ const TablaTickets = ({ listaMes, datos }) => {
 
   const [busqueda, setBusqueda] = useState("");
   const [resultadosFiltrados, setResultadosFiltrados] = useState([]);
+  const apiUrlPdf = process.env.REACT_APP_API_PDF;
+  const apiUrlExcel = process.env.REACT_APP_API_EXCEL;
 
   const handleSearchChange = (e) => {
     setBusqueda(e.target.value);
@@ -28,16 +30,17 @@ const TablaTickets = ({ listaMes, datos }) => {
     setResultadosFiltrados(resultados);
   };
 
+ 
   // Función para manejar la descarga de Excel
   const manejarClicDescarga = async () => {
     // Desactivar el botón al iniciar la descarga
     setDescargando(true);
     const token = sessionStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
+   
     const fechaActual = new Date();
     const año = datos?.anio || fechaActual.getFullYear();
     const mes = datos?.mes || fechaActual.getMonth() + 1;
-    const apiUrlExcel = process.env.REACT_APP_API_EXCEL;
+  
    
     try {
       const respuesta = await fetch(apiUrlExcel, {
@@ -46,7 +49,7 @@ const TablaTickets = ({ listaMes, datos }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Id: userId,
+         
           token: token,
           Year: año,
           Month: mes,
@@ -77,12 +80,12 @@ const TablaTickets = ({ listaMes, datos }) => {
     }
   };
 
-  const apiUrlPdf = process.env.REACT_APP_API_PDF;
+ 
   const manejarClicDescargaPdf = async () => {
     setDescargando2(true);
 
     const token = sessionStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
+   
     const fechaActual = new Date();
     const año = datos?.anio || fechaActual.getFullYear();
     const mes = datos?.mes || fechaActual.getMonth() + 1;
@@ -95,7 +98,7 @@ const TablaTickets = ({ listaMes, datos }) => {
         },
         body: JSON.stringify({
           token: token,
-          Id: userId,
+        
           Year: año,
           Month: mes,
           comercio: "todos",

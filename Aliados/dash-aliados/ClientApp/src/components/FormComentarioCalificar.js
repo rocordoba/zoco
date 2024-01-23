@@ -11,7 +11,6 @@ const FormComentarioCalificar = () => {
   const [formComentarioData, setFormComentarioData] = useState({
     comentario: "",
   });
-  const apiUrlClave = process.env.REACT_APP_API_CAMBIAR_CLAVE;
 
   const isButtonDisabled = rating === 0;
 
@@ -21,12 +20,12 @@ const FormComentarioCalificar = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     const token = sessionStorage.getItem("token");
-    const userId = parseInt(localStorage.getItem("userId")); // Asegúrate de que userId sea un entero
+     // Asegúrate de que userId sea un entero
     const fechaActual = new Date().toISOString();
 
     const datosConRating = {
       Token: token,
-      UsuarioId: userId,
+     
       NumCalifico: rating,
       Descripcion: formComentarioData.comentario,
       Fecha: fechaActual,
@@ -34,8 +33,10 @@ const FormComentarioCalificar = () => {
 
     //  console.log("Datos a enviar:", datosConRating);
 
+    const apiUrlCalificoCom = process.env.REACT_APP_API_CALIFICAR_COM;
+
     try {
-      await fetch("/api/califico/calificocom", {
+      await fetch(apiUrlCalificoCom, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -181,6 +182,7 @@ const FormComentarioCalificar = () => {
           <Form.Group as={Col} md="12" controlId="validationCustom01">
             <Form.Control
               as="textarea"
+              disabled={isButtonDisabled}
               className={
                 darkMode
                   ? "form-control input-comentarios-calificar-dark border-0 px-5 py-4 text-white"

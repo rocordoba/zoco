@@ -33,42 +33,6 @@ import { DatosInicioContext } from "../context/DatosInicioContext";
 import Swal from "sweetalert2";
 import NotificacionIndicador from "./NotificacionIndicador";
 
-const optionsAnios = [
-  { value: "2023", label: "2023" },
-  { value: "2022", label: "2022" },
-  { value: "2021", label: "2021" },
-];
-
-const optionsMes = [
-  { value: "enero", label: "Enero" },
-  { value: "febrero", label: "Febrero" },
-  { value: "marzo", label: "Marzo" },
-  { value: "abril", label: "Abril" },
-  { value: "mayo", label: "Mayo" },
-  { value: "junio", label: "Junio" },
-  { value: "julio", label: "Julio" },
-  { value: "agosto", label: "Agosto" },
-  { value: "septiembre", label: "Septiembre" },
-  { value: "octubre", label: "Octubre" },
-  { value: "noviembre", label: "Noviembre" },
-  { value: "diciembre", label: "Diciembre" },
-];
-
-const optionsComercio = [
-  { value: "Todos", label: "Todos" },
-  { value: "craft", label: "Craft" },
-  { value: "la Bandeña", label: "La Bandeña" },
-  { value: "casapan", label: "Casapan" },
-];
-
-const optionsSemanas = [
-  { value: "semana 1-7", label: "1-7" },
-  { value: "semana 7-14", label: "7-14" },
-  { value: "semana 14-21", label: "14-21" },
-  { value: "semana 21-28", label: "21-28" },
-  { value: "semana 28-31", label: "28-31" },
-];
-
 const NuevoNavReact = ({ name, ...props }) => {
   //states del sidebar
   const [show, setShow] = useState(false);
@@ -89,27 +53,6 @@ const NuevoNavReact = ({ name, ...props }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-  // states y config de los botones
-  // const [datoCapturados, setDatoCapturados] = useState({});
-  // const [isSearchable, setIsSearchable] = useState(true);
-  // const [selectedAnio, setSelectedAnio] = useState(null);
-  // const [selectedMes, setSelectedMes] = useState(null);
-  // const [selectedComercio, setSelectedComercio] = useState(null);
-  // const [selectedSemana, setSelectedSemana] = useState(null);
-  // const { darkMode } = useContext(DarkModeContext);
-  // const [visibleModal, setVisibleModal] = useState(false);
-
-  // const handleEnviarDatos = () => {
-  //   const data = {
-  //     anio: selectedAnio?.value,
-  //     mes: selectedMes?.value,
-  //     comercio: selectedComercio?.value,
-  //     semana: selectedSemana?.value,
-  //   };
-  //   setDatoCapturados(data);
-  //   verModalFilter();
-  // };
 
   const { darkMode } = useContext(DarkModeContext);
   const [datoCapturados, setDatoCapturados] = useState({});
@@ -141,7 +84,6 @@ const NuevoNavReact = ({ name, ...props }) => {
 
   const procesarDatos = (data) => {
     //   console.log("Respuesta de la API:", data);
-
     const optionsComercio = data.comercios.map((comercio) => ({
       value: comercio.toLowerCase().replace(/\s+/g, ""),
       label: comercio,
@@ -202,6 +144,8 @@ const NuevoNavReact = ({ name, ...props }) => {
     });
   };
 
+  const apiUrlBienvenidoPanel = process.env.REACT_APP_API_BIENVENIDO_PANEL;
+
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     const userId = localStorage.getItem("userId");
@@ -212,7 +156,7 @@ const NuevoNavReact = ({ name, ...props }) => {
     };
 
     if (token && userId) {
-      fetch("/api/bienvenidopanel/bienvenidopanel", {
+      fetch(apiUrlBienvenidoPanel, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -515,11 +459,14 @@ const NuevoNavReact = ({ name, ...props }) => {
   };
 
   const [notificaciones, setNotificaciones] = useState([]);
+  const apiUrlNotificaciones = process.env.REACT_APP_API_NOTIFICACIONES;
+  const apiUrlLogout = process.env.REACT_APP_API_LOGOUT;
+  const apiUrlToken = process.env.REACT_APP_API_TOKEN;
 
   useEffect(() => {
     const fetchNoticias = async () => {
       try {
-        const response = await fetch("/api/notificacion/noticias");
+        const response = await fetch(apiUrlNotificaciones);
         const data = await response.json();
         setNotificaciones(data);
       } catch (error) {
@@ -539,7 +486,7 @@ const NuevoNavReact = ({ name, ...props }) => {
       const token = sessionStorage.getItem("token");
 
       try {
-        const response = await fetch("/api/token/token", {
+        const response = await fetch(apiUrlToken, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -562,6 +509,40 @@ const NuevoNavReact = ({ name, ...props }) => {
 
     verificarToken();
   }, [usuarioRol]);
+
+  // funcion para borrar el token y cerrar sesion
+  const cerrarSesion = async () => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      console.error("No hay token en el almacenamiento de la sesión");
+      return;
+    }
+
+    try {
+      const response = await fetch(apiUrlLogout, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ Token: token }),
+      });
+
+      if (response.ok) {
+        console.log("Sesión cerrada correctamente");
+        // Aquí puedes redireccionar al usuario o realizar otras acciones necesarias después de cerrar sesión
+        sessionStorage.removeItem("token"); // Eliminar el token del sessionStorage
+        // Redireccionar al usuario, por ejemplo a la página de inicio de sesión
+        window.location.href = "/";
+      } else {
+        console.error("Error al cerrar sesión:", await response.text());
+      }
+    } catch (error) {
+      console.error(
+        "Error al realizar la solicitud de cierre de sesión:",
+        error
+      );
+    }
+  };
 
   return (
     <section className="container">
@@ -715,19 +696,16 @@ const NuevoNavReact = ({ name, ...props }) => {
                             </div>
 
                             <div className="centrado my-3">
-                              <NavLink
-                                end
-                                to="/"
-                                onClick={reloadPage}
-                                className=" border-0 text-decoration-none"
+                              {/* Botón para cerrar sesión */}
+                              <button
+                                className={
+                                  darkMode
+                                    ? "d-flex btn-nav-cerrar-sesion-dark centrado border-0 "
+                                    : "d-flex btn-nav-cerrar-sesion centrado border-0"
+                                }
+                                onClick={cerrarSesion}
                               >
-                                <div
-                                  className={
-                                    darkMode
-                                      ? "d-flex btn-nav-cerrar-sesion-dark centrado "
-                                      : "d-flex btn-nav-cerrar-sesion centrado"
-                                  }
-                                >
+                                <div>
                                   <div className="ms-3">
                                     <FontAwesomeIcon
                                       icon={faRightFromBracket}
@@ -737,7 +715,7 @@ const NuevoNavReact = ({ name, ...props }) => {
                                     </span>
                                   </div>
                                 </div>
-                              </NavLink>
+                              </button>
                             </div>
                           </div>
                         </div>

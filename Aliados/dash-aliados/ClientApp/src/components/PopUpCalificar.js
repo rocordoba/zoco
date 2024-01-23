@@ -13,6 +13,7 @@ const PopUpCalificar = () => {
   const { register, handleSubmit, reset } = useForm();
     const [califico, setCalifico] = useState();
 
+    const apiUrlCalifico = process.env.REACT_APP_API_CALIFICO_CALIFICO;
     const onSubmit = async (datos) => {
      /*   const token = localStorage.getItem("token");*/
         /*const userId = localStorage.getItem("userId");*/
@@ -31,7 +32,7 @@ const PopUpCalificar = () => {
         verModalNotificacion();
 
         try {
-            const response = await fetch('/api/califico/califico', {
+            const response = await fetch(apiUrlCalifico, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

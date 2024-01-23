@@ -2,7 +2,6 @@ import { useContext } from "react";
 import ContenidoLogin from "../../components/ContenidoLogin";
 import FooterLogin from "../../components/FooterLogin";
 import { DatosInicioContext } from "../../context/DatosInicioContext";
-import ContenidoLoginNew from "../../components/ContenidoLoginNew";
 
 const Login = () => {
   const {

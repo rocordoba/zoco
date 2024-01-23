@@ -17,13 +17,14 @@ const Tickets = () => {
   function recargarPagina() {
     window.location.reload();
   }
+  const apiUrlToken = process.env.REACT_APP_API_TOKEN;
 
   useEffect(() => {
     const verificarToken = async () => {
       const token = sessionStorage.getItem("token");
 
       try {
-        const response = await fetch("/api/token/token", {
+        const response = await fetch(apiUrlToken, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -34,7 +35,6 @@ const Tickets = () => {
         if (response.ok) {
         } else {
           if (codigoRespuesta !== null && codigoRespuesta !== 200) {
-            console.log(codigoRespuesta);
             Swal.fire({
               title: "Sesión expirada.",
               text: "Inicie sesión nuevamente.",
@@ -56,7 +56,6 @@ const Tickets = () => {
 
     const checkResponseCodeAndRedirect = () => {
       if (codigoRespuesta !== null && codigoRespuesta !== 200) {
-        console.log(codigoRespuesta);
         Swal.fire({
           title: "Sesión expirada.",
           text: "Inicie sesión nuevamente.",

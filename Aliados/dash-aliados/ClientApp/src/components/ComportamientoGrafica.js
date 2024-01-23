@@ -40,14 +40,13 @@ const ComportamientoGrafica = ({ datos }) => {
     comparativahoy,
     comparativaHoymesanterior,
     totalesPorDiaTarjeta,
-      porcentaje,
-      ComparativaMes
-    } = datos;
-    const { mesActual, mesAnterior } = datos.comparativaMes || {};
-    const totales = totalesPorDiaTarjeta || [];
- 
-    const comparativadiasemana = datos.comparativadiasemana;
-    console.log(comparativadiasemana);
+    porcentaje,
+    ComparativaMes,
+  } = datos;
+  const { mesActual, mesAnterior } = datos.comparativaMes || {};
+  const totales = totalesPorDiaTarjeta || [];
+
+  const comparativadiasemana = datos.comparativadiasemana;
   const tiendas = Object.keys(totales);
 
   // Crear un array para almacenar los días
@@ -56,9 +55,8 @@ const ComportamientoGrafica = ({ datos }) => {
   for (let tienda in totales) {
     if (totales.hasOwnProperty(tienda)) {
       // Obtener los días de esa tienda y añadirlos al array
-      diasArray = diasArray.concat(totales[tienda].map(valor => valor.key));
+      diasArray = diasArray.concat(totales[tienda].map((valor) => valor.key));
     }
-    
   }
   // Si quieres eliminar duplicados, convierte el array en un Set y luego de nuevo en un array
   diasArray = [...new Set(diasArray)];
@@ -71,21 +69,17 @@ const ComportamientoGrafica = ({ datos }) => {
       jueves: 4,
       viernes: 5,
       sábado: 6,
-      domingo: 7
+      domingo: 7,
     };
     return orden[dia] || 8;
   }
-  
+
   diasArray.sort((a, b) => ordenarDias(a) - ordenarDias(b));
-
-
 
   const datasets = tiendas.map((tienda) => {
     const valoresTienda = totales[tienda];
     const dias = valoresTienda.map((valor) => valor.diaSemana);
-    const totalConDescuentoPorDias = valoresTienda.map(
-      (valor) => valor.value
-    );
+    const totalConDescuentoPorDias = valoresTienda.map((valor) => valor.value);
     return {
       label: tienda,
       borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
@@ -138,8 +132,7 @@ const ComportamientoGrafica = ({ datos }) => {
 
   // grafica en Comparativa
   var beneficios = [comparativaHoymesanterior, comparativahoy];
-    var meses = [mesAnterior, mesActual];
-
+  var meses = [mesAnterior, mesActual];
 
   var misoptions = {
     responsive: true,
@@ -189,7 +182,8 @@ const ComportamientoGrafica = ({ datos }) => {
   let porcentajeFinal = numeroPorcentual.toFixed(2);
   let porcentajeNumero = porcentajeFinal;
 
-  let porcentajeEnteroComparativaDiaMes = convertirDecimalAPorcentaje(porcentajeNumero);
+  let porcentajeEnteroComparativaDiaMes =
+    convertirDecimalAPorcentaje(porcentajeNumero);
 
   const mostrarIcono = () => {
     if (porcentajeNumero > 0) {
@@ -236,7 +230,7 @@ const ComportamientoGrafica = ({ datos }) => {
               }
             >
               <h2 className="fs-18 text-center pb-3" style={{ top: "0%" }}>
-                              Comportamiento de ventas
+                Comportamiento de ventas
               </h2>
               <div className="d-flex justify-content-center">
                 <Line className="px-3" data={data} options={options} />
@@ -254,7 +248,7 @@ const ComportamientoGrafica = ({ datos }) => {
                 }
               >
                 <h2 className="fs-18 text-center">
-               Comparativa (igual {comparativadiasemana} mes anterior)
+                  Comparativa (igual {comparativadiasemana} mes anterior)
                 </h2>
                 <div className="d-flex justify-content-center ">
                   <Bar className="px-3" data={midata} options={misoptions} />
@@ -291,7 +285,7 @@ const ComportamientoGrafica = ({ datos }) => {
               >
                 <h5 className="text-center py-4 lato-bold fs-16">
                   {" "}
-                                  Comportamiento de ventas
+                  Comportamiento de ventas
                 </h5>
                 <div className="d-flex justify-content-center">
                   <Line
@@ -308,7 +302,7 @@ const ComportamientoGrafica = ({ datos }) => {
               <div className={darkMode ? " bg-grafica-dark" : "bg-grafica"}>
                 <h5 className="text-center py-4 lato-bold fs-16">
                   {" "}
-            Comparativa (igual {comparativadiasemana} mes anterior)
+                  Comparativa (igual {comparativadiasemana} mes anterior)
                 </h5>
                 <div className="d-flex justify-content-center">
                   <Bar data={midata} options={misoptions} />

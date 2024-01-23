@@ -20,13 +20,14 @@ const Contabilidad = () => {
     window.location.reload();
   }
   const [contabilidad, setdatoscontabilidad] = useState([]);
-
+  const apiUrlToken = process.env.REACT_APP_API_TOKEN;
+  const apiUrlTasa = process.env.REACT_APP_API_TASA;
   useEffect(() => {
     const verificarToken = async () => {
       const token = sessionStorage.getItem("token");
 
       try {
-        const response = await fetch("/api/token/token", {
+        const response = await fetch(apiUrlToken, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -60,7 +61,7 @@ const Contabilidad = () => {
     };
     const obtenerTasaInteres = async () => {
       try {
-        const response = await fetch("/api/tasainteres/tasainteres", {
+        const response = await fetch(apiUrlTasa, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -83,7 +84,7 @@ const Contabilidad = () => {
 
     const checkResponseCodeAndRedirect = () => {
       if (codigoRespuesta !== null && codigoRespuesta !== 200) {
-        console.log(codigoRespuesta);
+        
         Swal.fire({
           title: "Sesión expirada.",
           text: "Inicie sesión nuevamente.",

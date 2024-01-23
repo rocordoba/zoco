@@ -24,9 +24,6 @@ function App() {
   const showNavComponents =
     window.location.pathname !== "/" && window.location.pathname !== "/login";
 
- 
-    
-
   return (
     <div className={darkMode ? "container-dark" : "container-light bg-gris"}>
       <BrowserRouter>
@@ -34,10 +31,10 @@ function App() {
           {showNavComponents && (
             <div>
               <div className="d-xl-none d-block my-3 ">
-                <NuevoNavReact  />
+                <NuevoNavReact />
               </div>
               <article className="d-xl-block d-none bg-gris">
-                <SidebarReact  visible={navVisible} show={showNavbar} />
+                <SidebarReact visible={navVisible} show={showNavbar} />
               </article>
             </div>
           )}

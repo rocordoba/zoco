@@ -101,7 +101,7 @@ const Inicio = ({ califico, setCalifico }) => {
         if (response.ok) {
           const resultadoCalifico = await response.json();
 
-          console.log(resultadoCalifico);
+          
           setEstadoCalifico(resultadoCalifico); // Actualiza el nuevo estado
         } else {
           throw new Error("Error al obtener califico");

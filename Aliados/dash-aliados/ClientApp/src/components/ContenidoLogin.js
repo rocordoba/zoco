@@ -14,7 +14,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 
-const ContenidoLogin = ({ onSubmit, datosMandados, setDatosMandados }) => {
+const ContenidoLogin = ({ setDatosMandados }) => {
   const [recuperar, setRecuperar] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [usuario, setUsuario] = useState("");
@@ -43,9 +43,9 @@ const ContenidoLogin = ({ onSubmit, datosMandados, setDatosMandados }) => {
 
   function recargarPagina() {
     window.location.reload();
-}
+  }
 
-const apiUrlLogin= process.env.REACT_APP_API_LOGIN
+  const apiUrlLogin = process.env.REACT_APP_API_LOGIN;
 
   const onSubmit2 = () => {
     fetch(apiUrlLogin, {
@@ -61,18 +61,17 @@ const apiUrlLogin= process.env.REACT_APP_API_LOGIN
       .then((response) => response.json())
       .then((data) => {
         setDatosMandados(data);
-        console.log(data);
+
         if (data.token) {
           setIsActive(1);
           navigate("/aliados/inicio");
           recargarPagina();
           // Almacenar el token y el ID del usuario en sessionStorage
-            sessionStorage.setItem("token", data.token);
-          
+          sessionStorage.setItem("token", data.token);
         } else {
           alert("Revisar usuario/contraseña");
-          setButtonText("Conectar"); 
-          setIsLoading(false); 
+          setButtonText("Conectar");
+          setIsLoading(false);
           setContador(contador + 1);
         }
       })
@@ -396,18 +395,15 @@ const apiUrlLogin= process.env.REACT_APP_API_LOGIN
                     Tocá aquí.
                   </button>
                 </h6> */}
-                 <h6 className="fs-16 mb-1 me-2">
-                  {" "}
-                  ¿Problemas para ingresar?{" "}
-                  </h6>
-                 <a
-                    className="enlace lato-bold text-decoration-none fs-16"
-                    href="https://api.whatsapp.com/send/?phone=543813545650&text=Buenos%2Fas+d%C3%ADas%2Ftardes%2Cmi+CUIT+es%3A++tengo+una+consulta+sobre&type=phone_number&app_absent=0"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Tocá aquí.
-                  </a>
+                <h6 className="fs-16 mb-1 me-2"> ¿Problemas para ingresar? </h6>
+                <a
+                  className="enlace lato-bold text-decoration-none fs-16"
+                  href="https://api.whatsapp.com/send/?phone=543813545650&text=Buenos%2Fas+d%C3%ADas%2Ftardes%2Cmi+CUIT+es%3A++tengo+una+consulta+sobre&type=phone_number&app_absent=0"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Tocá aquí.
+                </a>
               </div>
             </div>
             <div className="text-center d-block d-md-none">

@@ -10,10 +10,6 @@ const DatosCalculadora = () => {
   const [datosCapturadosCalculadora, setDatosCapturadosCalculadora] = useState(
     {}
   );
-  console.log(
-    "🚀 ~ file: DatosCalculadora.js:13 ~ DatosCalculadora ~ datosCapturadosCalculadora:",
-    datosCapturadosCalculadora
-  );
   const { control, handleSubmit, register } = useForm();
 
   const onSubmit = (datos) => {
@@ -21,15 +17,6 @@ const DatosCalculadora = () => {
   };
 
   const { darkMode } = useContext(DarkModeContext);
-  // const optionsTarjeta = [
-  //   { value: "tarjeta 1 ", label: "tarjeta 1" },
-  //   { value: "tarjeta 2", label: "tarjeta 2 " },
-  //   { value: "tarjeta 3", label: "tarjeta 3" },
-  // ];
-
-  // const [selectedMes, setSelectedMes] = useState(null);
-  // const [isSearchable, setIsSearchable] = useState(true);
-
   const [neto, setNeto] = useState(1000);
   const [bruto, setBruto] = useState(Math.trunc(neto * 1.1));
   const [esMontoA, setEsMontoA] = useState(true);

@@ -84,7 +84,6 @@ const NuevoNavReact = ({ name, ...props }) => {
 
   const procesarDatos = (data) => {
     //   console.log("Respuesta de la API:", data);
-
     const optionsComercio = data.comercios.map((comercio) => ({
       value: comercio.toLowerCase().replace(/\s+/g, ""),
       label: comercio,

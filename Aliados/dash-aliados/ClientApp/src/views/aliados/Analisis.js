@@ -58,7 +58,7 @@ const Analisis = () => {
 
     const checkResponseCodeAndRedirect = () => {
       if (codigoRespuesta !== null && codigoRespuesta !== 200) {
-        console.log(codigoRespuesta);
+        
         Swal.fire({
           title: "Sesión expirada.",
           text: "Inicie sesión nuevamente.",

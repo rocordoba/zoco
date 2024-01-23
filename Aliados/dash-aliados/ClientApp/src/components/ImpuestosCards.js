@@ -14,7 +14,7 @@ const ImpuestosCards = ({ datosBack, DatosTasa }) => {
     retencionganancia,
     retecionIva,
   } = datosBack;
-  console.log(datosBack);
+
   const valoresFormateados = formatearValores(
     totalBrutoMes,
     totaldebito,

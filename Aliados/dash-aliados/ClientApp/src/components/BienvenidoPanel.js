@@ -35,7 +35,6 @@ const BienvenidoPanel = () => {
 
   const procesarDatos = (data) => {
     //   console.log("Respuesta de la API:", data);
-
     const optionsComercio = data.comercios.map((comercio) => ({
       value: comercio.toLowerCase().replace(/\s+/g, ""),
       label: comercio,
@@ -96,7 +95,7 @@ const BienvenidoPanel = () => {
     });
   };
 
-const apiUrlBienvenidoPanel = process.env.REACT_APP_API_BIENVENIDO_PANEL;
+  const apiUrlBienvenidoPanel = process.env.REACT_APP_API_BIENVENIDO_PANEL;
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
@@ -104,7 +103,7 @@ const apiUrlBienvenidoPanel = process.env.REACT_APP_API_BIENVENIDO_PANEL;
       token: token,
     };
 
-    if (token ) {
+    if (token) {
       fetch(apiUrlBienvenidoPanel, {
         method: "POST",
         headers: {
@@ -127,26 +126,30 @@ const apiUrlBienvenidoPanel = process.env.REACT_APP_API_BIENVENIDO_PANEL;
         });
     }
   }, []);
-    const actualizarMesesPorAnio = (anioSeleccionado) => {
-        if (!fechaInicio || !fechaFin) return;
-        setDatosSelect({
-            anio: parseInt(anioSeleccionado),
-        });
+  const actualizarMesesPorAnio = (anioSeleccionado) => {
+    if (!fechaInicio || !fechaFin) return;
+    setDatosSelect({
+      anio: parseInt(anioSeleccionado),
+    });
 
-        // Ajusta el mes de inicio y fin dependiendo del año seleccionado
-        const mesInicio = anioSeleccionado === fechaInicio.getFullYear() ? fechaInicio.getMonth() : 0;
-        const mesFin = anioSeleccionado === fechaFin.getFullYear() ? fechaFin.getMonth() : 11;
+    // Ajusta el mes de inicio y fin dependiendo del año seleccionado
+    const mesInicio =
+      anioSeleccionado === fechaInicio.getFullYear()
+        ? fechaInicio.getMonth()
+        : 0;
+    const mesFin =
+      anioSeleccionado === fechaFin.getFullYear() ? fechaFin.getMonth() : 11;
 
-        const optionsMeses = [];
-        for (let mes = mesInicio; mes <= mesFin; mes++) {
-            let fechaActual = new Date(anioSeleccionado, mes, 1);
-            const nombreMes = fechaActual.toLocaleString("es", { month: "long" });
-            optionsMeses.push({ value: mes + 1, label: nombreMes }); // Usar mes + 1 como valor
-        }
+    const optionsMeses = [];
+    for (let mes = mesInicio; mes <= mesFin; mes++) {
+      let fechaActual = new Date(anioSeleccionado, mes, 1);
+      const nombreMes = fechaActual.toLocaleString("es", { month: "long" });
+      optionsMeses.push({ value: mes + 1, label: nombreMes }); // Usar mes + 1 como valor
+    }
 
-        setOptionsMes(optionsMeses);
-        setSelectedMes(null);
-    };
+    setOptionsMes(optionsMeses);
+    setSelectedMes(null);
+  };
 
   const actualizarSemanasPorMes = (anioSeleccionado, mesSeleccionado) => {
     const primerDiaMes = new Date(anioSeleccionado, mesSeleccionado - 1, 1);

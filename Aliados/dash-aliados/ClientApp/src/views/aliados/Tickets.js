@@ -35,7 +35,6 @@ const Tickets = () => {
         if (response.ok) {
         } else {
           if (codigoRespuesta !== null && codigoRespuesta !== 200) {
-            console.log(codigoRespuesta);
             Swal.fire({
               title: "Sesión expirada.",
               text: "Inicie sesión nuevamente.",
@@ -57,7 +56,6 @@ const Tickets = () => {
 
     const checkResponseCodeAndRedirect = () => {
       if (codigoRespuesta !== null && codigoRespuesta !== 200) {
-        console.log(codigoRespuesta);
         Swal.fire({
           title: "Sesión expirada.",
           text: "Inicie sesión nuevamente.",

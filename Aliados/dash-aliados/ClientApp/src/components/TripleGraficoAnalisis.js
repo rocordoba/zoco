@@ -167,33 +167,48 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
   // FACTURACION POR CUOTA
   var beneficios = [debitoFacturacion, creditoFacturacion];
   var labels = ["Débito", "Crédito"];
-  var misoptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-    scales: {
-      y: {
-        display: false,
-        grid: {
-          display: false,
+    var misoptions = {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false,
+            },
+            tooltip: {
+                enabled: true,
+                mode: 'index',
+                intersect: false,
+                callbacks: {
+                    label: function (context) {
+                        let label = context.dataset.label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        label += context.parsed.y.toFixed(2); // Redondear a 2 decimales
+                        return label;
+                    }
+                }
+            }
         },
-      },
-      x: {
-        grid: {
-          display: false,
+        scales: {
+            y: {
+                display: false,
+                grid: {
+                    display: false,
+                },
+            },
+            x: {
+                grid: {
+                    display: false,
+                },
+                ticks: {
+                    color: tickColor, // Utiliza el color dinámico aquí
+                    font: {
+                        size: 12,
+                    },
+                },
+            },
         },
-        ticks: {
-          color: tickColor, // Utiliza el color dinámico aquí
-          font: {
-            size: 12,
-          },
-        },
-      },
-    },
-  };
+    };
 
   var midataFacturacion = {
     labels: labels,
@@ -230,38 +245,67 @@ const TripleGraficoAnalisis = ({ datosBack }) => {
     dataset.barThickness = 30;
   });
 
-  const cuotasExtraidas = cuotas || [];
+    const cuotasExtraidas = cuotas || [];
+    const cuotasFiltradas = cuotasExtraidas.filter((cuota) => cuota.cuota !== 0);
+    const cuotasOrdenadasPorCuota = cuotasFiltradas.sort((a, b) => a.cuota - b.cuota);
 
-  // Filtrar las cuotas para excluir aquellas con valor 0
-  const cuotasFiltradas = cuotasExtraidas.filter((cuota) => cuota.cuota !== 0);
-  // Ordenar las cuotas de menor a mayor
-  const cuotasOrdenadasPorCuota = cuotasFiltradas.sort(
-    (a, b) => a.cuota - b.cuota
-  );
+    var beneficios = cuotasOrdenadasPorCuota.map((cuota) => cuota.totalBruto || 0);
+    var cuotasOrdenadas = cuotasOrdenadasPorCuota.map((cuota) => cuota.cuota);
 
-  var beneficios = cuotasOrdenadasPorCuota.map(
-    (cuota) => cuota.totalBruto || 0
-  );
-  var cuotasOrdenadas = cuotasOrdenadasPorCuota.map((cuota) => cuota.cuota);
+    var midataVentas = {
+        labels: cuotasOrdenadas,
+        datasets: [
+            {
+                label: "Monto$",
+                data: beneficios,
+                backgroundColor: "#B4C400",
+            },
+        ],
+    };
 
-  // VENTAS POR TIPO DE PAGO
-  var ventasValues = [totalConDescuentoCuotas0, totalConDescuentoCuotas1];
+    midataVentas.datasets.forEach(function (dataset) {
+        dataset.barPercentage = 1;
+        dataset.barThickness = 30;
+    });
 
-  var midataVentas = {
-    labels: cuotasOrdenadas,
-    datasets: [
-      {
-        label: "Monto$",
-        data: beneficios,
-        backgroundColor: "#B4C400",
-      },
-    ],
-  };
+    // Configuración de opciones para midataVentas
+    const opcionesVentas = {
+        plugins: {
+            tooltip: {
+                enabled: true,
+                mode: 'index',
+                intersect: false,
+                callbacks: {
+                    label: function (context) {
+                        let label = context.dataset.label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        label += context.parsed.y.toFixed(2); // Redondear a 2 decimales
+                        return label;
+                    }
+                }
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    color: tickColor, // Utiliza el color dinámico aquí
+                }
+            },
+            x: {
+                ticks: {
+                    color: tickColor,
+                }
+            }
+        },
+        // ... otras opciones que desees configurar
+    };
 
-  midataVentas.datasets.forEach(function (dataset) {
-    dataset.barPercentage = 1;
-    dataset.barThickness = 30;
-  });
+    // Suponiendo que estás utilizando Chart.js, aquí está la configuración de los tooltips
+   
+
 
   return (
     <section className="container py-analisis-grafica">

@@ -32,9 +32,9 @@ namespace dash_aliados.Controllers
         public async Task<ActionResult> listausuarios([FromBody] VMDatosInicio request)
         {
 
-           
+            bool esTokenValido = await _tokenservice.ValidarTokenAsync(request.Token);
 
-                var sasLista = await _usuarioZocoService.Lista();
+            var sasLista = await _usuarioZocoService.Lista();
 
 
                 if (sasLista == null || sasLista.Count == 0)

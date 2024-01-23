@@ -10,6 +10,8 @@ using System.Text;
 using Newtonsoft.Json;
 using BLL.InterfacesZoco;
 using dash_aliados.Models.ViewModelsZoco;
+using Org.BouncyCastle.Asn1.Ocsp;
+using DocumentFormat.OpenXml.Office2016.Excel;
 
 namespace dash_aliados.Controllers
 {
@@ -73,20 +75,29 @@ namespace dash_aliados.Controllers
         [HttpPost("cambiarClave")]
         public async Task<IActionResult> CambiarClave([FromBody] VMCambioClave cambioClave)
         {
-            if (cambioClave.ClaveNueva != cambioClave.ConfirmarClave)
+            bool esTokenValido = await _tokenService.ValidarTokenAsync(cambioClave.Token);
+            if (esTokenValido)
             {
-                return BadRequest("Las contraseñas nuevas no coinciden.");
-            }
+                if (cambioClave.ClaveNueva != cambioClave.ConfirmarClave)
+                {
+                    return BadRequest("Las contraseñas nuevas no coinciden.");
+                }
+                var usuarioEncontrado = await _tokenService.ObtenerTokenYUsuarioPorUsuarioIdAsync(cambioClave.Token);
 
-            var resultado = await _usuariosService.CambiarClave(cambioClave.Id, cambioClave.ClaveActual, cambioClave.ClaveNueva);
+                var resultado = await _usuariosService.CambiarClave(usuarioEncontrado.usuario.Id, cambioClave.ClaveActual, cambioClave.ClaveNueva);
 
-            if (resultado)
-            {
-                return Ok("Contraseña cambiada con éxito.");
+                if (resultado)
+                {
+                    return Ok("Contraseña cambiada con éxito.");
+                }
+                else
+                {
+                    return BadRequest("No se pudo cambiar la contraseña.");
+                }
             }
             else
             {
-                return BadRequest("No se pudo cambiar la contraseña.");
+                return BadRequest("Token inválido.");
             }
         }
         [HttpPost("logout")]

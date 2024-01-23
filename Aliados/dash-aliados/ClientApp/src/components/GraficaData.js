@@ -44,32 +44,47 @@ const GraficaData = ({ datos }) => {
 
   const { darkMode } = useContext(DarkModeContext);
   const tickColor = darkMode ? "#fff" : "#292B2F";
-  var misoptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-    scales: {
-      y: {
-        display: false,
-        grid: {
-          color: darkMode ? "blue" : "red",
-          borderColor: "transparent",
+    var misoptions = {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false,
+            },
+            tooltip: {
+                enabled: true,
+                mode: 'index',
+                intersect: false,
+                callbacks: {
+                    label: function (context) {
+                        let label = context.dataset.label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        label += context.parsed.y.toFixed(2); // Redondear a 2 decimales
+                        return label;
+                    }
+                }
+            }
         },
-      },
-      x: {
-        display: false,
-        grid: {
-          display: false,
+        scales: {
+            y: {
+                display: false,
+                grid: {
+                    color: darkMode ? "blue" : "red",
+                    borderColor: "transparent",
+                },
+            },
+            x: {
+                display: false,
+                grid: {
+                    display: false,
+                },
+                ticks: {
+                    color: tickColor,
+                },
+            },
         },
-        ticks: {
-          color: tickColor,
-        },
-      },
-    },
-  };
+    };
 
   var midata = {
     labels: tarjetasOrdenadas,

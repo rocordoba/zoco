@@ -146,62 +146,65 @@ const BienvenidoPanel = () => {
         setSelectedMes(null);
     };
 
-  const actualizarSemanasPorMes = (anioSeleccionado, mesSeleccionado) => {
-    const primerDiaMes = new Date(anioSeleccionado, mesSeleccionado - 1, 1);
-    const ultimoDiaMes = new Date(anioSeleccionado, mesSeleccionado, 0);
+    const actualizarSemanasPorMes = (anioSeleccionado, mesSeleccionado) => {
+        const primerDiaMes = new Date(anioSeleccionado, mesSeleccionado - 1, 1);
+        const ultimoDiaMes = new Date(anioSeleccionado, mesSeleccionado, 0);
 
-    let diaActual = new Date(primerDiaMes.getTime());
-    let semanas = [];
-    let semana = [];
-    let numeroSemanaDelMes = 0;
+        // Ajustar al lunes de la misma semana solo si el primer día no es domingo
+        let diaActual = new Date(primerDiaMes);
+        if (primerDiaMes.getDay() !== 0) {
+            diaActual.setDate(diaActual.getDate() - ((diaActual.getDay() + 6) % 7));
+        }
 
-    // Ajustar el primer día de la semana al lunes más cercano
-    if (diaActual.getDay() !== 1) {
-      diaActual.setDate(diaActual.getDate() - diaActual.getDay() + 1);
-    }
+        let semanas = [];
+        let semana = [];
+        let numeroSemanaDelMes = 0;
 
-    // Iterar a través de los días del mes
-    for (
-      let d = new Date(diaActual);
-      d <= ultimoDiaMes;
-      d.setDate(d.getDate() + 1)
-    ) {
-      if (d.getDate() === 1 || d.getDay() === 1) {
-        numeroSemanaDelMes++;
-      }
+        // Iterar a través de los días
+        while (diaActual <= ultimoDiaMes || semana.length > 0) {
+            if (diaActual.getDay() === 1) {
+                if (semana.length > 0) {
+                    semanas.push({ numeroSemanaDelMes, dias: [...semana] });
+                    semana = [];
+                }
+                numeroSemanaDelMes++;
+            }
 
-      // Detener el proceso si se alcanza la semana 5
-      if (numeroSemanaDelMes > 5) {
-        break;
-      }
+            // Añadir el día a la semana actual si está dentro del mes
+            if (diaActual.getMonth() === mesSeleccionado - 1) {
+                semana.push(new Date(diaActual));
+            }
 
-      semana.push(new Date(d));
-      if (d.getDay() === 0 || d.getDate() === ultimoDiaMes.getDate()) {
-        semanas.push({ numeroSemanaDelMes, dias: [...semana] });
-        semana = [];
-      }
-    }
+            diaActual.setDate(diaActual.getDate() + 1);
 
-    // Filtrar las semanas que caen dentro del rango de fechaInicio y fechaFin
-    const semanasFiltradas = semanas.filter((semana) => {
-      const inicioSemana = semana.dias[0];
-      const finSemana = semana.dias[semana.dias.length - 1];
-      return (
-        (!fechaInicio || finSemana >= fechaInicio) &&
-        (!fechaFin || inicioSemana <= fechaFin)
-      );
-    });
+            // Añadir la última semana si hemos llegado al final del mes
+            if (diaActual > ultimoDiaMes && semana.length > 0) {
+                semanas.push({ numeroSemanaDelMes, dias: [...semana] });
+                semana = [];
+            }
+        }
 
-    // Formatear las semanas para el uso en el front-end
-    const semanasFormateadas = semanasFiltradas.map((semana) => {
-      const label = `Semana ${semana.numeroSemanaDelMes}`;
-      const value = semana.numeroSemanaDelMes;
+        // Filtrar las semanas que caen dentro del rango de fechaInicio y fechaFin
+        const semanasFiltradas = semanas.filter((semana) => {
+            const inicioSemana = semana.dias[0];
+            const finSemana = semana.dias[semana.dias.length - 1];
+            return (
+                (!fechaInicio || finSemana >= fechaInicio) &&
+                (!fechaFin || inicioSemana <= fechaFin)
+            );
+        });
 
-      return { label, value };
-    });
+        // Formatear las semanas para el uso en el front-end
+        const semanasFormateadas = semanasFiltradas.map((semana) => {
+            const label = `Semana ${semana.numeroSemanaDelMes}`;
+            const value = semana.numeroSemanaDelMes;
 
-    setOptionsSemanas(semanasFormateadas);
-  };
+            return { label, value };
+        });
+
+        setOptionsSemanas(semanasFormateadas);
+    };
+
 
   const mandarSemana = (selectedSemana) => {
     const valorSemanaSeleccionada = selectedSemana;

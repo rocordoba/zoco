@@ -35,7 +35,7 @@ namespace dash_aliados.Controllers
                 var sas = await _baseService.DatosInicioAliados(usuarioEncontrado.usuario.Usuario);
 
                
-                var fechaInicio = sas.Min(d => d.FechaOperacion);
+                var fechaInicio = sas.Min(d => d.FechaDePago);
 
                 
                 var fechaFin = sas.Max(d => d.FechaDePago);

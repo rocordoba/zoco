@@ -12,7 +12,6 @@ const FormComentarioCalificar = () => {
     comentario: "",
   });
 
-
   const isButtonDisabled = rating === 0;
 
   const handleStarClick = (star) => {
@@ -34,7 +33,7 @@ const FormComentarioCalificar = () => {
 
     //  console.log("Datos a enviar:", datosConRating);
 
-    const apiUrlCalificoCom = process.env.REACT_APP_API_CALIFICAR_COM
+    const apiUrlCalificoCom = process.env.REACT_APP_API_CALIFICAR_COM;
 
     try {
       await fetch(apiUrlCalificoCom, {
